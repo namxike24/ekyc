@@ -1,11 +1,11 @@
-allprojects {
-    repositories {
-        google()
-//        jcenter()
-        mavenCentral()
-        maven { url "https://google.com" }
-    }
-}
+//allprojects {
+//    repositories {
+//        google()
+////        jcenter()
+//        mavenCentral()
+//        maven { url "https://google.com" }
+//    }
+//}
 
 ext {
 

@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk androidCompileSdkVersion
 
     defaultConfig {
         applicationId "ai.ftech.ekyc"
-        minSdk 16
-        targetSdk 32
+        minSdk androidMinSdkVersion
+        targetSdk androidCompileSdkVersion
         versionCode 1
         versionName "1.0"
 
