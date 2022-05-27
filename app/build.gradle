@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -33,11 +35,71 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //region import module
+    implementation project(':base')
+    //endregion
+
+    //region kotlin
+    implementation rootProject.ext.kotlinDependencies.kotlin
+    implementation rootProject.ext.refection.kotlin
+    implementation rootProject.ext.kotlinSerializationConverterDependencies.kotlinSerializationConverter
+    implementation rootProject.ext.kotlinSerializationJsonDependencies.kotlinSerializationJson
+    //endregion
+
+    //region kotlin ktx
+    implementation rootProject.ext.androidKTXDependencies.coreKTX
+    implementation rootProject.ext.androidKTXDependencies.fragmentKTX
+    implementation rootProject.ext.androidKTXDependencies.lifecycleKTX
+    implementation rootProject.ext.androidKTXDependencies.livedataKTX
+    implementation rootProject.ext.androidKTXDependencies.roomKTX
+    implementation rootProject.ext.androidKTXDependencies.viewmodelKTX
+    //endregion
+
+    //region androidx
+    implementation rootProject.ext.androidXDependencies.appCompat
+    implementation rootProject.ext.androidXDependencies.constraintLayout
+    implementation rootProject.ext.androidXDependencies.savedStateViewModel
+    implementation rootProject.ext.androidXDependencies.room
+    kapt rootProject.ext.androidXDependencies.roomCompiler
+    //endregion
+
+    //region test
+    testImplementation rootProject.ext.testDependencies.junit
+    androidTestImplementation rootProject.ext.testDependencies.junitExt
+    androidTestImplementation rootProject.ext.testDependencies.espressoCore
+    //endregion
+
+    //region coroutines
+    implementation rootProject.ext.coroutinesDependencies.core
+    implementation rootProject.ext.coroutinesDependencies.android
+    //endregion
+
+    //region material
+    implementation rootProject.ext.materialDependency.material
+    //endregion
+
+    //region glide
+    implementation rootProject.ext.glideDependency.runtime
+    implementation rootProject.ext.glideDependency.transformation
+    //endregion
+
+    //region network
+    implementation rootProject.ext.networkDependencies.retrofit
+    implementation rootProject.ext.networkDependencies.retrofitGsonConverter
+    implementation rootProject.ext.networkDependencies.retrofitScalarConverter
+    implementation rootProject.ext.networkDependencies.retrofitConverterMoshi
+    implementation rootProject.ext.networkDependencies.retrofitRxJava
+    implementation rootProject.ext.networkDependencies.logging
+    //endregion
+
+    //region firebase
+    implementation rootProject.firebaseDependencies.bom
+    implementation rootProject.firebaseDependencies.analytics
+    implementation rootProject.firebaseDependencies.crashlyticsKTX
+    implementation rootProject.firebaseDependencies.cloudMessage
+    //endregion
+
+    //region eventbus
+    implementation rootProject.ext.eventbusDependencies.eventbus
+    //endregion
 }

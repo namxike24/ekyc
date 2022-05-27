@@ -16,3 +16,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ekyc-android"
 include ':app'
+include ':ekyc'
+include ':base'

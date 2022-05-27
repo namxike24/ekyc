@@ -1,0 +1,107 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    configurations.all {
+        resolutionStrategy {
+            force("org.antlr:antlr4-runtime:4.7.1")
+            force("org.antlr:antlr4-tool:4.7.1")
+        }
+    }
+}
+
+dependencies {
+
+    //region kotlin
+    implementation rootProject.ext.kotlinDependencies.kotlin
+    implementation rootProject.ext.refection.kotlin
+    implementation rootProject.ext.kotlinSerializationConverterDependencies.kotlinSerializationConverter
+    implementation rootProject.ext.kotlinSerializationJsonDependencies.kotlinSerializationJson
+    //endregion
+
+    //region kotlin ktx
+    implementation rootProject.ext.androidKTXDependencies.coreKTX
+    implementation rootProject.ext.androidKTXDependencies.fragmentKTX
+    implementation rootProject.ext.androidKTXDependencies.lifecycleKTX
+    implementation rootProject.ext.androidKTXDependencies.livedataKTX
+    implementation rootProject.ext.androidKTXDependencies.roomKTX
+    implementation rootProject.ext.androidKTXDependencies.viewmodelKTX
+    //endregion
+
+    //region androidx
+    implementation rootProject.ext.androidXDependencies.appCompat
+    implementation rootProject.ext.androidXDependencies.constraintLayout
+    implementation rootProject.ext.androidXDependencies.savedStateViewModel
+    implementation rootProject.ext.androidXDependencies.room
+    kapt rootProject.ext.androidXDependencies.roomCompiler
+    //endregion
+
+    //region test
+    testImplementation rootProject.ext.testDependencies.junit
+    androidTestImplementation rootProject.ext.testDependencies.junitExt
+    androidTestImplementation rootProject.ext.testDependencies.espressoCore
+    //endregion
+
+    //region coroutines
+    implementation rootProject.ext.coroutinesDependencies.core
+    implementation rootProject.ext.coroutinesDependencies.android
+    //endregion
+
+    //region material
+    implementation rootProject.ext.materialDependency.material
+    //endregion
+
+    //region glide
+    implementation rootProject.ext.glideDependency.runtime
+    implementation rootProject.ext.glideDependency.transformation
+    //endregion
+
+    //region network
+    implementation rootProject.ext.networkDependencies.retrofit
+    implementation rootProject.ext.networkDependencies.retrofitGsonConverter
+    implementation rootProject.ext.networkDependencies.retrofitConverterMoshi
+    implementation rootProject.ext.networkDependencies.retrofitRxJava
+    implementation rootProject.ext.networkDependencies.logging
+    //endregion
+
+    //region firebase
+    implementation rootProject.firebaseDependencies.bom
+    implementation rootProject.firebaseDependencies.analytics
+    implementation rootProject.firebaseDependencies.cloudMessage
+    //endregion
+
+    //region eventbus
+    implementation rootProject.ext.eventbusDependencies.eventbus
+    //endregion
+}
