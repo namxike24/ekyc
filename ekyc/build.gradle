@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+    //region import module
+    implementation project(':base')
+    //endregion
+
     //region kotlin
     implementation rootProject.ext.kotlinDependencies.kotlin
     implementation rootProject.ext.refection.kotlin
