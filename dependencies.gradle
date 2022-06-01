@@ -3,10 +3,10 @@ ext {
     /**
      * config build project
      */
-    androidCompileSdkVersion = 31
+    androidCompileSdkVersion = 32
     androidBuildToolsVersion = "30.0.3"
     androidMinSdkVersion = 23
-    androidTargetSdkVersion = 30
+    androidTargetSdkVersion = 32
 
 
     /**

@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
 }
@@ -40,7 +40,7 @@ dependencies {
     //endregion
 
     //region kotlin
-    implementation rootProject.ext.kotlinDependencies.kotlin
+//    implementation rootProject.ext.kotlinDependencies.kotlin
     implementation rootProject.ext.refection.kotlin
     implementation rootProject.ext.kotlinSerializationConverterDependencies.kotlinSerializationConverter
     implementation rootProject.ext.kotlinSerializationJsonDependencies.kotlinSerializationJson
