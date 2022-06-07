@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="color_primary">#1080EC</color>
+    <color name="color_black">#313C4B</color>
+    <color name="color_gray">#7A8086</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_background">#F4F4F5</color>
+    <color name="color_stroke">#F6F6F6</color>
+    <color name="color_green">#0DB473</color>
+    <color name="color_red">#FF7878</color>
 </resources>
