@@ -8,4 +8,10 @@
     <color name="color_stroke">#F6F6F6</color>
     <color name="color_green">#0DB473</color>
     <color name="color_red">#FF7878</color>
+
+    <color name="fekyc_color_failure">#CCFF0000</color>
+    <color name="fekyc_color_success">#42C34B</color>
+    <color name="fekyc_color_warning">#FFB32E</color>
+
+    <color name="color_text_primary">#FFFFFF</color>
 </resources>

@@ -37,6 +37,7 @@ dependencies {
 
     //region import module
     implementation project(':base')
+    implementation project(':ekyc')
     //endregion
 
     //region kotlin

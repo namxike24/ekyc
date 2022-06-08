@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fbase_dimen_88"
+    android:background="@drawable/bg_header"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_56"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivHeaderClose"
+            android:layout_width="@dimen/fbase_dimen_56"
+            android:layout_height="@dimen/fbase_dimen_56"
+            android:layout_marginStart="@dimen/fbase_dimen_10"
+            android:background="?selectableItemBackground"
+            android:padding="@dimen/fbase_dimen_12"
+            android:src="@drawable/ic_close" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHeaderTitle"
+            style="@style/FBaseStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:textSize="@dimen/fbase_text_size_16"
+            tools:text="Chọn loại giấy tờ Chọn loại giấy tờ Chọn loại giấy tờ" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHeaderLeftText"
+            style="@style/FBaseStyleRegular"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/fbase_dimen_24"
+            android:textSize="@dimen/fbase_text_size_16"
+            tools:text="Trợ giúp" />
+
+    </RelativeLayout>
+
+</merge>

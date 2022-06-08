@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fekyc_success">Thành công</string>
+    <string name="fekyc_failure">Thất bại</string>
+    <string name="fekyc_loading">Đang tải…</string>
+</resources>

@@ -8,21 +8,21 @@ import androidx.fragment.app.Fragment
 interface INavigation
 
 interface INavByActivity : INavigation {
-    fun navigateTo(clazz: Class<out BaseActivity<*>>)
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, bundle: Bundle)
+    fun navigateTo(clazz: Class<out BaseActivity>)
+    fun navigateTo(clazz: Class<out BaseActivity>, bundle: Bundle)
     fun navigateBack()
 }
 
 interface INavByFragment : INavigation {
     fun replaceFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle?,
         keepToBackStack: Boolean ,
         fragmentAnim: FragmentAnim
     )
 
     fun addFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle?,
         keepToBackStack: Boolean ,
         fragmentAnim: FragmentAnim
