@@ -12,7 +12,7 @@ import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
 
 object EncodeRSA {
-    private val PUBLIC_KEY: String = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcwwhLaw9suYrbgsS58p9Mqe/fqKfpfmllBh7DB+IghiHxu5JSYTAkt0QVki/5HVDJI9U5249N9KqRHN7FV4BWSzATFudpsMkM7OY6tU6bZJ/34CAIYNMOReHWWAuM5PVhiItS59yhWPJyZWSkEpM9s/xOhtZisXgBQOJLqt5n4wIDAQAB"
+    private val PUBLIC_KEY: String = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKvWIEhxiogTnaK9e7xH3UxhLPB73BafhsQSyt1eG5+3AbM3Nb4L974d6I41mPuF7OX/iBjxkX3qoHmEv0TnJCauBXuVt2irQ4mKx+Yyu1pi1YxH4xqKBIM37zNMsnC8k1upZ3LSBjjUf5xJLx+QVrZ5T1i2pBUUHOJcjIfkS8mQIDAQAB"
 
     fun encryptData(text: String): String {
         var encoded: String = ""
