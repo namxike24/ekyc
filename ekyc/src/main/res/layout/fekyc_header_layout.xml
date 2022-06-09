@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/fbase_dimen_90"
-    android:background="@drawable/bg_header"
+    android:background="@drawable/fekyc_bg_header"
     android:orientation="horizontal">
 
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:layout_marginStart="@dimen/fbase_dimen_10"
             android:background="?selectableItemBackground"
             android:padding="@dimen/fbase_dimen_12"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/fekyc_ic_close" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvHeaderTitle"

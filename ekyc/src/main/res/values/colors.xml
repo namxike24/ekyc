@@ -8,6 +8,7 @@
     <color name="fekyc_color_stroke">#F6F6F6</color>
     <color name="fekyc_color_green">#0DB473</color>
     <color name="fekyc_color_red">#FF7878</color>
+    <color name="fekyc_color_tropical_blue">#BEDFFF</color>
 
     <color name="fekyc_color_failure">#CCFF0000</color>
     <color name="fekyc_color_success">#42C34B</color>
