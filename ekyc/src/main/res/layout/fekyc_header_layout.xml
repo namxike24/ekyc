@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/fbase_dimen_88"
+    android:layout_height="@dimen/fbase_dimen_90"
     android:background="@drawable/bg_header"
     android:orientation="horizontal">
 
@@ -29,7 +29,6 @@
             android:gravity="center"
             android:maxLength="25"
             android:maxLines="1"
-            android:textSize="@dimen/fbase_text_size_16"
             tools:text="Chọn loại giấy tờ Chọn loại giấy tờ Chọn loại giấy tờ" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -42,7 +41,6 @@
             android:maxLines="1"
             android:paddingStart="0dp"
             android:paddingEnd="@dimen/fbase_dimen_24"
-            android:textSize="@dimen/fbase_text_size_16"
             tools:text="Trợ giúp" />
 
     </RelativeLayout>

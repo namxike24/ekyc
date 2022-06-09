@@ -3,4 +3,29 @@
     <string name="fekyc_success">Thành công</string>
     <string name="fekyc_failure">Thất bại</string>
     <string name="fekyc_loading">Đang tải…</string>
+
+
+    <!--region Home Activity-->
+    <string name="fekyc_home_title">Chọn loại giấy tờ</string>
+    <string name="fekyc_home_lefttitle">Trợ giúp</string>
+    <string name="fekyc_home_step_title">Các bước thực hiện</string>
+
+    <string name="fekyc_home_step_1">Lựa chọn loại giấy tờ</string>
+    <string name="fekyc_home_step_2">Chụp ảnh giấy tờ</string>
+    <string name="fekyc_home_step_3">Chụp ảnh chân dung</string>
+    <string name="fekyc_home_step_4">Kiểm tra lại thông tin cá nhân</string>
+
+
+    <string name="fekyc_home_select_type_of_papers_title">Kiểm tra lại thông tin cá nhân</string>
+    <string name="fekyc_home_select_type_of_papers_ssn">Căn cước công dân / Chứng minh thư</string>
+    <string name="fekyc_home_select_type_of_papers_driver_license">Giấy phép lái xe</string>
+    <string name="fekyc_home_select_type_of_papers_passport">Hộ chiếu Việt Nam</string>
+    <!--endregion-->
+
+
+
+
+
+
+
 </resources>

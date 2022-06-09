@@ -10,9 +10,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     override fun onInitView() {
         super.onInitView()
-//        findViewById<TextView>(R.id.tvTitle).setOnSafeClick {
-//            navigateTo(FEkycHomeActivity::class.java)
-//        }
+        findViewById<TextView>(R.id.tvTitle).setOnSafeClick {
+            navigateTo(FEkycHomeActivity::class.java)
+        }
         navigateTo(FEkycHomeActivity::class.java)
     }
 }

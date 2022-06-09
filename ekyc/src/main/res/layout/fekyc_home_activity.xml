@@ -4,12 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ai.ftech.ekyc.common.widget.header.HeaderView
+        android:id="@+id/hvHomeToolbar"
         android:layout_width="match_parent"
+        app:hv_lefttext_text="@string/fekyc_home_lefttitle"
+        app:hv_lefttext_text_size="@dimen/fbase_text_size_4"
         android:layout_height="@dimen/fbase_dimen_88"
+        app:hv_title_text="@string/fekyc_home_title"
+        app:hv_title_text_size="@dimen/fbase_text_size_6"
         android:background="@drawable/bg_header"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHomeStepTitle"
+        style="@style/FBaseStyleSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_24"
+        android:text="@string/fekyc_home_step_title"
+        android:textColor="@color/color_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hvHomeToolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHomeListStep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_16"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeStepTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
