@@ -103,4 +103,8 @@ dependencies {
     //region eventbus
     implementation rootProject.ext.eventbusDependencies.eventbus
     //endregion
+
+    //region camera view
+    implementation rootProject.ext.cameraViewNatario1Dependencies.cameraview
+    //endregion
 }

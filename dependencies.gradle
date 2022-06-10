@@ -192,4 +192,12 @@ ext {
     swipeLayoutDependencies = [
             "swipelayout": "androidx.swiperefreshlayout:swiperefreshlayout:$swipeLayoutVersion"
     ]
+
+    /**
+     * cameraview
+     */
+    def cameraViewNatario1Version = "2.7.1"
+    cameraViewNatario1Dependencies = [
+            "cameraview": "com.otaliastudios:cameraview:$cameraViewNatario1Version"
+    ]
 }
