@@ -5,6 +5,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.presentation.takepicture.TakePictureActivity
+import android.Manifest
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,10 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private val adapter by lazy {
         StepIdentityAdapter()
     }
+    private val permissionList = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     override fun onInitView() {
         super.onInitView()
@@ -42,7 +47,19 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         })
 
         llSSN.setOnSafeClick {
-            navigateTo(TakePictureActivity::class.java)
+            doRequestPermission(permissionList, object : PermissionListener {
+                override fun onAllow() {
+                    navigateTo(TakePictureActivity::class.java)
+                }
+
+                override fun onDenied() {
+
+                }
+
+                override fun onNeverAskAgain() {
+
+                }
+            })
         }
 
         llDriverLicense.setOnSafeClick {

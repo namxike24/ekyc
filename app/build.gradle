@@ -104,8 +104,10 @@ dependencies {
     implementation rootProject.ext.eventbusDependencies.eventbus
     //endregion
 
-    //region camera view
-//    api rootProject.ext.cameraViewNatario1Dependencies.cameraview
-    api 'com.otaliastudios:cameraview:2.6.1'
+    //region camera
+//    implementation rootProject.ext.androidXDependencies.cameraCore
+//    implementation rootProject.ext.androidXDependencies.camera2
+    implementation rootProject.ext.cameraViewNatario1Dependencies.cameraview
     //endregion
+
 }
