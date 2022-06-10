@@ -6,8 +6,17 @@
         <attr name="tbv_title_text" format="string" />
         <attr name="tbv_title_text_size" format="dimension" />
 
-        <attr name="tbv_lefttext_text" format="string" />
-        <attr name="tbv_lefttext_text_size" format="dimension" />
+        <attr name="tbv_right_text_content" format="string" />
+        <attr name="tbv_right_text_text_size" format="dimension" />
+
+
+        <attr name="tbv_right_icon_src" format="reference" />
+
+        <attr name="tbv_right_type" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="text" value="1"/>
+            <enum name="icon" value="2"/>
+        </attr>
 
     </declare-styleable>
 
