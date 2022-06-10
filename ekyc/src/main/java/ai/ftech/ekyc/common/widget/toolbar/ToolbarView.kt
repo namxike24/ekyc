@@ -17,7 +17,7 @@ class ToolbarView @JvmOverloads constructor(
     private lateinit var ivClose: ImageView
     private lateinit var tvTitle: TextView
     private lateinit var tvLeftText: TextView
-    private var listener: IHeaderViewListener? = null
+    private var listener: IListener? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.fekyc_toolbar_layout, this, true)
@@ -25,7 +25,7 @@ class ToolbarView @JvmOverloads constructor(
         init(attrs)
     }
 
-    fun setTitle(char: String) {
+    fun setTitle(char: CharSequence) {
         tvTitle.text = char
     }
 
@@ -33,7 +33,7 @@ class ToolbarView @JvmOverloads constructor(
         tvTitle.text = ""
     }
 
-    fun setLeftText(char: String) {
+    fun setLeftText(char: CharSequence) {
         tvLeftText.text = char
     }
 
@@ -41,7 +41,7 @@ class ToolbarView @JvmOverloads constructor(
         tvLeftText.text = ""
     }
 
-    fun setListener(listener: IHeaderViewListener) {
+    fun setListener(listener: IListener) {
         this.listener = listener
     }
 
@@ -60,18 +60,18 @@ class ToolbarView @JvmOverloads constructor(
     }
 
     private fun init(attrs: AttributeSet?) {
-        val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.HeaderView, 0, 0)
+        val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.ToolbarView, 0, 0)
 
-        tvTitle.text = ta.getText(R.styleable.HeaderView_hv_title_text)
-        tvTitle.textSize = ta.getDimension(R.styleable.HeaderView_hv_title_text_size, 12f)
+        tvTitle.text = ta.getText(R.styleable.ToolbarView_tbv_title_text)
+        tvTitle.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_title_text_size, 12f)
 
-        tvLeftText.text = ta.getText(R.styleable.HeaderView_hv_lefttext_text)
-        tvLeftText.textSize = ta.getDimension(R.styleable.HeaderView_hv_lefttext_text_size, 12f)
+        tvLeftText.text = ta.getText(R.styleable.ToolbarView_tbv_lefttext_text)
+        tvLeftText.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_lefttext_text_size, 12f)
 
         ta.recycle()
     }
 
-    interface IHeaderViewListener {
+    interface IListener {
         fun onCloseClick() {}
         fun onLeftTextClick() {}
     }

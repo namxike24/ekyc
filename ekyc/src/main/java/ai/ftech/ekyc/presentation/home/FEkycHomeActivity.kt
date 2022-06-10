@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class FEkycHomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
-    private lateinit var hvToolbar: ToolbarView
+    private lateinit var tbvHeader: ToolbarView
     private lateinit var rvListStep: RecyclerView
     private lateinit var llHomeSSN: LinearLayout
     private lateinit var llHomeDriverLicense: LinearLayout
@@ -20,14 +20,14 @@ class FEkycHomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
     override fun onInitView() {
         super.onInitView()
-        hvToolbar = findViewById(R.id.hvHomeToolbar)
+        tbvHeader = findViewById(R.id.tbvHomeHeader)
         rvListStep = findViewById(R.id.rvHomeListStep)
 
 
         rvListStep.layoutManager = LinearLayoutManager(this)
         rvListStep.adapter = adapter
 
-        hvToolbar.setListener(object : ToolbarView.IHeaderViewListener {
+        tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onCloseClick() {
                 finish()
             }
