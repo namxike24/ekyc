@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
 
-    private var dataList: List<StepDisplay>? = null
+    private var dataList: List<String>? = null
 
     init {
         dataList = listOf(
-            StepDisplay(getAppString(R.string.fekyc_home_step_1), isFirstItem = true),
-            StepDisplay(getAppString(R.string.fekyc_home_step_2)),
-            StepDisplay(getAppString(R.string.fekyc_home_step_3)),
-            StepDisplay(getAppString(R.string.fekyc_home_step_4), isLastItem = true),
+            getAppString(R.string.fekyc_home_step_1),
+            getAppString(R.string.fekyc_home_step_2),
+            getAppString(R.string.fekyc_home_step_3),
+            getAppString(R.string.fekyc_home_step_4),
         )
     }
 
@@ -42,6 +42,8 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
         private var tvTitle: TextView
         private var vTop: View
         private var vBottom: View
+        private val FIRST_POSITION = 0
+        private val LAST_POSITION = 3
 
         init {
             tvTitle = itemView.findViewById(R.id.tvStepIdentityItmText)
@@ -49,24 +51,20 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
             vBottom = itemView.findViewById(R.id.vStepIdentityItmBottom)
         }
 
-        fun onBind(step: StepDisplay) {
-            if (step.isFirstItem) {
+        fun onBind(step: String) {
+            if (adapterPosition == FIRST_POSITION) {
                 vTop.hide()
             } else {
                 vTop.show()
             }
-            if (step.isLastItem) {
+
+            if (adapterPosition == LAST_POSITION) {
                 vBottom.hide()
             } else {
                 vBottom.show()
             }
-            tvTitle.text = step.content
+
+            tvTitle.text = step
         }
     }
-
-    class StepDisplay(
-        val content: String,
-        val isFirstItem: Boolean = false,
-        val isLastItem: Boolean = false
-    )
 }
