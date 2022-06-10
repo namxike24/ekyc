@@ -196,7 +196,7 @@ ext {
     /**
      * cameraview
      */
-    def cameraViewNatario1Version = "2.7.1"
+    def cameraViewNatario1Version = "2.7.2"
     cameraViewNatario1Dependencies = [
             "cameraview": "com.otaliastudios:cameraview:$cameraViewNatario1Version"
     ]

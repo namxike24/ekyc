@@ -4,16 +4,17 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.presentation.takepicture.TakePictureActivity
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class FEkycHomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
+class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private lateinit var tbvHeader: ToolbarView
     private lateinit var rvListStep: RecyclerView
-    private lateinit var llHomeSSN: LinearLayout
-    private lateinit var llHomeDriverLicense: LinearLayout
-    private lateinit var llHomePassport: LinearLayout
+    private lateinit var llSSN: LinearLayout
+    private lateinit var llDriverLicense: LinearLayout
+    private lateinit var llPassport: LinearLayout
     private val adapter by lazy {
         StepIdentityAdapter()
     }
@@ -22,6 +23,9 @@ class FEkycHomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvHomeHeader)
         rvListStep = findViewById(R.id.rvHomeListStep)
+        llSSN = findViewById(R.id.llHomeSSN)
+        llDriverLicense = findViewById(R.id.llHomeDriverLicense)
+        llPassport = findViewById(R.id.llHomePassport)
 
 
         rvListStep.layoutManager = LinearLayoutManager(this)
@@ -37,15 +41,15 @@ class FEkycHomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
             }
         })
 
-        llHomeSSN.setOnSafeClick {
+        llSSN.setOnSafeClick {
+            navigateTo(TakePictureActivity::class.java)
+        }
+
+        llDriverLicense.setOnSafeClick {
 
         }
 
-        llHomeDriverLicense.setOnSafeClick {
-
-        }
-
-        llHomePassport.setOnSafeClick {
+        llPassport.setOnSafeClick {
 
         }
     }

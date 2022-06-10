@@ -5,7 +5,12 @@
     <application android:requestLegacyExternalStorage="true">
         <activity
             android:theme="@style/FBaseTheme"
-            android:name=".presentation.home.FEkycHomeActivity"
+            android:name=".presentation.home.HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:theme="@style/FBaseTheme"
+            android:name=".presentation.takepicture.TakePictureActivity"
             android:exported="false" />
     </application>
 </manifest>

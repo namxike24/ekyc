@@ -105,6 +105,7 @@ dependencies {
     //endregion
 
     //region camera view
-    implementation rootProject.ext.cameraViewNatario1Dependencies.cameraview
+//    api rootProject.ext.cameraViewNatario1Dependencies.cameraview
+    api 'com.otaliastudios:cameraview:2.6.1'
     //endregion
 }
