@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivHeaderClose"
+            android:id="@+id/ivToolbarClose"
             android:layout_width="@dimen/fbase_dimen_56"
             android:layout_height="@dimen/fbase_dimen_56"
             android:layout_marginStart="@dimen/fbase_dimen_10"
@@ -21,7 +21,7 @@
             android:src="@drawable/fekyc_ic_close" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvHeaderTitle"
+            android:id="@+id/tvToolbarTitle"
             style="@style/FBaseStyleRegular"
             android:layout_width="wrap_content"
             android:layout_centerInParent="true"
@@ -32,9 +32,10 @@
             tools:text="Chọn loại giấy tờ Chọn loại giấy tờ Chọn loại giấy tờ" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvHeaderLeftText"
+            android:id="@+id/tvToolbarLeftText"
             style="@style/FBaseStyleRegular"
             android:layout_alignParentEnd="true"
+            android:background="?selectableItemBackground"
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:gravity="center"

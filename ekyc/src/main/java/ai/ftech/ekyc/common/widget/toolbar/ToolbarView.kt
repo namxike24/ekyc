@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.common.widget.header
+package ai.ftech.ekyc.common.widget.toolbar
 
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 
-class HeaderView @JvmOverloads constructor(
+class ToolbarView @JvmOverloads constructor(
     ctx: Context,
     attrs: AttributeSet? = null
 ) : RelativeLayout(ctx, attrs) {
@@ -20,7 +20,7 @@ class HeaderView @JvmOverloads constructor(
     private var listener: IHeaderViewListener? = null
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.fekyc_header_layout, this, true)
+        LayoutInflater.from(context).inflate(R.layout.fekyc_toolbar_layout, this, true)
         initView()
         init(attrs)
     }
@@ -46,9 +46,9 @@ class HeaderView @JvmOverloads constructor(
     }
 
     private fun initView() {
-        ivClose = findViewById(R.id.ivHeaderClose)
-        tvTitle = findViewById(R.id.tvHeaderTitle)
-        tvLeftText = findViewById(R.id.tvHeaderLeftText)
+        ivClose = findViewById(R.id.ivToolbarClose)
+        tvTitle = findViewById(R.id.tvToolbarTitle)
+        tvLeftText = findViewById(R.id.tvToolbarLeftText)
 
         ivClose.setOnSafeClick {
             listener?.onCloseClick()

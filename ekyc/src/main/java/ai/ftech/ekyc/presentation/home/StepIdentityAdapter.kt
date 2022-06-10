@@ -1,6 +1,8 @@
 package ai.ftech.ekyc.presentation.home
 
 import ai.ftech.dev.base.extension.getAppString
+import ai.ftech.dev.base.extension.hide
+import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
 
-    private var dataList: List<String>? = null
+    private var dataList: List<StepDisplay>? = null
 
     init {
         dataList = listOf(
-            getAppString(R.string.fekyc_home_step_1),
-            getAppString(R.string.fekyc_home_step_2),
-            getAppString(R.string.fekyc_home_step_3),
-            getAppString(R.string.fekyc_home_step_4)
+            StepDisplay(getAppString(R.string.fekyc_home_step_1), isFirstItem = true),
+            StepDisplay(getAppString(R.string.fekyc_home_step_2)),
+            StepDisplay(getAppString(R.string.fekyc_home_step_3)),
+            StepDisplay(getAppString(R.string.fekyc_home_step_4), isLastItem = true),
         )
     }
 
@@ -28,7 +30,9 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
 
     override fun onBindViewHolder(holder: StepVH, position: Int) {
         val step = dataList?.get(position)
-        holder.onBind(step.toString())
+        if (step != null) {
+            holder.onBind(step)
+        }
     }
 
     override fun getItemCount(): Int = dataList?.size ?: 0
@@ -36,14 +40,33 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
     inner class StepVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private var tvTitle: TextView
+        private var vTop: View
+        private var vBottom: View
 
         init {
             tvTitle = itemView.findViewById(R.id.tvStepIdentityItmText)
+            vTop = itemView.findViewById(R.id.vStepIdentityItmTop)
+            vBottom = itemView.findViewById(R.id.vStepIdentityItmBottom)
         }
 
-        fun onBind(step: String) {
-            tvTitle.text = step
+        fun onBind(step: StepDisplay) {
+            if (step.isFirstItem) {
+                vTop.hide()
+            } else {
+                vTop.show()
+            }
+            if (step.isLastItem) {
+                vBottom.hide()
+            } else {
+                vBottom.show()
+            }
+            tvTitle.text = step.content
         }
-
     }
+
+    class StepDisplay(
+        val content: String,
+        val isFirstItem: Boolean = false,
+        val isLastItem: Boolean = false
+    )
 }

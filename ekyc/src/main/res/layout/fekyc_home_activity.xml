@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
-    <ai.ftech.ekyc.common.widget.header.HeaderView
+    <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/hvHomeToolbar"
         android:layout_width="match_parent"
         app:hv_lefttext_text="@string/fekyc_home_lefttitle"
@@ -32,11 +32,119 @@
         android:id="@+id/rvHomeListStep"
         android:background="@drawable/fekyc_bg_choose_identity"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="wrap_content"
         tools:itemCount="4"
         tools:listitem="@layout/ftech_step_identity_item"
         android:layout_marginHorizontal="@dimen/fbase_dimen_16"
         android:layout_marginTop="@dimen/fbase_dimen_16"
         app:layout_constraintTop_toBottomOf="@id/tvHomeStepTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHomeSelectTypeOfPapersTitle"
+        style="@style/FBaseStyleSemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fbase_dimen_24"
+        android:text="@string/fekyc_home_select_type_of_papers_title"
+        android:textColor="@color/fekyc_color_black"
+        app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
+        app:layout_constraintTop_toBottomOf="@id/rvHomeListStep" />
+
+    <LinearLayout
+        android:id="@+id/llHomeSSN"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_80"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_16"
+        android:background="@drawable/fekyc_bg_ssn"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeSelectTypeOfPapersTitle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/FBaseStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/fbase_dimen_16"
+            android:layout_marginEnd="@dimen/fbase_dimen_4"
+            android:layout_weight="9"
+            android:maxLines="1"
+            android:text="@string/fekyc_home_select_type_of_papers_ssn"
+            android:textSize="@dimen/fbase_text_size_14" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/fbase_dimen_80"
+            android:layout_height="@dimen/fbase_dimen_80"
+            android:layout_weight="1"
+            android:padding="@dimen/fbase_dimen_20"
+            android:src="@drawable/fekyc_ic_ssn" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHomeDriverLicense"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_80"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_16"
+        android:background="@drawable/fekyc_bg_driver_license"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
+        app:layout_constraintTop_toBottomOf="@id/llHomeSSN">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/FBaseStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/fbase_dimen_16"
+            android:layout_marginEnd="@dimen/fbase_dimen_4"
+            android:layout_weight="9"
+            android:maxLines="1"
+            android:text="@string/fekyc_home_select_type_of_papers_driver_license"
+            android:textSize="@dimen/fbase_text_size_14" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/fbase_dimen_80"
+            android:layout_height="@dimen/fbase_dimen_80"
+            android:layout_weight="1"
+            android:padding="@dimen/fbase_dimen_20"
+            android:src="@drawable/fekyc_ic_driver_license" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHomePassport"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_80"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_16"
+        android:background="@drawable/fekyc_bg_passport"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
+        app:layout_constraintTop_toBottomOf="@id/llHomeDriverLicense">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/FBaseStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/fbase_dimen_16"
+            android:layout_marginEnd="@dimen/fbase_dimen_4"
+            android:layout_weight="9"
+            android:maxLines="1"
+            android:text="@string/fekyc_home_select_type_of_papers_passport"
+            android:textSize="@dimen/fbase_text_size_14" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/fbase_dimen_80"
+            android:layout_height="@dimen/fbase_dimen_80"
+            android:layout_weight="1"
+            android:padding="@dimen/fbase_dimen_20"
+            android:src="@drawable/fekyc_ic_passport" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
