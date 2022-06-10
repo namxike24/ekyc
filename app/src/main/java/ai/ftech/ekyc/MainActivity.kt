@@ -1,11 +1,18 @@
 package ai.ftech.ekyc
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import ai.ftech.dev.base.common.BaseActivity
+import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.ekyc.presentation.home.FEkycHomeActivity
+import android.widget.TextView
+import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity(R.layout.activity_main) {
+
+    override fun onInitView() {
+        super.onInitView()
+        findViewById<TextView>(R.id.tvTitle).setOnSafeClick {
+            navigateTo(FEkycHomeActivity::class.java)
+        }
+        navigateTo(FEkycHomeActivity::class.java)
     }
 }

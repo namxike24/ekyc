@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fbase_dimen_40">
+
+    <View
+        android:id="@+id/vStepIdentityItmTop"
+        android:layout_width="@dimen/fbase_dimen_1"
+        android:layout_height="0dp"
+        android:background="@color/fekyc_color_tropical_blue"
+        app:layout_constraintBottom_toTopOf="@id/vStepCircle"
+        app:layout_constraintEnd_toEndOf="@id/vStepCircle"
+        app:layout_constraintStart_toStartOf="@id/vStepCircle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/vStepCircle"
+        android:layout_width="@dimen/fbase_dimen_10"
+        android:layout_height="@dimen/fbase_dimen_10"
+        android:layout_marginStart="@dimen/fbase_dimen_20"
+        android:background="@drawable/fekyc_shape_cir_tropical_blue"
+        app:layout_constraintBottom_toBottomOf="@id/tvStepIdentityItmText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvStepIdentityItmText" />
+
+    <View
+        android:id="@+id/vStepIdentityItmBottom"
+        android:layout_width="@dimen/fbase_dimen_1"
+        android:layout_height="0dp"
+        android:background="@color/fekyc_color_tropical_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/vStepCircle"
+        app:layout_constraintStart_toStartOf="@id/vStepCircle"
+        app:layout_constraintTop_toBottomOf="@id/vStepCircle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStepIdentityItmText"
+        style="@style/FBaseStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/fbase_dimen_20"
+        android:maxLines="1"
+        android:textColor="@color/fekyc_color_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vStepIdentityItmBottom"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Kiểm tra lại thông tin cá nhân" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

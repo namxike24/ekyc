@@ -12,26 +12,18 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.InflateException
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.*
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
-
-abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutId: Int) : AppCompatActivity(), BaseView {
-
-    interface PermissionListener {
-        fun onAllow()
-        fun onDenied()
-        fun onNeverAskAgain()
-    }
-
+abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatActivity(), BaseView {
     companion object {
         const val FRAGMENT_NAME = "FRAGMENT_NAME"
         const val FRAGMENT_BUNDLE = "FRAGMENT_BUNDLE"
@@ -40,9 +32,6 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
     var isFullScreen = false
         private set
     protected val TAG = this::class.java.simpleName
-    protected val binding
-        get() = _binding!!
-    private var _binding: DB? = null
     private var permissionListener: PermissionListener? = null
     private val launcher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { map ->
@@ -82,8 +71,7 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
                     return
                 }
             }
-            _binding = DataBindingUtil.setContentView(this, layoutId)
-            binding.lifecycleOwner = this
+            attachView()
             onInitBinding()
             onInitView()
             onObserverViewModel()
@@ -121,25 +109,9 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
         super.onStop()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onInitView() {
         setupStatusBar().let {
             setStatusColor(it.color, it.isDarkText)
-        }
-
-        //Tự tính toán lại khoảng cách view root khi set full màn
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v: View, windowInsets: WindowInsetsCompat ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val mlp = v.layoutParams as ViewGroup.MarginLayoutParams
-            mlp.leftMargin = insets.left
-            mlp.bottomMargin = insets.bottom
-            mlp.rightMargin = insets.right
-            v.layoutParams = mlp
-            WindowInsetsCompat.CONSUMED
         }
     }
     //endregion
@@ -154,15 +126,19 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
 
     open fun setupStatusBar(): StatusBar = StatusBar()
 
+    open fun attachView() {
+        setContentView(layoutId)
+    }
+
     //region navigate screen
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, onCallback: (Intent) -> Unit = {}) {
+    fun navigateTo(clazz: Class<out BaseActivity>, onCallback: (Intent) -> Unit = {}) {
         val intent = Intent(this, clazz)
         onCallback.invoke(intent)
         startActivity(intent)
     }
 
     fun navigateTo(
-        clazz: Class<out BaseActivity<*>>,
+        clazz: Class<out BaseActivity>,
         bundle: Bundle,
         onCallback: (Intent) -> Unit = {}
     ) {
@@ -173,8 +149,8 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun navigateTo(
-        clazz: Class<out BaseActivity<*>>,
-        fragmentClazz: Class<out BaseFragment<*>>,
+        clazz: Class<out BaseActivity>,
+        fragmentClazz: Class<out BaseFragment>,
         onCallback: (Intent) -> Unit = {}
     ) {
         val intent = Intent(this, clazz)
@@ -184,8 +160,8 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun navigateTo(
-        clazz: Class<out BaseActivity<*>>,
-        fragmentClazz: Class<out BaseFragment<*>>,
+        clazz: Class<out BaseActivity>,
+        fragmentClazz: Class<out BaseFragment>,
         bundle: Bundle,
         onCallback: (Intent) -> Unit = {}
     ) {
@@ -201,7 +177,7 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun replaceFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
@@ -217,7 +193,7 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun addFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
@@ -288,16 +264,6 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
         window?.apply {
             WindowCompat.setDecorFitsSystemWindows(this, false)
             isFullScreen = true
-        }
-    }
-
-    fun setNormalScreen() {
-        window?.apply {
-            WindowCompat.setDecorFitsSystemWindows(this, true)
-            isFullScreen = false
-            //reset view
-            (binding.root.layoutParams as MarginLayoutParams).setMargins(0, 0, 0, 0)
-            binding.root.requestLayout()
         }
     }
     //endregion
@@ -424,4 +390,10 @@ abstract class BaseActivity<DB : ViewDataBinding>(@LayoutRes private val layoutI
         }
     }
     //endregion
+
+    interface PermissionListener {
+        fun onAllow()
+        fun onDenied()
+        fun onNeverAskAgain()
+    }
 }

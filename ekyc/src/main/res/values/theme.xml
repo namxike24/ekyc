@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- font overide -->
+    <style name="FBaseStyleText">
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textColorHint">@color/fbase_color_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FBaseStyleBold" parent="FBaseStyleText">
+        <item name="android:fontFamily">@font/fbase_font_bold</item>
+        <item name="fontFamily">@font/fbase_font_bold</item>
+    </style>
+
+    <style name="FBaseStyleSemiBold" parent="FBaseStyleText">
+        <item name="android:fontFamily">@font/fbase_font_semibold</item>
+        <item name="fontFamily">@font/fbase_font_semibold</item>
+    </style>
+
+    <style name="FBaseStyleMedium" parent="FBaseStyleText">
+        <item name="android:fontFamily">@font/fbase_font_medium</item>
+        <item name="fontFamily">@font/fbase_font_medium</item>
+    </style>
+
+    <style name="FBaseStyleRegular" parent="FBaseStyleText">
+        <item name="android:fontFamily">@font/fbase_font_regular</item>
+        <item name="fontFamily">@font/fbase_font_regular</item>
+    </style>
+</resources>

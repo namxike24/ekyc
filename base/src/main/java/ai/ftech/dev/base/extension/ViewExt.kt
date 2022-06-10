@@ -18,7 +18,7 @@ import androidx.lifecycle.*
 import com.google.android.material.animation.AnimatorSetCompat
 
 @MainThread
-inline fun <reified VM : ViewModel> BaseFragment<*>.shareParentFragmentViewModels(
+inline fun <reified VM : ViewModel> BaseFragment.shareParentFragmentViewModels(
     noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ) {
     createViewModelLazy(VM::class, {
@@ -28,15 +28,15 @@ inline fun <reified VM : ViewModel> BaseFragment<*>.shareParentFragmentViewModel
     })
 }
 
-fun <T> BaseActivity<*>.observer(liveData: LiveData<T>, onChange: (T?) -> Unit) {
+fun <T> BaseActivity.observer(liveData: LiveData<T>, onChange: (T?) -> Unit) {
     liveData.observe(this, Observer(onChange))
 }
 
-fun <T> BaseFragment<*>.observer(liveData: LiveData<T>, onChange: (T?) -> Unit) {
+fun <T> BaseFragment.observer(liveData: LiveData<T>, onChange: (T?) -> Unit) {
     liveData.observe(viewLifecycleOwner, Observer(onChange))
 }
 
-fun BaseActivity<*>.runIfNotDestroyed(task: () -> Any?) {
+fun BaseActivity.runIfNotDestroyed(task: () -> Any?) {
     if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             !isDestroyed
         } else {
@@ -47,7 +47,7 @@ fun BaseActivity<*>.runIfNotDestroyed(task: () -> Any?) {
     }
 }
 
-fun BaseFragment<*>.runIfNotDestroyed(task: () -> Any?) {
+fun BaseFragment.runIfNotDestroyed(task: () -> Any?) {
     if (this.lifecycle.currentState != Lifecycle.State.DESTROYED) {
         task()
     }
@@ -56,10 +56,10 @@ fun BaseFragment<*>.runIfNotDestroyed(task: () -> Any?) {
 fun Any.runOnMainThread(task: () -> Any?, delayMs: Long = 0L) {
     Handler(Looper.getMainLooper()).postDelayed({
         when (this) {
-            is BaseActivity<*> -> {
+            is BaseActivity -> {
                 runIfNotDestroyed { task() }
             }
-            is BaseFragment<*> -> {
+            is BaseFragment -> {
                 runIfNotDestroyed { task() }
             }
             else -> {

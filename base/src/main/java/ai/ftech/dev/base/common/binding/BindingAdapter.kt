@@ -1,11 +1,10 @@
-package ai.ftech.dev.base.common.bindingadapter
+package ai.ftech.dev.base.common.binding
 
 import ai.ftech.dev.base.extension.*
 import android.os.Build
 import android.text.Html
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 

@@ -8,18 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutId: Int) : Fragment(), BaseView {
+abstract class BaseFragment(@LayoutRes protected val layoutId: Int) : Fragment(), BaseView {
     protected val TAG = this::class.java.simpleName
-    protected val binding get() = _binding!!
-    private var _binding: DB? = null
     private val baseActivity by lazy {
-        requireActivity() as BaseActivity<*>
+        requireActivity() as BaseActivity
     }
-    private lateinit var myInflater: LayoutInflater
+    protected lateinit var myInflater: LayoutInflater
     private lateinit var callback: OnBackPressedCallback
 
     init {
@@ -39,11 +35,9 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
         if (!::myInflater.isInitialized) {
             myInflater = LayoutInflater.from(requireActivity())
         }
-        _binding =
-            DataBindingUtil.inflate(myInflater, layoutId, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        val view = attachView(inflater, container, savedInstanceState)
         onInitBinding()
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(
@@ -99,6 +93,10 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
         return baseActivity.setupStatusBar()
     }
 
+    open fun attachView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(layoutId, container, false)
+    }
+
     open fun isSoftInputAdjustResize(): Boolean {
         return baseActivity.isSoftInputAdjustResize()
     }
@@ -108,19 +106,19 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     //region navigate screen
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, onCallback: (Intent) -> Unit = {}) {
+    fun navigateTo(clazz: Class<out BaseActivity>, onCallback: (Intent) -> Unit = {}) {
         baseActivity.navigateTo(clazz, onCallback)
     }
 
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, bundle: Bundle, onCallback: (Intent) -> Unit = {}) {
+    fun navigateTo(clazz: Class<out BaseActivity>, bundle: Bundle, onCallback: (Intent) -> Unit = {}) {
         baseActivity.navigateTo(clazz, bundle, onCallback)
     }
 
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, fragmentClass: Class<out BaseFragment<*>>, onCallback: (Intent) -> Unit = {}) {
+    fun navigateTo(clazz: Class<out BaseActivity>, fragmentClass: Class<out BaseFragment>, onCallback: (Intent) -> Unit = {}) {
         baseActivity.navigateTo(clazz, fragmentClass, onCallback)
     }
 
-    fun navigateTo(clazz: Class<out BaseActivity<*>>, fragmentClass: Class<out BaseFragment<*>>,  bundle: Bundle, onCallback: (Intent) -> Unit = {}) {
+    fun navigateTo(clazz: Class<out BaseActivity>, fragmentClass: Class<out BaseFragment>, bundle: Bundle, onCallback: (Intent) -> Unit = {}) {
         baseActivity.navigateTo(clazz, fragmentClass, bundle, onCallback)
     }
 
@@ -129,7 +127,7 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun replaceFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
@@ -138,7 +136,7 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun addFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
@@ -163,7 +161,7 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun replaceFragmentInsideFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
@@ -179,7 +177,7 @@ abstract class BaseFragment<DB : ViewDataBinding>(@LayoutRes private val layoutI
     }
 
     fun addFragmentInsideFragment(
-        fragment: BaseFragment<*>,
+        fragment: BaseFragment,
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         fragmentAnim: FragmentAnim = FragmentAnim()
