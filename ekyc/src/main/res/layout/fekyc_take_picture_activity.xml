@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    tools:background="#707070">
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+        android:id="@+id/tbvTakePictureHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_88"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tbv_right_text_content="@string/fekyc_home_lefttitle"
+        app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
+        app:tbv_right_type="icon"
+        app:tbv_title_text="@string/fekyc_take_picture_take_front"
+        app:tbv_title_text_size="@dimen/fbase_text_size_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTakePictureFlash"
+        android:layout_width="@dimen/fbase_dimen_56"
+        android:layout_height="@dimen/fbase_dimen_56"
+        android:layout_marginEnd="@dimen/fbase_dimen_40"
+        android:src="@drawable/fekyc_ic_flash_off"
+        app:layout_constraintBottom_toBottomOf="@id/ivTakePictureCapture"
+        app:layout_constraintEnd_toStartOf="@id/ivTakePictureCapture"
+        app:layout_constraintTop_toTopOf="@id/ivTakePictureCapture" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTakePictureCapture"
+        android:layout_width="@dimen/fbase_dimen_72"
+        android:layout_height="@dimen/fbase_dimen_72"
+        android:layout_marginBottom="@dimen/fbase_dimen_26"
+        android:src="@drawable/fekyc_ic_capture_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTakePictureChangeCamera"
+        android:layout_width="@dimen/fbase_dimen_56"
+        android:layout_height="@dimen/fbase_dimen_56"
+        android:layout_marginStart="@dimen/fbase_dimen_40"
+        android:src="@drawable/fekyc_ic_change_camera"
+        app:layout_constraintBottom_toBottomOf="@id/ivTakePictureCapture"
+        app:layout_constraintStart_toEndOf="@id/ivTakePictureCapture"
+        app:layout_constraintTop_toTopOf="@id/ivTakePictureCapture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

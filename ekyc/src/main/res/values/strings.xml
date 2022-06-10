@@ -23,7 +23,22 @@
 
 
 
+
     <!--endregion-->
+
+
+
+    <!--region Take Picture Activity-->
+    <string name="fekyc_take_picture_take_front">Chụp mặt trước</string>
+    <string name="fekyc_take_picture_take_back">Chụp mặt sau</string>
+
+    <string name="fekyc_take_picture_image_front">Ảnh mặt trước</string>
+    <string name="fekyc_take_picture_image_back">Ảnh mặt sau</string>
+
+    <string name="fekyc_take_picture_image_portrait">Ảnh chân dung</string>
+
+    <!--endregion-->
+
 
 
 

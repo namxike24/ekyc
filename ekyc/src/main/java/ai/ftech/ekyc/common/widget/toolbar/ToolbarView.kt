@@ -65,11 +65,11 @@ class ToolbarView @JvmOverloads constructor(
         }
 
         tvRightText.setOnSafeClick {
-            listener?.onLeftTextClick()
+            listener?.onRightTextClick()
         }
 
         ivRightIcon.setOnSafeClick {
-            listener?.onLeftIconClick()
+            listener?.onRightIconClick()
         }
     }
 
@@ -103,7 +103,7 @@ class ToolbarView @JvmOverloads constructor(
 
     interface IListener {
         fun onCloseClick() {}
-        fun onLeftTextClick() {}
-        fun onLeftIconClick() {}
+        fun onRightTextClick() {}
+        fun onRightIconClick() {}
     }
 }

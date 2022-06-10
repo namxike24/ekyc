@@ -42,7 +42,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
                 finish()
             }
 
-            override fun onLeftTextClick() {
+            override fun onRightTextClick() {
 
             }
         })
