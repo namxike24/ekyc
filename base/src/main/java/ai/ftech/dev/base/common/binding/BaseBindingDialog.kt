@@ -1,6 +1,6 @@
 package ai.ftech.dev.base.common.binding
 
-import ai.ftech.dev.base.common.BaseFragment
+import ai.ftech.dev.base.common.BaseDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseBindingFragment<DB : ViewDataBinding>(layoutId: Int) : BaseFragment(layoutId) {
+abstract class BaseBindingDialog<DB : ViewDataBinding>(layoutId: Int) : BaseDialog(layoutId) {
     protected val binding get() = _binding!!
     private var _binding: DB? = null
 
@@ -17,5 +17,4 @@ abstract class BaseBindingFragment<DB : ViewDataBinding>(layoutId: Int) : BaseFr
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
-
 }

@@ -18,15 +18,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tbv_right_text_content="@string/fekyc_home_lefttitle"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
-        app:tbv_right_type="icon"
+        app:tbv_right_type="ICON"
         app:tbv_title_text="@string/fekyc_take_picture_take_front"
         app:tbv_title_text_size="@dimen/fbase_text_size_6" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTakePictureFlash"
-        android:layout_width="@dimen/fbase_dimen_56"
-        android:layout_height="@dimen/fbase_dimen_56"
-        android:layout_marginEnd="@dimen/fbase_dimen_40"
+        android:layout_width="@dimen/fbase_dimen_60"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginEnd="@dimen/fbase_dimen_44"
         android:src="@drawable/fekyc_ic_flash_off"
         app:layout_constraintBottom_toBottomOf="@id/ivTakePictureCapture"
         app:layout_constraintEnd_toStartOf="@id/ivTakePictureCapture"
@@ -34,9 +34,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTakePictureCapture"
-        android:layout_width="@dimen/fbase_dimen_72"
-        android:layout_height="@dimen/fbase_dimen_72"
-        android:layout_marginBottom="@dimen/fbase_dimen_26"
+        android:layout_width="@dimen/fbase_dimen_80"
+        android:layout_height="@dimen/fbase_dimen_80"
+        android:layout_marginBottom="@dimen/fbase_dimen_40"
         android:src="@drawable/fekyc_ic_capture_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,9 +44,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTakePictureChangeCamera"
-        android:layout_width="@dimen/fbase_dimen_56"
-        android:layout_height="@dimen/fbase_dimen_56"
-        android:layout_marginStart="@dimen/fbase_dimen_40"
+        android:layout_width="@dimen/fbase_dimen_60"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginStart="@dimen/fbase_dimen_44"
         android:src="@drawable/fekyc_ic_change_camera"
         app:layout_constraintBottom_toBottomOf="@id/ivTakePictureCapture"
         app:layout_constraintStart_toEndOf="@id/ivTakePictureCapture"
