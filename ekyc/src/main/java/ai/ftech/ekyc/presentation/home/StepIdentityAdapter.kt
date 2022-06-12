@@ -24,7 +24,7 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StepVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.ftech_step_identity_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fekyc_step_identity_item, parent, false)
         return StepVH(view)
     }
 
