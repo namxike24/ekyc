@@ -16,5 +16,7 @@
     <color name="fekyc_color_warning">#FFB32E</color>
 
     <color name="fekyc_color_text_primary">@color/fekyc_color_white</color>
+    <color name="fekyc_color_text_black">@color/fekyc_color_black</color>
+    <color name="fekyc_color_text_blue">@color/fekyc_color_primary</color>
 
 </resources>

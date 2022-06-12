@@ -35,6 +35,8 @@
                 android:id="@+id/rvWarningCaptureDlgWarningList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:itemCount="3"
+                tools:listitem="@layout/fekyc_warning_papers_item"
                 android:layout_above="@id/btnWarningCaptureDlgConfirm"
                 android:layout_below="@id/tvWarningCaptureDlgTitle"
                 android:layout_marginVertical="@dimen/fbase_dimen_24" />

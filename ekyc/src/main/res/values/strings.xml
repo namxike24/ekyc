@@ -37,6 +37,21 @@
 
     <string name="fekyc_take_picture_image_portrait">Ảnh chân dung</string>
 
+
+
+    <!--endregion-->
+
+
+    <!--region Warning Dialog-->
+    <string name="fekyc_warning_papers_title">Lưu ý khi chụp giấy tờ tùy thân</string>
+    <string name="fekyc_warning_papers_1">Giấy tờ còn hạn sử dụng, là giấy tờ gốc, không phải scan hoặc photocopy</string>
+    <string name="fekyc_warning_papers_2">Không để ánh sáng lóa giấy tờ khi chụp ảnh</string>
+    <string name="fekyc_warning_papers_3">Không chụp giấy tờ mất góc, bị nhòe</string>
+
+    <string name="fekyc_warning_portrait_title">Giữ điện thoại ngang tầm mắt ở khoảng cách 30–40cm, sau đó thực hiện chụp hình</string>
+    <string name="fekyc_warning_portrait_1">Môi trường đủ sáng</string>
+    <string name="fekyc_warning_portrait_2">Không đeo kính</string>
+    <string name="fekyc_warning_portrait_3">Không đeo khẩu trang</string>
     <!--endregion-->
 
 
