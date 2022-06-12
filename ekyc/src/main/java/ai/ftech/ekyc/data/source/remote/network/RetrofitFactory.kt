@@ -10,7 +10,7 @@ object RetrofitFactory {
 
     private val builderMap = ConcurrentHashMap<String, RetrofitBuilderInfo>()
 
-    fun <T> createFBangService(service: Class<T>): T? {
+    fun <T> createFEkycService(service: Class<T>): T? {
         synchronized(RetrofitBuilderInfo::class.java) {
             var builderInfo = builderMap[FEKYC]
             if (builderInfo == null) {
