@@ -11,9 +11,9 @@ class BottomSheetPicker {
 
     fun getTextColor(): Int {
         return if (isSelected) {
-            R.color.color_text_selected
+            R.color.fekyc_color_text_selected
         } else {
-            R.color.color_text_primary
+            R.color.fekyc_color_text_black
         }
     }
 

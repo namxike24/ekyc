@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ai.ftech.ekyc.common.widget.leftcardview.LeafCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ekyc_dimen_height_bottom_dialog"
+        android:background="@color/fekyc_color_white"
+        app:cardElevation="@dimen/fbase_dimen_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lcv_corner_top_left="@dimen/fbase_corner_18"
+        app:lcv_corner_top_right="@dimen/fbase_corner_18">
+
+    </ai.ftech.ekyc.common.widget.leftcardview.LeafCardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

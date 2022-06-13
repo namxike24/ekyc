@@ -20,8 +20,9 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         StepIdentityAdapter()
     }
     private val permissionList = arrayOf(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.RECORD_AUDIO
     )
 
     override fun onInitView() {
@@ -41,7 +42,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
                 finish()
             }
 
-            override fun onLeftTextClick() {
+            override fun onRightTextClick() {
 
             }
         })

@@ -4,6 +4,7 @@ import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
 import ai.ftech.dev.base.extension.getAppDimensionPixel
 import ai.ftech.dev.base.extension.show
+import ai.ftech.ekyc.R
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import androidx.fragment.app.FragmentManager
 
@@ -14,7 +15,7 @@ class BottomSheetPickerDialog private constructor(
     var hint: String? = null,
     var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT,
     var visibleItem: Int? = null
-) : BaseDialog<BottomSheetPickerDialogBinding>(R.layout.bottom_sheet_picker_dialog) {
+) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
 
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f

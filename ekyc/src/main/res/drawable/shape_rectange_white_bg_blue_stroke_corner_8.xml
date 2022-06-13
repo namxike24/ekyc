@@ -4,5 +4,5 @@
     <corners android:radius="@dimen/fbase_corner_8" />
     <stroke
         android:width="@dimen/fbase_dimen_1"
-        android:color="@color/color_stroke_blue" />
+        android:color="@color/fekyc_color_stroke_blue" />
 </shape>

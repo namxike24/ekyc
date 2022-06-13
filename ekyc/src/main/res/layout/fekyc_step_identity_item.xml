@@ -20,7 +20,7 @@
         android:layout_width="@dimen/fbase_dimen_10"
         android:layout_height="@dimen/fbase_dimen_10"
         android:layout_marginStart="@dimen/fbase_dimen_20"
-        android:background="@drawable/fekyc_shape_cir_tropical_blue"
+        android:background="@drawable/fekyc_shape_cir_bg_tropical_blue"
         app:layout_constraintBottom_toBottomOf="@id/tvStepIdentityItmText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvStepIdentityItmText" />

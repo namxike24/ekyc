@@ -8,9 +8,10 @@
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvHomeHeader"
         android:layout_width="match_parent"
-        app:tbv_lefttext_text="@string/fekyc_home_lefttitle"
-        app:tbv_lefttext_text_size="@dimen/fbase_text_size_4"
         android:layout_height="@dimen/fbase_dimen_88"
+        app:tbv_right_type="TEXT"
+        app:tbv_right_text_content="@string/fekyc_home_lefttitle"
+        app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
         app:tbv_title_text="@string/fekyc_home_title"
         app:tbv_title_text_size="@dimen/fbase_text_size_6"
         android:background="@drawable/fekyc_bg_header"
@@ -35,7 +36,7 @@
         android:overScrollMode="never"
         android:layout_height="wrap_content"
         tools:itemCount="4"
-        tools:listitem="@layout/ftech_step_identity_item"
+        tools:listitem="@layout/fekyc_step_identity_item"
         android:layout_marginHorizontal="@dimen/fbase_dimen_16"
         android:layout_marginTop="@dimen/fbase_dimen_16"
         app:layout_constraintTop_toBottomOf="@id/tvHomeStepTitle" />
