@@ -2,20 +2,24 @@ package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 
 import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.getAppDimensionPixel
-import ai.ftech.dev.base.extension.show
+import ai.ftech.dev.base.extension.getScreenHeight
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
+import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 
 class BottomSheetPickerDialog private constructor(
     var lstPickers: List<BottomSheetPicker> = listOf(),
     var chooseItemListener: ((BottomSheetPicker) -> Unit)? = null,
     var title: String? = null,
-    var hint: String? = null,
     var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT,
     var visibleItem: Int? = null
 ) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
+
+    lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
+    lateinit var cvBottomSheetPickerDlg: CollectionView
 
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
@@ -29,34 +33,23 @@ class BottomSheetPickerDialog private constructor(
     }
 
     override fun onInitView() {
-        with(binding) {
-            abBottomSheetPickerDlg.apply {
-                setOnIconLeftClickListener {
-                    dismissDialog()
-                }
-                setLeftLabel(title)
-            }
+        constBottomSheetPickerDlgRoot = viewRoot.findViewById(R.id.constBottomSheetPickerDlgRoot)
+        cvBottomSheetPickerDlg = viewRoot.findViewById(R.id.cvBottomSheetPickerDlg)
 
-            if (!hint.isNullOrEmpty()) {
-                tvBottomSheetPickerDlgHint.show()
-                tvBottomSheetPickerDlgHint.text = hint
-            }
+        constBottomSheetPickerDlgRoot.maxHeight = (requireActivity().getScreenHeight() * ratioDialogHeight).toInt()
 
-            constBottomSheetPickerDlgRoot.maxHeight = (requireActivity().getScreenHeight() * ratioDialogHeight).toInt()
-
-            cvBottomSheetPickerDlg.apply {
-                setAdapter(BottomSheetPickerAdapter().apply {
-                    listener = object : BottomSheetPickerAdapter.BottomSheetItemListener {
-                        override fun onClickItem(bottomSheetPicker: BottomSheetPicker) {
-                            chooseItemListener?.invoke(bottomSheetPicker)
-                            dismissDialog()
-                        }
+        cvBottomSheetPickerDlg.apply {
+            setAdapter(BottomSheetPickerAdapter().apply {
+                listener = object : BottomSheetPickerAdapter.BottomSheetItemListener {
+                    override fun onClickItem(bottomSheetPicker: BottomSheetPicker) {
+                        chooseItemListener?.invoke(bottomSheetPicker)
+                        dismissDialog()
                     }
-                })
-                setItemDecoration(SpaceItemDecoration(getAppDimensionPixel(R.dimen.fbase_dimen_20)))
-                setMaximumVisibleItem(visibleItem, visibleItem?.plus(1))
-                addItems(lstPickers.toMutableList())
-            }
+                }
+            })
+            setItemDecoration(DividerDecorator(context, R.drawable.fekyc_shape_divider, false, true))
+            setMaximumVisibleItem(visibleItem, visibleItem?.plus(1))
+            addItems(lstPickers.toMutableList())
         }
     }
 
@@ -94,7 +87,7 @@ class BottomSheetPickerDialog private constructor(
 
         fun show(fragmentManager: FragmentManager?) {
             if (fragmentManager == null) return
-            BottomSheetPickerDialog(lstPickers, chooseItemListener, title, hint, ratioDialogHeight, visibleItem).show(fragmentManager, null)
+            BottomSheetPickerDialog(lstPickers, chooseItemListener, title, ratioDialogHeight, visibleItem).show(fragmentManager, null)
         }
     }
 

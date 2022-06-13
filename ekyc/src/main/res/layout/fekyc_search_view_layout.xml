@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/fbase_dimen_44"
     android:layout_marginHorizontal="@dimen/fbase_dimen_16"
-    android:background="@drawable/shape_rectange_white_bg_blue_stroke_corner_8"
+    android:background="@drawable/fekyc_shape_rectange_white_bg_blue_stroke_corner_8"
     android:gravity="center"
     android:paddingHorizontal="@dimen/fbase_dimen_12">
 
@@ -20,8 +20,8 @@
         android:background="@null"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:textColor="@color/color_text_primary"
-        android:textColorHint="@color/color_text_hint" />
+        android:textColor="@color/fekyc_color_text_black"
+        android:textColorHint="@color/fekyc_color_text_hint" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivSearchViewItmClear"

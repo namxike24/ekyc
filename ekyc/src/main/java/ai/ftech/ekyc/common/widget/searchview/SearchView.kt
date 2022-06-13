@@ -82,7 +82,7 @@ class SearchView @JvmOverloads constructor(
         }
 
         etSearchViewItm.setOnFocusChangeListener { view, hasFocus ->
-            view.setBackgroundResource(if (hasFocus) R.drawable.shape_rectange_white_bg_blue_stroke_corner_8 else R.drawable.shape_rectange_white_bg_gray_stroke_corner_8)
+            view.setBackgroundResource(if (hasFocus) R.drawable.fekyc_shape_rectange_white_bg_blue_stroke_corner_8 else R.drawable.fekyc_shape_rectange_white_bg_gray_stroke_corner_8)
         }
 
         ivSearchViewItmClear.setOnSafeClick {
