@@ -21,10 +21,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
-abstract class BaseDialog<BD : ViewDataBinding>(@LayoutRes private val layoutId: Int) : DialogFragment(), BaseView {
+abstract class BaseDialog(@LayoutRes protected val layoutId: Int) : DialogFragment(), BaseView {
     protected val TAG = this::class.java.simpleName
-    protected lateinit var binding: BD
-    private lateinit var myInflater: LayoutInflater
+    protected lateinit var myInflater: LayoutInflater
+    protected lateinit var viewRoot : View
     private val dismissListener: DialogInterface.OnDismissListener? = null
     private var needDismissOnResume = false
     private val handlerClose: Handler? = null
@@ -40,18 +40,6 @@ abstract class BaseDialog<BD : ViewDataBinding>(@LayoutRes private val layoutId:
 
     }
 
-
-    //dialog fragment have some bugs with old android OS when using default show
-    override fun show(manager: FragmentManager, tag: String?) {
-        try {
-            val ft = manager.beginTransaction()
-            ft.add(this, tag)
-            ft.commitAllowingStateLoss()
-        } catch (ignored: IllegalStateException) {
-            ignored.printStackTrace()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,15 +48,9 @@ abstract class BaseDialog<BD : ViewDataBinding>(@LayoutRes private val layoutId:
         if (!::myInflater.isInitialized) {
             myInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
-        binding = DataBindingUtil.inflate(
-            myInflater,
-            layoutId,
-            container,
-            false
-        )
-        binding.lifecycleOwner = viewLifecycleOwner
+        viewRoot = attachView(inflater, container, savedInstanceState)
         onInitBinding()
-        return binding.root
+        return viewRoot
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,6 +111,17 @@ abstract class BaseDialog<BD : ViewDataBinding>(@LayoutRes private val layoutId:
         return dialog
     }
 
+    //dialog fragment have some bugs with old android OS when using default show
+    override fun show(manager: FragmentManager, tag: String?) {
+        try {
+            val ft = manager.beginTransaction()
+            ft.add(this, tag)
+            ft.commitAllowingStateLoss()
+        } catch (ignored: IllegalStateException) {
+            ignored.printStackTrace()
+        }
+    }
+
     override fun onDismiss(dialog: DialogInterface) {
         handlerClose?.removeCallbacks(runnableClose)
         super.onDismiss(dialog)
@@ -143,8 +136,12 @@ abstract class BaseDialog<BD : ViewDataBinding>(@LayoutRes private val layoutId:
 
     open fun screen(): DialogScreen = DialogScreen()
 
+    open fun attachView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(layoutId, container, false)
+    }
+
     open fun getRootViewGroup(): ViewGroup? {
-        return binding.root as? ViewGroup
+        return viewRoot as? ViewGroup
     }
 
     fun showDialog(fm: FragmentManager, tag: String?) {

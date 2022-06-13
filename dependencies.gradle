@@ -49,6 +49,7 @@ ext {
     def lifecycleVersion = "2.4.0-alpha03"
     def viewPagerVersion = "1.0.0"
     def appCompatVersion = "1.4.0"
+//    def cameraXVersion = "1.1.0-alpha02"
 
     androidXDependencies = [
             "appCompat"          : "androidx.appcompat:appcompat:$appCompatVersion",
@@ -63,6 +64,9 @@ ext {
             "savedStateViewModel": "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion",
 
             "viewpager"          : "androidx.viewpager2:viewpager2:$viewPagerVersion",
+
+//            "cameraCore"         : "androidx.camera:camerak-core:$cameraXVersion",
+//            "camera2"            : "androidx.camera:camera-camera2:$cameraXVersion"
     ]
 
     /**
@@ -191,5 +195,13 @@ ext {
     def swipeLayoutVersion = "1.1.0"
     swipeLayoutDependencies = [
             "swipelayout": "androidx.swiperefreshlayout:swiperefreshlayout:$swipeLayoutVersion"
+    ]
+
+    /**
+     * cameraview
+     */
+    def cameraViewNatario1Version = "2.7.2"
+    cameraViewNatario1Dependencies = [
+            "cameraview": "com.otaliastudios:cameraview:$cameraViewNatario1Version"
     ]
 }

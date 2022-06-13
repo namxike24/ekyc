@@ -12,10 +12,6 @@ abstract class BaseBindingFragment<DB : ViewDataBinding>(layoutId: Int) : BaseFr
     protected val binding get() = _binding!!
     private var _binding: DB? = null
 
-    init {
-
-    }
-
     override fun attachView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(myInflater, layoutId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
