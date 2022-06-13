@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_88"
         app:layout_constraintTop_toTopOf="parent"
-        app:tbv_right_text_content="@string/fekyc_home_lefttitle"
+        app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
         app:tbv_right_type="ICON"
         app:tbv_title_text="@string/fekyc_take_picture_take_front"

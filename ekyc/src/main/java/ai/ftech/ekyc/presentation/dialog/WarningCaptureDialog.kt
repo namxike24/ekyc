@@ -4,9 +4,9 @@ import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
 import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.getAppString
+import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 typealias WARNING_TYPE = WarningCaptureDialog.WarningInfo.WARNING_TYPE
@@ -37,6 +36,10 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
 
         rvWarningList.layoutManager = getLayoutManager()
         rvWarningList.adapter = adapter
+
+        btnConfirmOK.setOnSafeClick {
+            dismissDialog()
+        }
     }
 
     private fun getTitle(): String {
@@ -139,7 +142,6 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
         }
 
         inner class WarningPapersVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
             private var ivImage: ImageView
             private var tvContent: TextView
 

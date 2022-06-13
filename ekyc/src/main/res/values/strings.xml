@@ -7,7 +7,7 @@
 
     <!--region Home Activity-->
     <string name="fekyc_home_title">Chọn loại giấy tờ</string>
-    <string name="fekyc_home_lefttitle">Trợ giúp</string>
+    <string name="fekyc_home_right_title">Trợ giúp</string>
     <string name="fekyc_home_step_title">Các bước thực hiện</string>
 
     <string name="fekyc_home_step_1">Lựa chọn loại giấy tờ</string>

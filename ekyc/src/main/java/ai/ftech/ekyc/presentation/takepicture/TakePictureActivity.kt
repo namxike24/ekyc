@@ -16,6 +16,9 @@ import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
+    companion object {
+
+    }
 
     private val viewModel by viewModels<TakePictureViewModel>()
     private lateinit var cvCameraView: CameraView
@@ -24,7 +27,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
     private val warningDialog = WarningCaptureDialog(WARNING_TYPE.PAPERS)
-
 
     override fun onResume() {
         super.onResume()
@@ -49,7 +51,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         ivCapture = findViewById(R.id.ivTakePictureCapture)
         ivChangeCamera = findViewById(R.id.ivTakePictureChangeCamera)
 
-        warningDialog.showDialog(supportFragmentManager, warningDialog::class.java.simpleName)
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onCloseClick() {
@@ -57,7 +58,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             override fun onRightIconClick() {
-
+                warningDialog.showDialog(supportFragmentManager, warningDialog::class.java.simpleName)
             }
         })
 
