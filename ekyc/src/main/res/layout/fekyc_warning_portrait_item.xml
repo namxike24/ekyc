@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="@dimen/fbase_dimen_4">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivWarningPortraitItmImage"
+        android:layout_width="@dimen/fbase_dimen_100"
+        android:layout_height="@dimen/fbase_dimen_100"
+        android:background="@drawable/fekyc_shape_rect_corner_8"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/fekyc_ic_human_glass" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivWarningPortraitItmIcon"
+        android:layout_width="@dimen/fbase_dimen_16"
+        android:layout_height="@dimen/fbase_dimen_16"
+        android:layout_marginTop="@dimen/fbase_dimen_10"
+        app:layout_constraintStart_toStartOf="@id/ivWarningPortraitItmImage"
+        app:layout_constraintTop_toBottomOf="@id/ivWarningPortraitItmImage"
+        tools:src="@drawable/fekyc_ic_success_green" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ivWarningPortraitItmContent"
+        style="@style/FBaseStyleText14Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fbase_dimen_8"
+        android:textColor="@color/fekyc_color_text_black"
+        app:layout_constraintEnd_toEndOf="@id/ivWarningPortraitItmImage"
+        app:layout_constraintStart_toEndOf="@id/ivWarningPortraitItmIcon"
+        app:layout_constraintTop_toTopOf="@id/ivWarningPortraitItmIcon"
+        tools:text="@string/fekyc_warning_portrait_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

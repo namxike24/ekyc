@@ -9,7 +9,7 @@
 
     <ai.ftech.ekyc.common.widget.leftcardview.LeafCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ekyc_dimen_height_bottom_dialog"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/fekyc_color_white"
         app:cardElevation="@dimen/fbase_dimen_20"
@@ -17,9 +17,10 @@
         app:lcv_corner_top_left="@dimen/fbase_corner_18"
         app:lcv_corner_top_right="@dimen/fbase_corner_18">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/fbase_dimen_16">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvWarningCaptureDlgTitle"
@@ -27,7 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fbase_dimen_26"
+                android:layout_marginBottom="@dimen/fbase_dimen_10"
                 android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@id/rvWarningCaptureDlgWarningList"
                 android:textColor="@color/fekyc_color_black"
                 tools:text="Lưu ý khi chụp giấy tờ tùy thân" />
 
@@ -35,25 +38,25 @@
                 android:id="@+id/rvWarningCaptureDlgWarningList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/fbase_dimen_16"
                 tools:itemCount="3"
+                android:layout_marginBottom="@dimen/fbase_dimen_10"
                 tools:listitem="@layout/fekyc_warning_papers_item"
-                android:layout_above="@id/btnWarningCaptureDlgConfirm"
-                android:layout_below="@id/tvWarningCaptureDlgTitle"
-                android:layout_marginVertical="@dimen/fbase_dimen_24" />
+                app:layout_constraintBottom_toTopOf="@id/btnWarningCaptureDlgConfirm" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnWarningCaptureDlgConfirm"
                 style="@style/FBaseStyleText18Bold"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fbase_dimen_60"
-                android:layout_alignParentBottom="true"
+                android:text="@string/fekyc_warning_confirm"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginHorizontal="@dimen/fbase_dimen_16"
-                android:layout_marginBottom="@dimen/fbase_dimen_26"
                 android:background="@drawable/fekyc_shape_rect_bg_green_corner_8"
                 android:gravity="center"
-                tools:text="OK" />
+                tools:text="Ok" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ai.ftech.ekyc.common.widget.leftcardview.LeafCardView>
 

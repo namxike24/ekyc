@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingVertical="@dimen/fbase_dimen_20"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivWarningPapersItmIcon"
         style="@style/FBaseIcon24"
         android:layout_gravity="center_vertical"
         android:src="@drawable/fekyc_ic_warning_blue" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWarningPapersItmContent"
         style="@style/FBaseStyleText16Regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

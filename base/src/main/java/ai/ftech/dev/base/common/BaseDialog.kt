@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentTransaction
 abstract class BaseDialog(@LayoutRes protected val layoutId: Int) : DialogFragment(), BaseView {
     protected val TAG = this::class.java.simpleName
     protected lateinit var myInflater: LayoutInflater
-    private lateinit var viewRoot : View
+    protected lateinit var viewRoot : View
     private val dismissListener: DialogInterface.OnDismissListener? = null
     private var needDismissOnResume = false
     private val handlerClose: Handler? = null

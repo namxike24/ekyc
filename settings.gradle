@@ -4,7 +4,6 @@ pluginManagement {
         google()
         mavenCentral()
         maven { url "https://google.com" }
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/"}
     }
 }
 dependencyResolutionManagement {
@@ -13,7 +12,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url "https://google.com" }
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/"}
     }
 }
 rootProject.name = "ekyc-android"
