@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llBottomSheetPickerItm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+    android:gravity="center"
+    android:minHeight="@dimen/fbase_dimen_46">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBottomSheetPickerItm"
+        style="@style/FBaseStyleText14Regular"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
