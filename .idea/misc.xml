@@ -8,10 +8,19 @@
         <entry key="..\:/Project/ekyc/base/src/main/res/layout/search_view_layout.xml" value="0.19479166666666667" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/fekyc_ic_arrow_back.xml" value="0.2025" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/fekyc_ic_close.xml" value="0.2025" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/fekyc_shape_divider.xml" value="0.2005" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/ic_close.xml" value="0.131" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/shape_rectange_white_bg_blue_stroke_corner_8.xml" value="0.2015" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/drawable/shape_rectange_white_bg_gray_stroke_corner_8.xml" value="0.2025" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_bottom_sheet_picker_dialog.xml" value="0.19479166666666667" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_bottom_sheet_picker_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_collection_view_layout.xml" value="0.19479166666666667" />
         <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_search_view_layout.xml" value="0.33" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_step_identity_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_take_picture_activity.xml" value="0.19479166666666667" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_warning_capture_dialog.xml" value="0.19479166666666667" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_warning_papers_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/Project/ekyc/ekyc/src/main/res/layout/fekyc_warning_portrait_item.xml" value="0.19479166666666667" />
         <entry key="..\:/work/ftech/project/ekyc/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
       </map>
     </option>

@@ -6,8 +6,8 @@ import ai.ftech.dev.base.extension.getAppColor
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import android.view.View
-import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
 
 class BottomSheetPickerAdapter : BaseAdapter() {
     var listener: BottomSheetItemListener? = null
@@ -20,7 +20,7 @@ class BottomSheetPickerAdapter : BaseAdapter() {
     override fun getDataAtPosition(position: Int) = dataList[position] as BottomSheetPicker
 
     inner class SchoolYearViewHolder(view: View) : BaseVH<BottomSheetPicker>(view) {
-        var llBottomSheetPickerItm: LinearLayout
+        var llBottomSheetPickerItm: LinearLayoutCompat
         var tvBottomSheetPickerItm: AppCompatTextView
 
         init {

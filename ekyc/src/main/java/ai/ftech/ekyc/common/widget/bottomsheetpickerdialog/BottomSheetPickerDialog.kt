@@ -7,6 +7,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 
@@ -20,6 +21,7 @@ class BottomSheetPickerDialog private constructor(
 
     lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
     lateinit var cvBottomSheetPickerDlg: CollectionView
+    lateinit var tvBottomSheetPickerTitle: AppCompatTextView
 
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
@@ -35,6 +37,9 @@ class BottomSheetPickerDialog private constructor(
     override fun onInitView() {
         constBottomSheetPickerDlgRoot = viewRoot.findViewById(R.id.constBottomSheetPickerDlgRoot)
         cvBottomSheetPickerDlg = viewRoot.findViewById(R.id.cvBottomSheetPickerDlg)
+        tvBottomSheetPickerTitle = viewRoot.findViewById(R.id.tvBottomSheetPickerTitle)
+
+        tvBottomSheetPickerTitle.text = title
 
         constBottomSheetPickerDlgRoot.maxHeight = (requireActivity().getScreenHeight() * ratioDialogHeight).toInt()
 
@@ -71,10 +76,6 @@ class BottomSheetPickerDialog private constructor(
 
         fun setTitle(title: String?) = apply {
             this.title = title
-        }
-
-        fun setHint(hint: String?) = apply {
-            this.hint = hint
         }
 
         fun setRatioDialogHeight(ratio: Float) = apply {
