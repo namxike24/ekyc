@@ -79,12 +79,20 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
         })
 
-        cvCameraView.setLifecycleOwner(this)
-        cvCameraView.addCameraListener(object : CameraListener() {
-            override fun onPictureTaken(result: PictureResult) {
-
+        cvCameraView.apply {
+            setLifecycleOwner(this@TakePictureActivity)
+            facing = if (viewModel.isFrontFace) {
+                Facing.FRONT
+            } else {
+                Facing.BACK
             }
-        })
+            addCameraListener(object : CameraListener() {
+                override fun onPictureTaken(result: PictureResult) {
+
+                }
+            })
+        }
+
 
         ivFlash.setOnSafeClick {
             if (viewModel.isFlash) {
@@ -116,6 +124,25 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 viewModel.isFrontFace = true
             }
         }
+    }
+
+    private fun setFacing() {
+         val ekycType = intent.getSerializableExtra(EKYC_TYPE_KEY_SEND) as EKYC_TYPE
+        when (viewModel.ekycType) {
+            EKYC_TYPE.SSN_FRONT,
+            EKYC_TYPE.DRIVER_LICENSE_FRONT,
+            EKYC_TYPE.PASSPORT_FRONT -> viewModel.isFrontFace = true
+
+            EKYC_TYPE.SSN_BACK,
+            EKYC_TYPE.DRIVER_LICENSE_BACK -> viewModel.isFrontFace = true
+
+            EKYC_TYPE.SSN_PORTRAIT,
+            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
+            EKYC_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
+
+            else -> AppConfig.EMPTY_CHAR
+        }
+
     }
 
     private fun getToolbarTitle(): String {

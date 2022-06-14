@@ -8,7 +8,6 @@
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
-        app:cameraFacing="front"
         android:layout_height="match_parent" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
