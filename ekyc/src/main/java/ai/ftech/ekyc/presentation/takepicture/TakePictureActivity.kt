@@ -5,8 +5,8 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
-import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -23,7 +23,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
-    private val warningDialog = WarningCaptureDialog()
+    private val warningDialog = WarningCaptureDialog(WARNING_TYPE.PAPERS)
 
 
     override fun onResume() {
@@ -64,7 +64,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         cvCameraView.setLifecycleOwner(this)
         cvCameraView.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(result: PictureResult) {
-                Log.d(TAG, "onPictureTaken: $result")
+
             }
         })
 
