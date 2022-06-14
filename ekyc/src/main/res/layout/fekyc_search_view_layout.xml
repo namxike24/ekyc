@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llSearchView"
     android:layout_width="match_parent"
     android:layout_height="@dimen/fbase_dimen_44"
     android:layout_marginHorizontal="@dimen/fbase_dimen_16"
-    android:background="@drawable/fekyc_shape_rectange_white_bg_blue_stroke_corner_8"
+    android:background="@drawable/fekyc_shape_rectange_white_bg_gray_stroke_corner_8"
     android:gravity="center"
     android:paddingHorizontal="@dimen/fbase_dimen_12">
 

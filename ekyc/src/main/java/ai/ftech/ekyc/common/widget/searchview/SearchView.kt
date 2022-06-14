@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.LinearLayoutCompat
 
 class SearchView @JvmOverloads constructor(
     ctx: Context,
@@ -22,6 +23,7 @@ class SearchView @JvmOverloads constructor(
 
     lateinit var etSearchViewItm: AppCompatEditText
     lateinit var ivSearchViewItmClear: AppCompatImageView
+    lateinit var llSearchView: LinearLayoutCompat
 
     private var textChangeListener: ((String) -> Unit)? = null
     private var submitListener: ((String) -> Unit)? = null
@@ -51,6 +53,7 @@ class SearchView @JvmOverloads constructor(
     private fun initView(attrs: AttributeSet?) {
         etSearchViewItm = findViewById(R.id.etSearchViewItm)
         ivSearchViewItmClear = findViewById(R.id.ivSearchViewItmClear)
+        llSearchView = findViewById(R.id.llSearchView)
 
         attrs?.let {
             val ta = context.theme.obtainStyledAttributes(it, androidx.appcompat.R.styleable.SearchView, 0, 0)
@@ -81,8 +84,8 @@ class SearchView @JvmOverloads constructor(
             false
         }
 
-        etSearchViewItm.setOnFocusChangeListener { view, hasFocus ->
-            view.setBackgroundResource(if (hasFocus) R.drawable.fekyc_shape_rectange_white_bg_blue_stroke_corner_8 else R.drawable.fekyc_shape_rectange_white_bg_gray_stroke_corner_8)
+        etSearchViewItm.setOnFocusChangeListener { _, hasFocus ->
+            llSearchView.setBackgroundResource(if (hasFocus) R.drawable.fekyc_shape_rectange_white_bg_blue_stroke_corner_8 else R.drawable.fekyc_shape_rectange_white_bg_gray_stroke_corner_8)
         }
 
         ivSearchViewItmClear.setOnSafeClick {

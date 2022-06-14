@@ -5,7 +5,7 @@
     android:id="@+id/constBottomSheetPickerDlgRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/fekyc_color_white"
+    android:background="@color/fekyc_color_transparent"
     android:orientation="vertical">
 
     <ai.ftech.ekyc.common.widget.leftcardview.LeafCardView
@@ -42,10 +42,19 @@
                     android:id="@+id/tvBottomSheetPickerTitle"
                     style="@style/FBaseStyleText18Medium"
                     android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="@dimen/fbase_dimen_50"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:textColor="@color/fekyc_color_text_black"
                     tools:text="Title" />
 
             </RelativeLayout>
+
+            <ai.ftech.ekyc.common.widget.searchview.SearchView
+                android:id="@+id/svBottomSheetPickerDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/fbase_dimen_12" />
 
             <ai.ftech.ekyc.common.widget.recyclerview.CollectionView
                 android:id="@+id/cvBottomSheetPickerDlg"

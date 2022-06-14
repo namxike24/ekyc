@@ -6,10 +6,13 @@ import ai.ftech.dev.base.extension.getScreenHeight
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
+import ai.ftech.ekyc.common.widget.searchview.SearchView
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
+import java.util.*
 
 class BottomSheetPickerDialog private constructor(
     var lstPickers: List<BottomSheetPicker> = listOf(),
@@ -22,6 +25,8 @@ class BottomSheetPickerDialog private constructor(
     lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
     lateinit var cvBottomSheetPickerDlg: CollectionView
     lateinit var tvBottomSheetPickerTitle: AppCompatTextView
+    lateinit var svBottomSheetPickerDialog: SearchView
+
 
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
@@ -38,6 +43,7 @@ class BottomSheetPickerDialog private constructor(
         constBottomSheetPickerDlgRoot = viewRoot.findViewById(R.id.constBottomSheetPickerDlgRoot)
         cvBottomSheetPickerDlg = viewRoot.findViewById(R.id.cvBottomSheetPickerDlg)
         tvBottomSheetPickerTitle = viewRoot.findViewById(R.id.tvBottomSheetPickerTitle)
+        svBottomSheetPickerDialog = viewRoot.findViewById(R.id.svBottomSheetPickerDialog)
 
         tvBottomSheetPickerTitle.text = title
 
@@ -55,6 +61,22 @@ class BottomSheetPickerDialog private constructor(
             setItemDecoration(DividerDecorator(context, R.drawable.fekyc_shape_divider, false, true))
             setMaximumVisibleItem(visibleItem, visibleItem?.plus(1))
             addItems(lstPickers.toMutableList())
+        }
+
+        svBottomSheetPickerDialog.apply {
+            setTextChangeListener { value ->
+                cvBottomSheetPickerDlg.resetData(lstPickers.filter {
+                    it.title?.lowercase()?.contains(value) ?: false
+                })
+            }
+            setOnClearListener {
+                cvBottomSheetPickerDlg.resetData(lstPickers.toMutableList())
+            }
+            setSubmitListener { value ->
+                cvBottomSheetPickerDlg.resetData(lstPickers.filter {
+                    it.title?.lowercase()?.contains(value) ?: false
+                })
+            }
         }
     }
 
