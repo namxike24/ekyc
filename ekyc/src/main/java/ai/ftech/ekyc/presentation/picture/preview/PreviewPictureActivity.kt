@@ -7,6 +7,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
+import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
@@ -54,6 +55,21 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onCloseClick() {
+                val dialog = ConfirmDialog.Builder()
+                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
+                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
+                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
+                    .build()
+                dialog.listener = object : ConfirmDialog.IListener {
+                    override fun onLeftClick() {
+                        dialog.dismissDialog()
+                    }
+
+                    override fun onRightClick() {
+                        dialog.dismissDialog()
+                    }
+                }
                 finish()
             }
 

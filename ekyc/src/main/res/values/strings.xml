@@ -60,5 +60,14 @@
     <!--endregion-->
 
 
+    <!--region Confirm Dialog-->
+    <string name="fekyc_confirm_notification_title">Thông báo</string>
+    <string name="fekyc_confirm_permission_title">Quyền truy cập</string>
 
+    <string name="fekyc_confirm_notification_content">Nếu thoát ra bây giờ, toàn bộ quá trình xác thực sẽ bị huỷ bỏ</string>
+    <string name="fekyc_confirm_permission_content">Vui lòng kích hoạt quyền truy cập máy ảnh trong mục Cài đặt</string>
+
+    <string name="fekyc_confirm_exit">Thoát</string>
+    <string name="fekyc_confirm_stay">Ở lại</string>
+    <!--endregion-->
 </resources>
