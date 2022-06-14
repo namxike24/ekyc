@@ -55,5 +55,10 @@
     <string name="fekyc_warning_confirm">Ok</string>
     <!--endregion-->
 
+    <!--region Preview Picture Activity-->
+    <string name="fekyc_preview_picture_take_picture_again">Chụp lại</string>
+    <!--endregion-->
+
+
 
 </resources>

@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.presentation.takepicture
+package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.dev.base.common.BaseViewModel
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
