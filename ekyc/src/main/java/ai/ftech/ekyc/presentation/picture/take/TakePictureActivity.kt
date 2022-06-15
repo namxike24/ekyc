@@ -89,7 +89,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
-                    navigateToPreviewScreen(result)
+                    uploadFile(result)
                 }
             })
         }
@@ -125,7 +125,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
-    private fun navigateToPreviewScreen(result: PictureResult) {
+    private fun uploadFile(result: PictureResult) {
         val path = viewModel.getFolderPathByEkycType()
 
         if (path != null) {
@@ -135,14 +135,18 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 FileUtils.deleteFile(path)
             }
 
-            result.toFile(file) { fileAfterCreate ->
-
-                navigateTo(PreviewPictureActivity::class.java) { intent ->
-
-                    intent.putExtra(PreviewPictureActivity.KEY_SEND_EKYC_TYPE, viewModel.ekycType)
-                    intent.putExtra(PreviewPictureActivity.KEY_SEND_PREVIEW_IMAGE, fileAfterCreate?.absolutePath)
+            result.toFile(file) {
+                if (it?.absolutePath != null) {
+                    viewModel.uploadPhoto(it.absolutePath)
                 }
             }
+        }
+    }
+
+    private fun navigateToPreviewScreen(path: String) {
+        navigateTo(PreviewPictureActivity::class.java) { intent ->
+            intent.putExtra(PreviewPictureActivity.KEY_SEND_EKYC_TYPE, viewModel.ekycType)
+            intent.putExtra(PreviewPictureActivity.KEY_SEND_PREVIEW_IMAGE, path)
         }
     }
 

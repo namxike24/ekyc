@@ -5,6 +5,10 @@ object ApiConfig {
 
     object HeaderName {
         const val CONTENT_TYPE = "Content-Type"
+        const val FTECH_KEY = "ftechKey"
+        const val APP_ID = "appID"
+        const val TRANSACTION_ID = "transactionId"
+        const val LANGUAGE = "language"
     }
 
     object HeaderValue {
