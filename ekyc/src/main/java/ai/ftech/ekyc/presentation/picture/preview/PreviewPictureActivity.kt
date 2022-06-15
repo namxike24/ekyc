@@ -5,24 +5,29 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
+import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
-import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
-        const val EKYC_TYPE_KEY_SEND = "EKYC_TYPE_KEY_SEND"
+        const val KEY_SEND_EKYC_TYPE = "KEY_SEND_EKYC_TYPE"
+        const val KEY_SEND_PREVIEW_IMAGE = "KEY_SEND_PREVIEW_IMAGE"
     }
 
-    private val viewModel by viewModels<PreviewPictureViewModel>()
     private lateinit var tbvHeader: ToolbarView
+    private lateinit var ivImageSrc: ImageView
     private lateinit var btnTakeAgain: Button
+
+    private val viewModel by viewModels<PreviewPictureViewModel>()
     private var warningDialog: WarningCaptureDialog? = null
+    private val imageLoader = ImageLoaderFactory.glide()
 
 
     override fun onResume() {
@@ -43,12 +48,14 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(TakePictureActivity.EKYC_TYPE_KEY_SEND) as? EKYC_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(KEY_SEND_EKYC_TYPE) as? EKYC_TYPE
+        viewModel.imagePreviewPath = intent.getStringExtra(KEY_SEND_PREVIEW_IMAGE)
     }
 
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvPreviewPictureHeader)
+        ivImageSrc = findViewById(R.id.ivPreviewPictureImageSrc)
         btnTakeAgain = findViewById(R.id.btnPreviewPictureTakeAgain)
 
         tbvHeader.setTitle(getToolbarTitle())
@@ -78,6 +85,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
             }
         })
 
+        imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
 
         btnTakeAgain.setOnSafeClick {
             finish()

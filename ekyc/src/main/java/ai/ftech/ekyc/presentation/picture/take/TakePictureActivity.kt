@@ -1,18 +1,14 @@
 package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.dev.base.extension.getAppDrawable
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
-import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
-import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -24,7 +20,7 @@ import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
-        const val EKYC_TYPE_KEY_SEND = "EKYC_TYPE_KEY_SEND"
+        const val KEY_SEND_EKYC_TYPE = "KEY_SEND_EKYC_TYPE"
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
@@ -39,7 +35,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onResume()
         cvCameraView.open()
         if (warningDialog == null) {
-            warningDialog = WarningCaptureDialog(getWarningType())
+            warningDialog = WarningCaptureDialog(viewModel.getWarningType())
         }
     }
 
@@ -57,7 +53,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(EKYC_TYPE_KEY_SEND) as? EKYC_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(KEY_SEND_EKYC_TYPE) as? EKYC_TYPE
     }
 
     override fun onInitView() {
@@ -68,9 +64,9 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         ivCapture = findViewById(R.id.ivTakePictureCapture)
         ivChangeCamera = findViewById(R.id.ivTakePictureChangeCamera)
 
+        setFacing()
 
-
-        tbvHeader.setTitle(getToolbarTitle())
+        tbvHeader.setTitle(viewModel.getToolbarTitleByEkycType())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onCloseClick() {
@@ -93,7 +89,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
-                   viewModel.createImageFile(result)
+                    navigateToPreviewScreen(result)
                 }
             })
         }
@@ -114,9 +110,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 //            navigateTo(TakePictureActivity::class.java) {
 //                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
 //            }
-//            navigateTo(PreviewPictureActivity::class.java) {
-//                it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
-//            }
+
             cvCameraView.takePicture()
         }
 
@@ -131,54 +125,52 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
+    private fun navigateToPreviewScreen(result: PictureResult) {
+        val path = viewModel.getFolderPathByEkycType()
+
+        if (path != null) {
+            val file = File(path)
+
+            if (file.exists()) {
+                FileUtils.deleteFile(path)
+            }
+
+            result.toFile(file) { fileAfterCreate ->
+
+                navigateTo(PreviewPictureActivity::class.java) { intent ->
+
+                    intent.putExtra(PreviewPictureActivity.KEY_SEND_EKYC_TYPE, viewModel.ekycType)
+                    intent.putExtra(PreviewPictureActivity.KEY_SEND_PREVIEW_IMAGE, fileAfterCreate?.absolutePath)
+                }
+            }
+        }
+    }
+
     private fun setFacing() {
-         val ekycType = intent.getSerializableExtra(EKYC_TYPE_KEY_SEND) as EKYC_TYPE
         when (viewModel.ekycType) {
             EKYC_TYPE.SSN_FRONT,
             EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.PASSPORT_FRONT -> viewModel.isFrontFace = true
+            EKYC_TYPE.PASSPORT_FRONT,
 
             EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_BACK -> viewModel.isFrontFace = true
+            EKYC_TYPE.DRIVER_LICENSE_BACK -> {
+                cvCameraView.facing = Facing.BACK
+                viewModel.isFrontFace = false
+            }
 
             EKYC_TYPE.SSN_PORTRAIT,
             EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
+            EKYC_TYPE.PASSPORT_PORTRAIT -> {
+                cvCameraView.facing = Facing.FRONT
+                viewModel.isFrontFace = true
+            }
 
-            else -> AppConfig.EMPTY_CHAR
-        }
-
-    }
-
-    private fun getToolbarTitle(): String {
-        return when (viewModel.ekycType) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_take_front)
-
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
-            else -> AppConfig.EMPTY_CHAR
+            else -> {
+                cvCameraView.facing = Facing.BACK
+                viewModel.isFrontFace = false
+            }
         }
     }
 
-    private fun getWarningType(): WARNING_TYPE {
-        return when (viewModel.ekycType!!) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
-
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
-        }
-    }
 
 }
