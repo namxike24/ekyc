@@ -6,7 +6,9 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
+import ai.ftech.ekyc.utils.FileUtils
 import android.Manifest
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +46,6 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
             }
 
             override fun onRightTextClick() {
-
             }
         })
 
