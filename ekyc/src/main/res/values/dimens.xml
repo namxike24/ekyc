@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="ekyc_dimen_height_bottom_dialog">400.00dp</dimen>
+    <dimen name="ekyc_dimen_weigh_confirm_dialog">350.00dp</dimen>
 </resources>

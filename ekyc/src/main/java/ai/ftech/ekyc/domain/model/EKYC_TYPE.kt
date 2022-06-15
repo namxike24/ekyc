@@ -1,0 +1,14 @@
+package ai.ftech.ekyc.domain.model
+
+enum class EKYC_TYPE {
+    SSN_FRONT,
+    SSN_BACK,
+    SSN_PORTRAIT,
+
+    DRIVER_LICENSE_FRONT,
+    DRIVER_LICENSE_BACK,
+    DRIVER_LICENSE_PORTRAIT,
+
+    PASSPORT_FRONT,
+    PASSPORT_PORTRAIT,
+}

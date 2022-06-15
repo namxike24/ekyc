@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:background="#A8A8A8">
 
-    <ai.ftech.ekyc.common.widget.leftcardview.LeafCardView
+    <ai.ftech.ekyc.common.widget.leftcard.LeafCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/fbase_dimen_16">
+            android:paddingVertical="@dimen/fbase_dimen_24">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvWarningCaptureDlgTitle"
@@ -58,6 +58,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ai.ftech.ekyc.common.widget.leftcardview.LeafCardView>
+    </ai.ftech.ekyc.common.widget.leftcard.LeafCardView>
 
 </FrameLayout>
