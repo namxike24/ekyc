@@ -1,17 +1,18 @@
 package ai.ftech.ekyc.presentation.home
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
-import ai.ftech.ekyc.common.widget.bottomsheetpickerdialog.BottomSheetPickerDialog
+import ai.ftech.ekyc.common.widget.datepicker.DatePickerDialog
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import ai.ftech.ekyc.presentation.takepicture.TakePictureActivity
 import android.Manifest
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
 class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private lateinit var tbvHeader: ToolbarView
@@ -71,50 +72,63 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         }
 
         llPassport.setOnSafeClick {
-            BottomSheetPickerDialog.Builder()
-                .setTitle(getAppString(R.string.fekyc_home_select_type_of_papers_passport))
-                .setListPicker(arrayListOf(
-                    BottomSheetPicker().apply {
-                        id = "1"
-                        title = "1"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "1"
-                        title = "2"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "12"
-                        title = "3"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "19"
-                        title = "4"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "18"
-                        title = "5"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "16"
-                        title = "6"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "14"
-                        title = "vlalva"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "11"
-                        title = "vlalva"
-                    },
-                    BottomSheetPicker().apply {
-                        id = "13"
-                        title = "vlalva"
-                    }
-                ))
-                .setChooseItemListener {
+//            BottomSheetPickerDialog.Builder()
+//                .setTitle(getAppString(R.string.fekyc_home_select_type_of_papers_passport))
+//                .setListPicker(arrayListOf(
+//                    BottomSheetPicker().apply {
+//                        id = "1"
+//                        title = "1"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "1"
+//                        title = "2"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "12"
+//                        title = "3"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "19"
+//                        title = "4"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "18"
+//                        title = "5"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "16"
+//                        title = "6"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "14"
+//                        title = "vlalva"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "11"
+//                        title = "vlalva"
+//                    },
+//                    BottomSheetPicker().apply {
+//                        id = "13"
+//                        title = "vlalva"
+//                    }
+//                ))
+//                .setChooseItemListener {
+//
+//                }
+//                .setVisibleItem(4)
+//                .show(supportFragmentManager)
+
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.YEAR, 1990)
+            calendar.set(Calendar.MONTH, 1)
+
+            //datepicker
+            DatePickerDialog.Builder()
+                .setTitle(getString(R.string.select_date))
+                .setDatePickerListener {
 
                 }
-                .setVisibleItem(4)
+                .setCurrentCalendar(calendar)
                 .show(supportFragmentManager)
         }
     }

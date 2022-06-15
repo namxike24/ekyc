@@ -4,6 +4,8 @@
     <string name="fekyc_failure">Thất bại</string>
     <string name="fekyc_loading">Đang tải…</string>
     <string name="search">Tìm kiếm</string>
+    <string name="save">Lưu</string>
+    <string name="select_date">Chọn thời gian</string>
 
     <!--region Home Activity-->
     <string name="fekyc_home_title">Chọn loại giấy tờ</string>

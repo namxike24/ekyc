@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:background="#9CF6A0">
+
+    <NumberPicker
+        android:id="@+id/npDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        tools:background="#F3C5C5" />
+
+    <NumberPicker
+        android:id="@+id/npMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:background="#81CCED" />
+
+    <NumberPicker
+        android:id="@+id/npYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:background="#F8DA7E" />
+
+</LinearLayout>

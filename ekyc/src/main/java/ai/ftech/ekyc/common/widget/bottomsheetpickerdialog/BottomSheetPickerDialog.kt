@@ -3,12 +3,14 @@ package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
 import ai.ftech.dev.base.extension.getScreenHeight
+import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
 import ai.ftech.ekyc.common.widget.searchview.SearchView
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
@@ -22,15 +24,15 @@ class BottomSheetPickerDialog private constructor(
     var visibleItem: Int? = null
 ) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
 
+    companion object {
+        const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
+    }
+
     lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
     lateinit var cvBottomSheetPickerDlg: CollectionView
     lateinit var tvBottomSheetPickerTitle: AppCompatTextView
     lateinit var svBottomSheetPickerDialog: SearchView
-
-
-    companion object {
-        const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
-    }
+    lateinit var ivBottomSheetPickerClose: AppCompatImageView
 
     override fun getBackgroundId(): Int = R.id.constBottomSheetPickerDlgRoot
 
@@ -44,6 +46,11 @@ class BottomSheetPickerDialog private constructor(
         cvBottomSheetPickerDlg = viewRoot.findViewById(R.id.cvBottomSheetPickerDlg)
         tvBottomSheetPickerTitle = viewRoot.findViewById(R.id.tvBottomSheetPickerTitle)
         svBottomSheetPickerDialog = viewRoot.findViewById(R.id.svBottomSheetPickerDialog)
+        ivBottomSheetPickerClose = viewRoot.findViewById(R.id.ivBottomSheetPickerClose)
+
+        ivBottomSheetPickerClose.setOnSafeClick {
+            dismiss()
+        }
 
         tvBottomSheetPickerTitle.text = title
 
