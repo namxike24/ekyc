@@ -1,15 +1,19 @@
 package ai.ftech.dev.base.extension
 
 import ai.ftech.dev.base.common.*
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Insets
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.SpannableString
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -160,6 +164,19 @@ fun getAppColor(
     return context?.let {
         ContextCompat.getColor(it, colorRes)
     } ?: Color.TRANSPARENT
+}
+
+fun Activity.getScreenHeight(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = windowManager.currentWindowMetrics
+        val insets: Insets = windowMetrics.windowInsets
+            .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+        windowMetrics.bounds.height() - insets.top - insets.bottom
+    } else {
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        displayMetrics.heightPixels
+    }
 }
 
 //fun getAppAnim(
