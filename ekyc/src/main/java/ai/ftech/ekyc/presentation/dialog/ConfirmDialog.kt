@@ -5,17 +5,25 @@ import ai.ftech.dev.base.common.DialogScreen
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import android.widget.Button
+import android.widget.TextView
 
 class ConfirmDialog : BaseDialog(R.layout.fekyc_confirm_dialog) {
-    private lateinit var btnLeft : Button
-    private lateinit var btnRight : Button
+    private lateinit var tvTitle: TextView
+    private lateinit var tvContent: TextView
+    private lateinit var btnLeft: Button
+    private lateinit var btnRight: Button
     var builder: Builder? = null
-    var listener : IListener?=null
+    var listener: IListener? = null
 
     override fun onInitView() {
+        tvTitle = viewRoot.findViewById(R.id.tvConfirmDlgTitle)
+        tvContent = viewRoot.findViewById(R.id.tvConfirmDlgContent)
         btnLeft = viewRoot.findViewById(R.id.btnConfirmLeft)
         btnRight = viewRoot.findViewById(R.id.btnConfirmRight)
 
+
+        tvTitle.text = builder?.title
+        tvContent.text = builder?.content
 
         btnLeft.setOnSafeClick {
             listener?.onLeftClick()

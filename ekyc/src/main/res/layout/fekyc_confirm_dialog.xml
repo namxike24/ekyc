@@ -10,9 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/ekyc_dimen_weigh_confirm_dialog"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:background="@drawable/fekyc_shape_rect_bg_white_corner_10"
-        android:padding="@dimen/fbase_dimen_24">
+        android:layout_gravity="center"
+        android:paddingVertical="@dimen/fbase_dimen_20">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvConfirmDlgTitle"
@@ -28,6 +28,7 @@
             android:id="@+id/tvConfirmDlgContent"
             style="@style/FBaseStyleText18Regular"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/fbase_dimen_24"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fbase_dimen_8"
             android:gravity="center"
@@ -54,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/fbase_dimen_56"
             android:layout_marginHorizontal="@dimen/fbase_dimen_10"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/fbase_dimen_24"
             android:background="@drawable/fekyc_shape_rect_bg_blue_corner_48"
             android:gravity="center"

@@ -10,6 +10,7 @@ import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
+import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import android.util.Log
 import android.widget.ImageView
@@ -116,10 +117,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 //            navigateTo(TakePictureActivity::class.java) {
 //                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
 //            }
-//            navigateTo(PreviewPictureActivity::class.java) {
-//                it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
-//            }
-            cvCameraView.takePicture()
+            navigateTo(PreviewPictureActivity::class.java) {
+                it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
+            }
+//            cvCameraView.takePicture()
         }
 
         ivChangeCamera.setOnSafeClick {
