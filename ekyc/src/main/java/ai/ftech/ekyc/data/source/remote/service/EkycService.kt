@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.data.source.remote.service
 
+import ai.ftech.ekyc.data.source.remote.base.IApiService
 import ai.ftech.ekyc.data.source.remote.model.CaptureFaceResponse
 import ai.ftech.ekyc.data.source.remote.model.UploadRequest
 import ai.ftech.ekyc.data.source.remote.model.VerifyIdentityResponse
@@ -10,7 +11,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
-interface EkycService {
+interface EkycService : IApiService {
     @Multipart
     @POST("/v1/ekyc/passport")
     fun verifyIdentityPassport(@Part file: MultipartBody.Part): Call<VerifyIdentityResponse>
