@@ -93,10 +93,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
-                    val file = File(FileUtils.getFacePath())
-                    result.toFile(file) {
-                        Log.d(TAG, "onPictureTaken: ${it?.absolutePath}")
-                    }
+                   viewModel.createImageFile(result)
                 }
             })
         }
@@ -117,10 +114,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 //            navigateTo(TakePictureActivity::class.java) {
 //                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
 //            }
-            navigateTo(PreviewPictureActivity::class.java) {
-                it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
-            }
-//            cvCameraView.takePicture()
+//            navigateTo(PreviewPictureActivity::class.java) {
+//                it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
+//            }
+            cvCameraView.takePicture()
         }
 
         ivChangeCamera.setOnSafeClick {
