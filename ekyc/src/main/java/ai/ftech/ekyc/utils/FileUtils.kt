@@ -9,7 +9,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 object FileUtils {
-
     private const val FTECH_EKYC_FOLDER_NAME = "ftech-ekyc"
     private const val PASSPORT = "passport"
     private const val IDENTITY_FRONT = "identity_front"
@@ -60,11 +59,6 @@ object FileUtils {
             file.mkdirs()
         }
         return file.absolutePath
-    }
-
-    fun convertFileToMultipart(name: String, absolutePath: String): MultipartBody.Part {
-        val file = File(absolutePath)
-        return MultipartBody.Part.createFormData(name, file.name, file.asRequestBody())
     }
 }
 
