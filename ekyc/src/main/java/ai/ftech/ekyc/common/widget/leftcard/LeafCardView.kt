@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.common.widget.leftcardview
+package ai.ftech.ekyc.common.widget.leftcard
 
 import ai.ftech.ekyc.R
 import android.content.Context

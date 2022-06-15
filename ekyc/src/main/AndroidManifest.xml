@@ -14,7 +14,12 @@
 
         <activity
             android:theme="@style/FBaseTheme"
-            android:name=".presentation.takepicture.TakePictureActivity"
+            android:name="ai.ftech.ekyc.presentation.picture.take.TakePictureActivity"
+            android:exported="false" />
+
+        <activity
+            android:theme="@style/FBaseTheme"
+            android:name="ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity"
             android:exported="false" />
     </application>
 </manifest>

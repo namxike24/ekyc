@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_88"
         app:tbv_right_type="TEXT"
-        app:tbv_right_text_content="@string/fekyc_home_lefttitle"
+        app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
         app:tbv_title_text="@string/fekyc_home_title"
         app:tbv_title_text_size="@dimen/fbase_text_size_6"

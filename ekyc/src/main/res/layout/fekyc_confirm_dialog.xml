@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/frameConfirmDlgRoot"
+    android:layout_height="match_parent"
+    tools:background="#A8A8A8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/ekyc_dimen_weigh_confirm_dialog"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/fekyc_shape_rect_bg_white_corner_10"
+        android:padding="@dimen/fbase_dimen_24">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvConfirmDlgTitle"
+            style="@style/FBaseStyleText18SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/fbase_color_black"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/fekyc_confirm_notification_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvConfirmDlgContent"
+            style="@style/FBaseStyleText18Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fbase_dimen_8"
+            android:gravity="center"
+            android:textColor="@color/fbase_color_black"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmDlgTitle"
+            tools:text="@string/fekyc_confirm_notification_content" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirmLeft"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fbase_dimen_56"
+            android:layout_marginHorizontal="@dimen/fbase_dimen_10"
+            android:gravity="center"
+            android:text="@string/fekyc_confirm_exit"
+            android:background="?selectableItemBackground"
+            android:textColor="@color/fekyc_color_text_blue"
+            app:layout_constraintBottom_toBottomOf="@id/btnConfirmRight"
+            app:layout_constraintEnd_toStartOf="@id/btnConfirmRight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnConfirmRight" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirmRight"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fbase_dimen_56"
+            android:layout_marginHorizontal="@dimen/fbase_dimen_10"
+            android:layout_marginTop="@dimen/fbase_dimen_24"
+            android:background="@drawable/fekyc_shape_rect_bg_blue_corner_48"
+            android:gravity="center"
+            android:text="@string/fekyc_confirm_stay"
+            android:textColor="@color/fekyc_color_text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnConfirmLeft"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmDlgContent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

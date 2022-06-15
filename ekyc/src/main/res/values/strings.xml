@@ -9,7 +9,7 @@
 
     <!--region Home Activity-->
     <string name="fekyc_home_title">Chọn loại giấy tờ</string>
-    <string name="fekyc_home_lefttitle">Trợ giúp</string>
+    <string name="fekyc_home_right_title">Trợ giúp</string>
     <string name="fekyc_home_step_title">Các bước thực hiện</string>
 
     <string name="fekyc_home_step_1">Lựa chọn loại giấy tờ</string>
@@ -57,5 +57,19 @@
     <string name="fekyc_warning_confirm">Ok</string>
     <!--endregion-->
 
+    <!--region Preview Picture Activity-->
+    <string name="fekyc_preview_picture_take_picture_again">Chụp lại</string>
+    <!--endregion-->
 
+
+    <!--region Confirm Dialog-->
+    <string name="fekyc_confirm_notification_title">Thông báo</string>
+    <string name="fekyc_confirm_permission_title">Quyền truy cập</string>
+
+    <string name="fekyc_confirm_notification_content">Nếu thoát ra bây giờ, toàn bộ quá trình xác thực sẽ bị huỷ bỏ</string>
+    <string name="fekyc_confirm_permission_content">Vui lòng kích hoạt quyền truy cập máy ảnh trong mục Cài đặt</string>
+
+    <string name="fekyc_confirm_exit">Thoát</string>
+    <string name="fekyc_confirm_stay">Ở lại</string>
+    <!--endregion-->
 </resources>

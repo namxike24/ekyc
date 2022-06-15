@@ -13,6 +13,7 @@
     <color name="fekyc_color_gray_stroke">#E1E3E6</color>
     <color name="fekyc_color_border_green">#CFF0E3</color>
     <color name="fekyc_color_transparent">#00000000</color>
+    <color name="fekyc_color_border_blue">#CFE6FB</color>
 
     <color name="fekyc_color_failure">#CCFF0000</color>
     <color name="fekyc_color_success">#42C34B</color>
@@ -24,4 +25,5 @@
     <color name="fekyc_color_text_primary">@color/fekyc_color_white</color>
     <color name="fekyc_color_text_black">@color/fekyc_color_black</color>
     <color name="fekyc_color_text_blue">@color/fekyc_color_primary</color>
+    <color name="fekyc_color_black_80">#CC000000</color>
 </resources>
