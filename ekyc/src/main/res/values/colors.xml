@@ -3,23 +3,27 @@
     <color name="fekyc_color_primary">#1080EC</color>
     <color name="fekyc_color_black">#313C4B</color>
     <color name="fekyc_color_gray">#7A8086</color>
+    <color name="fekyc_color_gray_light">#A3A8AF</color>
     <color name="fekyc_color_white">#FFFFFF</color>
     <color name="fekyc_color_background">#F4F4F5</color>
     <color name="fekyc_color_stroke">#F6F6F6</color>
     <color name="fekyc_color_green">#0DB473</color>
     <color name="fekyc_color_red">#FF7878</color>
     <color name="fekyc_color_tropical_blue">#BEDFFF</color>
+    <color name="fekyc_color_gray_stroke">#E1E3E6</color>
     <color name="fekyc_color_border_green">#CFF0E3</color>
+    <color name="fekyc_color_transparent">#00000000</color>
     <color name="fekyc_color_border_blue">#CFE6FB</color>
 
     <color name="fekyc_color_failure">#CCFF0000</color>
     <color name="fekyc_color_success">#42C34B</color>
     <color name="fekyc_color_warning">#FFB32E</color>
 
+    <color name="fekyc_color_text_hint">@color/fekyc_color_gray_light</color>
+    <color name="fekyc_color_text_selected">@color/fekyc_color_primary</color>
+    <color name="fekyc_color_stroke_blue">@color/fekyc_color_primary</color>
     <color name="fekyc_color_text_primary">@color/fekyc_color_white</color>
     <color name="fekyc_color_text_black">@color/fekyc_color_black</color>
     <color name="fekyc_color_text_blue">@color/fekyc_color_primary</color>
     <color name="fekyc_color_black_80">#CC000000</color>
-
-
 </resources>

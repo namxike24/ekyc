@@ -63,14 +63,14 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
                     .build()
                 dialog.listener = object : ConfirmDialog.IListener {
                     override fun onLeftClick() {
-                        dialog.dismissDialog()
+                        finish()
                     }
 
                     override fun onRightClick() {
                         dialog.dismissDialog()
                     }
                 }
-                finish()
+                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
             }
 
             override fun onRightIconClick() {

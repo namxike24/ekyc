@@ -2,6 +2,7 @@ package ai.ftech.dev.base.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -21,7 +22,7 @@ abstract class BaseAdapter : RecyclerView.Adapter<BaseVH<Any>>() {
 
     abstract fun getLayoutResource(viewType: Int): Int
 
-    abstract fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>
+    abstract fun onCreateViewHolder(viewType: Int, view: View): BaseVH<*>
 
     abstract fun getDataAtPosition(position: Int): Any
 
@@ -29,17 +30,8 @@ abstract class BaseAdapter : RecyclerView.Adapter<BaseVH<Any>>() {
         if (!::myInflater.isInitialized) {
             myInflater = LayoutInflater.from(parent.context)
         }
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            myInflater,
-            getLayoutResource(viewType),
-            parent,
-            false
-        ).apply {
-            val context = root.context as LifecycleOwner
-            lifecycleOwner = context
-            executePendingBindings()
-        }
-        return onCreateViewHolder(viewType, binding) as BaseVH<Any>
+        val view = myInflater.inflate(getLayoutResource(viewType), parent, false)
+        return onCreateViewHolder(viewType, view) as BaseVH<Any>
     }
 
     override fun getItemCount(): Int {

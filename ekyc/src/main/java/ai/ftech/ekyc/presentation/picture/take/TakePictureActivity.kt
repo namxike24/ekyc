@@ -11,6 +11,8 @@ import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
+import ai.ftech.ekyc.utils.FileUtils
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -18,6 +20,7 @@ import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
+import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
@@ -81,18 +84,22 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         cvCameraView.apply {
             setLifecycleOwner(this@TakePictureActivity)
+
             facing = if (viewModel.isFrontFace) {
                 Facing.FRONT
             } else {
                 Facing.BACK
             }
+
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
-
+                    val file = File(FileUtils.getFacePath())
+                    result.toFile(file) {
+                        Log.d(TAG, "onPictureTaken: ${it?.absolutePath}")
+                    }
                 }
             })
         }
-
 
         ivFlash.setOnSafeClick {
             if (viewModel.isFlash) {
@@ -113,6 +120,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             navigateTo(PreviewPictureActivity::class.java) {
                 it.putExtra(PreviewPictureActivity.EKYC_TYPE_KEY_SEND, viewModel.ekycType)
             }
+//            cvCameraView.takePicture()
         }
 
         ivChangeCamera.setOnSafeClick {
