@@ -10,6 +10,10 @@ import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Environment
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -17,7 +21,11 @@ import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
@@ -139,10 +147,35 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             result.toFile(file) {
-                if (it?.absolutePath != null) {
-                    viewModel.uploadPhoto(it.absolutePath)
+                val bitmap = BitmapFactory.decodeFile(it?.absolutePath)
+                val bitmapResize = Bitmap.createScaledBitmap(bitmap, 960, 960, true)
+                val resizeFile = bitmapToFile(bitmapResize, Calendar.getInstance().timeInMillis.toString())
+
+                if (resizeFile?.absolutePath != null) {
+                    viewModel.uploadPhoto(resizeFile.absolutePath)
                 }
             }
+        }
+    }
+
+    fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? {
+        var file: File? = null
+        return try {
+            file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
+            file.createNewFile()
+
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
+            val bitmapdata: ByteArray = bos.toByteArray()
+
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file
         }
     }
 
