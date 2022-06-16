@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:cameraAudio="off" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
         android:layout_width="match_parent"
@@ -23,8 +24,8 @@
         app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
         app:tbv_right_type="ICON"
-        tools:tbv_title_text="@string/fekyc_take_picture_take_front"
-        app:tbv_title_text_size="@dimen/fbase_text_size_6" />
+        app:tbv_title_text_size="@dimen/fbase_text_size_6"
+        tools:tbv_title_text="@string/fekyc_take_picture_take_front" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTakePictureFlash"

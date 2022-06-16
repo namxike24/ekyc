@@ -22,8 +22,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     }
     private val permissionList = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA,
-        Manifest.permission.RECORD_AUDIO
+        Manifest.permission.CAMERA
     )
 
     override fun onInitView() {
