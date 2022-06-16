@@ -7,6 +7,13 @@
     <string name="save">Lưu</string>
     <string name="select_date">Chọn thời gian</string>
 
+
+    <string name="fekyc_unknown_error">Đã có lỗi xảy ra</string>
+    <string name="fekyc_no_network">Vui lòng kiểm tra lại kết nối và thử lại</string>
+    <string name="fekyc_sever_time_out">Server không phản hồi</string>
+
+
+
     <!--region Home Activity-->
     <string name="fekyc_home_title">Chọn loại giấy tờ</string>
     <string name="fekyc_home_right_title">Trợ giúp</string>

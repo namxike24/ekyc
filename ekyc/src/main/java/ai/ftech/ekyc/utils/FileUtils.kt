@@ -2,10 +2,12 @@ package ai.ftech.ekyc.utils
 
 import ai.ftech.ekyc.BuildConfig
 import ai.ftech.ekyc.FTechEkycManager
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import android.os.Handler
+import android.os.Looper
 import java.io.File
 
 object FileUtils {
@@ -22,6 +24,25 @@ object FileUtils {
         FTechEkycManager.getApplicationContext().getExternalFilesDir(null)!!.absolutePath
     } else {
         getRootFolderBelowQ()
+    }
+
+    fun deleteFile(path: String, onScanComplete: (uri: Uri?) -> Unit = {}) {
+        val file = File(path)
+        scanFileForUri(path, onScanComplete)
+        file.delete()
+    }
+
+    fun scanFileForUri(path: String, onSuccess: (uri: Uri?) -> Unit = {}, onLoadPath: (path: String?) -> Unit = {}) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            MediaScannerConnection.scanFile(FTechEkycManager.getApplicationContext(), arrayOf(path), null) { _, uri ->
+                Handler(Looper.getMainLooper()).post {
+                    onSuccess(uri)
+                    onLoadPath.invoke(path)
+                }
+            }
+        } else {
+            onSuccess(null)
+        }
     }
 
     fun getIdentityPassportPath(): String {
@@ -60,6 +81,7 @@ object FileUtils {
         }
         return file.absolutePath
     }
+
 }
 
 enum class FILE {

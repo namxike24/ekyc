@@ -4,14 +4,14 @@ import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.ekyc.di.RepositoryFactory
 import ai.ftech.ekyc.domain.model.UPLOAD_PHOTO_TYPE
 
-class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Unit>() {
-    override suspend fun execute(rv: UploadRV) {
+class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
+    override suspend fun execute(rv: UploadRV): Boolean {
         val repo = RepositoryFactory.getEkyc()
 
         val path = rv.absolutePath
         val type = rv.uploadType
 
-        when (rv.uploadType) {
+        return when (rv.uploadType) {
             UPLOAD_PHOTO_TYPE.PASSPORT -> repo.verifyIdentityPassport(path)
             UPLOAD_PHOTO_TYPE.FRONT -> repo.verifyIdentityFront(path, type)
             UPLOAD_PHOTO_TYPE.BACK -> repo.verifyIdentityBack(path, type)

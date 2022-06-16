@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 abstract class BaseAction<REQUEST : BaseAction.RequestValue, RESPONSE> {
 
-    open val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
     protected abstract suspend fun execute(rv: REQUEST): RESPONSE
 

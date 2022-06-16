@@ -6,9 +6,7 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
-import ai.ftech.ekyc.utils.FileUtils
 import android.Manifest
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,7 +64,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
                 navigateTo(TakePictureActivity::class.java) {
-                    it.putExtra(TakePictureActivity.EKYC_TYPE_KEY_SEND, ekycType)
+                    it.putExtra(TakePictureActivity.SEND_EKYC_TYPE_KEY, ekycType)
                 }
             }
 

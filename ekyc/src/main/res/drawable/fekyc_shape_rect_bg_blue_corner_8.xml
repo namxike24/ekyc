@@ -3,7 +3,7 @@
     android:shape="rectangle">
     <corners android:radius="@dimen/fbase_corner_8" />
     <stroke
-        android:width="@dimen/fbase_dimen_2"
+        android:width="@dimen/fbase_dimen_1"
         android:color="@color/fekyc_color_border_blue" />
     <solid android:color="@color/fekyc_color_primary" />
 </shape>

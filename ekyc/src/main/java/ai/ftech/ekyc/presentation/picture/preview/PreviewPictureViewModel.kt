@@ -5,4 +5,5 @@ import ai.ftech.ekyc.domain.model.EKYC_TYPE
 
 class PreviewPictureViewModel : BaseViewModel() {
     var ekycType: EKYC_TYPE? = null
+    var imagePreviewPath: String? = null
 }
