@@ -1,5 +1,7 @@
 package ai.ftech.ekyc.data.source.remote.network
 
+import ai.ftech.ekyc.data.source.remote.base.IApiService
+
 object ApiConfig {
     const val BASE_URL_FEKYC = "https://api-ai-service.dev.ftech.ai"
 
@@ -15,4 +17,13 @@ object ApiConfig {
         const val APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded"
         const val APPLICATION_JSON = "application/json"
     }
+
+    enum class API_LANGUAGE(val language: String) {
+        VI("vi")
+    }
+}
+
+fun <T : IApiService> invokeFEkycService(service: Class<T>): T {
+    return RetrofitFactory.createFEkycService(service)
+
 }

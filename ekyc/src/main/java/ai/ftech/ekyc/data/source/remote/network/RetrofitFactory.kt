@@ -10,37 +10,47 @@ object RetrofitFactory {
 
     private val builderMap = ConcurrentHashMap<String, RetrofitBuilderInfo>()
 
-    fun <T> createFEkycService(service: Class<T>): T? {
+    fun <T> createFEkycService(service: Class<T>): T {
         synchronized(RetrofitBuilderInfo::class.java) {
             var builderInfo = builderMap[FEKYC]
             if (builderInfo == null) {
 
-                builderInfo = RetrofitBuilderInfo()
-
-                if (builderInfo.ftechKey != null && builderInfo.appID != null && builderInfo.transactionId != null && builderInfo.language?.language != null) {
-
-                    builderInfo.builder = EkycRetrofitConfig(
-                        builderInfo.ftechKey!!,
-                        builderInfo.appID!!,
-                        builderInfo.transactionId!!,
-                        builderInfo.language?.language!!
-                    ).getRetrofitBuilder()
-
-                    builderMap[FEKYC] = builderInfo
-                    Log.d(TAG, "Create new domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
+                // TODO: hardcode tạm vì chưa thiết kế các func cho app truyền vào các giá trị này
+                builderInfo = RetrofitBuilderInfo().apply {
+                    this.ftechKey = "123"
+                    this.appID = "111"
+                    this.transactionId = "12345"
+                    this.language = ApiConfig.API_LANGUAGE.VI
                 }
 
+                builderInfo.builder = EkycRetrofitConfig(
+                    builderInfo.ftechKey,
+                    builderInfo.appID,
+                    builderInfo.transactionId,
+                    builderInfo.language.language
+                ).getRetrofitBuilder()
+
+                builderMap[FEKYC] = builderInfo
+                Log.d(TAG, "Create new domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
             }
             Log.e(TAG, "Reuse domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
-            return builderInfo.builder?.build()?.create(service)
+            var serviceApi: T? = null
+            try {
+                serviceApi = builderInfo.builder?.build()?.create(service)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw e
+            }
+            return serviceApi!!
         }
     }
 
     class RetrofitBuilderInfo {
         var builder: Retrofit.Builder? = null
-        var ftechKey: String? = null
-        var appID: String? = null
-        var transactionId: String? = null
-        var language: API_LANGUAGE? = null
+        var ftechKey: String = ""
+        var appID: String = ""
+        var transactionId: String = ""
+        var language: ApiConfig.API_LANGUAGE = ApiConfig.API_LANGUAGE.VI
     }
 }
