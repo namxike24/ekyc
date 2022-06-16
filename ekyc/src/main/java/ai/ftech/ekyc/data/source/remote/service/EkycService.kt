@@ -5,6 +5,7 @@ import ai.ftech.ekyc.data.source.remote.model.CaptureFaceResponse
 import ai.ftech.ekyc.data.source.remote.model.UploadRequest
 import ai.ftech.ekyc.data.source.remote.model.VerifyIdentityResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Multipart
@@ -18,11 +19,11 @@ interface EkycService : IApiService {
 
     @Multipart
     @POST("/v1/ekyc/nationId")
-    fun verifyIdentityFront(@Part file: MultipartBody.Part, @Body body: UploadRequest): Call<VerifyIdentityResponse>
+    fun verifyIdentityFront(@Part file: MultipartBody.Part, @Part("type") body: RequestBody): Call<VerifyIdentityResponse>
 
     @Multipart
     @POST("/v1/ekyc/nationId")
-    fun verifyIdentityBack(@Part file: MultipartBody.Part, @Body body: UploadRequest): Call<VerifyIdentityResponse>
+    fun verifyIdentityBack(@Part file: MultipartBody.Part, @Part("type") body: RequestBody): Call<VerifyIdentityResponse>
 
     @Multipart
     @POST("/v1/ekyc/captureFace")
