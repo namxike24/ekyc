@@ -10,7 +10,6 @@
 
     <application
         android:requestLegacyExternalStorage="true">
-
         <activity
             android:theme="@style/FBaseTheme"
             android:name=".presentation.home.HomeActivity"

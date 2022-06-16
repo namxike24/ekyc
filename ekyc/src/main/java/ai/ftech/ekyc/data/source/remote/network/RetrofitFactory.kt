@@ -16,7 +16,14 @@ object RetrofitFactory {
             var builderInfo = builderMap[FEKYC]
             if (builderInfo == null) {
 
-                builderInfo = RetrofitBuilderInfo()
+                // TODO: hardcode tạm vì chưa thiết kế các func cho app truyền vào các giá trị này
+                builderInfo = RetrofitBuilderInfo().apply {
+                    this.ftechKey = "123"
+                    this.appID = "111"
+                    this.transactionId = "12345"
+                    this.language = ApiConfig.API_LANGUAGE.VI
+                }
+
                 builderInfo.builder = EkycRetrofitConfig(
                     builderInfo.ftechKey,
                     builderInfo.appID,
@@ -26,10 +33,8 @@ object RetrofitFactory {
 
                 builderMap[FEKYC] = builderInfo
                 Log.d(TAG, "Create new domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
-            } else {
-                Log.d(TAG, "Reuse domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
             }
-
+            Log.e(TAG, "Reuse domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
             val serviceApi = builderInfo.builder?.build()?.create(service)
 
             return serviceApi ?: throw APIException(APIException.CREATE_INSTANCE_SERVICE_ERROR)
@@ -38,9 +43,9 @@ object RetrofitFactory {
 
     class RetrofitBuilderInfo {
         var builder: Retrofit.Builder? = null
-        var ftechKey: String = "123"
-        var appID: String = "111"
-        var transactionId: String = "12345"
+        var ftechKey: String = ""
+        var appID: String = ""
+        var transactionId: String = ""
         var language: ApiConfig.API_LANGUAGE = ApiConfig.API_LANGUAGE.VI
     }
 }

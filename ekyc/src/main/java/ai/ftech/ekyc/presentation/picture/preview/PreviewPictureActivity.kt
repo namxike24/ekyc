@@ -17,8 +17,8 @@ import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
-        const val KEY_SEND_EKYC_TYPE = "KEY_SEND_EKYC_TYPE"
-        const val KEY_SEND_PREVIEW_IMAGE = "KEY_SEND_PREVIEW_IMAGE"
+        const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
+        const val SEND_PREVIEW_IMAGE_KEY = "SEND_PREVIEW_IMAGE_KEY"
     }
 
     private lateinit var tbvHeader: ToolbarView
@@ -48,8 +48,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(KEY_SEND_EKYC_TYPE) as? EKYC_TYPE
-        viewModel.imagePreviewPath = intent.getStringExtra(KEY_SEND_PREVIEW_IMAGE)
+        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_TYPE
+        viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
     }
 
     override fun onInitView() {

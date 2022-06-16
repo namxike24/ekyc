@@ -64,7 +64,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
                 navigateTo(TakePictureActivity::class.java) {
-                    it.putExtra(TakePictureActivity.KEY_SEND_EKYC_TYPE, ekycType)
+                    it.putExtra(TakePictureActivity.SEND_EKYC_TYPE_KEY, ekycType)
                 }
             }
 
