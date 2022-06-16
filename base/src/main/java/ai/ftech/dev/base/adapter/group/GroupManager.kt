@@ -3,6 +3,7 @@ package ai.ftech.dev.base.adapter.group
 import ai.ftech.dev.base.adapter.BaseVH
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,6 +16,16 @@ class GroupManager(
     fun onCreateVH(itemViewBinding: ViewDataBinding, viewType: Int): BaseVH<*> {
         groupDataList.forEach {
             val vh: BaseVH<*>? = it.onCreateVH(itemViewBinding, viewType)
+            if (vh != null) {
+                return vh
+            }
+        }
+        throw IllegalArgumentException("Can not find ViewHolder for type: $viewType")
+    }
+
+    fun onCreateVH(itemView: View, viewType: Int): BaseVH<*> {
+        groupDataList.forEach {
+            val vh: BaseVH<*>? = it.onCreateVH(itemView, viewType)
             if (vh != null) {
                 return vh
             }

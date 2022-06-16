@@ -2,7 +2,6 @@ package ai.ftech.dev.base.adapter.group
 
 import ai.ftech.dev.base.adapter.BaseVH
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -18,16 +17,21 @@ class GroupAdapter : RecyclerView.Adapter<BaseVH<*>>() {
         context = parent.context
 
         val layoutResource = groupManager.getLayoutResource(viewType)
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            LayoutInflater.from(context),
-            layoutResource,
-            parent,
-            false
-        )
-        if (binding != null) {
-            return groupManager.onCreateVH(binding, viewType)
+
+        if (hasBindingView()) {
+            val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                LayoutInflater.from(context),
+                layoutResource,
+                parent,
+                false
+            )
+            if (binding != null) {
+                return groupManager.onCreateVH(binding, viewType)
+            }
         }
-        throw IllegalArgumentException("Chuyển group layout thành dạng databinding <layout>...</layout>")
+
+        val view = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
+        return groupManager.onCreateVH(view, viewType)
     }
 
     override fun onBindViewHolder(holder: BaseVH<*>, position: Int) {
@@ -57,6 +61,8 @@ class GroupAdapter : RecyclerView.Adapter<BaseVH<*>>() {
     override fun getItemViewType(position: Int): Int {
         return groupManager.getItemViewType(position)
     }
+
+    open fun hasBindingView() = false
 
     fun notifyAllGroupChanged() {
         groupManager.notifyDataSetChanged()

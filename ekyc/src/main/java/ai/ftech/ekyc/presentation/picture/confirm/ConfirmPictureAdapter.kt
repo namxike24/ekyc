@@ -114,11 +114,8 @@ class ConfirmPictureAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             return getAppDrawable(R.drawable.fekyc_ic_success_green)
         }
 
-        fun getMessage(): String? {
-            if (data.isValid) {
-                return getAppString(R.string.fekyc_confirm_picture_valid_photo)
-            }
-            return null
+        fun getMessage(): String {
+            return getAppString(R.string.fekyc_confirm_picture_valid_photo)
         }
     }
 

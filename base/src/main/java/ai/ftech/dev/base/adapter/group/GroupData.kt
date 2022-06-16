@@ -1,7 +1,7 @@
 package ai.ftech.dev.base.adapter.group
 
 import ai.ftech.dev.base.adapter.BaseVH
-import android.util.Log
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 
@@ -26,7 +26,9 @@ abstract class GroupData<DATA>(
 
     abstract fun getCount(): Int
 
-    abstract fun onCreateVH(itemViewBinding: ViewDataBinding, viewType: Int): BaseVH<*>?
+    open fun onCreateVH(itemViewBinding: ViewDataBinding, viewType: Int): BaseVH<*>? = null
+
+    open fun onCreateVH(itemView: View, viewType: Int): BaseVH<*>? = null
 
     open fun attach() {
         firstAdapterPositionGroup = groupManager?.findAdapterPositionForGroup(this) ?: -1

@@ -1,42 +1,85 @@
 package ai.ftech.ekyc.domain.action
 
 import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.dev.base.extension.getAppString
-import ai.ftech.ekyc.R
-import ai.ftech.ekyc.domain.model.EKYC_TYPE
+import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.PhotoInfo
-import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureAdapter
 
-class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<Any>>() {
-    override suspend fun execute(rv: VoidRequest): List<Any> {
+class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoConfirmDetailInfo>>() {
+    override suspend fun execute(rv: VoidRequest): List<PhotoConfirmDetailInfo> {
 
-        val photoConfirmList = mutableListOf<Any>()
+        val photoConfirmList = mutableListOf<PhotoInfo>()
 
-        val titlePapers = ConfirmPictureAdapter.SingleTitle().apply {
-            this.title = getAppString(R.string.fekyc_confirm_picture_capture_two_face_papers)
-        }
+        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.SSN_FRONT))
+        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.SSN_BACK))
+        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.PORTRAIT))
 
-        val titlePortrait = ConfirmPictureAdapter.SingleTitle().apply {
-            this.title = getAppString(R.string.fekyc_confirm_picture_portrait_myself)
-        }
+        convertPhotoListToConfirmPhotoList(photoConfirmList)
 
-        photoConfirmList.add(titlePapers)
-        photoConfirmList.addAll(getPhotoListFake(EKYC_TYPE.SSN_FRONT, 2))
-        photoConfirmList.add(titlePortrait)
-        photoConfirmList.addAll(getPhotoListFake(EKYC_TYPE.SSN_PORTRAIT))
-
-        return photoConfirmList
+        return convertPhotoListToConfirmPhotoList(photoConfirmList)
     }
 
-    private fun getPhotoListFake(ekycType: EKYC_TYPE, size: Int = 1): List<PhotoInfo> {
+    private fun convertPhotoListToConfirmPhotoList(photoConfirmList: MutableList<PhotoInfo>): List<PhotoConfirmDetailInfo> {
+
+        val photoConfirmDetailInfoList = mutableListOf<PhotoConfirmDetailInfo>()
+
+        photoConfirmList.forEach { photoInfo ->
+            convertEKYCPhotoTypeToConfirmDetailPhotoType(photoInfo.ekycType)?.let { photoType ->
+                val index = photoConfirmDetailInfoList.indexOfFirst { it.photoType == photoType }
+
+                val photoConfirmDetail = if (index == -1) {
+                    PhotoConfirmDetailInfo().apply {
+                        this.photoType = photoType
+                    }
+                } else {
+                    photoConfirmDetailInfoList[index]
+                }
+
+                photoConfirmDetail.photoList.add(photoInfo)
+
+                if (index == -1) {
+                    photoConfirmDetailInfoList.add(photoConfirmDetail)
+                } else {
+                    photoConfirmDetailInfoList[index] = photoConfirmDetail
+                }
+            }
+        }
+
+        return photoConfirmDetailInfoList
+    }
+
+    private fun convertEKYCPhotoTypeToConfirmDetailPhotoType(ekycType: EKYC_PHOTO_TYPE?): PhotoConfirmDetailInfo.PHOTO_TYPE? {
+        return when (ekycType) {
+            EKYC_PHOTO_TYPE.SSN_FRONT, EKYC_PHOTO_TYPE.SSN_BACK -> {
+                PhotoConfirmDetailInfo.PHOTO_TYPE.SSN
+            }
+
+            EKYC_PHOTO_TYPE.PORTRAIT -> {
+                PhotoConfirmDetailInfo.PHOTO_TYPE.PORTRAIT
+            }
+
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT, EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> {
+                PhotoConfirmDetailInfo.PHOTO_TYPE.DRIVER_LICENSE
+            }
+
+            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> {
+                PhotoConfirmDetailInfo.PHOTO_TYPE.PASSPORT
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    private fun getPhotoListFake(ekycType: EKYC_PHOTO_TYPE, size: Int = 1): List<PhotoInfo> {
         val photoList = mutableListOf<PhotoInfo>()
 
         for (i in 0 until size) {
             val photoInfo = PhotoInfo().apply {
                 this.url = ""
                 this.ekycType = ekycType
-                this.isValid = true
             }
+
             photoList.add(photoInfo)
         }
 
