@@ -20,7 +20,7 @@ import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
-        const val KEY_SEND_EKYC_TYPE = "KEY_SEND_EKYC_TYPE"
+        const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
@@ -53,7 +53,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(KEY_SEND_EKYC_TYPE) as? EKYC_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_TYPE
     }
 
     override fun onInitView() {
@@ -145,8 +145,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
-            intent.putExtra(PreviewPictureActivity.KEY_SEND_EKYC_TYPE, viewModel.ekycType)
-            intent.putExtra(PreviewPictureActivity.KEY_SEND_PREVIEW_IMAGE, path)
+            intent.putExtra(PreviewPictureActivity.SEND_EKYC_TYPE_KEY, viewModel.ekycType)
+            intent.putExtra(PreviewPictureActivity.SEND_PREVIEW_IMAGE_KEY, path)
         }
     }
 
