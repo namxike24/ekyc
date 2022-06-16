@@ -111,10 +111,12 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         ivCapture.setOnSafeClick {
 //            navigateTo(TakePictureActivity::class.java) {
-//                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
+//                it.putExtra(SEND_EKYC_TYPE_KEY, EKYC_TYPE.SSN_BACK)
 //            }
 
-            cvCameraView.takePicture()
+            navigateTo(PreviewPictureActivity::class.java)
+
+//            cvCameraView.takePicture()
         }
 
         ivChangeCamera.setOnSafeClick {
@@ -145,6 +147,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
         }
     }
+
 
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->

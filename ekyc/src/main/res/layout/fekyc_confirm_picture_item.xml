@@ -40,7 +40,7 @@
         style="@style/FBaseStyleText14Regular"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fbase_dimen_4"
+        android:layout_marginStart="@dimen/fbase_dimen_8"
         android:textColor="@color/fekyc_color_black"
         app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmIcon"
         app:layout_constraintStart_toEndOf="@id/ivConfirmPictureItmIcon"

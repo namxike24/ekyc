@@ -17,6 +17,7 @@
         app:tbv_title_text_size="@dimen/fbase_text_size_6" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConfirmPicturePhotoList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/fbase_dimen_16"

@@ -11,6 +11,7 @@ import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
+import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.viewModels
@@ -33,7 +34,10 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     override fun onResume() {
         super.onResume()
         if (warningDialog == null) {
-            warningDialog = WarningCaptureDialog(getWarningType())
+            val type = getWarningType()
+            if (type != null) {
+                warningDialog = WarningCaptureDialog(type)
+            }
         }
     }
 
@@ -88,7 +92,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
 
         btnTakeAgain.setOnSafeClick {
-            finish()
+            navigateTo(ConfirmPictureActivity::class.java)
         }
     }
 
@@ -109,8 +113,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         }
     }
 
-    private fun getWarningType(): WARNING_TYPE {
-        return when (viewModel.ekycType!!) {
+    private fun getWarningType(): WARNING_TYPE? {
+        return when (viewModel.ekycType) {
             EKYC_TYPE.SSN_FRONT,
             EKYC_TYPE.SSN_BACK,
             EKYC_TYPE.DRIVER_LICENSE_FRONT,
@@ -120,6 +124,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
             EKYC_TYPE.SSN_PORTRAIT,
             EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
             EKYC_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
+
+            else -> null
         }
     }
 }

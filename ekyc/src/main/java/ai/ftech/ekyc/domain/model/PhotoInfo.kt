@@ -5,5 +5,3 @@ class PhotoInfo {
     var ekycType: EKYC_TYPE? = null
     var isValid = false
 }
-
-

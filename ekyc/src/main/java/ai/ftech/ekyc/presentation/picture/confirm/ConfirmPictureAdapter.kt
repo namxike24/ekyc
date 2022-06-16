@@ -7,6 +7,7 @@ import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.domain.model.PhotoInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,15 +27,24 @@ class ConfirmPictureAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var dataList: List<Any>? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setDataList(list: List<Any>) {
-        dataList = list
+    fun setDataList(list: List<Any>?) {
+        val tempList = list?.toMutableList()
+
+        tempList?.forEachIndexed { index, value ->
+            if (value is PhotoInfo) {
+                tempList[index] = PhotoInfoDisplay(value)
+            }
+        }
+
+        dataList = tempList
+
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (dataList?.get(position)) {
             is SingleTitle -> TITLE_VIEW_TYPE
-            is PhotoInfo -> PHOTO_INFO_VIEW_TYPE
+            is PhotoInfoDisplay -> PHOTO_INFO_VIEW_TYPE
             else -> INVALID_VIEW_TYPE
         }
     }
@@ -48,6 +58,8 @@ class ConfirmPictureAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else -> INVALID_RESOURCE
         }
 
+        Log.d("anhnd", "onCreateViewHolder: $layout")
+
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return when (viewType) {
             TITLE_VIEW_TYPE -> TitleVH(view)
@@ -59,7 +71,7 @@ class ConfirmPictureAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = dataList?.get(position)
         if (item != null) {
             if (holder is TitleVH) holder.onBind(item as SingleTitle)
-            if (holder is PhotoInfoVH) holder.onBind(item as ContentDisplay)
+            if (holder is PhotoInfoVH) holder.onBind(item as PhotoInfoDisplay)
         }
     }
 
@@ -86,14 +98,14 @@ class ConfirmPictureAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tvMessage = itemView.findViewById(R.id.tvConfirmPictureItmMessage)
         }
 
-        fun onBind(data: ContentDisplay) {
+        fun onBind(data: PhotoInfoDisplay) {
             imageLoader.loadImage(itemView, data.getUrl(), ivPhoto, null, true)
             ivIcon.setImageDrawable(data.getIcon())
             tvMessage.text = data.getMessage()
         }
     }
 
-    class ContentDisplay(val data: PhotoInfo) {
+    class PhotoInfoDisplay(val data: PhotoInfo) {
         fun getUrl(): String {
             return data.url.toString()
         }

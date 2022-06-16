@@ -24,5 +24,10 @@
             android:theme="@style/FBaseTheme"
             android:name="ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity"
             android:exported="false" />
+
+        <activity
+            android:theme="@style/FBaseTheme"
+            android:name=".presentation.picture.confirm.ConfirmPictureActivity"
+            android:exported="false" />
     </application>
 </manifest>
