@@ -2,8 +2,8 @@ package ai.ftech.ekyc.data.repo
 
 import ai.ftech.dev.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
+import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.model.UploadRequest
-import ai.ftech.ekyc.data.source.remote.network.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.service.EkycService
 import ai.ftech.ekyc.domain.model.UPLOAD_PHOTO_TYPE
 import ai.ftech.ekyc.domain.repo.IEkycRepo

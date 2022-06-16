@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.data.source.remote.base
 
+import ai.ftech.ekyc.data.source.remote.network.RetrofitFactory
 import ai.ftech.ekyc.domain.APIException
 import okhttp3.Headers
 import retrofit2.Call
@@ -34,4 +35,8 @@ fun <RESPONSE : IApiResponse, RETURN_VALUE> Call<RESPONSE>.invokeApi(block: (Hea
             else -> throw e
         }
     }
+}
+
+fun <T : IApiService> invokeFEkycService(service: Class<T>): T {
+    return RetrofitFactory.createFEkycService(service)
 }
