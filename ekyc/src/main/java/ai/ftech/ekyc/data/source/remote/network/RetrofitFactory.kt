@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.data.source.remote.network
 
+import ai.ftech.ekyc.domain.APIException
 import android.util.Log
 import retrofit2.Retrofit
 import java.util.concurrent.ConcurrentHashMap
@@ -34,15 +35,9 @@ object RetrofitFactory {
                 Log.d(TAG, "Create new domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
             }
             Log.e(TAG, "Reuse domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
-            var serviceApi: T? = null
-            try {
-                serviceApi = builderInfo.builder?.build()?.create(service)
+            val serviceApi = builderInfo.builder?.build()?.create(service)
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw e
-            }
-            return serviceApi!!
+            return serviceApi ?: throw APIException(APIException.CREATE_INSTANCE_SERVICE_ERROR)
         }
     }
 
