@@ -17,9 +17,6 @@ import kotlinx.coroutines.launch
 
 class TakePictureViewModel : BaseViewModel() {
     var ekycType: EKYC_TYPE? = null
-    var isFrontFace = false
-    var isFlash = false
-
 
     fun uploadPhoto(absolutePath: String) {
         viewModelScope.launch {
@@ -89,17 +86,5 @@ class TakePictureViewModel : BaseViewModel() {
         }
     }
 
-    fun getWarningType(): WARNING_TYPE {
-        return when (ekycType!!) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
 
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
-        }
-    }
 }
