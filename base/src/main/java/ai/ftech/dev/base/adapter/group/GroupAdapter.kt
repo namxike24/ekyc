@@ -2,7 +2,6 @@ package ai.ftech.dev.base.adapter.group
 
 import ai.ftech.dev.base.adapter.BaseVH
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,24 +9,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 class GroupAdapter : RecyclerView.Adapter<BaseVH<*>>() {
-
-    val groupManager: GroupManager = GroupManager(this)
     private lateinit var context: Context
+    val groupManager: GroupManager = GroupManager(this)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseVH<*> {
         context = parent.context
 
         val layoutResource = groupManager.getLayoutResource(viewType)
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            LayoutInflater.from(context),
-            layoutResource,
-            parent,
-            false
-        )
-        if (binding != null) {
-            return groupManager.onCreateVH(binding, viewType)
-        }
-        throw IllegalArgumentException("Chuyển group layout thành dạng databinding <layout>...</layout>")
+
+        val view = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
+        return groupManager.onCreateVH(view, viewType)
     }
 
     override fun onBindViewHolder(holder: BaseVH<*>, position: Int) {

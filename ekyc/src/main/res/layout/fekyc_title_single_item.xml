@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleSingleItmContent"
+        style="@style/FBaseStyleText14Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fbase_dimen_8"
+        android:layout_marginStart="@dimen/fbase_dimen_4"
+        android:textColor="@color/fekyc_color_black"
+        tools:text="@string/fekyc_confirm_picture_capture_two_face_papers" />
+
+</LinearLayout>

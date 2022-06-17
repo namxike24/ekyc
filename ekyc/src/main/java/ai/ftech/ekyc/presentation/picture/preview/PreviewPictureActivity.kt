@@ -7,10 +7,11 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.EKYC_TYPE
+import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
+import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.viewModels
@@ -33,7 +34,10 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     override fun onResume() {
         super.onResume()
         if (warningDialog == null) {
-            warningDialog = WarningCaptureDialog(getWarningType())
+            val type = getWarningType()
+            if (type != null) {
+                warningDialog = WarningCaptureDialog(type)
+            }
         }
     }
 
@@ -48,7 +52,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_PHOTO_TYPE
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
     }
 
@@ -88,38 +92,40 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
 
         btnTakeAgain.setOnSafeClick {
-            finish()
+            navigateTo(ConfirmPictureActivity::class.java)
         }
     }
 
     private fun getToolbarTitle(): String {
         return when (viewModel.ekycType) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_image_front)
+            EKYC_PHOTO_TYPE.SSN_FRONT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_image_front)
 
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_image_back)
+            EKYC_PHOTO_TYPE.SSN_BACK,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_image_back)
 
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
+            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
+            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
 
             else -> AppConfig.EMPTY_CHAR
         }
     }
 
-    private fun getWarningType(): WARNING_TYPE {
-        return when (viewModel.ekycType!!) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
+    private fun getWarningType(): WARNING_TYPE? {
+        return when (viewModel.ekycType) {
+            EKYC_PHOTO_TYPE.SSN_FRONT,
+            EKYC_PHOTO_TYPE.SSN_BACK,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK,
+            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
 
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
+            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
+            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
+
+            else -> null
         }
     }
 }

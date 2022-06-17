@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.domain.model
 
-enum class EKYC_TYPE {
+enum class EKYC_PHOTO_TYPE {
     SSN_FRONT,
     SSN_BACK,
     SSN_PORTRAIT,
@@ -11,4 +11,6 @@ enum class EKYC_TYPE {
 
     PASSPORT_FRONT,
     PASSPORT_PORTRAIT,
+
+    PORTRAIT
 }

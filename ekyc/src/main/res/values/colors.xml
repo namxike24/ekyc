@@ -14,6 +14,7 @@
     <color name="fekyc_color_border_green">#CFF0E3</color>
     <color name="fekyc_color_transparent">#00000000</color>
     <color name="fekyc_color_border_blue">#CFE6FB</color>
+    <color name="fekyc_color_light_cyan">#D3F7FF</color>
 
     <color name="fekyc_color_failure">#CCFF0000</color>
     <color name="fekyc_color_success">#42C34B</color>

@@ -5,7 +5,7 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.EKYC_TYPE
+import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
@@ -56,7 +56,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_PHOTO_TYPE
     }
 
     override fun onInitView() {
@@ -111,10 +111,12 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         ivCapture.setOnSafeClick {
 //            navigateTo(TakePictureActivity::class.java) {
-//                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
+//                it.putExtra(SEND_EKYC_TYPE_KEY, EKYC_TYPE.SSN_BACK)
 //            }
 
-            cvCameraView.takePicture()
+            navigateTo(PreviewPictureActivity::class.java)
+
+//            cvCameraView.takePicture()
         }
 
         ivChangeCamera.setOnSafeClick {
@@ -146,6 +148,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
+
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
             intent.putExtra(PreviewPictureActivity.SEND_EKYC_TYPE_KEY, viewModel.ekycType)
@@ -155,19 +158,19 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     private fun setFacing() {
         when (viewModel.ekycType) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.PASSPORT_FRONT,
+            EKYC_PHOTO_TYPE.SSN_FRONT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            EKYC_PHOTO_TYPE.PASSPORT_FRONT,
 
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_BACK -> {
+            EKYC_PHOTO_TYPE.SSN_BACK,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> {
                 cvCameraView.facing = Facing.BACK
                 isFrontFace = false
             }
 
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> {
+            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
+            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
             }
@@ -181,15 +184,16 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     private fun getWarningType(): WARNING_TYPE {
         return when (viewModel.ekycType!!) {
-            EKYC_TYPE.SSN_FRONT,
-            EKYC_TYPE.SSN_BACK,
-            EKYC_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
+            EKYC_PHOTO_TYPE.SSN_FRONT,
+            EKYC_PHOTO_TYPE.SSN_BACK,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK,
+            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
 
-            EKYC_TYPE.SSN_PORTRAIT,
-            EKYC_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
+            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
+            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
+            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT,
+            EKYC_PHOTO_TYPE.PORTRAIT -> WARNING_TYPE.PORTRAIT
         }
     }
 }

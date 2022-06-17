@@ -3,18 +3,16 @@ package ai.ftech.dev.base.adapter.group
 import ai.ftech.dev.base.adapter.BaseVH
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-class GroupManager(
-    private val adapter: RecyclerView.Adapter<*>
-) {
-
+class GroupManager(private val adapter: RecyclerView.Adapter<*>) {
     private val groupDataList = mutableListOf<GroupData<*>>()
 
-    fun onCreateVH(itemViewBinding: ViewDataBinding, viewType: Int): BaseVH<*> {
+    fun onCreateVH(itemView: View, viewType: Int): BaseVH<*> {
         groupDataList.forEach {
-            val vh: BaseVH<*>? = it.onCreateVH(itemViewBinding, viewType)
+            val vh: BaseVH<*>? = it.onCreateVH(itemView, viewType)
             if (vh != null) {
                 return vh
             }

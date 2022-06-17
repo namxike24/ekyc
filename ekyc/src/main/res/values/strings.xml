@@ -79,4 +79,15 @@
     <string name="fekyc_confirm_exit">Thoát</string>
     <string name="fekyc_confirm_stay">Ở lại</string>
     <!--endregion-->
+
+
+    <!--region Confirm Picture Activity-->
+    <string name="fekyc_confirm_picture_title">Ảnh đã chụp</string>
+    <string name="fekyc_confirm_picture_capture_two_face_papers">Chụp 2 mặt của giấy tờ</string>
+    <string name="fekyc_confirm_picture_portrait_myself">Ảnh chân dung của bạn</string>
+    <string name="fekyc_confirm_picture_valid_photo">Ảnh hợp lệ</string>
+    <string name="fekyc_confirm_picture_continues">Tiếp tục</string>
+    <!--endregion-->
+
+
 </resources>
