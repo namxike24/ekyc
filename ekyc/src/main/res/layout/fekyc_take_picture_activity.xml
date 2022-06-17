@@ -9,7 +9,9 @@
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cameraAudio="off" />
+        app:cameraAudio="off"
+        app:cameraSnapshotMaxHeight="1920"
+        app:cameraSnapshotMaxWidth="1920" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
         android:layout_width="match_parent"
@@ -56,5 +58,16 @@
         app:layout_constraintBottom_toBottomOf="@id/ivTakePictureCapture"
         app:layout_constraintStart_toEndOf="@id/ivTakePictureCapture"
         app:layout_constraintTop_toTopOf="@id/ivTakePictureCapture" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTakePictureCrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_220"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_32"
+        android:src="@drawable/fekyc_ic_photo_crop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cvTakePictureCameraView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

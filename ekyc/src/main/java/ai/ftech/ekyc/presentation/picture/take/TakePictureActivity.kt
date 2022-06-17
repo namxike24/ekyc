@@ -14,6 +14,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.graphics.RectF
+import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -39,6 +40,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
+    private lateinit var ivTakePictureCrop: ImageView
     private var warningDialog: WarningCaptureDialog? = null
     private var isFrontFace = false
     private var isFlash = false
@@ -75,6 +77,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         ivFlash = findViewById(R.id.ivTakePictureFlash)
         ivCapture = findViewById(R.id.ivTakePictureCapture)
         ivChangeCamera = findViewById(R.id.ivTakePictureChangeCamera)
+        ivTakePictureCrop = findViewById(R.id.ivTakePictureCrop)
 
         setFacing()
 
@@ -123,7 +126,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 //                it.putExtra(EKYC_TYPE_KEY_SEND, EKYC_TYPE.SSN_BACK)
 //            }
 
-            cvCameraView.takePicture()
+            //dùng snapshot để xử lý ảnh đầu ra cho nhanh, nhẹ vì mình không trực tiếp lấy ảnh gốc
+            cvCameraView.takePictureSnapshot()
         }
 
         ivChangeCamera.setOnSafeClick {
@@ -148,16 +152,61 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             result.toFile(file) {
-                val bitmapResize = resizeBitmap(BitmapFactory.decodeFile(it?.absolutePath))
-                val resizeFile = bitmapToFile(bitmapResize, path)
-                if (resizeFile?.absolutePath != null) {
-                    viewModel.uploadPhoto(resizeFile.absolutePath)
+                it?.let { file ->
+                    //crop lại ảnh theo vùng view truyền vào
+                    val bitmapCrop = cropBitMap(file, ivTakePictureCrop)
+
+                    //resize về size ảnh 960
+                    val bitmapResize = resizeBitmap(bitmapCrop)
+
+                    //tạo file resize để upload
+                    val resizeFile = bitmapToFile(bitmapResize, path)
+                    if (resizeFile?.absolutePath != null) {
+                        viewModel.uploadPhoto(resizeFile.absolutePath)
+                    }
                 }
             }
         }
     }
 
-    private fun resizeBitmap(bitmap: Bitmap) : Bitmap {
+    private fun cropBitMap(file: File, viewCrop: View): Bitmap {
+        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+        val rotationMatrix = Matrix()
+        //xử lý ảnh bị xoay bởi camera Samsung
+        return if (bitmap.width > bitmap.height) {
+            rotationMatrix.postRotate(90f)
+
+            val ratio = bitmap.height.toDouble() / cvCameraView.width.toDouble()
+            val x = (((cvCameraView.height - viewCrop.height) / 2) * ratio).toInt()
+            val y = (((cvCameraView.width - viewCrop.width) / 2) * ratio).toInt()
+            Bitmap.createBitmap(
+                bitmap,
+                x,
+                y,
+                bitmap.width - (x * 2),
+                bitmap.height - (y * 2),
+                rotationMatrix,
+                false
+            )
+        } else {
+            rotationMatrix.postRotate(0f)
+            val ratio = bitmap.width.toDouble() / cvCameraView.width.toDouble()
+            val x = (((cvCameraView.width - viewCrop.width) / 2) * ratio).toInt()
+            val y = (((cvCameraView.height - viewCrop.height) / 2) * ratio).toInt()
+
+            Bitmap.createBitmap(
+                bitmap,
+                x,
+                y,
+                bitmap.width - (x * 2),
+                bitmap.height - (y * 2),
+                rotationMatrix,
+                false
+            )
+        }
+    }
+
+    private fun resizeBitmap(bitmap: Bitmap): Bitmap {
         val matrix = Matrix()
         matrix.setRectToRect(RectF(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat()), RectF(0f, 0f, IMAGE_CROP_MAX_SIZE, IMAGE_CROP_MAX_SIZE), Matrix.ScaleToFit.CENTER)
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
