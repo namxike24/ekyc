@@ -10,10 +10,10 @@ import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Environment
+import android.graphics.Matrix
+import android.graphics.RectF
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -30,6 +30,7 @@ import java.util.*
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
         const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
+        const val IMAGE_CROP_MAX_SIZE = 960f
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
@@ -147,10 +148,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             result.toFile(file) {
-                val bitmap = BitmapFactory.decodeFile(it?.absolutePath)
-                val bitmapResize = Bitmap.createScaledBitmap(bitmap, 960, 960, true)
-                val resizeFile = bitmapToFile(bitmapResize, Calendar.getInstance().timeInMillis.toString())
-
+                val bitmapResize = resizeBitmap(BitmapFactory.decodeFile(it?.absolutePath))
+                val resizeFile = bitmapToFile(bitmapResize, path)
                 if (resizeFile?.absolutePath != null) {
                     viewModel.uploadPhoto(resizeFile.absolutePath)
                 }
@@ -158,18 +157,24 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
-    fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? {
+    private fun resizeBitmap(bitmap: Bitmap) : Bitmap {
+        val matrix = Matrix()
+        matrix.setRectToRect(RectF(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat()), RectF(0f, 0f, IMAGE_CROP_MAX_SIZE, IMAGE_CROP_MAX_SIZE), Matrix.ScaleToFit.CENTER)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap, path: String): File? {
         var file: File? = null
         return try {
-            file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
+            file = File(path)
             file.createNewFile()
 
             val bos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
-            val bitmapdata: ByteArray = bos.toByteArray()
+            val bitmapData: ByteArray = bos.toByteArray()
 
             val fos = FileOutputStream(file)
-            fos.write(bitmapdata)
+            fos.write(bitmapData)
             fos.flush()
             fos.close()
             file
