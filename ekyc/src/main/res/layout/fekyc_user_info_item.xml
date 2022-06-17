@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ai.ftech.ekyc.common.widget.leftcard.LeafCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lcvUserInfoItmRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fbase_dimen_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUserInfoItmTitle"
+            style="@style/FBaseStyleText14Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fekyc_color_gray_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Họ và tên" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tvUserInfoItmValue"
+            style="@style/FBaseStyleText14Bold"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/fbase_dimen_4"
+            android:layout_marginEnd="@dimen/fbase_dimen_20"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/fekyc_color_black"
+            app:layout_constraintBottom_toBottomOf="@id/ivUserInfoItmRightIcon"
+            app:layout_constraintEnd_toStartOf="@id/ivUserInfoItmRightIcon"
+            app:layout_constraintStart_toStartOf="@id/tvUserInfoItmTitle"
+            app:layout_constraintTop_toTopOf="@id/ivUserInfoItmRightIcon"
+            tools:text="Hoàng Thị Toan" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivUserInfoItmRightIcon"
+            android:layout_width="@dimen/fbase_dimen_40"
+            android:layout_height="@dimen/fbase_dimen_40"
+            android:layout_marginTop="@dimen/fbase_dimen_4"
+            android:padding="@dimen/fbase_dimen_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserInfoItmTitle"
+            tools:src="@drawable/fekyc_ic_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ai.ftech.ekyc.common.widget.leftcard.LeafCardView>

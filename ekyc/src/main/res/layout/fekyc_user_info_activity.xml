@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+        android:id="@+id/tbvUserInfoHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_88"
+        android:background="@drawable/fekyc_bg_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tbv_right_icon_src="@drawable/fekyc_ic_close"
+        app:tbv_right_text_content="@string/fekyc_home_right_title"
+        app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
+        app:tbv_right_type="NONE"
+        app:tbv_title_text="@string/fekyc_home_title"
+        app:tbv_title_text_size="@dimen/fbase_text_size_6" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUserInfoEkycTypeContent"
+        style="@style/FBaseStyleText14Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_30"
+        android:layout_marginTop="@dimen/fbase_dimen_24"
+        android:maxLines="1"
+        android:textColor="@color/fekyc_color_black"
+        app:layout_constraintTop_toBottomOf="@id/tbvUserInfoHeader"
+        tools:text="Giấy tờ: Chứng minh nhân dân" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUserInfoList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_20"
+        android:layout_marginVertical="@dimen/fbase_dimen_10"
+        app:layout_constraintBottom_toTopOf="@id/btnUserInfoCompleted"
+        app:layout_constraintTop_toBottomOf="@id/tvUserInfoEkycTypeContent"
+        tools:listitem="@layout/fekyc_user_info_item" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnUserInfoCompleted"
+        style="@style/FBaseStyleText18Bold"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginBottom="@dimen/fbase_dimen_40"
+        android:background="@drawable/fekyc_shape_rect_bg_blue_corner_8"
+        android:gravity="center"
+        android:text="@string/fekyc_user_info_completed"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

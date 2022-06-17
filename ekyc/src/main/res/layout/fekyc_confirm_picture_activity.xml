@@ -21,6 +21,7 @@
         android:id="@+id/rvConfirmPicturePhotoList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         android:layout_margin="@dimen/fbase_dimen_16"
         app:layout_constraintBottom_toTopOf="@id/btnConfirmPictureContinues"
         app:layout_constraintTop_toBottomOf="@id/tbvConfirmPictureHeader" />
