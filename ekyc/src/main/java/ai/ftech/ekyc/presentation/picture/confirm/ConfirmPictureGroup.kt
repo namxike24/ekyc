@@ -2,6 +2,7 @@ package ai.ftech.ekyc.presentation.picture.confirm
 
 import ai.ftech.dev.base.adapter.BaseVH
 import ai.ftech.dev.base.adapter.group.GroupData
+import ai.ftech.dev.base.adapter.group.GroupVH
 import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.AppConfig
@@ -9,21 +10,18 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.PhotoInfo
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 
 class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoInfo>>(data.photoList) {
-
     companion object {
         private const val TITLE_VIEW_TYPE = 0
         private const val PHOTO_INFO_VIEW_TYPE = 1
     }
 
     private val imageLoader = ImageLoaderFactory.glide()
-    private var groupTitle: String = ""
+    private var groupTitle: String
 
     init {
         groupTitle = getGroupTitle(data.photoType)
@@ -41,7 +39,9 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
     }
 
     override fun getDataInGroup(positionInGroup: Int): Any {
-        return data[positionInGroup]
+        val indexOffsetOfTitle = 1
+        return if (positionInGroup == 0) groupTitle
+        else data[positionInGroup - indexOffsetOfTitle]
     }
 
     override fun getLayoutResource(viewType: Int): Int {
@@ -72,7 +72,7 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
         }
     }
 
-    inner class TitleVH(view: View) : BaseVH<String>(view) {
+    class TitleVH(view: View) : GroupVH<String, ConfirmPictureGroup>(view) {
         private var tvTitle: TextView
 
         init {
@@ -80,11 +80,11 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
         }
 
         override fun onBind(data: String) {
-            tvTitle.text = this@ConfirmPictureGroup.groupTitle
+            tvTitle.text = data
         }
     }
 
-    inner class PhotoInfoVH(view: View) : BaseVH<PhotoInfo>(view) {
+    inner class PhotoInfoVH(view: View) : GroupVH<PhotoInfo, ConfirmPictureGroup>(view) {
         private var ivPhoto: ImageView
         private var ivIcon: ImageView
         private var tvMessage: TextView
@@ -101,12 +101,8 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
             tvMessage.text = getMessage()
         }
 
-        private fun getIcon(): Drawable? {
-            return getAppDrawable(R.drawable.fekyc_ic_success_green)
-        }
+        private fun getIcon() = getAppDrawable(R.drawable.fekyc_ic_success_green)
 
-        private fun getMessage(): String {
-            return getAppString(R.string.fekyc_confirm_picture_valid_photo)
-        }
+        private fun getMessage() = getAppString(R.string.fekyc_confirm_picture_valid_photo)
     }
 }
