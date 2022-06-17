@@ -3,6 +3,7 @@ package ai.ftech.ekyc.presentation.info
 import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
 import ai.ftech.dev.base.extension.getAppDrawable
+import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.domain.model.UserInfo
 import android.graphics.drawable.Drawable
@@ -12,17 +13,17 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class UserInfoAdapter : BaseAdapter() {
+    var listener: IListener? = null
 
     override fun getLayoutResource(viewType: Int) = R.layout.fekyc_user_info_item
 
-    override fun getDataAtPosition(position: Int): UserInfoDisplay {
-        return dataList[position] as UserInfoDisplay
+    override fun getDataAtPosition(position: Int): UserInfo {
+        return (dataList[position] as UserInfoDisplay).data
     }
 
     override fun onCreateViewHolder(viewType: Int, view: View): BaseVH<*> {
         return UserInfoVH(view)
     }
-
 
     inner class UserInfoVH(view: View) : BaseVH<UserInfoDisplay>(view) {
         private var tvTitle: TextView
@@ -33,6 +34,10 @@ class UserInfoAdapter : BaseAdapter() {
             tvTitle = view.findViewById(R.id.tvUserInfoItmTitle)
             edtValue = view.findViewById(R.id.tvUserInfoItmValue)
             ivIcon = view.findViewById(R.id.ivUserInfoItmRightIcon)
+
+            itemView.setOnSafeClick {
+                listener?.onClickItem(getDataAtPosition(adapterPosition))
+            }
         }
 
         override fun onBind(data: UserInfoDisplay) {
@@ -56,5 +61,9 @@ class UserInfoAdapter : BaseAdapter() {
                 else -> null
             }
         }
+    }
+
+    interface IListener {
+        fun onClickItem(item: UserInfo)
     }
 }
