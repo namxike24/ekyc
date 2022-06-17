@@ -10,6 +10,7 @@ import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -135,6 +136,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         if (path != null) {
             val file = File(path)
+
+            Log.d(TAG, "uploadFile: $path")
 
             if (file.exists()) {
                 FileUtils.deleteFile(path)

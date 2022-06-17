@@ -6,6 +6,7 @@ import ai.ftech.dev.base.extension.observer
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.PhotoInfo
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import android.util.Log
@@ -58,20 +59,24 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
 
     override fun onObserverViewModel() {
         super.onObserverViewModel()
-        observer(viewModel.photoList) {
-            it?.forEach { photoConfirmDetailInfo ->
-                val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
-                    this.listener = object : ConfirmPictureGroup.IListener {
-                        override fun onClickItem(item: PhotoInfo) {
-                            Log.d(TAG, "onClickItem: ${item.ekycType?.name}")
-                            replaceFragment(ConfirmPictureFragment())
-                        }
+        observer(viewModel.photoConfirmDetailInfoList) {
+            createConfirmPictureGroup(it)
+        }
+    }
+
+    private fun createConfirmPictureGroup(list: MutableList<PhotoConfirmDetailInfo>?) {
+        list?.forEach { photoConfirmDetailInfo ->
+            val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
+                this.listener = object : ConfirmPictureGroup.IListener {
+                    override fun onClickItem(item: PhotoInfo) {
+                        Log.d(TAG, "onClickItem: ${item.ekycType?.name}")
+                        replaceFragment(ConfirmPictureFragment())
                     }
                 }
-                adapter.addGroupData(groupData)
             }
-            adapter.notifyAllGroupChanged()
+            adapter.addGroupData(groupData)
         }
+        adapter.notifyAllGroupChanged()
     }
 
     override fun getContainerId() = R.id.flconfirmPictureFrame

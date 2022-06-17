@@ -76,7 +76,7 @@ class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoC
 
         for (i in 0 until size) {
             val photoInfo = PhotoInfo().apply {
-                this.url = ""
+                this.url = "/storage/emulated/0/Android/data/ai.ftech.ekyc/files/ftech-ekyc/identity_front.png"
                 this.ekycType = ekycType
             }
 
