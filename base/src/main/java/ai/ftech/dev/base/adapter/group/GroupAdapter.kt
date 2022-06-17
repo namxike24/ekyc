@@ -9,26 +9,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 class GroupAdapter : RecyclerView.Adapter<BaseVH<*>>() {
-
-    val groupManager: GroupManager = GroupManager(this)
     private lateinit var context: Context
+    val groupManager: GroupManager = GroupManager(this)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseVH<*> {
         context = parent.context
 
         val layoutResource = groupManager.getLayoutResource(viewType)
-
-        if (hasBindingView()) {
-            val binding = DataBindingUtil.inflate<ViewDataBinding>(
-                LayoutInflater.from(context),
-                layoutResource,
-                parent,
-                false
-            )
-            if (binding != null) {
-                return groupManager.onCreateVH(binding, viewType)
-            }
-        }
 
         val view = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
         return groupManager.onCreateVH(view, viewType)
@@ -61,8 +48,6 @@ class GroupAdapter : RecyclerView.Adapter<BaseVH<*>>() {
     override fun getItemViewType(position: Int): Int {
         return groupManager.getItemViewType(position)
     }
-
-    open fun hasBindingView() = false
 
     fun notifyAllGroupChanged() {
         groupManager.notifyDataSetChanged()

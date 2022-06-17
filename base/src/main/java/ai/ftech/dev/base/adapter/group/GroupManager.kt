@@ -7,21 +7,8 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-class GroupManager(
-    private val adapter: RecyclerView.Adapter<*>
-) {
-
+class GroupManager(private val adapter: RecyclerView.Adapter<*>) {
     private val groupDataList = mutableListOf<GroupData<*>>()
-
-    fun onCreateVH(itemViewBinding: ViewDataBinding, viewType: Int): BaseVH<*> {
-        groupDataList.forEach {
-            val vh: BaseVH<*>? = it.onCreateVH(itemViewBinding, viewType)
-            if (vh != null) {
-                return vh
-            }
-        }
-        throw IllegalArgumentException("Can not find ViewHolder for type: $viewType")
-    }
 
     fun onCreateVH(itemView: View, viewType: Int): BaseVH<*> {
         groupDataList.forEach {
