@@ -72,7 +72,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         tbvHeader.setTitle(viewModel.getToolbarTitleByEkycType())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
-            override fun onCloseClick() {
+            override fun onLeftIconClick() {
                 finish()
             }
 

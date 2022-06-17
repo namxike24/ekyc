@@ -65,7 +65,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         tbvHeader.setTitle(getToolbarTitle())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
-            override fun onCloseClick() {
+            override fun onLeftIconClick() {
                 val dialog = ConfirmDialog.Builder()
                     .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
                     .setContent(getAppString(R.string.fekyc_confirm_notification_content))

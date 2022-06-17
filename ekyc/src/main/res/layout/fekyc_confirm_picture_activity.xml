@@ -10,6 +10,7 @@
         android:layout_height="@dimen/fbase_dimen_88"
         android:background="@drawable/fekyc_bg_header"
         app:layout_constraintTop_toTopOf="parent"
+        app:tbv_left_icon_src="@drawable/fekyc_ic_close"
         app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
         app:tbv_right_type="NONE"
@@ -26,6 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnConfirmPictureContinues"
+        android:elevation="@dimen/fbase_dimen_1"
         style="@style/FBaseStyleText18Regular"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_56"
@@ -34,6 +36,13 @@
         android:background="@drawable/fekyc_shape_rect_bg_blue_corner_8"
         android:gravity="center"
         android:text="@string/fekyc_confirm_picture_continues"
+        android:outlineProvider="bounds"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/flconfirmPictureFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/fbase_dimen_10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

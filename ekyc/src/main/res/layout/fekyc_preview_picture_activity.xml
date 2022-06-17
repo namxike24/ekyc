@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fekyc_color_green">
+    tools:background="#424242">
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvPreviewPictureHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_88"
+        app:tbv_left_icon_src="@drawable/fekyc_ic_close"
         app:layout_constraintTop_toTopOf="parent"
         app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_8"

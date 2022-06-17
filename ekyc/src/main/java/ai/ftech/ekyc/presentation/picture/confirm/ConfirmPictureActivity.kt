@@ -5,15 +5,16 @@ import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.observer
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
-import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_activity) {
+    private lateinit var tbvHeader: ToolbarView
     private lateinit var rvPhoto: RecyclerView
     private val viewModel by viewModels<ConfirmPictureViewModel>()
     private val adapter = GroupAdapter()
@@ -24,23 +25,54 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
 
     override fun onInitView() {
         super.onInitView()
+        tbvHeader = findViewById(R.id.tbvConfirmPictureHeader)
         rvPhoto = findViewById(R.id.rvConfirmPicturePhotoList)
 
         rvPhoto.layoutManager = LinearLayoutManager(this)
         rvPhoto.adapter = adapter
         viewModel.getConfirmPhotoList()
+
+
+        tbvHeader.setListener(object : ToolbarView.IListener {
+            override fun onLeftIconClick() {
+                val dialog = ConfirmDialog.Builder()
+                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
+                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
+                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
+                    .build()
+                dialog.listener = object : ConfirmDialog.IListener {
+                    override fun onLeftClick() {
+                        finish()
+                    }
+
+                    override fun onRightClick() {
+                        dialog.dismissDialog()
+                    }
+                }
+                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+            }
+        })
+
     }
 
     override fun onObserverViewModel() {
         super.onObserverViewModel()
-
         observer(viewModel.photoList) {
-            it?.forEach {photoConfirmDetailInfo->
-                val groupData = ConfirmPictureGroup(photoConfirmDetailInfo)
+            it?.forEach { photoConfirmDetailInfo ->
+                val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
+                    this.listener = object : ConfirmPictureGroup.IListener {
+                        override fun onClickItem(item: PhotoInfo) {
+                            Log.d(TAG, "onClickItem: ${item.ekycType?.name}")
+                            replaceFragment(ConfirmPictureFragment())
+                        }
+                    }
+                }
                 adapter.addGroupData(groupData)
             }
-
             adapter.notifyAllGroupChanged()
         }
     }
+
+    override fun getContainerId() = R.id.flconfirmPictureFrame
 }
