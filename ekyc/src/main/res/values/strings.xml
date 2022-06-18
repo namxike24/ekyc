@@ -89,9 +89,9 @@
     <string name="fekyc_confirm_picture_continues">Tiếp tục</string>
     <!--endregion-->
 
-    <!--region User Info Activity-->
-    <string name="fekyc_user_info_title">Thông tin của bạn</string>
-    <string name="fekyc_user_info_completed">Hoàn tất</string>
+    <!--region Ekyc Info Activity-->
+    <string name="fekyc_ekyc_info_title">Thông tin của bạn</string>
+    <string name="fekyc_ekyc_info_completed">Hoàn tất</string>
     <!--endregion-->
 
 </resources>

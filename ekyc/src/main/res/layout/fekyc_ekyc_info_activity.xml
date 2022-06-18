@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-        android:id="@+id/tbvUserInfoHeader"
+        android:id="@+id/tbvEkycInfoHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_88"
         android:background="@drawable/fekyc_bg_header"
@@ -19,7 +19,7 @@
         app:tbv_title_text_size="@dimen/fbase_text_size_6" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvUserInfoEkycTypeContent"
+        android:id="@+id/tvEkycInfoEkycTypeContent"
         style="@style/FBaseStyleText14Bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,22 +27,22 @@
         android:layout_marginTop="@dimen/fbase_dimen_24"
         android:maxLines="1"
         android:textColor="@color/fekyc_color_black"
-        app:layout_constraintTop_toBottomOf="@id/tbvUserInfoHeader"
+        app:layout_constraintTop_toBottomOf="@id/tbvEkycInfoHeader"
         tools:text="Giấy tờ: Chứng minh nhân dân" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUserInfoList"
+        android:id="@+id/rvEkycInfoList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
         android:layout_marginHorizontal="@dimen/fbase_dimen_20"
         android:layout_marginVertical="@dimen/fbase_dimen_10"
-        app:layout_constraintBottom_toTopOf="@id/btnUserInfoCompleted"
-        app:layout_constraintTop_toBottomOf="@id/tvUserInfoEkycTypeContent"
-        tools:listitem="@layout/fekyc_user_info_item" />
+        app:layout_constraintBottom_toTopOf="@id/btnEkycInfoCompleted"
+        app:layout_constraintTop_toBottomOf="@id/tvEkycInfoEkycTypeContent"
+        tools:listitem="@layout/fekyc_ekyc_info_item" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUserInfoCompleted"
+        android:id="@+id/btnEkycInfoCompleted"
         style="@style/FBaseStyleText18Bold"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_60"
@@ -50,7 +50,7 @@
         android:layout_marginBottom="@dimen/fbase_dimen_40"
         android:background="@drawable/fekyc_shape_rect_bg_blue_corner_8"
         android:gravity="center"
-        android:text="@string/fekyc_user_info_completed"
+        android:text="@string/fekyc_ekyc_info_completed"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
