@@ -4,23 +4,15 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class UserData {
-    @SerializedName("id")
+    @SerializedName("identityType")
     @Expose
-    var id: Int? = null
+    var identityType: String? = null
 
-    @SerializedName("fieldName")
+    @SerializedName("identityName")
     @Expose
-    var fieldName: String? = null
+    var identityName: String? = null
 
-    @SerializedName("fieldValue")
+    @SerializedName("form")
     @Expose
-    var fieldValue: String? = null
-
-    @SerializedName("fieldType")
-    @Expose
-    var fieldType: String? = null
-
-    @SerializedName("editable")
-    @Expose
-    var editable: Boolean? = null
+    var formList: List<FormData>? = null
 }

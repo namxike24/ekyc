@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 class UserResponse : BaseApiResponse() {
     @SerializedName("data")
     @Expose
-    var data: List<UserData>? = null
+    var data: UserData? = null
 }
