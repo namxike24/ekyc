@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class UserInfoActivity : FEkycActivity(R.layout.fekyc_user_info_activity) {
+class EkycInfoActivity : FEkycActivity(R.layout.fekyc_user_info_activity) {
     private lateinit var tbvHeader: ToolbarView
     private lateinit var tvTypePapres: TextView
     private lateinit var rvUserInfo: RecyclerView

@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.domain.model
 
 
-class UserInfo {
+class EkycInfo {
     var id: Int = -1
     var title: String = ""
     var value: String = ""
