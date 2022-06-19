@@ -29,5 +29,10 @@
             android:theme="@style/FBaseTheme"
             android:name=".presentation.picture.confirm.ConfirmPictureActivity"
             android:exported="false" />
+
+        <activity
+            android:theme="@style/FBaseTheme"
+            android:name=".presentation.info.EkycInfoActivity"
+            android:exported="false" />
     </application>
 </manifest>

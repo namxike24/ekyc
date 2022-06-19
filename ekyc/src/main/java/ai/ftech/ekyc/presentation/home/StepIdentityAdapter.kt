@@ -43,7 +43,7 @@ class StepIdentityAdapter : RecyclerView.Adapter<StepIdentityAdapter.StepVH>() {
         private var vTop: View
         private var vBottom: View
         private val FIRST_POSITION = 0
-        private val LAST_POSITION = 3
+        private val LAST_POSITION = dataList?.size?.minus(1)
 
         init {
             tvTitle = itemView.findViewById(R.id.tvStepIdentityItmText)

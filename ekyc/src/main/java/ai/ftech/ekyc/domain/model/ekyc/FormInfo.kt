@@ -1,12 +1,13 @@
-package ai.ftech.ekyc.domain.model
+package ai.ftech.ekyc.domain.model.ekyc
 
 
-class EkycInfo {
-    var id: Int = -1
-    var title: String = ""
-    var value: String = ""
+class FormInfo {
+    var id: Int? = null
+    var title: String? = null
+    var value: String? = null
+    var type: String? = null
     var isEditable: Boolean = false
-    var fieldType: FIELD_TYPE? = null
+    var fieldActionType: FIELD_TYPE? = null
 
     enum class FIELD_TYPE {
         EDIT,

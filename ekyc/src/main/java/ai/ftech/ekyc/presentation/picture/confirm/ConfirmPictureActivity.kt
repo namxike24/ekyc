@@ -3,13 +3,16 @@ package ai.ftech.ekyc.presentation.picture.confirm
 import ai.ftech.dev.base.adapter.group.GroupAdapter
 import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.observer
+import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.PhotoInfo
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
+import ai.ftech.ekyc.presentation.info.EkycInfoActivity
 import android.util.Log
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_activity) {
     private lateinit var tbvHeader: ToolbarView
     private lateinit var rvPhoto: RecyclerView
+    private lateinit var btnContinue: Button
     private val viewModel by viewModels<ConfirmPictureViewModel>()
     private val adapter = GroupAdapter()
 
@@ -28,6 +32,7 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvConfirmPictureHeader)
         rvPhoto = findViewById(R.id.rvConfirmPicturePhotoList)
+        btnContinue = findViewById(R.id.btnConfirmPictureContinues)
 
         rvPhoto.layoutManager = LinearLayoutManager(this)
         rvPhoto.adapter = adapter
@@ -54,6 +59,11 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
                 dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
             }
         })
+
+
+        btnContinue.setOnSafeClick {
+            navigateTo(EkycInfoActivity::class.java)
+        }
 
     }
 

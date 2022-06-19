@@ -1,9 +1,9 @@
-package ai.ftech.ekyc.data.source.remote.model.user
+package ai.ftech.ekyc.data.source.remote.model.ekyc
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class UserData {
+class EkycData {
     @SerializedName("identityType")
     @Expose
     var identityType: String? = null

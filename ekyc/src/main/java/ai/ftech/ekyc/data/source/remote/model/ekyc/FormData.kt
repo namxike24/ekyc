@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.data.source.remote.model.user
+package ai.ftech.ekyc.data.source.remote.model.ekyc
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
