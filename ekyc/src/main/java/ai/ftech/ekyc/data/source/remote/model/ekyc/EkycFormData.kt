@@ -3,7 +3,7 @@ package ai.ftech.ekyc.data.source.remote.model.ekyc
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class FormData {
+class EkycFormData {
     @SerializedName("id")
     @Expose
     var id: Int? = null

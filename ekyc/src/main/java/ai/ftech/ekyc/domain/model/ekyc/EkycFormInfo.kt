@@ -3,7 +3,7 @@ package ai.ftech.ekyc.domain.model.ekyc
 import android.util.Log
 
 
-class FormInfo {
+class EkycFormInfo {
     var id: Int? = null
     var title: String? = null
     var value: String? = null

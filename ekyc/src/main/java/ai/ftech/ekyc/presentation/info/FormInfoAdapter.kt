@@ -6,7 +6,7 @@ import ai.ftech.dev.base.extension.getAppDimension
 import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
-import ai.ftech.ekyc.domain.model.ekyc.FormInfo
+import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -31,7 +31,7 @@ class FormInfoAdapter : BaseAdapter() {
     @SuppressLint("NotifyDataSetChanged")
     override fun resetData(dataList: List<Any>) {
         val list = dataList.map {
-            FormInfoDisplay(it as FormInfo)
+            FormInfoDisplay(it as EkycFormInfo)
         }
         this.dataList.clear()
         this.dataList.addAll(list)
@@ -64,7 +64,7 @@ class FormInfoAdapter : BaseAdapter() {
         }
     }
 
-    class FormInfoDisplay(val data: FormInfo) {
+    class FormInfoDisplay(val data: EkycFormInfo) {
 
         fun getTitle() = data.title
 
@@ -72,16 +72,16 @@ class FormInfoAdapter : BaseAdapter() {
 
         fun getIcon(): Drawable? {
             return when (data.fieldType) {
-                FormInfo.FIELD_TYPE.STRING,
-                FormInfo.FIELD_TYPE.NUMBER,
-                FormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
+                EkycFormInfo.FIELD_TYPE.STRING,
+                EkycFormInfo.FIELD_TYPE.NUMBER,
+                EkycFormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
 
-                FormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
+                EkycFormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
 
-                FormInfo.FIELD_TYPE.GENDER,
-                FormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
+                EkycFormInfo.FIELD_TYPE.GENDER,
+                EkycFormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
 
-                FormInfo.FIELD_TYPE.NULL -> getAppDrawable(ai.ftech.dev.base.R.drawable.default_photo)
+                EkycFormInfo.FIELD_TYPE.NULL -> getAppDrawable(ai.ftech.dev.base.R.drawable.default_photo)
                 else -> null
             }
         }
@@ -90,6 +90,6 @@ class FormInfoAdapter : BaseAdapter() {
     }
 
     interface IListener {
-        fun onClickItem(item: FormInfo)
+        fun onClickItem(item: EkycFormInfo)
     }
 }

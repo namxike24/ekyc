@@ -4,36 +4,36 @@ import ai.ftech.dev.base.common.converter.Converter
 import ai.ftech.dev.base.common.converter.IConverter
 import ai.ftech.dev.base.common.converter.Mapper
 import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycData
-import ai.ftech.ekyc.data.source.remote.model.ekyc.FormData
+import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycFormData
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
-import ai.ftech.ekyc.domain.model.ekyc.FormInfo
+import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 
 class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
-    private val formMapper = Mapper(FormData::class, FormInfo::class).apply {
-        addNameMapper(FormInfo::title) {
-            return@addNameMapper FormData::fieldName
+    private val formMapper = Mapper(EkycFormData::class, EkycFormInfo::class).apply {
+        addNameMapper(EkycFormInfo::title) {
+            return@addNameMapper EkycFormData::fieldName
         }
 
-        addNameMapper(FormInfo::value) {
-            return@addNameMapper FormData::fieldValue
+        addNameMapper(EkycFormInfo::value) {
+            return@addNameMapper EkycFormData::fieldValue
         }
 
-        addNameMapper(FormInfo::type) {
-            return@addNameMapper FormData::fieldType
+        addNameMapper(EkycFormInfo::type) {
+            return@addNameMapper EkycFormData::fieldType
         }
 
-        addNameMapper(FormInfo::isEditable) {
-            return@addNameMapper FormData::editable
+        addNameMapper(EkycFormInfo::isEditable) {
+            return@addNameMapper EkycFormData::editable
         }
-        register(FormInfo::isEditable, object : Converter<Boolean?, Boolean> {
+        register(EkycFormInfo::isEditable, object : Converter<Boolean?, Boolean> {
             override fun invoke(p1: Boolean?): Boolean {
                 return p1 ?: false
             }
         })
 
-        register(FormInfo::fieldType, object : Converter<String?, FormInfo.FIELD_TYPE?> {
-            override fun invoke(p1: String?): FormInfo.FIELD_TYPE? {
-                return FormInfo.FIELD_TYPE.valueOfName(p1)
+        register(EkycFormInfo::fieldType, object : Converter<String?, EkycFormInfo.FIELD_TYPE?> {
+            override fun invoke(p1: String?): EkycFormInfo.FIELD_TYPE? {
+                return EkycFormInfo.FIELD_TYPE.valueOfName(p1)
             }
         })
     }
