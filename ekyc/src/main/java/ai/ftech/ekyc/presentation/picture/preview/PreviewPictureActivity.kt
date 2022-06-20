@@ -7,7 +7,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.ekyc.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
@@ -52,7 +52,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_PHOTO_TYPE
+        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? UPLOAD_PHOTO_TYPE
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
     }
 
@@ -62,7 +62,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         ivImageSrc = findViewById(R.id.ivPreviewPictureImageSrc)
         btnTakeAgain = findViewById(R.id.btnPreviewPictureTakeAgain)
 
-        tbvHeader.setTitle(getToolbarTitle())
+        tbvHeader.setTitle(getToolbarTitleByEkycType())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
@@ -96,18 +96,14 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         }
     }
 
-    private fun getToolbarTitle(): String {
+    private fun getToolbarTitleByEkycType(): String {
         return when (viewModel.ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_image_front)
+            UPLOAD_PHOTO_TYPE.FRONT,
+            UPLOAD_PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_take_picture_take_front)
 
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_image_back)
+            UPLOAD_PHOTO_TYPE.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
 
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
+            UPLOAD_PHOTO_TYPE.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
 
             else -> AppConfig.EMPTY_CHAR
         }
@@ -115,15 +111,11 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     private fun getWarningType(): WARNING_TYPE? {
         return when (viewModel.ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
+            UPLOAD_PHOTO_TYPE.FRONT,
+            UPLOAD_PHOTO_TYPE.BACK,
+            UPLOAD_PHOTO_TYPE.PASSPORT -> WARNING_TYPE.PAPERS
 
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
+            UPLOAD_PHOTO_TYPE.FACE -> WARNING_TYPE.PORTRAIT
 
             else -> null
         }

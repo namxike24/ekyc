@@ -9,6 +9,7 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import android.view.View
@@ -64,12 +65,12 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
         }
     }
 
-    private fun getGroupTitle(photoType: PhotoConfirmDetailInfo.PHOTO_TYPE?): String {
+    private fun getGroupTitle(photoType: PHOTO_TYPE?): String {
         return when (photoType) {
-            PhotoConfirmDetailInfo.PHOTO_TYPE.SSN,
-            PhotoConfirmDetailInfo.PHOTO_TYPE.DRIVER_LICENSE,
-            PhotoConfirmDetailInfo.PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_confirm_picture_capture_two_face_papers)
-            PhotoConfirmDetailInfo.PHOTO_TYPE.PORTRAIT -> getAppString(R.string.fekyc_confirm_picture_portrait_myself)
+            PHOTO_TYPE.SSN,
+            PHOTO_TYPE.DRIVER_LICENSE,
+            PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_confirm_picture_capture_two_face_papers)
+            PHOTO_TYPE.PORTRAIT -> getAppString(R.string.fekyc_confirm_picture_portrait_myself)
             else -> AppConfig.EMPTY_CHAR
         }
     }

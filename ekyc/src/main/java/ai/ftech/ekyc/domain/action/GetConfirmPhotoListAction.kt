@@ -1,18 +1,19 @@
 package ai.ftech.ekyc.domain.action
 
 import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.ekyc.domain.model.ekyc.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 
 class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoConfirmDetailInfo>>() {
     override suspend fun execute(rv: VoidRequest): List<PhotoConfirmDetailInfo> {
 
         val photoConfirmList = mutableListOf<PhotoInfo>()
 
-        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.SSN_FRONT))
-        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.SSN_BACK))
-        photoConfirmList.addAll(getPhotoListFake(EKYC_PHOTO_TYPE.PORTRAIT))
+        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.FRONT))
+        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.BACK))
+        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.FACE))
 
         convertPhotoListToConfirmPhotoList(photoConfirmList)
 
@@ -48,30 +49,17 @@ class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoC
         return photoConfirmDetailInfoList
     }
 
-    private fun convertEKYCPhotoTypeToConfirmDetailPhotoType(ekycType: EKYC_PHOTO_TYPE?): PhotoConfirmDetailInfo.PHOTO_TYPE? {
+    private fun convertEKYCPhotoTypeToConfirmDetailPhotoType(ekycType: UPLOAD_PHOTO_TYPE?): PHOTO_TYPE? {
         return when (ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT, EKYC_PHOTO_TYPE.SSN_BACK -> {
-                PhotoConfirmDetailInfo.PHOTO_TYPE.SSN
-            }
-
-            EKYC_PHOTO_TYPE.PORTRAIT -> {
-                PhotoConfirmDetailInfo.PHOTO_TYPE.PORTRAIT
-            }
-
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT, EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> {
-                PhotoConfirmDetailInfo.PHOTO_TYPE.DRIVER_LICENSE
-            }
-
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> {
-                PhotoConfirmDetailInfo.PHOTO_TYPE.PASSPORT
-            }
-            else -> {
-                null
-            }
+            UPLOAD_PHOTO_TYPE.FRONT,
+            UPLOAD_PHOTO_TYPE.BACK -> PHOTO_TYPE.SSN
+            UPLOAD_PHOTO_TYPE.FACE -> PHOTO_TYPE.PORTRAIT
+            UPLOAD_PHOTO_TYPE.PASSPORT -> PHOTO_TYPE.PASSPORT
+            else -> null
         }
     }
 
-    private fun getPhotoListFake(ekycType: EKYC_PHOTO_TYPE, size: Int = 1): List<PhotoInfo> {
+    private fun getPhotoListFake(ekycType: UPLOAD_PHOTO_TYPE, size: Int = 1): List<PhotoInfo> {
         val photoList = mutableListOf<PhotoInfo>()
 
         for (i in 0 until size) {

@@ -24,10 +24,6 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
     private val viewModel by viewModels<ConfirmPictureViewModel>()
     private val adapter = GroupAdapter()
 
-    override fun onPrepareInitView() {
-        super.onPrepareInitView()
-    }
-
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvConfirmPictureHeader)
@@ -41,22 +37,7 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                val dialog = ConfirmDialog.Builder()
-                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-                    .build()
-                dialog.listener = object : ConfirmDialog.IListener {
-                    override fun onLeftClick() {
-                        finish()
-                    }
-
-                    override fun onRightClick() {
-                        dialog.dismissDialog()
-                    }
-                }
-                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+                showConfirmDialog()
             }
         })
 
@@ -74,6 +55,8 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         }
     }
 
+    override fun getContainerId() = R.id.flconfirmPictureFrame
+
     private fun createConfirmPictureGroup(list: MutableList<PhotoConfirmDetailInfo>?) {
         list?.forEach { photoConfirmDetailInfo ->
             val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
@@ -89,5 +72,23 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         adapter.notifyAllGroupChanged()
     }
 
-    override fun getContainerId() = R.id.flconfirmPictureFrame
+
+    private fun showConfirmDialog() {
+        val dialog = ConfirmDialog.Builder()
+            .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
+            .setContent(getAppString(R.string.fekyc_confirm_notification_content))
+            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+            .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
+            .build()
+        dialog.listener = object : ConfirmDialog.IListener {
+            override fun onLeftClick() {
+                finish()
+            }
+
+            override fun onRightClick() {
+                dialog.dismissDialog()
+            }
+        }
+        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+    }
 }

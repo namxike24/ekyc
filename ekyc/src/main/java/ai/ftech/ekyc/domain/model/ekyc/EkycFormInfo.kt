@@ -38,25 +38,21 @@ class EkycFormInfo {
     enum class GENDER(val value: String) {
         UNKNOWN("UNKNOWN"),
         MALE("Nam"),
-        FEMALE("Nữ")
+        FEMALE("Nữ");
+
+        companion object {
+            fun valueOfName(value: String): GENDER? {
+                val item = values().find {
+                    it.value == value
+                }
+
+                return if (item != null) {
+                    item
+                } else {
+                    Log.e("GENDER", "can not find any GENDER for name: $value")
+                    null
+                }
+            }
+        }
     }
 }
-
-
-//class UserInfo {
-//    var fullName: String = ""
-//    var numberPapers: String = ""
-//    var dateOfIssue: DateInfo? = null
-//    var issuedBy: City? = null
-//    var gender: GENDER = GENDER.UNKNOWN
-//    var isEditable: Boolean = false
-//    var nation: Nation? = null
-//    var address: String = ""
-//    var note: String = ""
-//
-//    enum class GENDER {
-//        UNKNOWN,
-//        MALE,
-//        FEMALE
-//    }
-//}

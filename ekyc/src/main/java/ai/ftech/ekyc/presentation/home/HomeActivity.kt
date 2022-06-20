@@ -4,7 +4,7 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.ekyc.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.Manifest
 import android.widget.LinearLayout
@@ -47,19 +47,19 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         })
 
         llSSN.setOnSafeClick {
-            navigateToTakePictureScreen(EKYC_PHOTO_TYPE.SSN_FRONT)
+            navigateToTakePictureScreen(UPLOAD_PHOTO_TYPE.FRONT)
         }
 
         llDriverLicense.setOnSafeClick {
-            navigateToTakePictureScreen(EKYC_PHOTO_TYPE.SSN_BACK)
+            navigateToTakePictureScreen(UPLOAD_PHOTO_TYPE.BACK)
         }
 
         llPassport.setOnSafeClick {
-            navigateToTakePictureScreen(EKYC_PHOTO_TYPE.SSN_PORTRAIT)
+            navigateToTakePictureScreen(UPLOAD_PHOTO_TYPE.FACE)
         }
     }
 
-    private fun navigateToTakePictureScreen(ekycType: EKYC_PHOTO_TYPE) {
+    private fun navigateToTakePictureScreen(ekycType: UPLOAD_PHOTO_TYPE) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
                 navigateTo(TakePictureActivity::class.java) {
