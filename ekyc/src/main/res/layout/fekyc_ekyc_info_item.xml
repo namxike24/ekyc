@@ -1,53 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ai.ftech.ekyc.common.widget.leftcard.LeafCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lcvEkycInfoItmRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:padding="@dimen/fbase_dimen_8">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEkycInfoItmTitle"
+        style="@style/FBaseStyleText14Regular"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/fbase_dimen_8">
+        android:textColor="@color/fekyc_color_gray_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Họ và tên" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvEkycInfoItmTitle"
-            style="@style/FBaseStyleText14Regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/fekyc_color_gray_light"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Họ và tên" />
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/tvEkycInfoItmValue"
+        style="@style/FBaseStyleText14Bold"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/fbase_dimen_40"
+        android:layout_marginVertical="@dimen/fbase_dimen_4"
+        android:layout_marginTop="@dimen/fbase_dimen_4"
+        android:layout_marginEnd="@dimen/fbase_dimen_20"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="@color/fekyc_color_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivEkycInfoItmRightIcon"
+        app:layout_constraintStart_toStartOf="@id/tvEkycInfoItmTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvEkycInfoItmTitle"
+        tools:text="Hoàng Thị Toan" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/tvEkycInfoItmValue"
-            style="@style/FBaseStyleText14Bold"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginVertical="@dimen/fbase_dimen_4"
-            android:layout_marginEnd="@dimen/fbase_dimen_20"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:textColor="@color/fekyc_color_black"
-            app:layout_constraintBottom_toBottomOf="@id/ivEkycInfoItmRightIcon"
-            app:layout_constraintEnd_toStartOf="@id/ivEkycInfoItmRightIcon"
-            app:layout_constraintStart_toStartOf="@id/tvEkycInfoItmTitle"
-            app:layout_constraintTop_toTopOf="@id/ivEkycInfoItmRightIcon"
-            tools:text="Hoàng Thị Toan" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivEkycInfoItmRightIcon"
+        android:layout_width="@dimen/fbase_dimen_40"
+        android:layout_height="@dimen/fbase_dimen_40"
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/fbase_dimen_10"
+        app:layout_constraintBottom_toBottomOf="@id/tvEkycInfoItmValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvEkycInfoItmValue"
+        tools:src="@drawable/fekyc_ic_edit" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivEkycInfoItmRightIcon"
-            android:layout_width="@dimen/fbase_dimen_40"
-            android:layout_height="@dimen/fbase_dimen_40"
-            android:layout_marginTop="@dimen/fbase_dimen_4"
-            android:padding="@dimen/fbase_dimen_10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEkycInfoItmTitle"
-            tools:src="@drawable/fekyc_ic_edit" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ai.ftech.ekyc.common.widget.leftcard.LeafCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

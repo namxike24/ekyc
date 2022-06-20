@@ -27,8 +27,12 @@
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_warning_blue.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_cir_bg_tropical_blue.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_green_corner_8.xml" value="0.25" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_confirm_picture_activity.xml" value="0.3625" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_ekyc_info_activity.xml" value="0.2" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_ekyc_info_item.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_home_activity.xml" value="0.33" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_preview_picture_activity.xml" value="0.3625" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_search_view_layout.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_step_identity_item.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_take_picture_activity.xml" value="0.22" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_toolbar_layout.xml" value="0.3625" />

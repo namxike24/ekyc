@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fekyc_color_background">
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvEkycInfoHeader"
@@ -11,11 +12,11 @@
         android:layout_height="@dimen/fbase_dimen_88"
         android:background="@drawable/fekyc_bg_header"
         app:layout_constraintTop_toTopOf="parent"
-        app:tbv_right_icon_src="@drawable/fekyc_ic_close"
+        app:tbv_left_icon_src="@drawable/fekyc_ic_close"
         app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
         app:tbv_right_type="NONE"
-        app:tbv_title_text="@string/fekyc_home_title"
+        app:tbv_title_text="@string/fekyc_ekyc_info_title"
         app:tbv_title_text_size="@dimen/fbase_text_size_6" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -33,11 +34,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEkycInfoList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/fbase_dimen_20"
         android:layout_marginVertical="@dimen/fbase_dimen_10"
-        app:layout_constraintBottom_toTopOf="@id/btnEkycInfoCompleted"
+        android:overScrollMode="never"
+        android:background="@drawable/fekyc_shape_rect_bg_white_corner_10"
         app:layout_constraintTop_toBottomOf="@id/tvEkycInfoEkycTypeContent"
         tools:listitem="@layout/fekyc_ekyc_info_item" />
 
