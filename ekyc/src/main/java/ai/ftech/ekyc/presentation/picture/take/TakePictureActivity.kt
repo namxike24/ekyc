@@ -2,12 +2,14 @@ package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.getAppString
+import ai.ftech.dev.base.extension.observer
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
@@ -27,21 +29,26 @@ import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
-        const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
+        const val SEND_PHOTO_TYPE_KEY = "SEND_PHOTO_TYPE_KEY"
     }
 
-    private val viewModel by viewModels<TakePictureViewModel>()
+    /**
+     * view
+     */
     private lateinit var ovFrameCrop: OverlayView
     private lateinit var cvCameraView: CameraView
     private lateinit var tbvHeader: ToolbarView
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
-    private var warningDialog: WarningCaptureDialog? = null
+
+    /**
+     * data
+     */
+    private val viewModel by viewModels<TakePictureViewModel>()
     private var isFrontFace = false
     private var isFlash = false
     private var file: File? = null
-
 
     override fun onResume() {
         super.onResume()
@@ -68,7 +75,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? UPLOAD_PHOTO_TYPE
+        viewModel.photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_TYPE
     }
 
     override fun onInitView() {
@@ -86,7 +93,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                finish()
+                showConfirmDialog()
             }
 
             override fun onRightIconClick() {
@@ -152,6 +159,15 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
+    override fun onObserverViewModel() {
+        super.onObserverViewModel()
+        observer(viewModel.uploadPhoto) {
+            if (it == true) {
+                navigateTo(TakePictureActivity::class.java)
+            }
+        }
+    }
+
     private fun uploadFile(result: PictureResult) {
         val path = viewModel.getFolderPathByEkycType()
 
@@ -175,25 +191,23 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
-            intent.putExtra(PreviewPictureActivity.SEND_EKYC_TYPE_KEY, viewModel.ekycType)
+            intent.putExtra(PreviewPictureActivity.SEND_EKYC_TYPE_KEY, viewModel.uploadType)
             intent.putExtra(PreviewPictureActivity.SEND_PREVIEW_IMAGE_KEY, path)
         }
     }
 
     private fun setFacing() {
-        when (viewModel.ekycType) {
+        when (viewModel.uploadType) {
             UPLOAD_PHOTO_TYPE.FRONT,
             UPLOAD_PHOTO_TYPE.BACK,
             UPLOAD_PHOTO_TYPE.PASSPORT -> {
                 cvCameraView.facing = Facing.BACK
                 isFrontFace = false
             }
-
             UPLOAD_PHOTO_TYPE.FACE -> {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
             }
-
             else -> {
                 cvCameraView.facing = Facing.BACK
                 isFrontFace = false
@@ -202,26 +216,21 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     }
 
     private fun getWarningType(): WARNING_TYPE? {
-        return when (viewModel.ekycType) {
+        return when (viewModel.uploadType) {
             UPLOAD_PHOTO_TYPE.FRONT,
             UPLOAD_PHOTO_TYPE.BACK,
             UPLOAD_PHOTO_TYPE.PASSPORT -> WARNING_TYPE.PAPERS
-
             UPLOAD_PHOTO_TYPE.FACE -> WARNING_TYPE.PORTRAIT
-
             else -> null
         }
     }
 
     private fun getToolbarTitleByEkycType(): String {
-        return when (viewModel.ekycType) {
+        return when (viewModel.uploadType) {
             UPLOAD_PHOTO_TYPE.FRONT,
             UPLOAD_PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_take_picture_take_front)
-
             UPLOAD_PHOTO_TYPE.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-
             UPLOAD_PHOTO_TYPE.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
             else -> AppConfig.EMPTY_CHAR
         }
     }

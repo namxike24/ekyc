@@ -170,23 +170,4 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             }
             .show(supportFragmentManager)
     }
-
-    private fun showConfirmDialog() {
-        val dialog = ConfirmDialog.Builder()
-            .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-            .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-            .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-            .build()
-        dialog.listener = object : ConfirmDialog.IListener {
-            override fun onLeftClick() {
-                finish()
-            }
-
-            override fun onRightClick() {
-                dialog.dismissDialog()
-            }
-        }
-        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
-    }
 }

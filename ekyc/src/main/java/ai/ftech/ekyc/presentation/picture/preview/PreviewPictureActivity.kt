@@ -27,9 +27,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     private lateinit var btnTakeAgain: Button
 
     private val viewModel by viewModels<PreviewPictureViewModel>()
-    private var warningDialog: WarningCaptureDialog? = null
     private val imageLoader = ImageLoaderFactory.glide()
-
 
     override fun onResume() {
         super.onResume()
@@ -66,22 +64,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                val dialog = ConfirmDialog.Builder()
-                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-                    .build()
-                dialog.listener = object : ConfirmDialog.IListener {
-                    override fun onLeftClick() {
-                        finish()
-                    }
-
-                    override fun onRightClick() {
-                        dialog.dismissDialog()
-                    }
-                }
-                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+                showConfirmDialog()
             }
 
             override fun onRightIconClick() {
@@ -100,11 +83,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         return when (viewModel.ekycType) {
             UPLOAD_PHOTO_TYPE.FRONT,
             UPLOAD_PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_take_picture_take_front)
-
             UPLOAD_PHOTO_TYPE.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-
             UPLOAD_PHOTO_TYPE.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
             else -> AppConfig.EMPTY_CHAR
         }
     }
@@ -114,9 +94,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
             UPLOAD_PHOTO_TYPE.FRONT,
             UPLOAD_PHOTO_TYPE.BACK,
             UPLOAD_PHOTO_TYPE.PASSPORT -> WARNING_TYPE.PAPERS
-
             UPLOAD_PHOTO_TYPE.FACE -> WARNING_TYPE.PORTRAIT
-
             else -> null
         }
     }

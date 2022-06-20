@@ -62,7 +62,7 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
             val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
                 this.listener = object : ConfirmPictureGroup.IListener {
                     override fun onClickItem(item: PhotoInfo) {
-                        Log.d(TAG, "onClickItem: ${item.ekycType?.name}")
+                        Log.d(TAG, "onClickItem: ${item.uploadType?.name}")
                         replaceFragment(ConfirmPictureFragment())
                     }
                 }
@@ -70,25 +70,5 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
             adapter.addGroupData(groupData)
         }
         adapter.notifyAllGroupChanged()
-    }
-
-
-    private fun showConfirmDialog() {
-        val dialog = ConfirmDialog.Builder()
-            .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-            .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-            .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-            .build()
-        dialog.listener = object : ConfirmDialog.IListener {
-            override fun onLeftClick() {
-                finish()
-            }
-
-            override fun onRightClick() {
-                dialog.dismissDialog()
-            }
-        }
-        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
     }
 }

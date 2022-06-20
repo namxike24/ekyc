@@ -16,6 +16,7 @@ class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
             UPLOAD_PHOTO_TYPE.FRONT -> repo.verifyIdentityFront(path, type)
             UPLOAD_PHOTO_TYPE.BACK -> repo.verifyIdentityBack(path, type)
             UPLOAD_PHOTO_TYPE.FACE -> repo.captureFace(path)
+            else -> false
         }
     }
 

@@ -8,12 +8,11 @@ import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 
 class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoConfirmDetailInfo>>() {
     override suspend fun execute(rv: VoidRequest): List<PhotoConfirmDetailInfo> {
-
         val photoConfirmList = mutableListOf<PhotoInfo>()
 
-        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.FRONT))
-        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.BACK))
-        photoConfirmList.addAll(getPhotoListFake(UPLOAD_PHOTO_TYPE.FACE))
+        photoConfirmList.add(getPhotoListFake(UPLOAD_PHOTO_TYPE.FRONT))
+        photoConfirmList.add(getPhotoListFake(UPLOAD_PHOTO_TYPE.BACK))
+        photoConfirmList.add(getPhotoListFake(UPLOAD_PHOTO_TYPE.FACE))
 
         convertPhotoListToConfirmPhotoList(photoConfirmList)
 
@@ -25,7 +24,7 @@ class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoC
         val photoConfirmDetailInfoList = mutableListOf<PhotoConfirmDetailInfo>()
 
         photoConfirmList.forEach { photoInfo ->
-            convertEKYCPhotoTypeToConfirmDetailPhotoType(photoInfo.ekycType)?.let { photoType ->
+            convertEKYCPhotoTypeToConfirmDetailPhotoType(photoInfo.uploadType)?.let { photoType ->
                 val index = photoConfirmDetailInfoList.indexOfFirst { it.photoType == photoType }
 
                 val photoConfirmDetail = if (index == -1) {
@@ -59,18 +58,10 @@ class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoC
         }
     }
 
-    private fun getPhotoListFake(ekycType: UPLOAD_PHOTO_TYPE, size: Int = 1): List<PhotoInfo> {
-        val photoList = mutableListOf<PhotoInfo>()
-
-        for (i in 0 until size) {
-            val photoInfo = PhotoInfo().apply {
-                this.url = "/storage/emulated/0/Android/data/ai.ftech.ekyc/files/ftech-ekyc/identity_front.png"
-                this.ekycType = ekycType
-            }
-
-            photoList.add(photoInfo)
+    private fun getPhotoListFake(ekycType: UPLOAD_PHOTO_TYPE): PhotoInfo {
+        return PhotoInfo().apply {
+            this.url = "/storage/emulated/0/Android/data/ai.ftech.ekyc/files/ftech-ekyc/identity_front.png"
+            this.uploadType = ekycType
         }
-
-        return photoList
     }
 }

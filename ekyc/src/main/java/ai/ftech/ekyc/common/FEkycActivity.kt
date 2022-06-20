@@ -1,6 +1,10 @@
 package ai.ftech.ekyc.common
 
 import ai.ftech.dev.base.common.BaseActivity
+import ai.ftech.dev.base.extension.getAppString
+import ai.ftech.ekyc.R
+import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
+import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.utils.KeyboardUtility
 import android.graphics.Rect
 import android.view.MotionEvent
@@ -11,6 +15,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId) {
     var viewTouchOutside: View? = null
     var listener: ITouchOutsideViewListener? = null
         private set
+    var warningDialog: WarningCaptureDialog? = null
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
@@ -44,6 +49,25 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId) {
 
     fun removeTouchRootListener() {
         setOnTouchOutsideViewListener(null, null)
+    }
+
+    fun showConfirmDialog() {
+        val dialog = ConfirmDialog.Builder()
+            .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
+            .setContent(getAppString(R.string.fekyc_confirm_notification_content))
+            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+            .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
+            .build()
+        dialog.listener = object : ConfirmDialog.IListener {
+            override fun onLeftClick() {
+                finish()
+            }
+
+            override fun onRightClick() {
+                dialog.dismissDialog()
+            }
+        }
+        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
     }
 
     private fun setOnTouchOutsideViewListener(view: View?, listener: ITouchOutsideViewListener?) {
