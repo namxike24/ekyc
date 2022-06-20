@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.domain.model
+package ai.ftech.ekyc.domain.model.ekyc
 
 enum class EKYC_PHOTO_TYPE {
     SSN_FRONT,

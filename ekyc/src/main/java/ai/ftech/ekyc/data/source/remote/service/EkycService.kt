@@ -18,11 +18,11 @@ interface EkycService : IApiService {
 
     @Multipart
     @POST("/v1/ekyc/nationId")
-    fun verifyIdentityFront(@Part file: MultipartBody.Part, @PartMap map: Map<String, RequestBody>): Call<VerifyIdentityResponse>
+    fun verifyIdentityFront(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
 
     @Multipart
     @POST("/v1/ekyc/nationId")
-    fun verifyIdentityBack(@Part file: MultipartBody.Part, @PartMap map: Map<String, RequestBody>): Call<VerifyIdentityResponse>
+    fun verifyIdentityBack(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
 
     @Multipart
     @POST("/v1/ekyc/captureFace")

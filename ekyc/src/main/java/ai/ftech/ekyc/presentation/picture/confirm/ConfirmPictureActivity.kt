@@ -7,8 +7,8 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.info.EkycInfoActivity
 import android.util.Log

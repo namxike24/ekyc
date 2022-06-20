@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.domain.action
 
 import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 
 class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoConfirmDetailInfo>>() {
     override suspend fun execute(rv: VoidRequest): List<PhotoConfirmDetailInfo> {

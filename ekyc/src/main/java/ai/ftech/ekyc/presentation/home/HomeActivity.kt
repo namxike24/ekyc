@@ -4,7 +4,7 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.EKYC_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.Manifest
 import android.widget.LinearLayout

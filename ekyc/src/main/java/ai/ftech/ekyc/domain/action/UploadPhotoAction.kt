@@ -2,7 +2,7 @@ package ai.ftech.ekyc.domain.action
 
 import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.ekyc.di.RepositoryFactory
-import ai.ftech.ekyc.domain.model.UPLOAD_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 
 class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
     override suspend fun execute(rv: UploadRV): Boolean {

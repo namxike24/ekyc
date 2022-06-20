@@ -9,8 +9,8 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView

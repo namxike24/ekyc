@@ -1,7 +1,6 @@
 package ai.ftech.ekyc.domain.repo
 
-import ai.ftech.ekyc.domain.model.UPLOAD_PHOTO_TYPE
-import java.io.File
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 
 interface IEkycRepo {
     fun verifyIdentityPassport(absolutePath:String) : Boolean
