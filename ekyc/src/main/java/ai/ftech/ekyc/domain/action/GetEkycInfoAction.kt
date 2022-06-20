@@ -8,7 +8,6 @@ import android.util.Log
 class GetEkycInfoAction : BaseAction<BaseAction.VoidRequest, EkycInfo>() {
     override suspend fun execute(rv: VoidRequest): EkycInfo {
         val repo = RepositoryFactory.getInfoRepo()
-        val x = repo.getEkycInfo()
-        return x
+        return repo.getEkycInfo()
     }
 }

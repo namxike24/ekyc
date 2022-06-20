@@ -4,7 +4,7 @@ import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
 import ai.ftech.dev.base.extension.*
 import ai.ftech.ekyc.R
-import ai.ftech.ekyc.domain.model.ekyc.FormInfo
+import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -29,7 +29,7 @@ class FormInfoAdapter : BaseAdapter() {
     @SuppressLint("NotifyDataSetChanged")
     override fun resetData(dataList: List<Any>) {
         val list = dataList.map {
-            FormInfoDisplay(it as FormInfo)
+            FormInfoDisplay(it as EkycFormInfo)
         }
         this.dataList.clear()
         this.dataList.addAll(list)
@@ -67,15 +67,15 @@ class FormInfoAdapter : BaseAdapter() {
             if (data.isEditable()) {
                 ivIcon.show()
                 when (data.getFieldType()) {
-                    FormInfo.FIELD_TYPE.STRING,
-                    FormInfo.FIELD_TYPE.NUMBER,
-                    FormInfo.FIELD_TYPE.COUNTRY -> {
+                    EkycFormInfo.FIELD_TYPE.STRING,
+                    EkycFormInfo.FIELD_TYPE.NUMBER,
+                    EkycFormInfo.FIELD_TYPE.COUNTRY -> {
                         setEnableEditText(true)
                     }
 
-                    FormInfo.FIELD_TYPE.DATE,
-                    FormInfo.FIELD_TYPE.GENDER,
-                    FormInfo.FIELD_TYPE.NATIONAL -> {
+                    EkycFormInfo.FIELD_TYPE.DATE,
+                    EkycFormInfo.FIELD_TYPE.GENDER,
+                    EkycFormInfo.FIELD_TYPE.NATIONAL -> {
                         setEnableEditText(false)
                     }
 
@@ -93,7 +93,7 @@ class FormInfoAdapter : BaseAdapter() {
         }
     }
 
-    class FormInfoDisplay(val data: FormInfo) {
+    class FormInfoDisplay(val data: EkycFormInfo) {
 
         fun getTitle() = data.title
 
@@ -101,20 +101,20 @@ class FormInfoAdapter : BaseAdapter() {
 
         fun getIcon(): Drawable? {
             return when (getFieldType()) {
-                FormInfo.FIELD_TYPE.STRING,
-                FormInfo.FIELD_TYPE.NUMBER,
-                FormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
+                EkycFormInfo.FIELD_TYPE.STRING,
+                EkycFormInfo.FIELD_TYPE.NUMBER,
+                EkycFormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
 
-                FormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
+                EkycFormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
 
-                FormInfo.FIELD_TYPE.GENDER,
-                FormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
+                EkycFormInfo.FIELD_TYPE.GENDER,
+                EkycFormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
 
                 else -> null
             }
         }
 
-        fun getFieldType(): FormInfo.FIELD_TYPE? {
+        fun getFieldType(): EkycFormInfo.FIELD_TYPE? {
             return data.fieldType
         }
 
@@ -124,6 +124,6 @@ class FormInfoAdapter : BaseAdapter() {
     }
 
     interface IListener {
-        fun onClickItem(item: FormInfo)
+        fun onClickItem(item: EkycFormInfo)
     }
 }

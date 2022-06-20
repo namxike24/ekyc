@@ -5,7 +5,7 @@ import ai.ftech.dev.base.extension.observer
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.ekyc.FormInfo
+import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +26,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
     private val adapter = FormInfoAdapter().apply {
         listener = object : FormInfoAdapter.IListener {
-            override fun onClickItem(item: FormInfo) {
+            override fun onClickItem(item: EkycFormInfo) {
 
             }
         }
@@ -56,22 +56,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                val dialog = ConfirmDialog.Builder()
-                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-                    .build()
-                dialog.listener = object : ConfirmDialog.IListener {
-                    override fun onLeftClick() {
-                        finish()
-                    }
-
-                    override fun onRightClick() {
-                        dialog.dismissDialog()
-                    }
-                }
-                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+                showConfirmDialog()
             }
         })
 
@@ -90,4 +75,22 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         }
     }
 
+    private fun showConfirmDialog() {
+        val dialog = ConfirmDialog.Builder()
+            .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
+            .setContent(getAppString(R.string.fekyc_confirm_notification_content))
+            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+            .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
+            .build()
+        dialog.listener = object : ConfirmDialog.IListener {
+            override fun onLeftClick() {
+                finish()
+            }
+
+            override fun onRightClick() {
+                dialog.dismissDialog()
+            }
+        }
+        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+    }
 }
