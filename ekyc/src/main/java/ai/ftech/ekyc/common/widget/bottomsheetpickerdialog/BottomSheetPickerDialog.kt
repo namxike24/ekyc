@@ -3,25 +3,26 @@ package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
 import ai.ftech.dev.base.extension.getScreenHeight
+import ai.ftech.dev.base.extension.gone
 import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
 import ai.ftech.ekyc.common.widget.searchview.SearchView
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
-import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
-import java.util.*
 
 class BottomSheetPickerDialog private constructor(
     var lstPickers: List<BottomSheetPicker> = listOf(),
     var chooseItemListener: ((BottomSheetPicker) -> Unit)? = null,
     var title: String? = null,
     var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT,
-    var visibleItem: Int? = null
+    var visibleItem: Int? = null,
+    var hasSearch: Boolean = true
 ) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
 
     companion object {
@@ -70,6 +71,12 @@ class BottomSheetPickerDialog private constructor(
             addItems(lstPickers.toMutableList())
         }
 
+        if (hasSearch) {
+            svBottomSheetPickerDialog.show()
+        } else {
+            svBottomSheetPickerDialog.gone()
+        }
+
         svBottomSheetPickerDialog.apply {
             setTextChangeListener { value ->
                 cvBottomSheetPickerDlg.resetData(lstPickers.filter {
@@ -94,6 +101,7 @@ class BottomSheetPickerDialog private constructor(
         private var hint: String? = null
         private var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT
         private var visibleItem: Int? = null
+        private var hasSearch: Boolean = true
 
         fun setListPicker(lstPickers: List<BottomSheetPicker>) = apply {
             this.lstPickers = lstPickers
@@ -115,9 +123,13 @@ class BottomSheetPickerDialog private constructor(
             this.visibleItem = limit
         }
 
+        fun hasSearch(isSearch: Boolean) = apply {
+            this.hasSearch = isSearch
+        }
+
         fun show(fragmentManager: FragmentManager?) {
             if (fragmentManager == null) return
-            BottomSheetPickerDialog(lstPickers, chooseItemListener, title, ratioDialogHeight, visibleItem).show(fragmentManager, null)
+            BottomSheetPickerDialog(lstPickers, chooseItemListener, title, ratioDialogHeight, visibleItem, hasSearch).show(fragmentManager, null)
         }
     }
 

@@ -1,3 +1,8 @@
 package ai.ftech.ekyc.domain.model.address
 
-data class City(val id: Int, val code: String, val name: String, val displayName: String)
+class City {
+    var id: Int? = null
+    var code: String? = null
+    var name: String? = null
+    var displayName: String? = null
+}

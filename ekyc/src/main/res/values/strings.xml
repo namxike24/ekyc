@@ -29,10 +29,6 @@
     <string name="fekyc_home_select_type_of_papers_ssn">Căn cước công dân / Chứng minh thư</string>
     <string name="fekyc_home_select_type_of_papers_driver_license">Giấy phép lái xe</string>
     <string name="fekyc_home_select_type_of_papers_passport">Hộ chiếu Việt Nam</string>
-
-
-
-
     <!--endregion-->
 
 
@@ -92,6 +88,11 @@
     <!--region Ekyc Info Activity-->
     <string name="fekyc_ekyc_info_title">Thông tin của bạn</string>
     <string name="fekyc_ekyc_info_completed">Hoàn tất</string>
+    <string name="fekyc_ekyc_info_select_time">Chọn thời gian</string>
+    <string name="fekyc_ekyc_info_select_issued_by">Chọn nơi cấp giấy tờ</string>
+    <string name="fekyc_ekyc_info_select_gender">Chọn giới tính</string>
+    <string name="fekyc_ekyc_info_gender_male">Nam</string>
+    <string name="fekyc_ekyc_info_gender_female">Nữ</string>
     <!--endregion-->
 
 </resources>

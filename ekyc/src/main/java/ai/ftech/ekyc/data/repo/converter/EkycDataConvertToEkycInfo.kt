@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.data.repo.converter.ekyc
+package ai.ftech.ekyc.data.repo.converter
 
 import ai.ftech.dev.base.common.converter.Converter
 import ai.ftech.dev.base.common.converter.IConverter
@@ -7,6 +7,7 @@ import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycData
 import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycFormData
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
+import android.util.Log
 
 class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
     private val formMapper = Mapper(EkycFormData::class, EkycFormInfo::class).apply {
@@ -33,7 +34,12 @@ class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
 
         register(EkycFormInfo::fieldType, object : Converter<String?, EkycFormInfo.FIELD_TYPE?> {
             override fun invoke(p1: String?): EkycFormInfo.FIELD_TYPE? {
-                return EkycFormInfo.FIELD_TYPE.valueOfName(p1)
+                return if (p1 != null) {
+                    EkycFormInfo.FIELD_TYPE.valueOfName(p1)
+                } else {
+                    Log.e("FIELD_TYPE", "`FIELD_TYPE` response form server is null")
+                    null
+                }
             }
         })
     }

@@ -1,7 +1,10 @@
 package ai.ftech.ekyc.data.repo
 
+import ai.ftech.dev.base.common.converter.ListConverter
 import ai.ftech.dev.base.repo.BaseRepo
-import ai.ftech.ekyc.data.repo.converter.ekyc.EkycDataConvertToEkycInfo
+import ai.ftech.ekyc.data.repo.converter.CityDataConvertToCity
+import ai.ftech.ekyc.data.repo.converter.EkycDataConvertToEkycInfo
+import ai.ftech.ekyc.data.repo.converter.NationDataConvertToNation
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.service.InfoService
@@ -20,10 +23,18 @@ class InfoRepoImpl : BaseRepo(), IInfoRepo {
     }
 
     override fun getCityList(): List<City> {
-        TODO("Not yet implemented")
+        val service = invokeFEkycService(InfoService::class.java)
+
+        return service.getCityList().invokeApi { _, body ->
+            ListConverter(CityDataConvertToCity()).convert(body.data!!)
+        }
     }
 
     override fun getNationList(): List<Nation> {
-        TODO("Not yet implemented")
+        val service = invokeFEkycService(InfoService::class.java)
+
+        return service.getNationList().invokeApi { _, body ->
+            ListConverter(NationDataConvertToNation()).convert(body.data!!)
+        }
     }
 }

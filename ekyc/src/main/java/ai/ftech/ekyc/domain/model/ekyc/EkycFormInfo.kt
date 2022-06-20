@@ -12,7 +12,6 @@ class EkycFormInfo {
     var fieldType: FIELD_TYPE? = null
 
     enum class FIELD_TYPE(val type: String) {
-        NULL("null"),
         STRING("string"),
         NUMBER("number"),
         DATE("date"),
@@ -21,7 +20,7 @@ class EkycFormInfo {
         NATIONAL("national");
 
         companion object {
-            fun valueOfName(value: String?): FIELD_TYPE? {
+            fun valueOfName(value: String): FIELD_TYPE? {
                 val item = values().find {
                     it.type == value
                 }
@@ -34,6 +33,12 @@ class EkycFormInfo {
                 }
             }
         }
+    }
+
+    enum class GENDER(val value: String) {
+        UNKNOWN("UNKNOWN"),
+        MALE("Nam"),
+        FEMALE("Nữ")
     }
 }
 
