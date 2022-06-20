@@ -20,7 +20,9 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivPreviewPictureImageSrc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/fbase_dimen_10"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@id/btnPreviewPictureTakeAgain"
         app:layout_constraintTop_toBottomOf="@id/tbvPreviewPictureHeader"
         tools:src="@drawable/default_photo" />

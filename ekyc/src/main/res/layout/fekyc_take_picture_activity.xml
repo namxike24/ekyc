@@ -14,11 +14,13 @@
         app:cameraSnapshotMaxWidth="1920" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
+        android:id="@+id/ovTakePictureFrameCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:ov_frame_take_picture="@drawable/bg_circle_stroke_blue" />
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+
         android:id="@+id/tbvTakePictureHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_88"
@@ -59,15 +61,15 @@
         app:layout_constraintStart_toEndOf="@id/ivTakePictureCapture"
         app:layout_constraintTop_toTopOf="@id/ivTakePictureCapture" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivTakePictureCrop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fbase_dimen_220"
-        android:layout_marginHorizontal="@dimen/fbase_dimen_32"
-        android:src="@drawable/fekyc_ic_photo_crop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cvTakePictureCameraView" />
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/ivTakePictureCrop"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/fbase_dimen_220"-->
+<!--        android:layout_marginHorizontal="@dimen/fbase_dimen_32"-->
+<!--        android:src="@drawable/fekyc_ic_photo_crop"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/cvTakePictureCameraView" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

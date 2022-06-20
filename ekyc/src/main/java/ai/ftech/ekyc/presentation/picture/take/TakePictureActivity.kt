@@ -4,6 +4,7 @@ import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
+import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
@@ -11,21 +12,16 @@ import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.graphics.RectF
-import android.view.View
+import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
@@ -35,6 +31,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
+    private lateinit var ovFrameCrop: OverlayView
     private lateinit var cvCameraView: CameraView
     private lateinit var tbvHeader: ToolbarView
     private lateinit var ivFlash: ImageView
@@ -44,6 +41,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private var warningDialog: WarningCaptureDialog? = null
     private var isFrontFace = false
     private var isFlash = false
+    private var file: File? = null
+
 
     override fun onResume() {
         super.onResume()
@@ -72,12 +71,13 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onInitView() {
         super.onInitView()
+        ovFrameCrop = findViewById(R.id.ovTakePictureFrameCrop)
         tbvHeader = findViewById(R.id.tbvTakePictureHeader)
         cvCameraView = findViewById(R.id.cvTakePictureCameraView)
         ivFlash = findViewById(R.id.ivTakePictureFlash)
         ivCapture = findViewById(R.id.ivTakePictureCapture)
         ivChangeCamera = findViewById(R.id.ivTakePictureChangeCamera)
-        ivTakePictureCrop = findViewById(R.id.ivTakePictureCrop)
+//        ivTakePictureCrop = findViewById(R.id.ivTakePictureCrop)
 
         setFacing()
 
@@ -92,6 +92,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 warningDialog?.showDialog(supportFragmentManager, warningDialog!!::class.java.simpleName)
             }
         })
+
+
 
         cvCameraView.apply {
             setLifecycleOwner(this@TakePictureActivity)
@@ -139,6 +141,17 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 isFrontFace = true
             }
         }
+
+        ovFrameCrop.listener = object : OverlayView.ICallback {
+            override fun onTakePicture(bitmap: Bitmap) {
+                val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
+                navigateToPreviewScreen(file?.absolutePath!!)
+            }
+
+            override fun onError(exception: Exception) {
+                Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun uploadFile(result: PictureResult) {
@@ -153,83 +166,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             result.toFile(file) {
                 it?.let { file ->
-                    //crop lại ảnh theo vùng view truyền vào
-                    val bitmapCrop = cropBitMap(file, ivTakePictureCrop)
-
-                    //resize về size ảnh 960
-                    val bitmapResize = resizeBitmap(bitmapCrop)
-
-                    //tạo file resize để upload
-                    val resizeFile = bitmapToFile(bitmapResize, path)
-                    if (resizeFile?.absolutePath != null) {
-                        viewModel.uploadPhoto(resizeFile.absolutePath)
-                    }
+                    this.file = file
+                    ovFrameCrop.attachFile(file.absolutePath)
                 }
             }
-        }
-    }
-
-    private fun cropBitMap(file: File, viewCrop: View): Bitmap {
-        val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-        val rotationMatrix = Matrix()
-        //xử lý ảnh bị xoay bởi camera Samsung
-        return if (bitmap.width > bitmap.height) {
-            rotationMatrix.postRotate(90f)
-
-            val ratio = bitmap.height.toDouble() / cvCameraView.width.toDouble()
-            val x = (((cvCameraView.height - viewCrop.height) / 2) * ratio).toInt()
-            val y = (((cvCameraView.width - viewCrop.width) / 2) * ratio).toInt()
-            Bitmap.createBitmap(
-                bitmap,
-                x,
-                y,
-                bitmap.width - (x * 2),
-                bitmap.height - (y * 2),
-                rotationMatrix,
-                false
-            )
-        } else {
-            rotationMatrix.postRotate(0f)
-            val ratio = bitmap.width.toDouble() / cvCameraView.width.toDouble()
-            val x = (((cvCameraView.width - viewCrop.width) / 2) * ratio).toInt()
-            val y = (((cvCameraView.height - viewCrop.height) / 2) * ratio).toInt()
-
-            Bitmap.createBitmap(
-                bitmap,
-                x,
-                y,
-                bitmap.width - (x * 2),
-                bitmap.height - (y * 2),
-                rotationMatrix,
-                false
-            )
-        }
-    }
-
-    private fun resizeBitmap(bitmap: Bitmap): Bitmap {
-        val matrix = Matrix()
-        matrix.setRectToRect(RectF(0f, 0f, bitmap.width.toFloat(), bitmap.height.toFloat()), RectF(0f, 0f, IMAGE_CROP_MAX_SIZE, IMAGE_CROP_MAX_SIZE), Matrix.ScaleToFit.CENTER)
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
-
-    private fun bitmapToFile(bitmap: Bitmap, path: String): File? {
-        var file: File? = null
-        return try {
-            file = File(path)
-            file.createNewFile()
-
-            val bos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 0, bos)
-            val bitmapData: ByteArray = bos.toByteArray()
-
-            val fos = FileOutputStream(file)
-            fos.write(bitmapData)
-            fos.flush()
-            fos.close()
-            file
-        } catch (e: Exception) {
-            e.printStackTrace()
-            file
         }
     }
 
