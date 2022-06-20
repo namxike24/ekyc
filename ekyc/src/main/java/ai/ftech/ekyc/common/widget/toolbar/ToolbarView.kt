@@ -22,10 +22,13 @@ class ToolbarView @JvmOverloads constructor(
         private const val RIGHT_TYPE_ICON = 2
     }
 
-    private lateinit var ivClose: ImageView
-    private lateinit var tvTitle: TextView
+    private lateinit var ivLeftIcon: ImageView
+
+    private lateinit var tvCenterTitle: TextView
+
     private lateinit var tvRightText: TextView
     private lateinit var ivRightIcon: ImageView
+
     private var listener: IListener? = null
 
     init {
@@ -35,11 +38,11 @@ class ToolbarView @JvmOverloads constructor(
     }
 
     fun setTitle(char: CharSequence) {
-        tvTitle.text = char
+        tvCenterTitle.text = char
     }
 
     fun clearTitle() {
-        tvTitle.text = ""
+        tvCenterTitle.text = ""
     }
 
     fun setLeftText(char: CharSequence) {
@@ -55,13 +58,13 @@ class ToolbarView @JvmOverloads constructor(
     }
 
     private fun initView() {
-        ivClose = findViewById(R.id.ivToolbarClose)
-        tvTitle = findViewById(R.id.tvToolbarTitle)
+        ivLeftIcon = findViewById(R.id.ivToolbarLeftIcon)
+        tvCenterTitle = findViewById(R.id.tvToolbarCenterTitle)
         tvRightText = findViewById(R.id.tvToolbarRightText)
         ivRightIcon = findViewById(R.id.ivToolbarRightIcon)
 
-        ivClose.setOnSafeClick {
-            listener?.onCloseClick()
+        ivLeftIcon.setOnSafeClick {
+            listener?.onLeftIconClick()
         }
 
         tvRightText.setOnSafeClick {
@@ -76,8 +79,11 @@ class ToolbarView @JvmOverloads constructor(
     private fun init(attrs: AttributeSet?) {
         val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.ToolbarView, 0, 0)
 
-        tvTitle.text = ta.getText(R.styleable.ToolbarView_tbv_title_text)
-        tvTitle.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_title_text_size, 12f)
+        val leftIcon = ta.getDrawable(R.styleable.ToolbarView_tbv_left_icon_src)
+        ivLeftIcon.setImageDrawable(leftIcon)
+
+        tvCenterTitle.text = ta.getText(R.styleable.ToolbarView_tbv_title_text)
+        tvCenterTitle.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_title_text_size, 12f)
 
         tvRightText.text = ta.getText(R.styleable.ToolbarView_tbv_right_text_content)
         tvRightText.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_right_text_text_size, 12f)
@@ -102,7 +108,7 @@ class ToolbarView @JvmOverloads constructor(
     }
 
     interface IListener {
-        fun onCloseClick() {}
+        fun onLeftIconClick() {}
         fun onRightTextClick() {}
         fun onRightIconClick() {}
     }

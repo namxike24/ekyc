@@ -17,6 +17,8 @@ abstract class BaseFragment(@LayoutRes protected val layoutId: Int) : Fragment()
     }
     protected lateinit var myInflater: LayoutInflater
     private lateinit var callback: OnBackPressedCallback
+    protected lateinit var viewRoot : View
+
 
     init {
 
@@ -35,9 +37,9 @@ abstract class BaseFragment(@LayoutRes protected val layoutId: Int) : Fragment()
         if (!::myInflater.isInitialized) {
             myInflater = LayoutInflater.from(requireActivity())
         }
-        val view = attachView(inflater, container, savedInstanceState)
+       viewRoot= attachView(inflater, container, savedInstanceState)
         onInitBinding()
-        return view
+        return viewRoot
     }
 
     override fun onViewCreated(

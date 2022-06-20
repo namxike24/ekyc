@@ -39,7 +39,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         rvListStep.adapter = adapter
 
         tbvHeader.setListener(object : ToolbarView.IListener {
-            override fun onCloseClick() {
+            override fun onLeftIconClick() {
                 finish()
             }
 

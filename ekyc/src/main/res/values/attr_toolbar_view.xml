@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ToolbarView">
-        <attr name="tbv_icon_close" format="reference" />
+        <attr name="tbv_left_icon_src" format="reference" />
 
         <attr name="tbv_title_text" format="string" />
         <attr name="tbv_title_text_size" format="dimension" />

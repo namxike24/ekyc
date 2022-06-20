@@ -5,6 +5,7 @@ import ai.ftech.dev.base.adapter.group.GroupData
 import ai.ftech.dev.base.adapter.group.GroupVH
 import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.getAppString
+import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
@@ -22,6 +23,7 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
 
     private val imageLoader = ImageLoaderFactory.glide()
     private var groupTitle: String
+    var listener: IListener? = null
 
     init {
         groupTitle = getGroupTitle(data.photoType)
@@ -93,6 +95,11 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
             ivPhoto = view.findViewById(R.id.ivConfirmPictureItmPhoto)
             ivIcon = view.findViewById(R.id.ivConfirmPictureItmIcon)
             tvMessage = view.findViewById(R.id.tvConfirmPictureItmMessage)
+
+            itemView.setOnSafeClick {
+                val item = groupManager?.getItemDataAtAdapterPosition(adapterPosition) as PhotoInfo
+                listener?.onClickItem(item)
+            }
         }
 
         override fun onBind(data: PhotoInfo) {
@@ -104,5 +111,9 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
         private fun getIcon() = getAppDrawable(R.drawable.fekyc_ic_success_green)
 
         private fun getMessage() = getAppString(R.string.fekyc_confirm_picture_valid_photo)
+    }
+
+    interface IListener {
+        fun onClickItem(item: PhotoInfo)
     }
 }

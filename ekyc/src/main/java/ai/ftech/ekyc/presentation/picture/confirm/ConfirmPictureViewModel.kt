@@ -12,16 +12,28 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ConfirmPictureViewModel : BaseViewModel() {
-    private val _photoList = MutableLiveData(mutableListOf<PhotoConfirmDetailInfo>())
-    val photoList = _photoList.asLiveData()
+    private val _photoConfirmDetailInfoList = MutableLiveData(mutableListOf<PhotoConfirmDetailInfo>())
+    val photoConfirmDetailInfoList = _photoConfirmDetailInfoList.asLiveData()
+
+    private val _photoInfoList = MutableLiveData<List<PhotoInfo>>()
+    val photoInfoList = _photoInfoList.asLiveData()
 
     fun getConfirmPhotoList() {
         viewModelScope.launch {
             GetConfirmPhotoListAction().invoke(BaseAction.VoidRequest()).catch {
 
             }.collect {
-                _photoList.value = it.toMutableList()
+                _photoConfirmDetailInfoList.value = it.toMutableList()
+                _photoInfoList.value = getPhotoInfoList(it)
             }
         }
+    }
+
+    private fun getPhotoInfoList(list: List<PhotoConfirmDetailInfo>): List<PhotoInfo> {
+        val result = mutableListOf<PhotoInfo>()
+        list.forEach {
+            result.addAll(it.photoList)
+        }
+        return result
     }
 }
