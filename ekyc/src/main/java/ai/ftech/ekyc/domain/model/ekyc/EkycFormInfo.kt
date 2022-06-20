@@ -34,6 +34,12 @@ class EkycFormInfo {
             }
         }
     }
+
+    enum class GENDER(val value: String) {
+        UNKNOWN("UNKNOWN"),
+        MALE("Nam"),
+        FEMALE("Nữ")
+    }
 }
 
 

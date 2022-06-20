@@ -1,4 +1,4 @@
-package ai.ftech.ekyc.data.repo.converter.ekyc
+package ai.ftech.ekyc.data.repo.converter
 
 import ai.ftech.dev.base.common.converter.Converter
 import ai.ftech.dev.base.common.converter.IConverter

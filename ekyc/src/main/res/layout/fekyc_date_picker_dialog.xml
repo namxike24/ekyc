@@ -8,7 +8,7 @@
     android:background="@color/fekyc_color_transparent"
     android:orientation="vertical">
 
-    <ai.ftech.ekyc.common.widget.leftcardview.LeafCardView
+    <ai.ftech.ekyc.common.widget.leftcard.LeafCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/fekyc_color_white"
@@ -69,6 +69,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </ai.ftech.ekyc.common.widget.leftcardview.LeafCardView>
+    </ai.ftech.ekyc.common.widget.leftcard.LeafCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

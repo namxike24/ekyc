@@ -7,6 +7,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -67,14 +68,17 @@ class FormInfoAdapter : BaseAdapter() {
             if (data.isEditable()) {
                 ivIcon.show()
                 when (data.getFieldType()) {
-                    EkycFormInfo.FIELD_TYPE.STRING,
-                    EkycFormInfo.FIELD_TYPE.NUMBER,
-                    EkycFormInfo.FIELD_TYPE.COUNTRY -> {
+                    EkycFormInfo.FIELD_TYPE.STRING -> {
                         setEnableEditText(true)
+                    }
+                    EkycFormInfo.FIELD_TYPE.NUMBER -> {
+                        setEnableEditText(true)
+                        edtValue.inputType = InputType.TYPE_CLASS_NUMBER
                     }
 
                     EkycFormInfo.FIELD_TYPE.DATE,
                     EkycFormInfo.FIELD_TYPE.GENDER,
+                    EkycFormInfo.FIELD_TYPE.COUNTRY,
                     EkycFormInfo.FIELD_TYPE.NATIONAL -> {
                         setEnableEditText(false)
                     }
@@ -102,12 +106,12 @@ class FormInfoAdapter : BaseAdapter() {
         fun getIcon(): Drawable? {
             return when (getFieldType()) {
                 EkycFormInfo.FIELD_TYPE.STRING,
-                EkycFormInfo.FIELD_TYPE.NUMBER,
-                EkycFormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
+                EkycFormInfo.FIELD_TYPE.NUMBER -> getAppDrawable(R.drawable.fekyc_ic_edit)
 
                 EkycFormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
 
                 EkycFormInfo.FIELD_TYPE.GENDER,
+                EkycFormInfo.FIELD_TYPE.COUNTRY,
                 EkycFormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
 
                 else -> null
