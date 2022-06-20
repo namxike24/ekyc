@@ -4,14 +4,17 @@ import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
+import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -23,17 +26,22 @@ import java.io.File
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
         const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
+        const val IMAGE_CROP_MAX_SIZE = 960f
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
+    private lateinit var ovFrameCrop: OverlayView
     private lateinit var cvCameraView: CameraView
     private lateinit var tbvHeader: ToolbarView
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
+    private lateinit var ivTakePictureCrop: ImageView
     private var warningDialog: WarningCaptureDialog? = null
     private var isFrontFace = false
     private var isFlash = false
+    private var file: File? = null
+
 
     override fun onResume() {
         super.onResume()
@@ -62,6 +70,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onInitView() {
         super.onInitView()
+        ovFrameCrop = findViewById(R.id.ovTakePictureFrameCrop)
         tbvHeader = findViewById(R.id.tbvTakePictureHeader)
         cvCameraView = findViewById(R.id.cvTakePictureCameraView)
         ivFlash = findViewById(R.id.ivTakePictureFlash)
@@ -117,7 +126,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             navigateTo(PreviewPictureActivity::class.java)
 
-//            cvCameraView.takePicture()
+            //dùng snapshot để xử lý ảnh đầu ra cho nhanh, nhẹ vì mình không trực tiếp lấy ảnh gốc
+            cvCameraView.takePictureSnapshot()
         }
 
         ivChangeCamera.setOnSafeClick {
@@ -127,6 +137,17 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             } else {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
+            }
+        }
+
+        ovFrameCrop.listener = object : OverlayView.ICallback {
+            override fun onTakePicture(bitmap: Bitmap) {
+                val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
+                navigateToPreviewScreen(file?.absolutePath!!)
+            }
+
+            override fun onError(exception: Exception) {
+                Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -144,13 +165,13 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             result.toFile(file) {
-                if (it?.absolutePath != null) {
-                    viewModel.uploadPhoto(it.absolutePath)
+                it?.let { file ->
+                    this.file = file
+                    ovFrameCrop.attachFile(file.absolutePath)
                 }
             }
         }
     }
-
 
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
