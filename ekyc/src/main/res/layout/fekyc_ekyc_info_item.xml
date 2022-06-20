@@ -24,6 +24,7 @@
         android:layout_height="@dimen/fbase_dimen_40"
         android:layout_marginVertical="@dimen/fbase_dimen_4"
         android:layout_marginTop="@dimen/fbase_dimen_4"
+        android:cursorVisible="false"
         android:layout_marginEnd="@dimen/fbase_dimen_20"
         android:background="@null"
         android:gravity="center_vertical"

@@ -12,7 +12,6 @@ class FormInfo {
     var fieldType: FIELD_TYPE? = null
 
     enum class FIELD_TYPE(val type: String) {
-        NULL("null"),
         STRING("string"),
         NUMBER("number"),
         DATE("date"),
@@ -21,7 +20,7 @@ class FormInfo {
         NATIONAL("national");
 
         companion object {
-            fun valueOfName(value: String?): FIELD_TYPE? {
+            fun valueOfName(value: String): FIELD_TYPE? {
                 val item = values().find {
                     it.type == value
                 }

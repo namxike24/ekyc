@@ -2,9 +2,7 @@ package ai.ftech.ekyc.presentation.info
 
 import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.extension.getAppDimension
-import ai.ftech.dev.base.extension.getAppDrawable
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.dev.base.extension.*
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.domain.model.ekyc.FormInfo
 import android.annotation.SuppressLint
@@ -61,6 +59,37 @@ class FormInfoAdapter : BaseAdapter() {
             tvTitle.text = data.getTitle()
             edtValue.setText(data.getValue())
             ivIcon.setImageDrawable(data.getIcon())
+
+            checkStateFormHasEditable(data)
+        }
+
+        private fun checkStateFormHasEditable(data: FormInfoDisplay) {
+            if (data.isEditable()) {
+                ivIcon.show()
+                when (data.getFieldType()) {
+                    FormInfo.FIELD_TYPE.STRING,
+                    FormInfo.FIELD_TYPE.NUMBER,
+                    FormInfo.FIELD_TYPE.COUNTRY -> {
+                        setEnableEditText(true)
+                    }
+
+                    FormInfo.FIELD_TYPE.DATE,
+                    FormInfo.FIELD_TYPE.GENDER,
+                    FormInfo.FIELD_TYPE.NATIONAL -> {
+                        setEnableEditText(false)
+                    }
+
+                    else -> setEnableEditText(false)
+                }
+            } else {
+                ivIcon.gone()
+                setEnableEditText(false)
+            }
+        }
+
+        private fun setEnableEditText(isEnable: Boolean) {
+            edtValue.isFocusable = isEnable
+            edtValue.isFocusableInTouchMode = isEnable
         }
     }
 
@@ -71,7 +100,7 @@ class FormInfoAdapter : BaseAdapter() {
         fun getValue() = data.value
 
         fun getIcon(): Drawable? {
-            return when (data.fieldType) {
+            return when (getFieldType()) {
                 FormInfo.FIELD_TYPE.STRING,
                 FormInfo.FIELD_TYPE.NUMBER,
                 FormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
@@ -81,12 +110,17 @@ class FormInfoAdapter : BaseAdapter() {
                 FormInfo.FIELD_TYPE.GENDER,
                 FormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
 
-                FormInfo.FIELD_TYPE.NULL -> getAppDrawable(ai.ftech.dev.base.R.drawable.default_photo)
                 else -> null
             }
         }
 
+        fun getFieldType(): FormInfo.FIELD_TYPE? {
+            return data.fieldType
+        }
+
         fun getCorner() = getAppDimension(ai.ftech.dev.base.R.dimen.fbase_corner_10)
+
+        fun isEditable() = data.isEditable
     }
 
     interface IListener {
