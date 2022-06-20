@@ -71,10 +71,17 @@ class FormInfoAdapter : BaseAdapter() {
         fun getValue() = data.value
 
         fun getIcon(): Drawable? {
-            return when (data.fieldActionType) {
-                FormInfo.FIELD_TYPE.EDIT -> getAppDrawable(R.drawable.fekyc_ic_edit)
-                FormInfo.FIELD_TYPE.TIME_PICKER -> getAppDrawable(R.drawable.fekyc_ic_calendar)
-                FormInfo.FIELD_TYPE.SELECT -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
+            return when (data.fieldType) {
+                FormInfo.FIELD_TYPE.STRING,
+                FormInfo.FIELD_TYPE.NUMBER,
+                FormInfo.FIELD_TYPE.COUNTRY -> getAppDrawable(R.drawable.fekyc_ic_edit)
+
+                FormInfo.FIELD_TYPE.DATE -> getAppDrawable(R.drawable.fekyc_ic_calendar)
+
+                FormInfo.FIELD_TYPE.GENDER,
+                FormInfo.FIELD_TYPE.NATIONAL -> getAppDrawable(R.drawable.fekyc_ic_dropdrown)
+
+                FormInfo.FIELD_TYPE.NULL -> getAppDrawable(ai.ftech.dev.base.R.drawable.default_photo)
                 else -> null
             }
         }

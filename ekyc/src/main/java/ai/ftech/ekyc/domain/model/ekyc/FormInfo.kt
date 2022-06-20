@@ -1,5 +1,7 @@
 package ai.ftech.ekyc.domain.model.ekyc
 
+import android.util.Log
+
 
 class FormInfo {
     var id: Int? = null
@@ -7,12 +9,31 @@ class FormInfo {
     var value: String? = null
     var type: String? = null
     var isEditable: Boolean = false
-    var fieldActionType: FIELD_TYPE? = null
+    var fieldType: FIELD_TYPE? = null
 
-    enum class FIELD_TYPE {
-        EDIT,
-        TIME_PICKER,
-        SELECT
+    enum class FIELD_TYPE(val type: String) {
+        NULL("null"),
+        STRING("string"),
+        NUMBER("number"),
+        DATE("date"),
+        COUNTRY("country"),
+        GENDER("gender"),
+        NATIONAL("national");
+
+        companion object {
+            fun valueOfName(value: String?): FIELD_TYPE? {
+                val item = values().find {
+                    it.type == value
+                }
+
+                return if (item != null) {
+                    item
+                } else {
+                    Log.e("FIELD_TYPE", "can not find any FIELD_TYPE for name: $value")
+                    null
+                }
+            }
+        }
     }
 }
 

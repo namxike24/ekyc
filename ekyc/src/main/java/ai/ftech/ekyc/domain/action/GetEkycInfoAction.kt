@@ -9,7 +9,6 @@ class GetEkycInfoAction : BaseAction<BaseAction.VoidRequest, EkycInfo>() {
     override suspend fun execute(rv: VoidRequest): EkycInfo {
         val repo = RepositoryFactory.getInfoRepo()
         val x = repo.getEkycInfo()
-        Log.d("anhnd", "execute: $x")
         return x
     }
 }
