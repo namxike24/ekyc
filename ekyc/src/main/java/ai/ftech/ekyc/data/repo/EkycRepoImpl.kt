@@ -24,7 +24,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        return service.verifyIdentityPassport(part).invokeApi { headers, body ->
+        return service.verifyIdentityPassport(part).invokeApi { _, body ->
             true
         }
     }
@@ -36,7 +36,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val map = mapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
 
-        return service.verifyIdentityFront(part, map).invokeApi { headers, body ->
+        return service.verifyIdentityFront(part, map).invokeApi { _, body ->
             true
         }
     }
@@ -48,7 +48,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val map = mapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
 
-        return service.verifyIdentityBack(part, map).invokeApi { headers, body ->
+        return service.verifyIdentityBack(part, map).invokeApi { _, body ->
             true
         }
     }
@@ -58,7 +58,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        return service.captureFace(part).invokeApi { headers, body ->
+        return service.captureFace(part).invokeApi { _, body ->
             true
         }
     }

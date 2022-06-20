@@ -120,7 +120,9 @@ class OverlayView @JvmOverloads constructor(
                         override fun onError(exception: Exception) {
                             listener?.onError(exception)
                         }
-                    })
+                    }
+                )
+
                 executor.execute(runnable)
             }
         }

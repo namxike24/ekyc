@@ -26,7 +26,6 @@ import java.io.File
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
     companion object {
         const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
-        const val IMAGE_CROP_MAX_SIZE = 960f
     }
 
     private val viewModel by viewModels<TakePictureViewModel>()
@@ -36,7 +35,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
-    private lateinit var ivTakePictureCrop: ImageView
     private var warningDialog: WarningCaptureDialog? = null
     private var isFrontFace = false
     private var isFlash = false
@@ -120,13 +118,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
 
         ivCapture.setOnSafeClick {
-//            navigateTo(TakePictureActivity::class.java) {
-//                it.putExtra(SEND_EKYC_TYPE_KEY, EKYC_TYPE.SSN_BACK)
-//            }
-
-            navigateTo(PreviewPictureActivity::class.java)
-
-            //dùng snapshot để xử lý ảnh đầu ra cho nhanh, nhẹ vì mình không trực tiếp lấy ảnh gốc
             cvCameraView.takePictureSnapshot()
         }
 
@@ -143,7 +134,11 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         ovFrameCrop.listener = object : OverlayView.ICallback {
             override fun onTakePicture(bitmap: Bitmap) {
                 val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
-                navigateToPreviewScreen(file?.absolutePath!!)
+                if (file != null) {
+                    viewModel.uploadPhoto(file.absolutePath)
+                }
+
+//                navigateToPreviewScreen(file?.absolutePath!!)
             }
 
             override fun onError(exception: Exception) {

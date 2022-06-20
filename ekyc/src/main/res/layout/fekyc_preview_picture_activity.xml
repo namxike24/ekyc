@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#424242">
+    android:background="@drawable/fekyc_bg_preview">
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvPreviewPictureHeader"
