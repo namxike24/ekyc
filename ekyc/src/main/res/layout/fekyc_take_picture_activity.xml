@@ -17,8 +17,9 @@
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
         android:id="@+id/ovTakePictureFrameCrop"
         android:layout_width="match_parent"
+        app:ov_frame_take_picture="@drawable/fekyc_ic_photo_rect_crop"
         android:layout_height="match_parent"
-        app:ov_frame_take_picture="@drawable/bg_circle_stroke_blue" />
+        app:ov_frame_type="RECTANGLE" />
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvTakePictureHeader"

@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import java.io.File
 
 class OverlayView @JvmOverloads constructor(
     ctx: Context,
@@ -21,6 +20,9 @@ class OverlayView @JvmOverloads constructor(
         private const val THREAD_NAME_BY_CROP_BITMAP = "THREAD_NAME_BY_CROP_BITMAP"
         private const val THREAD_NAME_BY_RESIZE_BITMAP = "THREAD_NAME_BY_RESIZE_BITMAP"
         private const val IMAGE_CROP_MAX_SIZE = 960f
+        private const val SSN_CORNER = 60f
+        private const val CROP_RECTANGLE_TYPE = 0
+        private const val CROP_CIRCLE_TYPE = 1
     }
 
     var listener: ICallback? = null
@@ -30,6 +32,8 @@ class OverlayView @JvmOverloads constructor(
     private var rectFrame = RectF()
     private var paintFrame = Paint(Paint.ANTI_ALIAS_FLAG)
     private var drawableFrame: Drawable? = null
+
+    private var cropType = CROP_RECTANGLE_TYPE
 
     private var bitmapFull: Bitmap? = null
     var imageCropMaxSize = IMAGE_CROP_MAX_SIZE
@@ -44,25 +48,18 @@ class OverlayView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         initBackgroundView()
         initFrameView()
-
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
     override fun onDraw(canvas: Canvas) {
-
         canvas.drawRect(rectBackground, paintBackground)
-
-//        canvas.drawRoundRect(rectFrame, getDrawableWidth() / 2f, getDrawableHeight() / 2f, paintFrame)
-        canvas.drawRect(rectFrame, paintFrame)
-//        drawableFrame?.drawAt(rectFrame, canvas)
-
-
-        val w = ((rectBackground.width() - (144 * 2)) * 0.8).toInt()
-        val h = ((rectBackground.height() - (804 * 2)) * 0.8).toInt()
-
-        canvas.drawCircle(h.toFloat(), w.toFloat(), 5f, Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.RED
-        })
+        Log.d(TAG, "onDraw: xxxxx   $cropType")
+        if (cropType == CROP_CIRCLE_TYPE) {
+            canvas.drawRoundRect(rectFrame, getDrawableWidth() / 2f, getDrawableHeight() / 2f, paintFrame)
+        } else if (cropType == CROP_RECTANGLE_TYPE) {
+            canvas.drawRoundRect(rectFrame, SSN_CORNER, SSN_CORNER, paintFrame)
+        }
+        drawableFrame?.drawAt(rectFrame, canvas)
     }
 
     fun attachFile(path: String) {
@@ -173,6 +170,10 @@ class OverlayView @JvmOverloads constructor(
 
         val centerX = rectBackground.centerX()
         val centerY = rectBackground.centerY()
+
+//        val rectFrameWidth = width * 0.8f
+//        val rectFrameHeight = rectFrameWidth * SSN_RATIO
+
         val halfOffsetWidth = getDrawableWidth() / 2f
         val halfOffsetHeight = getDrawableHeight() / 2f
 
@@ -187,7 +188,9 @@ class OverlayView @JvmOverloads constructor(
     private fun init(attrs: AttributeSet?) {
         val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.OverlayView, 0, 0)
         drawableFrame = ta.getDrawable(R.styleable.OverlayView_ov_frame_take_picture)
-            ?: getAppDrawable(R.drawable.bg_circle_stroke_blue)
+            ?: getAppDrawable(R.drawable.fekyc_ic_photo_circle_crop)
+
+        cropType = ta.getInt(R.styleable.OverlayView_ov_frame_type, CROP_RECTANGLE_TYPE)
 
         ta.recycle()
     }

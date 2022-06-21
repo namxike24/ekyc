@@ -34,7 +34,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        val map = mapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
+        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
 
         return service.verifyIdentityFront(part, map).invokeApi { _, body ->
             true
@@ -46,7 +46,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        val map = mapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
+        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
 
         return service.verifyIdentityBack(part, map).invokeApi { _, body ->
             true
