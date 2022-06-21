@@ -4,6 +4,7 @@ import ai.ftech.dev.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.service.EkycService
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.repo.IEkycRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -29,7 +30,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
         }
     }
 
-    override fun verifyIdentityFront(absolutePath: String, type: PHOTO_TYPE): Boolean {
+    override fun verifyIdentity(absolutePath: String, type: PHOTO_INFORMATION): Boolean {
         val service = invokeFEkycService(EkycService::class.java)
 
         val part = convertFileToMultipart(absolutePath)
@@ -37,18 +38,6 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
         val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.value))
 
         return service.verifyIdentityFront(part, map).invokeApi { _, _ ->
-            true
-        }
-    }
-
-    override fun verifyIdentityBack(absolutePath: String, type: PHOTO_TYPE): Boolean {
-        val service = invokeFEkycService(EkycService::class.java)
-
-        val part = convertFileToMultipart(absolutePath)
-
-        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.value))
-
-        return service.verifyIdentityBack(part, map).invokeApi { _, _ ->
             true
         }
     }

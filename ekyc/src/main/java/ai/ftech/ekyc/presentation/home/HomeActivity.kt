@@ -53,22 +53,22 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         })
 
         llSSN.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.SSN_FRONT)
+            navigateToTakePictureScreen(PHOTO_TYPE.SSN)
         }
 
         llDriverLicense.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.DRIVER_LICENSE_FRONT)
+            navigateToTakePictureScreen(PHOTO_TYPE.DRIVER_LICENSE)
         }
 
         llPassport.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.PASSPORT_FRONT)
+            navigateToTakePictureScreen(PHOTO_TYPE.PASSPORT)
         }
     }
 
     private fun navigateToTakePictureScreen(photoType: PHOTO_TYPE) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
-                EkycStep.add(photoType)
+                EkycStep.setType(photoType)
                 navigateTo(TakePictureActivity::class.java)
             }
 

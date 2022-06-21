@@ -18,6 +18,7 @@ object FileUtils {
     private const val PASSPORT = "passport"
     private const val IDENTITY_FRONT = "identity_front"
     private const val IDENTITY_BACK = "identity_back"
+    private const val IDENTITY_PASSPORT = "identity_passport"
     private const val FACE = "face"
 
     private val imageType = FILE.IMAGE.PNG
@@ -83,6 +84,10 @@ object FileUtils {
 
     fun getFacePath(): String {
         return "${getFEkycFolder()}/${FACE}.${imageType.extension}"
+    }
+
+    fun getPassportPath(): String {
+        return "${getFEkycFolder()}/${IDENTITY_PASSPORT}.${imageType.extension}"
     }
 
     private fun getFEkycFolder(): String {
