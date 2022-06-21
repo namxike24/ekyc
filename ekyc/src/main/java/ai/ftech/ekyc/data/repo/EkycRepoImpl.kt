@@ -4,7 +4,7 @@ import ai.ftech.dev.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.service.EkycService
-import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.repo.IEkycRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -24,31 +24,31 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        return service.verifyIdentityPassport(part).invokeApi { _, body ->
+        return service.verifyIdentityPassport(part).invokeApi { _, _ ->
             true
         }
     }
 
-    override fun verifyIdentityFront(absolutePath: String, type: UPLOAD_PHOTO_TYPE): Boolean {
+    override fun verifyIdentityFront(absolutePath: String, type: PHOTO_TYPE): Boolean {
         val service = invokeFEkycService(EkycService::class.java)
 
         val part = convertFileToMultipart(absolutePath)
 
-        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
+        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.value))
 
-        return service.verifyIdentityFront(part, map).invokeApi { _, body ->
+        return service.verifyIdentityFront(part, map).invokeApi { _, _ ->
             true
         }
     }
 
-    override fun verifyIdentityBack(absolutePath: String, type: UPLOAD_PHOTO_TYPE): Boolean {
+    override fun verifyIdentityBack(absolutePath: String, type: PHOTO_TYPE): Boolean {
         val service = invokeFEkycService(EkycService::class.java)
 
         val part = convertFileToMultipart(absolutePath)
 
-        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.type))
+        val map = hashMapOf(PART_FIELD_TYPE to convertToRequestBody(type.value))
 
-        return service.verifyIdentityBack(part, map).invokeApi { _, body ->
+        return service.verifyIdentityBack(part, map).invokeApi { _, _ ->
             true
         }
     }
@@ -58,7 +58,7 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
 
         val part = convertFileToMultipart(absolutePath)
 
-        return service.captureFace(part).invokeApi { _, body ->
+        return service.captureFace(part).invokeApi { _, _ ->
             true
         }
     }

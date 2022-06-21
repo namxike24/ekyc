@@ -5,6 +5,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
+import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.Manifest
 import android.widget.LinearLayout
@@ -52,24 +53,23 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         })
 
         llSSN.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.SSN)
+            navigateToTakePictureScreen(PHOTO_TYPE.SSN_FRONT)
         }
 
         llDriverLicense.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.DRIVER_LICENSE)
+            navigateToTakePictureScreen(PHOTO_TYPE.DRIVER_LICENSE_FRONT)
         }
 
         llPassport.setOnSafeClick {
-            navigateToTakePictureScreen(PHOTO_TYPE.PASSPORT)
+            navigateToTakePictureScreen(PHOTO_TYPE.PASSPORT_FRONT)
         }
     }
 
     private fun navigateToTakePictureScreen(photoType: PHOTO_TYPE) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
-                navigateTo(TakePictureActivity::class.java) {
-                    it.putExtra(TakePictureActivity.SEND_PHOTO_TYPE_KEY, photoType)
-                }
+                EkycStep.add(photoType)
+                navigateTo(TakePictureActivity::class.java)
             }
 
             override fun onDenied() {
@@ -80,5 +80,11 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
             }
         })
+
+
+
+
+
+
     }
 }

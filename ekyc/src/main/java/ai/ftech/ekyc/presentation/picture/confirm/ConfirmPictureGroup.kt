@@ -67,10 +67,10 @@ class ConfirmPictureGroup(data: PhotoConfirmDetailInfo) : GroupData<List<PhotoIn
 
     private fun getGroupTitle(photoType: PHOTO_TYPE?): String {
         return when (photoType) {
-            PHOTO_TYPE.SSN,
-            PHOTO_TYPE.DRIVER_LICENSE,
-            PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_confirm_picture_capture_two_face_papers)
-            PHOTO_TYPE.PORTRAIT -> getAppString(R.string.fekyc_confirm_picture_portrait_myself)
+//            PHOTO_TYPE.SSN,
+//            PHOTO_TYPE.DRIVER_LICENSE,
+//            PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_confirm_picture_capture_two_face_papers)
+//            PHOTO_TYPE.PORTRAIT -> getAppString(R.string.fekyc_confirm_picture_portrait_myself)
             else -> AppConfig.EMPTY_CHAR
         }
     }

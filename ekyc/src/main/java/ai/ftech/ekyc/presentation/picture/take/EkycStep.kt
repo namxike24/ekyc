@@ -2,32 +2,38 @@ package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
-import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 
 object EkycStep {
+    private const val PASSPORT_STEP_COUNT = 2
+    private const val PAPERS_STEP_COUNT = 3
     private var stepList = mutableListOf<PhotoInfo>()
 
     fun isDoneStep(): Boolean {
         return stepList.size == 3
     }
 
-    fun getNextStep(): UPLOAD_PHOTO_TYPE? {
-        if (stepList.size in 1..3) {
-            stepList.forEachIndexed { index, value ->
-                if (index == stepList.size - 1) {
-                    return getNextStepUploadType(value)
-                }
+    fun getCurrentStep() : PHOTO_TYPE? {
+        return stepList.last().photoType
+    }
+
+    fun getNextStep(): PHOTO_TYPE? {
+        if (stepList.size > 0) {
+            val lastItem = stepList.last()
+            val stepCount = if (lastItem.photoType == PHOTO_TYPE.PASSPORT_FRONT) {
+                PASSPORT_STEP_COUNT
+            } else {
+                PAPERS_STEP_COUNT
             }
-        } else if (stepList.size > 3) {
-            return UPLOAD_PHOTO_TYPE.DONE
+            if (stepList.size in 1..stepCount) {
+                return getNextStepUploadType(lastItem)
+            }
         }
         return null
     }
 
-    fun add(photoType: PHOTO_TYPE, uploadType: UPLOAD_PHOTO_TYPE) {
+    fun add(photoType: PHOTO_TYPE) {
         val photoInfo = PhotoInfo().apply {
             this.photoType = photoType
-            this.uploadType = uploadType
         }
 
         stepList.add(photoInfo)
@@ -37,13 +43,19 @@ object EkycStep {
         stepList.clear()
     }
 
-    private fun getNextStepUploadType(photoInfo: PhotoInfo): UPLOAD_PHOTO_TYPE? {
-        return when (photoInfo.uploadType) {
-            UPLOAD_PHOTO_TYPE.FRONT -> UPLOAD_PHOTO_TYPE.BACK
-            UPLOAD_PHOTO_TYPE.BACK -> UPLOAD_PHOTO_TYPE.FACE
-            UPLOAD_PHOTO_TYPE.PASSPORT -> UPLOAD_PHOTO_TYPE.FACE
-            UPLOAD_PHOTO_TYPE.FACE -> UPLOAD_PHOTO_TYPE.DONE
-            else -> UPLOAD_PHOTO_TYPE.FRONT
+    private fun getNextStepUploadType(photoInfo: PhotoInfo): PHOTO_TYPE? {
+        return when (photoInfo.photoType) {
+            PHOTO_TYPE.SSN_FRONT -> PHOTO_TYPE.SSN_BACK
+
+
+            PHOTO_TYPE.DRIVER_LICENSE_FRONT -> PHOTO_TYPE.DRIVER_LICENSE_BACK
+
+            PHOTO_TYPE.SSN_BACK,
+            PHOTO_TYPE.DRIVER_LICENSE_BACK,
+            PHOTO_TYPE.PASSPORT_FRONT -> PHOTO_TYPE.PORTRAIT
+
+            PHOTO_TYPE.PORTRAIT -> null
+            else -> null
         }
     }
 }

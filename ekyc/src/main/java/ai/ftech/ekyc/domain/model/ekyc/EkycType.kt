@@ -1,16 +1,13 @@
 package ai.ftech.ekyc.domain.model.ekyc
 
-enum class PHOTO_TYPE{
-    SSN,
-    DRIVER_LICENSE,
-    PASSPORT,
-    PORTRAIT
-}
+enum class PHOTO_TYPE(var value: String){
+    SSN_FRONT("FRONT"),
+    SSN_BACK("BACK"),
 
-enum class UPLOAD_PHOTO_TYPE(val type: String) {
-    PASSPORT(""),
-    FRONT("FRONT"),
-    BACK("BACK"),
-    FACE(""),
-    DONE("")
+    DRIVER_LICENSE_FRONT("FRONT"),
+    DRIVER_LICENSE_BACK("BACK"),
+
+    PASSPORT_FRONT(""),
+
+    PORTRAIT("")
 }

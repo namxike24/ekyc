@@ -10,9 +10,7 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
-import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
-import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import android.graphics.Bitmap
@@ -54,10 +52,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onResume()
         cvCameraView.open()
         if (warningDialog == null) {
-            val type = getWarningType()
-            if (type != null) {
-                warningDialog = WarningCaptureDialog(type)
-            }
+//            warningDialog = WarningCaptureDialog(getWarningType())
         }
     }
 
@@ -75,7 +70,12 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_TYPE
+//        val photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_TYPE
+//        if (photoType != null) {
+//            viewModel.currentPhotoType = photoType
+//        } else {
+//
+//        }
     }
 
     override fun onInitView() {
@@ -163,7 +163,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onObserverViewModel()
         observer(viewModel.uploadPhoto) {
             if (it == true) {
-                navigateTo(TakePictureActivity::class.java)
+                viewModel.clearUploadPhotoValue()
+                navigateToTakePictureScreen()
             }
         }
     }
@@ -189,49 +190,59 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
+    private fun navigateToTakePictureScreen() {
+        navigateTo(TakePictureActivity::class.java)
+    }
+
     private fun navigateToPreviewScreen(path: String) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
-            intent.putExtra(PreviewPictureActivity.SEND_EKYC_TYPE_KEY, viewModel.uploadType)
+            intent.putExtra(PreviewPictureActivity.SEND_PHOTO_TYPE_KEY, viewModel.currentPhotoType)
             intent.putExtra(PreviewPictureActivity.SEND_PREVIEW_IMAGE_KEY, path)
         }
     }
 
     private fun setFacing() {
-        when (viewModel.uploadType) {
-            UPLOAD_PHOTO_TYPE.FRONT,
-            UPLOAD_PHOTO_TYPE.BACK,
-            UPLOAD_PHOTO_TYPE.PASSPORT -> {
+        when (viewModel.currentPhotoType) {
+            PHOTO_TYPE.SSN_FRONT,
+            PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            PHOTO_TYPE.SSN_BACK,
+            PHOTO_TYPE.DRIVER_LICENSE_BACK,
+            PHOTO_TYPE.PASSPORT_FRONT -> {
                 cvCameraView.facing = Facing.BACK
                 isFrontFace = false
             }
-            UPLOAD_PHOTO_TYPE.FACE -> {
+
+            PHOTO_TYPE.PORTRAIT -> {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
-            }
-            else -> {
-                cvCameraView.facing = Facing.BACK
-                isFrontFace = false
             }
         }
     }
 
-    private fun getWarningType(): WARNING_TYPE? {
-        return when (viewModel.uploadType) {
-            UPLOAD_PHOTO_TYPE.FRONT,
-            UPLOAD_PHOTO_TYPE.BACK,
-            UPLOAD_PHOTO_TYPE.PASSPORT -> WARNING_TYPE.PAPERS
-            UPLOAD_PHOTO_TYPE.FACE -> WARNING_TYPE.PORTRAIT
-            else -> null
+    private fun getWarningType(): WARNING_TYPE {
+        return when (viewModel.currentPhotoType!!) {
+            PHOTO_TYPE.SSN_FRONT,
+            PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            PHOTO_TYPE.SSN_BACK,
+            PHOTO_TYPE.DRIVER_LICENSE_BACK,
+            PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
+
+            PHOTO_TYPE.PORTRAIT -> WARNING_TYPE.PORTRAIT
         }
     }
 
     private fun getToolbarTitleByEkycType(): String {
-        return when (viewModel.uploadType) {
-            UPLOAD_PHOTO_TYPE.FRONT,
-            UPLOAD_PHOTO_TYPE.PASSPORT -> getAppString(R.string.fekyc_take_picture_take_front)
-            UPLOAD_PHOTO_TYPE.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-            UPLOAD_PHOTO_TYPE.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
-            else -> AppConfig.EMPTY_CHAR
+        return when (viewModel.currentPhotoType) {
+            PHOTO_TYPE.SSN_FRONT,
+            PHOTO_TYPE.DRIVER_LICENSE_FRONT,
+            PHOTO_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_take_front)
+
+            PHOTO_TYPE.SSN_BACK,
+            PHOTO_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_take_back)
+
+            PHOTO_TYPE.PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
+
+            else ->  getAppString(R.string.fekyc_take_picture_take_front)
         }
     }
 }

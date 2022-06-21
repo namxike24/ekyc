@@ -62,7 +62,7 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
             val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
                 this.listener = object : ConfirmPictureGroup.IListener {
                     override fun onClickItem(item: PhotoInfo) {
-                        Log.d(TAG, "onClickItem: ${item.uploadType?.name}")
+//                        Log.d(TAG, "onClickItem: ${item.uploadType?.name}")
                         replaceFragment(ConfirmPictureFragment())
                     }
                 }
