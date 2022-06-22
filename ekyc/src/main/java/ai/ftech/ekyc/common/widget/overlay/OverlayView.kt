@@ -2,6 +2,7 @@ package ai.ftech.ekyc.common.widget.overlay
 
 import ai.ftech.dev.base.extension.getAppColor
 import ai.ftech.dev.base.extension.getAppDrawable
+import ai.ftech.dev.base.extension.runOnMainThread
 import ai.ftech.ekyc.R
 import android.content.Context
 import android.graphics.*
@@ -38,7 +39,10 @@ class OverlayView @JvmOverloads constructor(
     private var bitmapFull: Bitmap? = null
     var imageCropMaxSize = IMAGE_CROP_MAX_SIZE
     private var executor: HandleViewPool = HandleViewPool()
-
+    private var runnable: Runnable? = null
+    private var paintPointTest = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.RED
+    }
 
     init {
 
@@ -53,13 +57,17 @@ class OverlayView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawRect(rectBackground, paintBackground)
-        Log.d(TAG, "onDraw: xxxxx   $cropType")
         if (cropType == CROP_CIRCLE_TYPE) {
             canvas.drawRoundRect(rectFrame, getDrawableWidth() / 2f, getDrawableHeight() / 2f, paintFrame)
+//            canvas.drawRoundRect(rectFrame, 0f, 0f, paintFrame)
         } else if (cropType == CROP_RECTANGLE_TYPE) {
             canvas.drawRoundRect(rectFrame, SSN_CORNER, SSN_CORNER, paintFrame)
         }
         drawableFrame?.drawAt(rectFrame, canvas)
+
+//        val cx = rectFrame.left
+//        val cy = rectFrame.top
+//        canvas.drawCircle(cx, cy, 5f, paintPointTest)
     }
 
     fun attachFile(path: String) {
@@ -96,26 +104,30 @@ class OverlayView @JvmOverloads constructor(
 
                 val ratio = it.width.toDouble() / width
 
-                val x = (rectFrame.left * ratio).toInt()
-                val y = (rectFrame.top * ratio).toInt()
+                val x = ((rectFrame.left) * ratio).toInt()
+                val y = ((rectFrame.top) * ratio).toInt()
 
-                val w = rectFrame.width().toInt()
-                val h = rectFrame.height().toInt()
+                val w = (rectFrame.width() * ratio).toInt()
+                val h = (rectFrame.height() * ratio).toInt()
 
                 Log.d(TAG, "cropBitmap:  ratio: $ratio x: $x  y: $y   w: $w   h: $h     bitmap[${it.width}   ${it.height}]    rectBackground[${rectBackground.width()}   ${rectBackground.height()}]")
 
-                val runnable = HandleViewTask(
+                runnable = HandleViewTask(
                     name = THREAD_NAME_BY_CROP_BITMAP,
                     task = {
-                        Bitmap.createBitmap(it, x, y, w - x, h - x, rotationMatrix, false)
+                        Bitmap.createBitmap(it, x, y, w, h, rotationMatrix, false)
                     },
                     callback = object : HandleViewTask.ICallback {
                         override fun onFinish(bitmap: Bitmap) {
+                            executor.remove(runnable)
+                            runnable = null
                             resizeBitmap(bitmap)
                         }
 
                         override fun onError(exception: Exception) {
-                            listener?.onError(exception)
+                            runOnMainThread({
+                                listener?.onError(exception)
+                            })
                         }
                     }
                 )
@@ -126,7 +138,7 @@ class OverlayView @JvmOverloads constructor(
     }
 
     private fun resizeBitmap(bitmap: Bitmap) {
-        val runnable = HandleViewTask(
+        runnable = HandleViewTask(
             name = THREAD_NAME_BY_RESIZE_BITMAP,
             task = {
                 val matrix = Matrix()
@@ -137,11 +149,15 @@ class OverlayView @JvmOverloads constructor(
             },
             callback = object : HandleViewTask.ICallback {
                 override fun onFinish(bitmap: Bitmap) {
+                    executor.remove(runnable)
+                    runnable = null
                     listener?.onTakePicture(bitmap)
                 }
 
                 override fun onError(exception: Exception) {
-                    listener?.onError(exception)
+                    runOnMainThread({
+                        listener?.onError(exception)
+                    })
                 }
             })
         executor.execute(runnable)
@@ -171,11 +187,9 @@ class OverlayView @JvmOverloads constructor(
         val centerX = rectBackground.centerX()
         val centerY = rectBackground.centerY()
 
-//        val rectFrameWidth = width * 0.8f
-//        val rectFrameHeight = rectFrameWidth * SSN_RATIO
-
         val halfOffsetWidth = getDrawableWidth() / 2f
         val halfOffsetHeight = getDrawableHeight() / 2f
+
 
         val left = centerX - halfOffsetWidth
         val top = centerY - halfOffsetHeight

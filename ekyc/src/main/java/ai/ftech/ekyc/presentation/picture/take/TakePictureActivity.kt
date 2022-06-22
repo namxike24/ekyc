@@ -135,10 +135,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             override fun onTakePicture(bitmap: Bitmap) {
                 val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
                 if (file != null) {
-                    viewModel.uploadPhoto(file.absolutePath)
+//                    viewModel.uploadPhoto(file.absolutePath)
                 }
 
-//                navigateToPreviewScreen(file?.absolutePath!!)
+                navigateToPreviewScreen(file?.absolutePath!!)
             }
 
             override fun onError(exception: Exception) {
