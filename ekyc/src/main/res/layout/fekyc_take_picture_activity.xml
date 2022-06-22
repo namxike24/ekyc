@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:background="#424242"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="#424242">
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:cameraAudio="off"
+        app:cameraSnapshotMaxHeight="1920"
+        app:cameraSnapshotMaxWidth="1920" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
+        android:id="@+id/ovTakePictureFrameCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ov_frame_take_picture="@drawable/bg_circle_stroke_blue" />
+        app:ov_frame_type="RECTANGLE" />
 
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvTakePictureHeader"
@@ -25,8 +29,8 @@
         app:tbv_right_text_content="@string/fekyc_home_right_title"
         app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
         app:tbv_right_type="ICON"
-        tools:tbv_title_text="@string/fekyc_take_picture_take_front"
-        app:tbv_title_text_size="@dimen/fbase_text_size_6" />
+        app:tbv_title_text_size="@dimen/fbase_text_size_6"
+        tools:tbv_title_text="@string/fekyc_take_picture_take_front" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTakePictureFlash"

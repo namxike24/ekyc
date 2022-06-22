@@ -7,10 +7,11 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.info.EkycInfoActivity
+import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
@@ -23,10 +24,6 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
     private lateinit var btnContinue: Button
     private val viewModel by viewModels<ConfirmPictureViewModel>()
     private val adapter = GroupAdapter()
-
-    override fun onPrepareInitView() {
-        super.onPrepareInitView()
-    }
 
     override fun onInitView() {
         super.onInitView()
@@ -41,30 +38,13 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                val dialog = ConfirmDialog.Builder()
-                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-                    .build()
-                dialog.listener = object : ConfirmDialog.IListener {
-                    override fun onLeftClick() {
-                        finish()
-                    }
-
-                    override fun onRightClick() {
-                        dialog.dismissDialog()
-                    }
-                }
-                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+                showConfirmDialog()
             }
         })
-
 
         btnContinue.setOnSafeClick {
             navigateTo(EkycInfoActivity::class.java)
         }
-
     }
 
     override fun onObserverViewModel() {
@@ -74,12 +54,14 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         }
     }
 
+    override fun getContainerId() = R.id.flconfirmPictureFrame
+
     private fun createConfirmPictureGroup(list: MutableList<PhotoConfirmDetailInfo>?) {
         list?.forEach { photoConfirmDetailInfo ->
             val groupData = ConfirmPictureGroup(photoConfirmDetailInfo).apply {
                 this.listener = object : ConfirmPictureGroup.IListener {
                     override fun onClickItem(item: PhotoInfo) {
-                        Log.d(TAG, "onClickItem: ${item.ekycType?.name}")
+                        viewModel.setSelectedIndex(item)
                         replaceFragment(ConfirmPictureFragment())
                     }
                 }
@@ -88,6 +70,4 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         }
         adapter.notifyAllGroupChanged()
     }
-
-    override fun getContainerId() = R.id.flconfirmPictureFrame
 }

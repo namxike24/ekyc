@@ -18,6 +18,11 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
     private val activityViewModel by activityViewModels<ConfirmPictureViewModel>()
     private val adapter = PreviewPhotoAdapter()
 
+    override fun onDestroy() {
+        super.onDestroy()
+        activityViewModel.clearSelected()
+    }
+
     override fun onPrepareInitView() {
         super.onPrepareInitView()
     }
@@ -37,6 +42,9 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
 
         vpPhoto.apply {
             offscreenPageLimit = this@ConfirmPictureFragment.adapter.count
+            post {
+                currentItem = activityViewModel.getSelectedIndex()
+            }
             adapter = this@ConfirmPictureFragment.adapter
         }
 

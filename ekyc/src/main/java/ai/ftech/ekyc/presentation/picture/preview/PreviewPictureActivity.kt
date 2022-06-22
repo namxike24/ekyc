@@ -7,18 +7,20 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
-import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
-import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
+import ai.ftech.ekyc.presentation.picture.take.EkycStep
+import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
-        const val SEND_EKYC_TYPE_KEY = "SEND_EKYC_TYPE_KEY"
+        const val SEND_PHOTO_TYPE_KEY = "SEND_PHOTO_TYPE_KEY"
         const val SEND_PREVIEW_IMAGE_KEY = "SEND_PREVIEW_IMAGE_KEY"
     }
 
@@ -27,17 +29,15 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     private lateinit var btnTakeAgain: Button
 
     private val viewModel by viewModels<PreviewPictureViewModel>()
-    private var warningDialog: WarningCaptureDialog? = null
     private val imageLoader = ImageLoaderFactory.glide()
-
 
     override fun onResume() {
         super.onResume()
         if (warningDialog == null) {
             val type = getWarningType()
-            if (type != null) {
-                warningDialog = WarningCaptureDialog(type)
-            }
+//            if (type != null) {
+            warningDialog = WarningCaptureDialog(type)
+//            }
         }
     }
 
@@ -52,7 +52,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? EKYC_PHOTO_TYPE
+//        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? CAMERA_TYPE
+//        viewModel.photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_INFORMATION
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
     }
 
@@ -62,26 +63,11 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         ivImageSrc = findViewById(R.id.ivPreviewPictureImageSrc)
         btnTakeAgain = findViewById(R.id.btnPreviewPictureTakeAgain)
 
-        tbvHeader.setTitle(getToolbarTitle())
+        tbvHeader.setTitle(getToolbarTitleByEkycType())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                val dialog = ConfirmDialog.Builder()
-                    .setTitle(getAppString(R.string.fekyc_confirm_notification_title))
-                    .setContent(getAppString(R.string.fekyc_confirm_notification_content))
-                    .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
-                    .setRightTitle(getAppString(R.string.fekyc_confirm_stay))
-                    .build()
-                dialog.listener = object : ConfirmDialog.IListener {
-                    override fun onLeftClick() {
-                        finish()
-                    }
-
-                    override fun onRightClick() {
-                        dialog.dismissDialog()
-                    }
-                }
-                dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+                showConfirmDialog()
             }
 
             override fun onRightIconClick() {
@@ -96,36 +82,21 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         }
     }
 
-    private fun getToolbarTitle(): String {
-        return when (viewModel.ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_image_front)
-
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_image_back)
-
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
-            else -> AppConfig.EMPTY_CHAR
+    private fun getWarningType(): WARNING_TYPE {
+        return when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT,
+            PHOTO_INFORMATION.BACK,
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> WARNING_TYPE.PAPERS
+            PHOTO_INFORMATION.FACE -> WARNING_TYPE.PORTRAIT
         }
     }
 
-    private fun getWarningType(): WARNING_TYPE? {
-        return when (viewModel.ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK,
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
-
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> WARNING_TYPE.PORTRAIT
-
-            else -> null
+    private fun getToolbarTitleByEkycType(): String {
+        return when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT -> getAppString(R.string.fekyc_take_picture_take_front)
+            PHOTO_INFORMATION.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
+            PHOTO_INFORMATION.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> getAppString(R.string.fekyc_take_picture_take_passport)
         }
     }
 }

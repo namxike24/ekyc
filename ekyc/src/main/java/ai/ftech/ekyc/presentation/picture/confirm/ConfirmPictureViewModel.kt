@@ -4,8 +4,8 @@ import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.dev.base.common.BaseViewModel
 import ai.ftech.dev.base.extension.asLiveData
 import ai.ftech.ekyc.domain.action.GetConfirmPhotoListAction
-import ai.ftech.ekyc.domain.model.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
@@ -17,6 +17,8 @@ class ConfirmPictureViewModel : BaseViewModel() {
 
     private val _photoInfoList = MutableLiveData<List<PhotoInfo>>()
     val photoInfoList = _photoInfoList.asLiveData()
+    private var selectedPosition = -1
+
 
     fun getConfirmPhotoList() {
         viewModelScope.launch {
@@ -27,6 +29,18 @@ class ConfirmPictureViewModel : BaseViewModel() {
                 _photoInfoList.value = getPhotoInfoList(it)
             }
         }
+    }
+
+    fun setSelectedIndex(item: PhotoInfo) {
+        selectedPosition = photoInfoList.value?.indexOf(item) ?: -1
+    }
+
+    fun getSelectedIndex(): Int {
+        return selectedPosition
+    }
+
+    fun clearSelected() {
+        selectedPosition = -1
     }
 
     private fun getPhotoInfoList(list: List<PhotoConfirmDetailInfo>): List<PhotoInfo> {
