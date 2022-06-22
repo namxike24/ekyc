@@ -2,6 +2,7 @@ package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.dev.base.common.BaseViewModel
 import ai.ftech.dev.base.extension.asLiveData
+import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.action.UploadPhotoAction
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class TakePictureViewModel : BaseViewModel() {
     var currentPhotoType: PHOTO_TYPE? = null
-    private var _uploadPhoto = MutableLiveData(UPLOAD_STATUS.NONE)
+    private var _uploadPhoto = MutableLiveData(FEkycActionResult<UPLOAD_STATUS>())
     val uploadPhoto = _uploadPhoto.asLiveData()
     private var _filePath = MutableLiveData<String>(null)
     val filePath = _filePath.asLiveData()
@@ -25,7 +26,9 @@ class TakePictureViewModel : BaseViewModel() {
     }
 
     fun clearUploadPhotoValue() {
-        _uploadPhoto.value = UPLOAD_STATUS.NONE
+        _uploadPhoto.value = FEkycActionResult<UPLOAD_STATUS>().apply {
+            this.data = UPLOAD_STATUS.NONE
+        }
     }
 
     fun uploadPhoto(absolutePath: String) {
@@ -38,11 +41,23 @@ class TakePictureViewModel : BaseViewModel() {
                             it.printStackTrace()
                         }
                         _filePath.value = absolutePath
-                        _uploadPhoto.value = UPLOAD_STATUS.FAIL
+                        _uploadPhoto.value = FEkycActionResult<UPLOAD_STATUS>().apply {
+                            this.data = UPLOAD_STATUS.FAIL
+                            this.exception = it
+                        }
                     }.collect {
                         EkycStep.add(photoType, absolutePath)
                         //check để biết bước tiếp theo đã hoàn thành chưa
-                        _uploadPhoto.value = if (EkycStep.isDoneStep()) UPLOAD_STATUS.COMPLETE else UPLOAD_STATUS.SUCCESS
+                        _uploadPhoto.value = if (EkycStep.isDoneStep()) {
+                            FEkycActionResult<UPLOAD_STATUS>().apply {
+                                this.data = UPLOAD_STATUS.COMPLETE
+                            }
+
+                        } else {
+                            FEkycActionResult<UPLOAD_STATUS>().apply {
+                                this.data = UPLOAD_STATUS.SUCCESS
+                            }
+                        }
                     }
                 }
             }

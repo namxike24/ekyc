@@ -18,14 +18,28 @@
         app:tbv_title_text_size="@dimen/fbase_text_size_6"
         tools:tbv_title_text="@string/fekyc_take_picture_image_front" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPreviewPictureErrorMessage"
+        style="@style/FBaseStyleText14Regular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_50"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_32"
+        android:layout_marginTop="@dimen/fbase_dimen_40"
+        android:background="@drawable/fekyc_shape_rect_bg_red_alplha_10_corner_10"
+        android:gravity="center"
+        android:textColor="@color/fekyc_color_red"
+        app:layout_constraintTop_toBottomOf="@id/tbvPreviewPictureHeader"
+        tools:text="Ảnh chụp không hợp lệ. Vui lòng chụp lại!" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivPreviewPictureImageSrc"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/fbase_dimen_10"
+        android:layout_marginTop="@dimen/fbase_dimen_20"
+        android:layout_marginBottom="@dimen/fbase_dimen_80"
+        app:layout_constraintTop_toBottomOf="@id/tvPreviewPictureErrorMessage"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@id/btnPreviewPictureTakeAgain"
-        app:layout_constraintTop_toBottomOf="@id/tbvPreviewPictureHeader"
         tools:src="@drawable/default_photo" />
 
     <androidx.appcompat.widget.AppCompatButton

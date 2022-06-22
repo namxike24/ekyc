@@ -16,9 +16,9 @@ class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
         return when {
             photoType == PHOTO_TYPE.PASSPORT -> repo.verifyIdentityPassport(photoPath)
 
-            photoType == PHOTO_TYPE.SSN || photoType == PHOTO_TYPE.DRIVER_LICENSE -> {
-                repo.verifyIdentity(photoPath, photoInformation)
-            }
+            photoType == PHOTO_TYPE.SSN -> repo.verifyIdentitySSN(photoPath, photoInformation)
+
+            photoType == PHOTO_TYPE.DRIVER_LICENSE -> repo.verifyIdentityDriverLicense(photoPath, photoInformation)
 
             photoInformation == PHOTO_INFORMATION.FACE -> repo.captureFace(photoPath)
 

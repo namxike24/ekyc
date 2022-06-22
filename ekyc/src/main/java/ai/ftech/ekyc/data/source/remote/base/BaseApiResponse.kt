@@ -10,9 +10,9 @@ open class BaseApiResponse : IApiResponse {
 
     @SerializedName("statusCode")
     @Expose
-    var statusCode: Int? = null
+    var statusCode: String? = null
 
     override fun isSuccessful(): Boolean {
-        return message == "success" && statusCode == 200
+        return message == "success" && statusCode == "OK"
     }
 }

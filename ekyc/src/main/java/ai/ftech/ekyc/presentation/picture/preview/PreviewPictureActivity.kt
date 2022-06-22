@@ -20,8 +20,8 @@ import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
-        const val SEND_PHOTO_TYPE_KEY = "SEND_PHOTO_TYPE_KEY"
         const val SEND_PREVIEW_IMAGE_KEY = "SEND_PREVIEW_IMAGE_KEY"
+        const val SEND_MESSAGE_KEY = "SEND_MESSAGE_KEY"
     }
 
     private lateinit var tbvHeader: ToolbarView
@@ -35,9 +35,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         super.onResume()
         if (warningDialog == null) {
             val type = getWarningType()
-//            if (type != null) {
             warningDialog = WarningCaptureDialog(type)
-//            }
         }
     }
 
@@ -52,9 +50,8 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-//        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? CAMERA_TYPE
-//        viewModel.photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_INFORMATION
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
+        viewModel.message = intent.getStringExtra(SEND_MESSAGE_KEY)
     }
 
     override fun onInitView() {
@@ -78,7 +75,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
 
         btnTakeAgain.setOnSafeClick {
-            navigateTo(ConfirmPictureActivity::class.java)
+            finish()
         }
     }
 

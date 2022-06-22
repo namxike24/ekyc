@@ -148,9 +148,9 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     override fun onObserverViewModel() {
         super.onObserverViewModel()
         observer(viewModel.uploadPhoto) {
-            when (it) {
+            when (it?.data) {
                 UPLOAD_STATUS.FAIL -> {
-                    navigateToPreviewScreen(viewModel.filePath.value ?: "")
+                    navigateToPreviewScreen(viewModel.filePath.value ?: "", it.exception?.message)
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
@@ -189,10 +189,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         navigateTo(TakePictureActivity::class.java)
     }
 
-    private fun navigateToPreviewScreen(path: String) {
+    private fun navigateToPreviewScreen(path: String, message: String? = null) {
         navigateTo(PreviewPictureActivity::class.java) { intent ->
-//            intent.putExtra(PreviewPictureActivity.SEND_PHOTO_TYPE_KEY, viewModel.currentPhotoType)
             intent.putExtra(PreviewPictureActivity.SEND_PREVIEW_IMAGE_KEY, path)
+            intent.putExtra(PreviewPictureActivity.SEND_MESSAGE_KEY, message)
         }
     }
 
