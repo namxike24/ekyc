@@ -2,7 +2,7 @@ package ai.ftech.ekyc.presentation.picture.confirm
 
 import ai.ftech.ekyc.common.imageloader.IImageLoader
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
-import ai.ftech.ekyc.domain.model.PhotoInfo
+import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView

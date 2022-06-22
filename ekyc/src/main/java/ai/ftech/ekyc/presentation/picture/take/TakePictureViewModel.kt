@@ -1,89 +1,60 @@
 package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.dev.base.common.BaseViewModel
-import ai.ftech.dev.base.extension.getAppString
-import ai.ftech.ekyc.AppConfig
-import ai.ftech.ekyc.R
+import ai.ftech.dev.base.extension.asLiveData
 import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.action.UploadPhotoAction
-import ai.ftech.ekyc.domain.model.EKYC_PHOTO_TYPE
-import ai.ftech.ekyc.domain.model.UPLOAD_PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
+import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
+import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
 import ai.ftech.ekyc.utils.FileUtils
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class TakePictureViewModel : BaseViewModel() {
-    var ekycType: EKYC_PHOTO_TYPE? = null
+    var currentPhotoType: PHOTO_TYPE? = null
+    private var _uploadPhoto = MutableLiveData(UPLOAD_STATUS.NONE)
+    val uploadPhoto = _uploadPhoto.asLiveData()
+    private var _filePath = MutableLiveData<String>(null)
+    val filePath = _filePath.asLiveData()
+
+    init {
+        currentPhotoType = EkycStep.getType()
+    }
+
+    fun clearUploadPhotoValue() {
+        _uploadPhoto.value = UPLOAD_STATUS.NONE
+    }
 
     fun uploadPhoto(absolutePath: String) {
         viewModelScope.launch {
-            val uploadType = when (ekycType) {
-
-                EKYC_PHOTO_TYPE.PASSPORT_FRONT -> UPLOAD_PHOTO_TYPE.PASSPORT
-
-                EKYC_PHOTO_TYPE.SSN_FRONT,
-                EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT -> UPLOAD_PHOTO_TYPE.FRONT
-
-                EKYC_PHOTO_TYPE.SSN_BACK,
-                EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> UPLOAD_PHOTO_TYPE.FRONT
-
-                EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-                EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-                EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> UPLOAD_PHOTO_TYPE.FACE
-
-                else -> null
-            }
-
-            if (uploadType != null) {
-                val rv = UploadPhotoAction.UploadRV(absolutePath, uploadType)
-                UploadPhotoAction().invoke(rv).catch {
-                    if (it is APIException) {
-                        Log.d("anhnd", "uploadPhoto: ${it.code}")
-                        it.printStackTrace()
+            currentPhotoType?.let { photoType ->
+                if (currentPhotoType != null) {
+                    val rv = UploadPhotoAction.UploadRV(absolutePath, photoType, EkycStep.getCurrentStep())
+                    UploadPhotoAction().invoke(rv).catch {
+                        if (it is APIException) {
+                            it.printStackTrace()
+                        }
+                        _filePath.value = absolutePath
+                        _uploadPhoto.value = UPLOAD_STATUS.FAIL
+                    }.collect {
+                        EkycStep.add(photoType, absolutePath)
+                        //check để biết bước tiếp theo đã hoàn thành chưa
+                        _uploadPhoto.value = if (EkycStep.isDoneStep()) UPLOAD_STATUS.COMPLETE else UPLOAD_STATUS.SUCCESS
                     }
-                }.collect {
-                    Log.d("anhnd", "uploadPhoto: $it")
                 }
             }
         }
     }
 
-    fun getToolbarTitleByEkycType(): String {
-        return when (ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> getAppString(R.string.fekyc_take_picture_take_front)
-
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
-            else -> AppConfig.EMPTY_CHAR
+    fun getFolderPathByEkycType(): String {
+        return when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT -> FileUtils.getIdentityFrontPath()
+            PHOTO_INFORMATION.BACK -> FileUtils.getIdentityBackPath()
+            PHOTO_INFORMATION.FACE -> FileUtils.getFacePath()
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> FileUtils.getPassportPath()
         }
     }
-
-    fun getFolderPathByEkycType(): String? {
-        return when (ekycType) {
-            EKYC_PHOTO_TYPE.SSN_FRONT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_FRONT -> FileUtils.getIdentityFrontPath()
-
-            EKYC_PHOTO_TYPE.SSN_BACK,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_BACK -> FileUtils.getIdentityBackPath()
-
-            EKYC_PHOTO_TYPE.SSN_PORTRAIT,
-            EKYC_PHOTO_TYPE.DRIVER_LICENSE_PORTRAIT,
-            EKYC_PHOTO_TYPE.PASSPORT_PORTRAIT -> FileUtils.getFacePath()
-
-            EKYC_PHOTO_TYPE.PASSPORT_FRONT -> FileUtils.getIdentityPassportPath()
-
-            else -> null
-        }
-    }
-
-
 }

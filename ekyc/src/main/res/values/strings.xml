@@ -42,6 +42,9 @@
 
     <string name="fekyc_take_picture_image_portrait">Ảnh chân dung</string>
 
+    <string name="fekyc_take_picture_take_passport">Chụp trang số 2</string>
+    <string name="fekyc_take_picture_image_passport">Ảnh trang số 2</string>
+
 
     <!--endregion-->
 
