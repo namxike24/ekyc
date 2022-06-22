@@ -20,10 +20,8 @@ class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
                 repo.verifyIdentity(photoPath, photoInformation)
             }
 
-//            PHOTO_TYPE.SSN_BACK,
-//            PHOTO_TYPE.DRIVER_LICENSE_BACK -> repo.verifyIdentityBack(path, type)
-
             photoInformation == PHOTO_INFORMATION.FACE -> repo.captureFace(photoPath)
+
             else -> false
         }
     }

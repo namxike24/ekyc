@@ -12,6 +12,7 @@ import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
+import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.widget.Button
 import android.widget.ImageView
@@ -82,21 +83,20 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     }
 
     private fun getWarningType(): WARNING_TYPE {
-        return when (viewModel.photoType!!) {
-            PHOTO_INFORMATION.BACK, PHOTO_INFORMATION.FRONT, PHOTO_INFORMATION.PAGE_NUMBER_2 -> WARNING_TYPE.PAPERS
+        return when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT,
+            PHOTO_INFORMATION.BACK,
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> WARNING_TYPE.PAPERS
             PHOTO_INFORMATION.FACE -> WARNING_TYPE.PORTRAIT
         }
     }
 
     private fun getToolbarTitleByEkycType(): String {
-        return when (viewModel.photoType!!) {
+        return when (EkycStep.getCurrentStep()) {
             PHOTO_INFORMATION.FRONT -> getAppString(R.string.fekyc_take_picture_take_front)
-
             PHOTO_INFORMATION.BACK -> getAppString(R.string.fekyc_take_picture_take_back)
-
             PHOTO_INFORMATION.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
-
-            PHOTO_INFORMATION.PAGE_NUMBER_2 -> getAppString(R.string.fekyc_take_picture_image_passport)
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> getAppString(R.string.fekyc_take_picture_take_passport)
         }
     }
 }

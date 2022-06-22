@@ -5,7 +5,9 @@ import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
+import ai.ftech.ekyc.presentation.home.HomeActivity
 import ai.ftech.ekyc.utils.KeyboardUtility
+import android.content.Intent
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View

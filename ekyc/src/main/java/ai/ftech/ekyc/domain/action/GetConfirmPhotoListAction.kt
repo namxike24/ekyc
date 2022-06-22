@@ -1,66 +1,26 @@
 package ai.ftech.ekyc.domain.action
 
 import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
-import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
+import ai.ftech.ekyc.presentation.picture.take.EkycStep
 
 class GetConfirmPhotoListAction : BaseAction<BaseAction.VoidRequest, List<PhotoConfirmDetailInfo>>() {
     override suspend fun execute(rv: VoidRequest): List<PhotoConfirmDetailInfo> {
-        val photoConfirmList = mutableListOf<PhotoInfo>()
+        val photoConfirmList = mutableListOf<PhotoConfirmDetailInfo>()
 
-//        photoConfirmList.add(getPhotoListFake(CAMERA_TYPE.FRONT))
-//        photoConfirmList.add(getPhotoListFake(CAMERA_TYPE.BACK))
-//        photoConfirmList.add(getPhotoListFake(CAMERA_TYPE.FACE))
+        val confirmDetailInfoPapers = PhotoConfirmDetailInfo().apply {
+            this.photoType = EkycStep.getType()
+            this.photoList = EkycStep.getPaperList()
+        }
 
-        convertPhotoListToConfirmPhotoList(photoConfirmList)
+        val confirmDetailInfoFace = PhotoConfirmDetailInfo().apply {
+            this.photoType = null // gán null để group get ra null và tự define ra title của những ảnh ko phải là giấy tờ
+            this.photoList = mutableListOf(EkycStep.getPortraitItem())
+        }
 
-        return convertPhotoListToConfirmPhotoList(photoConfirmList)
+        photoConfirmList.add(confirmDetailInfoPapers)
+        photoConfirmList.add(confirmDetailInfoFace)
+
+        return photoConfirmList
     }
-
-    private fun convertPhotoListToConfirmPhotoList(photoConfirmList: MutableList<PhotoInfo>): List<PhotoConfirmDetailInfo> {
-
-        val photoConfirmDetailInfoList = mutableListOf<PhotoConfirmDetailInfo>()
-
-//        photoConfirmList.forEach { photoInfo ->
-//            convertEKYCPhotoTypeToConfirmDetailPhotoType(photoInfo.uploadType)?.let { photoType ->
-//                val index = photoConfirmDetailInfoList.indexOfFirst { it.photoType == photoType }
-//
-//                val photoConfirmDetail = if (index == -1) {
-//                    PhotoConfirmDetailInfo().apply {
-//                        this.photoType = photoType
-//                    }
-//                } else {
-//                    photoConfirmDetailInfoList[index]
-//                }
-//
-//                photoConfirmDetail.photoList.add(photoInfo)
-//
-//                if (index == -1) {
-//                    photoConfirmDetailInfoList.add(photoConfirmDetail)
-//                } else {
-//                    photoConfirmDetailInfoList[index] = photoConfirmDetail
-//                }
-//            }
-//        }
-
-        return photoConfirmDetailInfoList
-    }
-
-//    private fun convertEKYCPhotoTypeToConfirmDetailPhotoType(ekycType: CAMERA_TYPE?): PHOTO_TYPE? {
-//        return when (ekycType) {
-//            CAMERA_TYPE.FRONT,
-//            CAMERA_TYPE.BACK -> PHOTO_TYPE.SSN
-//            CAMERA_TYPE.FACE -> PHOTO_TYPE.PORTRAIT
-//            CAMERA_TYPE.PASSPORT -> PHOTO_TYPE.PASSPORT
-//            else -> null
-//        }
-//    }
-
-//    private fun getPhotoListFake(ekycType: CAMERA_TYPE): PhotoInfo {
-//        return PhotoInfo().apply {
-//            this.url = "/storage/emulated/0/Android/data/ai.ftech.ekyc/files/ftech-ekyc/identity_front.png"
-//            this.uploadType = ekycType
-//        }
-//    }
 }

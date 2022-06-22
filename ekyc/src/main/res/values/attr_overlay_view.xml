@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="OverlayView">
-        <attr name="ov_frame_take_picture" format="reference" />
         <attr name="ov_frame_type" format="enum">
             <enum name="RECTANGLE" value="0" />
             <enum name="CIRCLE" value="1" />

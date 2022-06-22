@@ -31,6 +31,11 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         Manifest.permission.CAMERA
     )
 
+    override fun onResume() {
+        super.onResume()
+        EkycStep.clear()
+    }
+
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvHomeHeader)

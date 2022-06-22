@@ -4,15 +4,14 @@ import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.observer
 import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
-import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
+import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
@@ -29,10 +28,6 @@ import com.otaliastudios.cameraview.controls.Flash
 import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
-    companion object {
-        const val SEND_PHOTO_TYPE_KEY = "SEND_PHOTO_TYPE_KEY"
-    }
-
     /**
      * view
      */
@@ -55,7 +50,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onResume()
         cvCameraView.open()
         if (warningDialog == null) {
-//            warningDialog = WarningCaptureDialog(getWarningType())
+            warningDialog = WarningCaptureDialog(getWarningType())
         }
     }
 
@@ -69,16 +64,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onDestroy()
         cvCameraView.close()
         warningDialog = null
-    }
-
-    override fun onPrepareInitView() {
-        super.onPrepareInitView()
-//        val photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_TYPE
-//        if (photoType != null) {
-//            viewModel.currentPhotoType = photoType
-//        } else {
-//
-//        }
     }
 
     override fun onInitView() {
@@ -150,10 +135,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             override fun onTakePicture(bitmap: Bitmap) {
                 val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
                 if (file != null) {
-//                    viewModel.uploadPhoto(file.absolutePath)
+                    viewModel.uploadPhoto(file.absolutePath)
                 }
-
-                navigateToPreviewScreen(file?.absolutePath!!)
             }
 
             override fun onError(exception: Exception) {
@@ -167,17 +150,14 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         observer(viewModel.uploadPhoto) {
             when (it) {
                 UPLOAD_STATUS.FAIL -> {
-                    //mở màn error
                     navigateToPreviewScreen(viewModel.filePath.value ?: "")
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
-                    //finish activity này trước khi navigate
                     finish()
                     navigateToTakePictureScreen()
                 }
                 UPLOAD_STATUS.COMPLETE -> {
-                    //finish activity này trước khi navigate
                     finish()
                     navigateTo(ConfirmPictureActivity::class.java)
                 }
@@ -229,18 +209,25 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         }
     }
 
-    //Chưa hiểu hàm này để làm gì, comment lại
-//    private fun getWarningType(): WARNING_TYPE {
-//        return when (viewModel.currentPhotoType!!) {
-//            PHOTO_TYPE.SSN_FRONT,
-//            PHOTO_TYPE.DRIVER_LICENSE_FRONT,
-//            PHOTO_TYPE.SSN_BACK,
-//            PHOTO_TYPE.DRIVER_LICENSE_BACK,
-//            PHOTO_TYPE.PASSPORT_FRONT -> WARNING_TYPE.PAPERS
-//
-//            PHOTO_TYPE.PORTRAIT -> WARNING_TYPE.PORTRAIT
-//        }
-//    }
+    private fun getWarningType(): WARNING_TYPE {
+        return when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT,
+            PHOTO_INFORMATION.BACK,
+            PHOTO_INFORMATION.PAGE_NUMBER_2 -> {
+                ovFrameCrop.apply {
+                    setCropType(OverlayView.CROP_TYPE.REACTANGLE)
+
+                }
+                WARNING_TYPE.PAPERS
+            }
+            PHOTO_INFORMATION.FACE ->{
+                ovFrameCrop.apply {
+                    setCropType(OverlayView.CROP_TYPE.CIRCLE)
+                }
+                WARNING_TYPE.PORTRAIT
+            }
+        }
+    }
 
     private fun getToolbarTitleByEkycType(): String {
         return when (EkycStep.getCurrentStep()) {

@@ -17,6 +17,8 @@ class ConfirmPictureViewModel : BaseViewModel() {
 
     private val _photoInfoList = MutableLiveData<List<PhotoInfo>>()
     val photoInfoList = _photoInfoList.asLiveData()
+    private var selectedPosition = -1
+
 
     fun getConfirmPhotoList() {
         viewModelScope.launch {
@@ -27,6 +29,18 @@ class ConfirmPictureViewModel : BaseViewModel() {
                 _photoInfoList.value = getPhotoInfoList(it)
             }
         }
+    }
+
+    fun setSelectedIndex(item: PhotoInfo) {
+        selectedPosition = photoInfoList.value?.indexOf(item) ?: -1
+    }
+
+    fun getSelectedIndex(): Int {
+        return selectedPosition
+    }
+
+    fun clearSelected() {
+        selectedPosition = -1
     }
 
     private fun getPhotoInfoList(list: List<PhotoConfirmDetailInfo>): List<PhotoInfo> {

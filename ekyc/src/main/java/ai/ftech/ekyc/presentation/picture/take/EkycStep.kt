@@ -20,10 +20,6 @@ object EkycStep {
         return stepList.size == if (isTypePassport()) PASSPORT_STEP_COUNT else PAPERS_STEP_COUNT
     }
 
-//    fun getCurrentStep(): PHOTO_TYPE? {
-//        return stepList.last().photoType
-//    }
-
     fun getCurrentStep(): PHOTO_INFORMATION {
         return if(isTypePassport()) {
             when (stepList.size) {
@@ -41,21 +37,6 @@ object EkycStep {
         }
     }
 
-//    fun getNextStep(): PHOTO_TYPE? {
-//        if (stepList.size > 0) {
-//            val lastItem = stepList.last()
-//            val stepCount = if (lastItem.photoType == PHOTO_TYPE.PASSPORT) {
-//                PASSPORT_STEP_COUNT
-//            } else {
-//                PAPERS_STEP_COUNT
-//            }
-//            if (stepList.size in 1..stepCount) {
-//                return getNextStepUploadType(lastItem)
-//            }
-//        }
-//        return null
-//    }
-
     fun add(photoType: PHOTO_TYPE, path: String) {
         val photoInfo = PhotoInfo().apply {
             this.photoType = photoType
@@ -65,6 +46,26 @@ object EkycStep {
         stepList.add(photoInfo)
     }
 
+    fun getPaperList(): MutableList<PhotoInfo> {
+        if (getType() == PHOTO_TYPE.SSN || getType() == PHOTO_TYPE.DRIVER_LICENSE) {
+            if (stepList.size > 2) {
+                val paperFront = stepList[0]
+                val paperBack = stepList[1]
+                return mutableListOf(paperFront, paperBack)
+            }
+        } else if (getType() == PHOTO_TYPE.PASSPORT) {
+            val passportItem = stepList.firstOrNull()
+            if (passportItem != null) {
+                return mutableListOf(passportItem)
+            }
+        }
+        return mutableListOf()
+    }
+
+    fun getPortraitItem(): PhotoInfo {
+        return stepList.last()
+    }
+
     fun clear() {
         stepList.clear()
     }
@@ -72,20 +73,4 @@ object EkycStep {
     private fun isTypePassport(): Boolean {
         return photoType == PHOTO_TYPE.PASSPORT
     }
-
-//    private fun getNextStepUploadType(photoInfo: PhotoInfo): PHOTO_TYPE? {
-//        return when (photoInfo.photoType) {
-//            PHOTO_TYPE.SSN_FRONT -> PHOTO_TYPE.SSN_BACK
-//
-//
-//            PHOTO_TYPE.DRIVER_LICENSE_FRONT -> PHOTO_TYPE.DRIVER_LICENSE_BACK
-//
-//            PHOTO_TYPE.SSN_BACK,
-//            PHOTO_TYPE.DRIVER_LICENSE_BACK,
-//            PHOTO_TYPE.PASSPORT_FRONT -> PHOTO_TYPE.PORTRAIT
-//
-//            PHOTO_TYPE.PORTRAIT -> null
-//            else -> null
-//        }
-//    }
 }

@@ -34,7 +34,7 @@ class OverlayView @JvmOverloads constructor(
     private var paintFrame = Paint(Paint.ANTI_ALIAS_FLAG)
     private var drawableFrame: Drawable? = null
 
-    private var cropType = CROP_RECTANGLE_TYPE
+    private var cropType = CROP_TYPE.REACTANGLE
 
     private var bitmapFull: Bitmap? = null
     var imageCropMaxSize = IMAGE_CROP_MAX_SIZE
@@ -45,7 +45,6 @@ class OverlayView @JvmOverloads constructor(
     }
 
     init {
-
         init(attrs)
     }
 
@@ -57,10 +56,10 @@ class OverlayView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawRect(rectBackground, paintBackground)
-        if (cropType == CROP_CIRCLE_TYPE) {
+        if (cropType == CROP_TYPE.CIRCLE) {
             canvas.drawRoundRect(rectFrame, getDrawableWidth() / 2f, getDrawableHeight() / 2f, paintFrame)
 //            canvas.drawRoundRect(rectFrame, 0f, 0f, paintFrame)
-        } else if (cropType == CROP_RECTANGLE_TYPE) {
+        } else if (cropType == CROP_TYPE.REACTANGLE) {
             canvas.drawRoundRect(rectFrame, SSN_CORNER, SSN_CORNER, paintFrame)
         }
         drawableFrame?.drawAt(rectFrame, canvas)
@@ -68,6 +67,12 @@ class OverlayView @JvmOverloads constructor(
 //        val cx = rectFrame.left
 //        val cy = rectFrame.top
 //        canvas.drawCircle(cx, cy, 5f, paintPointTest)
+    }
+
+    fun setCropType(type: CROP_TYPE) {
+        this.cropType = type
+        getDrawableFrame()
+        invalidate()
     }
 
     fun attachFile(path: String) {
@@ -199,18 +204,49 @@ class OverlayView @JvmOverloads constructor(
         rectFrame.set(left, top, right, bottom)
     }
 
+    private fun getDrawableFrame() {
+        if (cropType == CROP_TYPE.REACTANGLE) {
+            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_rect_crop)
+        } else if (cropType == CROP_TYPE.CIRCLE) {
+            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_circle_crop)
+        }
+    }
+
     private fun init(attrs: AttributeSet?) {
         val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.OverlayView, 0, 0)
-        drawableFrame = ta.getDrawable(R.styleable.OverlayView_ov_frame_take_picture)
-            ?: getAppDrawable(R.drawable.fekyc_ic_photo_circle_crop)
 
-        cropType = ta.getInt(R.styleable.OverlayView_ov_frame_type, CROP_RECTANGLE_TYPE)
+
+        val type = ta.getInt(R.styleable.OverlayView_ov_frame_type, CROP_RECTANGLE_TYPE)
+        cropType = CROP_TYPE.valueOfName(type) ?: CROP_TYPE.REACTANGLE
+
+        getDrawableFrame()
 
         ta.recycle()
     }
 
+
     interface ICallback {
         fun onTakePicture(bitmap: Bitmap)
         fun onError(exception: Exception)
+    }
+
+    enum class CROP_TYPE(val value: Int) {
+        REACTANGLE(0),
+        CIRCLE(1);
+
+        companion object {
+            fun valueOfName(value: Int): CROP_TYPE? {
+                val item = values().find {
+                    it.value == value
+                }
+
+                return if (item != null) {
+                    item
+                } else {
+                    Log.e("CROP_TYPE", "can not find any CROP_TYPE for name: $value")
+                    null
+                }
+            }
+        }
     }
 }
