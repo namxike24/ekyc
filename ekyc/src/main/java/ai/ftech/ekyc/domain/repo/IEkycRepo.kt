@@ -8,4 +8,5 @@ interface IEkycRepo {
     fun verifyIdentityDriverLicense(absolutePath: String, type: PHOTO_INFORMATION): Boolean
     fun verifyIdentityPassport(absolutePath: String): Boolean
     fun captureFace(absolutePath: String): Boolean
+    fun submitInfo(data: String): Boolean
 }

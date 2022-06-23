@@ -8,7 +8,6 @@ import ai.ftech.ekyc.common.widget.bottomsheetpickerdialog.BottomSheetPickerDial
 import ai.ftech.ekyc.common.widget.datepicker.DatePickerDialog
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
-import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import android.util.Log
 import android.view.MotionEvent
@@ -21,18 +20,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
+    /**
+     * view
+     */
     private lateinit var constRoot: ConstraintLayout
     private lateinit var tbvHeader: ToolbarView
     private lateinit var tvTypePapres: TextView
     private lateinit var rvUserInfo: RecyclerView
     private lateinit var btnCompleted: Button
+
+    /**
+     * data
+     */
     private val viewModel by viewModels<EkycInfoViewModel>()
 
     private val adapter = FormInfoAdapter().apply {
         listener = object : FormInfoAdapter.IListener {
             override fun onClickItem(item: EkycFormInfo) {
                 if (item.fieldType !== null) {
-                    showBottomSheetDialog(item.fieldType!!)
+                    showBottomSheetDialog(item)
                 }
             }
         }
@@ -66,6 +72,10 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             }
         })
 
+        btnCompleted.setOnClickListener {
+            viewModel.submitInfo(adapter.dataList as MutableList<EkycFormInfo>)
+        }
+
         rvUserInfo.layoutManager = LinearLayoutManager(this)
         rvUserInfo.adapter = adapter
 
@@ -81,36 +91,40 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             tvTypePapres.text = String.format("${it?.identityType}: ${it?.identityName}")
             adapter.resetData(it?.formList ?: emptyList())
         }
+
+        observer(viewModel.submitInfo) {
+            Log.d(TAG, "onObserverViewModel: $it")
+        }
     }
 
-    private fun showBottomSheetDialog(type: EkycFormInfo.FIELD_TYPE) {
-        when (type) {
+    private fun showBottomSheetDialog(ekycInfo: EkycFormInfo) {
+        when (ekycInfo.fieldType) {
             EkycFormInfo.FIELD_TYPE.DATE -> {
-                showDatePickerDialog()
+                showDatePickerDialog(ekycInfo)
             }
 
             EkycFormInfo.FIELD_TYPE.COUNTRY -> {
-                showCityDialog()
+                showCityDialog(ekycInfo)
             }
             EkycFormInfo.FIELD_TYPE.NATIONAL -> {
-                showNationDialog()
+                showNationDialog(ekycInfo)
             }
 
             EkycFormInfo.FIELD_TYPE.GENDER -> {
-                showGenderDialog()
+                showGenderDialog(ekycInfo)
             }
         }
     }
 
-    private fun showDatePickerDialog() {
+    private fun showDatePickerDialog(ekycInfo: EkycFormInfo) {
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setDatePickerListener {
-                Log.d(TAG, "onClickItem: $it")
+                adapter.updateField(ekycInfo.id!!, "")
             }.show(supportFragmentManager)
     }
 
-    private fun showCityDialog() {
+    private fun showCityDialog(ekycInfo: EkycFormInfo) {
         val list = viewModel.cityList.mapIndexed { index, city ->
             BottomSheetPicker().apply {
                 this.id = city.id.toString()
@@ -123,12 +137,12 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_issued_by))
             .setListPicker(list)
             .setChooseItemListener {
-
+                adapter.updateField(ekycInfo.id!!, it.title.toString())
             }
             .show(supportFragmentManager)
     }
 
-    private fun showNationDialog() {
+    private fun showNationDialog(ekycInfo: EkycFormInfo) {
         val list = viewModel.nationList.mapIndexed { index, city ->
             BottomSheetPicker().apply {
                 this.id = city.id.toString()
@@ -141,12 +155,12 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_issued_by))
             .setListPicker(list)
             .setChooseItemListener {
-
+                adapter.updateField(ekycInfo.id!!, it.title.toString())
             }
             .show(supportFragmentManager)
     }
 
-    private fun showGenderDialog() {
+    private fun showGenderDialog(ekycInfo: EkycFormInfo) {
         val list = mutableListOf<BottomSheetPicker>()
         list.add(BottomSheetPicker().apply {
             this.id = "1"
@@ -166,7 +180,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             .setListPicker(list)
             .hasSearch(false)
             .setChooseItemListener {
-
+                adapter.updateField(ekycInfo.id!!, it.title.toString())
             }
             .show(supportFragmentManager)
     }
