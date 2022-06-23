@@ -38,7 +38,7 @@ abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatA
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 map.forEach { (k, v) ->
                     if (v) {
-                        permissionListener?.onAllow()
+//                        permissionListener?.onAllow()
                     } else {
                         if (!shouldShowRequestPermissionRationale(k)) {
                             permissionListener?.onNeverAskAgain()
@@ -331,11 +331,11 @@ abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatA
 
     private fun checkPermission(permissions: Array<String>): Boolean {
         permissions.forEach {
-            if (checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED) {
-                return true
+            if (checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED) {
+                return false
             }
         }
-        return false
+        return true
     }
     //endregion
 

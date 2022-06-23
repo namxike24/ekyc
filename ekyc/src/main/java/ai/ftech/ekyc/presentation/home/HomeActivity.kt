@@ -85,11 +85,5 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
             }
         })
-
-
-
-
-
-
     }
 }
