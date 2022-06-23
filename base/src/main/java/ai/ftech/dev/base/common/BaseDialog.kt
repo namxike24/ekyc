@@ -171,13 +171,13 @@ abstract class BaseDialog(@LayoutRes protected val layoutId: Int) : DialogFragme
                 )
             }
             else -> {
-                val set = AnimatorSet()
-                val animatorX = ObjectAnimator.ofFloat(viewGroup, ViewGroup.SCALE_X, 0.7f, 1f)
-                val animatorY = ObjectAnimator.ofFloat(viewGroup, ViewGroup.SCALE_Y, 0.7f, 1f)
-                set.playTogether(animatorX, animatorY)
-                set.interpolator = BounceInterpolator()
-                set.duration = 500
-                set.start()
+//                val set = AnimatorSet()
+//                val animatorX = ObjectAnimator.ofFloat(viewGroup, ViewGroup.SCALE_X, 0.7f, 1f)
+//                val animatorY = ObjectAnimator.ofFloat(viewGroup, ViewGroup.SCALE_Y, 0.7f, 1f)
+//                set.playTogether(animatorX, animatorY)
+//                set.interpolator = BounceInterpolator()
+//                set.duration = 500
+//                set.start()
             }
         }
     }

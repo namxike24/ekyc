@@ -6,6 +6,7 @@
         <entry key="..\:/work/ftech/project/ekyc/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/bg_circle_stroke_blue.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/ekyc_shape_rect_bg_green_corner_8.xml" value="0.25" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_anim_loading.xml" value="0.1955" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_arrow_back.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_arrow_next.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_back.xml" value="0.171" />
@@ -20,6 +21,7 @@
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_eye.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_human_facemask.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_human_glass.xml" value="0.171" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_loading.xml" value="0.1955" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_photo_circle_crop.xml" value="0.1955" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_photo_crop.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_photo_rect_crop.xml" value="0.1955" />
@@ -31,6 +33,8 @@
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_ic_warning_blue.xml" value="0.171" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_cir_bg_tropical_blue.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_divider.xml" value="0.1955" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_black_alpha_10_corner_8.xml" value="0.1805" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_black_alpha_20_corner_8.xml" value="0.1805" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_blue_corner_48.xml" value="0.1955" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_green_corner_8.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_shape_rect_bg_red_alplha_10_corner_10.xml" value="0.1955" />
@@ -49,6 +53,7 @@
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_ekyc_info_activity.xml" value="0.2" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_ekyc_info_item.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_home_activity.xml" value="0.33" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_loading_dialog.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_noti_network_dialog.xml" value="0.33" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_preview_picture_activity.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/layout/fekyc_search_view_layout.xml" value="0.3625" />

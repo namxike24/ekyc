@@ -120,6 +120,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         ivCapture.setOnSafeClick {
             cvCameraView.takePictureSnapshot()
+            showLoading()
         }
 
         ivChangeCamera.setOnSafeClick {
@@ -149,9 +150,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     override fun onObserverViewModel() {
         super.onObserverViewModel()
         observer(viewModel.uploadPhoto) {
+            hideLoading()
             when (it?.data) {
                 UPLOAD_STATUS.FAIL -> {
-                   handleCaseUploadFail(it.exception as APIException)
+                    handleCaseUploadFail(it.exception as APIException)
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
