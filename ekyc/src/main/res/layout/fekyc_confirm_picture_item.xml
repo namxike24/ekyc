@@ -26,6 +26,14 @@
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/fbase_dimen_30"
+        android:layout_height="@dimen/fbase_dimen_30"
+        android:layout_margin="@dimen/fbase_dimen_10"
+        android:src="@drawable/fekyc_ic_eye"
+        app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmPhoto"
+        app:layout_constraintEnd_toEndOf="@id/ivConfirmPictureItmPhoto" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivConfirmPictureItmIcon"
         android:layout_width="@dimen/fbase_dimen_16"
         android:layout_height="@dimen/fbase_dimen_16"
