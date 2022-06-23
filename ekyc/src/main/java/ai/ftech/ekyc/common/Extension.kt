@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.catch
 fun <T> Flow<T>.onException(onCatch: (Throwable) -> Unit): Flow<T> {
     return catch { e ->
         if (e is APIException) {
-            val apiException = APIException(HandleApiException.getAPIMessage(FTechEkycManager.getApplicationContext(), e), e.code)
+            val msg = HandleApiException.getAPIMessage(FTechEkycManager.getApplicationContext(), e)
+            val apiException = APIException(e.code, msg)
             onCatch(apiException)
         } else {
             onCatch(e)

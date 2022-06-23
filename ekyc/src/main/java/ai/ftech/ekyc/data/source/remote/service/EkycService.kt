@@ -13,16 +13,16 @@ import retrofit2.http.PartMap
 
 interface EkycService : IApiService {
     @Multipart
+    @POST("/v1/ekyc/nationId")
+    fun verifyIdentitySSN(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
+
+    @Multipart
+    @POST("/v1/ekyc/driverlicense")
+    fun verifyIdentityDriverLicense(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
+
+    @Multipart
     @POST("/v1/ekyc/passport")
     fun verifyIdentityPassport(@Part file: MultipartBody.Part): Call<VerifyIdentityResponse>
-
-    @Multipart
-    @POST("/v1/ekyc/nationId")
-    fun verifyIdentityFront(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
-
-    @Multipart
-    @POST("/v1/ekyc/nationId")
-    fun verifyIdentityBack(@Part file: MultipartBody.Part, @PartMap map: HashMap<String, RequestBody>): Call<VerifyIdentityResponse>
 
     @Multipart
     @POST("/v1/ekyc/captureFace")

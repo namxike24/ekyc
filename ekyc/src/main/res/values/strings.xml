@@ -6,6 +6,8 @@
     <string name="search">Tìm kiếm</string>
     <string name="save">Lưu</string>
     <string name="select_date">Chọn thời gian</string>
+    <string name="fekyc_notification">Thông báo</string>
+    <string name="fekyc_close">Đóng</string>
 
 
     <string name="fekyc_unknown_error">Đã có lỗi xảy ra</string>
@@ -69,7 +71,6 @@
 
 
     <!--region Confirm Dialog-->
-    <string name="fekyc_confirm_notification_title">Thông báo</string>
     <string name="fekyc_confirm_permission_title">Quyền truy cập</string>
 
     <string name="fekyc_confirm_notification_content">Nếu thoát ra bây giờ, toàn bộ quá trình xác thực sẽ bị huỷ bỏ</string>
@@ -97,5 +98,10 @@
     <string name="fekyc_ekyc_info_gender_male">Nam</string>
     <string name="fekyc_ekyc_info_gender_female">Nữ</string>
     <!--endregion-->
+
+    <!--region Noti Network Dialog-->
+    <string name="fekyc_ekyc_noti_network">Ảnh tải lên không thành công.\nVui lòng kiểm tra lại kết nối mạng</string>
+    <!--endregion-->
+
 
 </resources>

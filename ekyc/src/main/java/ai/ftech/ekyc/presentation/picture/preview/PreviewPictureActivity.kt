@@ -2,30 +2,28 @@ package ai.ftech.ekyc.presentation.picture.preview
 
 import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
-import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
-import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
-import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
-        const val SEND_PHOTO_TYPE_KEY = "SEND_PHOTO_TYPE_KEY"
         const val SEND_PREVIEW_IMAGE_KEY = "SEND_PREVIEW_IMAGE_KEY"
+        const val SEND_MESSAGE_KEY = "SEND_MESSAGE_KEY"
     }
 
     private lateinit var tbvHeader: ToolbarView
     private lateinit var ivImageSrc: ImageView
+    private lateinit var tvMessage: TextView
     private lateinit var btnTakeAgain: Button
 
     private val viewModel by viewModels<PreviewPictureViewModel>()
@@ -35,9 +33,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         super.onResume()
         if (warningDialog == null) {
             val type = getWarningType()
-//            if (type != null) {
             warningDialog = WarningCaptureDialog(type)
-//            }
         }
     }
 
@@ -52,18 +48,19 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-//        viewModel.ekycType = intent.getSerializableExtra(SEND_EKYC_TYPE_KEY) as? CAMERA_TYPE
-//        viewModel.photoType = intent.getSerializableExtra(SEND_PHOTO_TYPE_KEY) as? PHOTO_INFORMATION
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
+        viewModel.message = intent.getStringExtra(SEND_MESSAGE_KEY)
     }
 
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvPreviewPictureHeader)
+        tvMessage = findViewById(R.id.tvPreviewPictureErrorMessage)
         ivImageSrc = findViewById(R.id.ivPreviewPictureImageSrc)
         btnTakeAgain = findViewById(R.id.btnPreviewPictureTakeAgain)
 
         tbvHeader.setTitle(getToolbarTitleByEkycType())
+        tvMessage.text = viewModel.message
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
@@ -78,7 +75,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
 
         btnTakeAgain.setOnSafeClick {
-            navigateTo(ConfirmPictureActivity::class.java)
+            finish()
         }
     }
 

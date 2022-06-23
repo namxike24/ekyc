@@ -18,7 +18,7 @@ object ExceptionHelper {
     fun throwException(response: Response<*>): APIException {
         return when (response.code()) {
             HTTP_CODE_SUCCESSFUL_OK -> getAPIExceptionWhenHTTPCodeSuccessful(response)
-            else -> APIException(response.message(), response.code())
+            else -> APIException(response.code(), response.message())
         }
     }
 
@@ -26,10 +26,11 @@ object ExceptionHelper {
         val body = response.body()
         if (body != null) {
             val apiResponse = body as BaseApiResponse
+            val status = apiResponse.status
+            val code = apiResponse.statusCode ?: APIException.SERVER_ERROR_CODE_UNDEFINE
             val msg = apiResponse.message
-            val status = apiResponse.statusCode ?: APIException.SERVER_ERROR_CODE_UNDEFINE
-            return APIException(msg, status)
+            return APIException(code, msg)
         }
-        return APIException("body null", APIException.RESPONSE_BODY_ERROR)
+        return APIException(APIException.RESPONSE_BODY_ERROR, "body null")
     }
 }

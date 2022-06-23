@@ -18,8 +18,8 @@ class ConfirmDialog : BaseDialog(R.layout.fekyc_confirm_dialog) {
     override fun onInitView() {
         tvTitle = viewRoot.findViewById(R.id.tvConfirmDlgTitle)
         tvContent = viewRoot.findViewById(R.id.tvConfirmDlgContent)
-        btnLeft = viewRoot.findViewById(R.id.btnConfirmLeft)
-        btnRight = viewRoot.findViewById(R.id.btnConfirmRight)
+        btnLeft = viewRoot.findViewById(R.id.btnConfirmDlgLeft)
+        btnRight = viewRoot.findViewById(R.id.btnConfirmDlgRight)
 
 
         tvTitle.text = builder?.title

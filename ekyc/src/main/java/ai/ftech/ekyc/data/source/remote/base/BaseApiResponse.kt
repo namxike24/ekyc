@@ -6,13 +6,17 @@ import com.google.gson.annotations.SerializedName
 open class BaseApiResponse : IApiResponse {
     @SerializedName("status")
     @Expose
-    var message: String? = null
+    var status: String? = null
 
     @SerializedName("statusCode")
     @Expose
     var statusCode: Int? = null
 
+    @SerializedName("message")
+    @Expose
+    var message: String? = null
+
     override fun isSuccessful(): Boolean {
-        return message == "success" && statusCode == 200
+        return status == "success" && statusCode == 0
     }
 }
