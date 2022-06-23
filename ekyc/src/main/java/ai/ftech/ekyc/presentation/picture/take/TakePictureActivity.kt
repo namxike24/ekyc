@@ -8,6 +8,7 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
@@ -150,7 +151,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         observer(viewModel.uploadPhoto) {
             when (it?.data) {
                 UPLOAD_STATUS.FAIL -> {
-                    navigateToPreviewScreen(viewModel.filePath.value ?: "", it.exception?.message)
+                    navigateToPreviewScreen(viewModel.filePath.value ?: "", (it.exception as APIException).message)
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()

@@ -2,20 +2,17 @@ package ai.ftech.ekyc.presentation.picture.preview
 
 import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
-import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
-import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
-import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
@@ -26,6 +23,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     private lateinit var tbvHeader: ToolbarView
     private lateinit var ivImageSrc: ImageView
+    private lateinit var tvMessage: TextView
     private lateinit var btnTakeAgain: Button
 
     private val viewModel by viewModels<PreviewPictureViewModel>()
@@ -57,10 +55,12 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvPreviewPictureHeader)
+        tvMessage = findViewById(R.id.tvPreviewPictureErrorMessage)
         ivImageSrc = findViewById(R.id.ivPreviewPictureImageSrc)
         btnTakeAgain = findViewById(R.id.btnPreviewPictureTakeAgain)
 
         tbvHeader.setTitle(getToolbarTitleByEkycType())
+        tvMessage.text = viewModel.message
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
