@@ -42,8 +42,8 @@ class TakePictureViewModel : BaseViewModel() {
                         }
                         _filePath.value = absolutePath
                         _uploadPhoto.value = FEkycActionResult<UPLOAD_STATUS>().apply {
-                            this.data = UPLOAD_STATUS.FAIL
                             this.exception = it
+                            this.data = UPLOAD_STATUS.FAIL
                         }
                     }.collect {
                         EkycStep.add(photoType, absolutePath)

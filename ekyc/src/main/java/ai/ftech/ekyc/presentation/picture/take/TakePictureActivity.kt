@@ -151,7 +151,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         observer(viewModel.uploadPhoto) {
             when (it?.data) {
                 UPLOAD_STATUS.FAIL -> {
-                    navigateToPreviewScreen(viewModel.filePath.value ?: "", (it.exception as APIException).message)
+                   handleCaseUploadFail(it.exception as APIException)
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
@@ -163,7 +163,16 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                     navigateTo(ConfirmPictureActivity::class.java)
                 }
                 UPLOAD_STATUS.NONE -> {}
+                else -> {}
             }
+        }
+    }
+
+    private fun handleCaseUploadFail(exp: APIException) {
+        when (exp.code) {
+            APIException.TIME_OUT_ERROR,
+            APIException.NETWORK_ERROR -> showNotiNetworkDialog()
+            else -> navigateToPreviewScreen(viewModel.filePath.value ?: "", exp.message)
         }
     }
 
