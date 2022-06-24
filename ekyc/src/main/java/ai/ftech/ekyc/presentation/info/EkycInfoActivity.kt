@@ -69,7 +69,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                showConfirmDialog()
+                onBackPressed()
             }
         })
 
@@ -94,7 +94,9 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         }
 
         observer(viewModel.submitInfo) {
-            Log.d(TAG, "onObserverViewModel: $it")
+            if (it?.data == true) {
+                finishAffinity()
+            }
         }
     }
 
@@ -121,7 +123,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setDatePickerListener {
-               val time = TimeUtils.dateToDateString(it, TimeUtils.ISO_SHORT_DATE_FOMAT)
+                val time = TimeUtils.dateToDateString(it, TimeUtils.ISO_SHORT_DATE_FOMAT)
                 adapter.updateField(ekycInfo.id!!, time)
             }.show(supportFragmentManager)
     }
@@ -131,7 +133,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             BottomSheetPicker().apply {
                 this.id = city.id.toString()
                 this.title = city.name
-                this.isSelected = (index == 0)
+                this.isSelected = (ekycInfo.value == city.name)
             }
         }
 
@@ -145,11 +147,11 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showNationDialog(ekycInfo: EkycFormInfo) {
-        val list = viewModel.nationList.mapIndexed { index, city ->
+        val list = viewModel.nationList.mapIndexed { index, nation ->
             BottomSheetPicker().apply {
-                this.id = city.id.toString()
-                this.title = city.name
-                this.isSelected = (index == 0)
+                this.id = nation.id.toString()
+                this.title = nation.name
+                this.isSelected = (ekycInfo.value == nation.name)
             }
         }
 
@@ -164,18 +166,18 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
     private fun showGenderDialog(ekycInfo: EkycFormInfo) {
         val list = mutableListOf<BottomSheetPicker>()
+
         list.add(BottomSheetPicker().apply {
-            this.id = "1"
+            this.id = ekycInfo.id.toString()
             this.title = getAppString(R.string.fekyc_ekyc_info_gender_male)
-            this.isSelected = true
+            this.isSelected = (ekycInfo.value == getAppString(R.string.fekyc_ekyc_info_gender_male))
         })
 
         list.add(BottomSheetPicker().apply {
-            this.id = "2"
+            this.id = ekycInfo.id.toString()
             this.title = getAppString(R.string.fekyc_ekyc_info_gender_female)
-            this.isSelected = false
+            this.isSelected = (ekycInfo.value == getAppString(R.string.fekyc_ekyc_info_gender_female))
         })
-
 
         BottomSheetPickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_gender))

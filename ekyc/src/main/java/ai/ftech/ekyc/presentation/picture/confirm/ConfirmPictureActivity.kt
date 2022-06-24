@@ -38,11 +38,12 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                showConfirmDialog()
+                onBackPressed()
             }
         })
 
         btnContinue.setOnSafeClick {
+            finish()
             navigateTo(EkycInfoActivity::class.java)
         }
     }

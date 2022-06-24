@@ -79,6 +79,10 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     override fun showWarning(msg: String?) {
     }
 
+    override fun onBackPressed() {
+        showConfirmDialog()
+    }
+
     fun showKeyboard() {
         KeyboardUtility.showKeyBoard(this)
     }

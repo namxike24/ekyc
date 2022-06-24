@@ -82,7 +82,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                showConfirmDialog()
+                onBackPressed()
             }
 
             override fun onRightIconClick() {
@@ -157,7 +157,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
-                    finish()
                     navigateToTakePictureScreen()
                 }
                 UPLOAD_STATUS.COMPLETE -> {
@@ -198,6 +197,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     }
 
     private fun navigateToTakePictureScreen() {
+        finish()
         navigateTo(TakePictureActivity::class.java)
     }
 

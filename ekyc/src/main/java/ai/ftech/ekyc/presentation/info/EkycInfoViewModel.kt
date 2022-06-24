@@ -31,11 +31,6 @@ class EkycInfoViewModel : BaseViewModel() {
     var nationList: List<Nation> = emptyList()
         private set
 
-    fun updateValue() {
-
-        Log.d("anhnd", "updateValue: $ekycInfoLocal")
-    }
-
     fun submitInfo(list: MutableList<EkycFormInfo>) {
         viewModelScope.launch {
             ekycInfoLocal?.formList = list

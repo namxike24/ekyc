@@ -50,7 +50,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                finish()
+                onBackPressed()
             }
 
             override fun onRightTextClick() {
@@ -70,9 +70,14 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         }
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     private fun navigateToTakePictureScreen(photoType: PHOTO_TYPE) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
+                finish()
                 EkycStep.setType(photoType)
                 navigateTo(TakePictureActivity::class.java)
             }

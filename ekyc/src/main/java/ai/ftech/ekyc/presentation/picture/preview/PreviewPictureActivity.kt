@@ -64,7 +64,7 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                showConfirmDialog()
+                onBackPressed()
             }
 
             override fun onRightIconClick() {
