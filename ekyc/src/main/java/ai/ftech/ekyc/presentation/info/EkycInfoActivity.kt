@@ -9,6 +9,7 @@ import ai.ftech.ekyc.common.widget.datepicker.DatePickerDialog
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import ai.ftech.ekyc.utils.TimeUtils
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -120,7 +121,8 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setDatePickerListener {
-                adapter.updateField(ekycInfo.id!!, "")
+               val time = TimeUtils.dateToDateString(it, TimeUtils.ISO_SHORT_DATE_FOMAT)
+                adapter.updateField(ekycInfo.id!!, time)
             }.show(supportFragmentManager)
     }
 
