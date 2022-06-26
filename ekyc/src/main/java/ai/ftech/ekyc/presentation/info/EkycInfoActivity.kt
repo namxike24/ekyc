@@ -74,6 +74,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         })
 
         btnCompleted.setOnClickListener {
+//            showLoading()
             viewModel.submitInfo(adapter.dataList as MutableList<EkycFormInfo>)
         }
 
@@ -95,7 +96,8 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
         observer(viewModel.submitInfo) {
             if (it?.data == true) {
-                finishAffinity()
+                hideLoading()
+                finish()
             }
         }
     }
@@ -105,14 +107,12 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             EkycFormInfo.FIELD_TYPE.DATE -> {
                 showDatePickerDialog(ekycInfo)
             }
-
             EkycFormInfo.FIELD_TYPE.COUNTRY -> {
                 showCityDialog(ekycInfo)
             }
             EkycFormInfo.FIELD_TYPE.NATIONAL -> {
                 showNationDialog(ekycInfo)
             }
-
             EkycFormInfo.FIELD_TYPE.GENDER -> {
                 showGenderDialog(ekycInfo)
             }
@@ -129,7 +129,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showCityDialog(ekycInfo: EkycFormInfo) {
-        val list = viewModel.cityList.mapIndexed { index, city ->
+        val list = viewModel.cityList.map { city ->
             BottomSheetPicker().apply {
                 this.id = city.id.toString()
                 this.title = city.name
@@ -147,7 +147,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showNationDialog(ekycInfo: EkycFormInfo) {
-        val list = viewModel.nationList.mapIndexed { index, nation ->
+        val list = viewModel.nationList.map { nation ->
             BottomSheetPicker().apply {
                 this.id = nation.id.toString()
                 this.title = nation.name

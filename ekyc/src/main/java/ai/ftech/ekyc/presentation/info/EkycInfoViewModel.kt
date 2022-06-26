@@ -2,7 +2,7 @@ package ai.ftech.ekyc.presentation.info
 
 import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.dev.base.common.BaseViewModel
-import ai.ftech.dev.base.extension.asLiveData
+import ai.ftech.dev.base.extension.postSelf
 import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.domain.action.GetCityListAction
 import ai.ftech.ekyc.domain.action.GetEkycInfoAction
@@ -19,11 +19,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class EkycInfoViewModel : BaseViewModel() {
-    private val _ekycInfo = MutableLiveData<EkycInfo>()
-    val ekycInfo = _ekycInfo.asLiveData()
+    var ekycInfo = MutableLiveData<EkycInfo>()
+        private set
 
-    private val _submitInfo = MutableLiveData(FEkycActionResult<Boolean>())
-    val submitInfo = _submitInfo.asLiveData()
+    var submitInfo = MutableLiveData(FEkycActionResult<Boolean>())
+        private set
+
     var ekycInfoLocal: EkycInfo? = null
 
     var cityList: List<City> = emptyList()
@@ -38,10 +39,13 @@ class EkycInfoViewModel : BaseViewModel() {
             if (data != null) {
                 val rv = SubmitInfoAction.SubmitRV(data)
                 SubmitInfoAction().invoke(rv).catch {
-                    _submitInfo.value?.exception = it
-                    _submitInfo.value?.data = false
+                    submitInfo.value?.exception = it
+                    submitInfo.value?.data = false
+                    submitInfo.postSelf()
                 }.collect {
-                    _submitInfo.value?.data = it
+                    submitInfo.value?.data = it
+                    submitInfo.postSelf()
+                    Log.d("anhnd", "zzz: ${submitInfo.value?.data}")
                 }
             }
         }
@@ -52,7 +56,7 @@ class EkycInfoViewModel : BaseViewModel() {
             GetEkycInfoAction().invoke(BaseAction.VoidRequest()).catch {
 
             }.collect {
-                _ekycInfo.value = it
+                ekycInfo.value = it
                 ekycInfoLocal = it
             }
         }

@@ -77,7 +77,6 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private fun navigateToTakePictureScreen(photoType: PHOTO_TYPE) {
         doRequestPermission(permissionList, object : PermissionListener {
             override fun onAllow() {
-                finish()
                 EkycStep.setType(photoType)
                 navigateTo(TakePictureActivity::class.java)
             }
