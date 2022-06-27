@@ -48,6 +48,9 @@
     <string name="fekyc_take_picture_take_passport">Chụp trang số 2</string>
     <string name="fekyc_take_picture_image_passport">Ảnh trang số 2</string>
 
+    <string name="fekyc_take_picture_warning_take_papers">Định vị rõ ràng cả 4 góc của mặt trước\ntrong khung hình</string>
+    <string name="fekyc_take_picture_warning_take_face">Định vị rõ ràng toàn bộ khuôn mặt trong\nkhung hình</string>
+
 
     <!--endregion-->
 

@@ -17,8 +17,8 @@ import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import android.graphics.Bitmap
-import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.otaliastudios.cameraview.CameraListener
@@ -35,6 +35,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private lateinit var ovFrameCrop: OverlayView
     private lateinit var cvCameraView: CameraView
     private lateinit var tbvHeader: ToolbarView
+    private lateinit var tvWarningText: TextView
     private lateinit var ivFlash: ImageView
     private lateinit var ivCapture: ImageView
     private lateinit var ivChangeCamera: ImageView
@@ -71,6 +72,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onInitView()
         ovFrameCrop = findViewById(R.id.ovTakePictureFrameCrop)
         tbvHeader = findViewById(R.id.tbvTakePictureHeader)
+        tvWarningText = findViewById(R.id.tvTakePictureWarningText)
         cvCameraView = findViewById(R.id.cvTakePictureCameraView)
         ivFlash = findViewById(R.id.ivTakePictureFlash)
         ivCapture = findViewById(R.id.ivTakePictureCapture)
@@ -142,6 +144,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             override fun onError(exception: Exception) {
+                hideLoading()
                 Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -180,8 +183,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private fun uploadFile(result: PictureResult) {
         val path = viewModel.getFolderPathByEkycType()
         val file = File(path)
-
-        Log.d(TAG, "uploadFile: $path")
 
         if (file.exists()) {
             FileUtils.deleteFile(path)
@@ -228,14 +229,15 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             PHOTO_INFORMATION.PAGE_NUMBER_2 -> {
                 ovFrameCrop.apply {
                     setCropType(OverlayView.CROP_TYPE.REACTANGLE)
-
                 }
+                tvWarningText.text = getAppString(R.string.fekyc_take_picture_warning_take_papers)
                 WARNING_TYPE.PAPERS
             }
-            PHOTO_INFORMATION.FACE ->{
+            PHOTO_INFORMATION.FACE -> {
                 ovFrameCrop.apply {
                     setCropType(OverlayView.CROP_TYPE.CIRCLE)
                 }
+                tvWarningText.text = getAppString(R.string.fekyc_take_picture_warning_take_face)
                 WARNING_TYPE.PORTRAIT
             }
         }

@@ -12,7 +12,6 @@ import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
-import ai.ftech.ekyc.publish.FTECH_STATE
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
 import android.util.Log
@@ -110,8 +109,8 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                         lifecycleScope.launch {
 
                             val event = EkycEvent().apply {
-                                this.code = FTECH_STATE.EKYC_SUCCESSFULLY.code
-                                this.message = FTECH_STATE.EKYC_SUCCESSFULLY.message
+                                this.code = 0
+                                this.message ="Ekyc thành công!"
                             }
 
                             ShareFlowEventBus.emitEvent(event)
