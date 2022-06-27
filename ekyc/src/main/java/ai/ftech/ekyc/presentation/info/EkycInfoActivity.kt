@@ -118,7 +118,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                         APIException.EXPIRE_SESSION_ERROR -> {
                             lifecycleScope.launchWhenStarted {
                                 val event = EkycEvent().apply {
-                                    this.throwable = it.exception
+                                    this.exception = it.exception as APIException
                                 }
                                 ShareFlowEventBus.emitEvent(event)
                             }

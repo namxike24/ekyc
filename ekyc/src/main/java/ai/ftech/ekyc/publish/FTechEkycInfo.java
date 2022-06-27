@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class FTechEkycInfo implements Serializable {
     private int code = -1;
     private String message = "";
-    private Throwable throwable;
 
     public int getCode() {
         return code;
@@ -21,13 +20,5 @@ public class FTechEkycInfo implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public Throwable getThrowable() {
-        return throwable;
-    }
-
-    public void setThrowable(Throwable throwable) {
-        this.throwable = throwable;
     }
 }

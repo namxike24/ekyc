@@ -29,7 +29,7 @@ class KotlinActivity : AppCompatActivity() {
                     tvState.text = info?.message
                 }
 
-                override fun onFail(throwable: Throwable?) {
+                override fun onFail() {
 
                 }
 

@@ -12,6 +12,7 @@ import ai.ftech.ekyc.publish.FTechEkycInfo
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.Manifest
 import android.content.Intent
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,9 +88,14 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
             flow.collectLatest {
                 val info = FTechEkycInfo().apply {
-                    this.code = -1
-                    this.message = (it as? EkycEvent)?.message
-                    this.throwable = (it as? EkycEvent)?.throwable
+                    if (it is EkycEvent) {
+                        if (it.exception == null) {
+                            this.message = it.message
+                        } else {
+                            this.code = (it as? EkycEvent)?.exception?.code ?: -1
+                            this.message = (it as? EkycEvent)?.exception?.message.toString()
+                        }
+                    }
                 }
                 val intent = Intent()
                 intent.putExtra(SEND_RESULT_FTECH_EKYC_INFO, info)

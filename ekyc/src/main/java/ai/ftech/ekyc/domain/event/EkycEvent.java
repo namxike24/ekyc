@@ -1,8 +1,13 @@
 package ai.ftech.ekyc.domain.event;
 
-public class EkycEvent implements IFbaseEvent {
+import java.io.Serializable;
+
+import ai.ftech.dev.base.parcelable.IParcelable;
+import ai.ftech.ekyc.domain.APIException;
+
+public class EkycEvent implements IFbaseEvent, Serializable {
     private String message;
-    private Throwable  throwable;
+    private APIException exception;
 
     public String getMessage() {
         return message;
@@ -12,11 +17,11 @@ public class EkycEvent implements IFbaseEvent {
         this.message = message;
     }
 
-    public Throwable getThrowable() {
-        return throwable;
+    public APIException getException() {
+        return exception;
     }
 
-    public void setThrowable(Throwable throwable) {
-        this.throwable = throwable;
+    public void setException(APIException exception) {
+        this.exception = exception;
     }
 }

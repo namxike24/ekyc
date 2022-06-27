@@ -39,7 +39,6 @@ class EkycInfoViewModel : BaseViewModel() {
                 val rv = SubmitInfoAction.SubmitRV(data)
                 SubmitInfoAction().invoke(rv).catch {
                     submitInfo.value?.exception = it
-                    submitInfo.value?.data = false
                     submitInfo.postSelf()
                 }.collect {
                     submitInfo.value?.data = it

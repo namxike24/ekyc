@@ -1,15 +1,16 @@
 package ai.ftech.demo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ai.ftech.ekyc.publish.FTechEkycInfo;
 import ai.ftech.ekyc.publish.FTechEkycManager;
 import ai.ftech.ekyc.publish.IFTechEkycCallback;
-import ai.ftech.ekyc.publish.FTechEkycInfo;
 
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
@@ -35,9 +36,9 @@ public class JavaActivity extends AppCompatActivity {
                     tvState.setText(info.getMessage());
                 }
 
-                @Override
-                public void onFail(Throwable throwable) {
 
+                @Override
+                public void onFail() {
                 }
 
                 @Override

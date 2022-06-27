@@ -40,7 +40,6 @@ object FTechEkycManager {
     @JvmStatic
     fun register(context: Context) {
         if (context is FragmentActivity) {
-            Log.d("anhnd", "register: ${launcherMap[context.hashCode()]}")
             resultLauncher = if (launcherMap.contains(context.hashCode())) {
                 launcherMap[context.hashCode()]
             } else {
@@ -121,7 +120,6 @@ object FTechEkycManager {
             else -> {
                 return FTechEkycResult<FTechEkycInfo>().apply {
                     this.type = RESULT_TYPE.ERROR
-                    this.throwable = Throwable()
                 }
             }
         }
@@ -129,12 +127,21 @@ object FTechEkycManager {
 
     private fun <T> invokeCallback(callback: IFTechEkycCallback<T>?, result: FTechEkycResult<T>) {
         when (result.type) {
-            RESULT_TYPE.ERROR -> {
+            RESULT_TYPE.SUCCESS -> {
                 if (isActive) {
-                    callback?.onFail(result.throwable)
+                    callback?.onSuccess(result.data!!)
                 } else {
                     pendingCallback = {
-                        callback?.onFail(result.throwable)
+                        callback?.onSuccess(result.data!!)
+                    }
+                }
+            }
+            RESULT_TYPE.ERROR -> {
+                if (isActive) {
+                    callback?.onFail()
+                } else {
+                    pendingCallback = {
+                        callback?.onFail()
                     }
                 }
             }
@@ -144,15 +151,6 @@ object FTechEkycManager {
                 } else {
                     pendingCallback = {
                         callback?.onCancel()
-                    }
-                }
-            }
-            RESULT_TYPE.SUCCESS -> {
-                if (isActive) {
-                    callback?.onSuccess(result.data!!)
-                } else {
-                    pendingCallback = {
-                        callback?.onSuccess(result.data!!)
                     }
                 }
             }
