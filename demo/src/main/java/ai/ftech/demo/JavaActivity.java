@@ -33,9 +33,9 @@ public class JavaActivity extends AppCompatActivity {
             FTechEkycManager.startEkyc(new IFTechEkycCallback<FTechEkycInfo>() {
                 @Override
                 public void onSuccess(FTechEkycInfo info) {
+                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
                     tvState.setText(info.getMessage());
                 }
-
 
                 @Override
                 public void onFail() {

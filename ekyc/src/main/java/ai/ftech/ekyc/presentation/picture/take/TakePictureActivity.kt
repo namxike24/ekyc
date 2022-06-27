@@ -173,7 +173,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         when (exp.code) {
             APIException.TIME_OUT_ERROR,
             APIException.NETWORK_ERROR -> showNotiNetworkDialog()
-            else -> navigateToPreviewScreen(viewModel.filePath.value ?: "", exp.message)
+            else -> navigateToPreviewScreen(viewModel.filePath ?: "", exp.message)
         }
     }
 

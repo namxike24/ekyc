@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.common
 
-import ai.ftech.ekyc.publish.FTechEkycManager
 import ai.ftech.ekyc.common.message.HandleApiException
 import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.publish.FTechEkycManager
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -16,7 +16,7 @@ import androidx.core.content.res.ResourcesCompat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 
-fun <T> Flow<T>.onException(onCatch: (Throwable) -> Unit): Flow<T> {
+fun <T> Flow<T>.onException(onCatch: suspend (Throwable) -> Unit): Flow<T> {
     return catch { e ->
         if (e is APIException) {
             val msg = HandleApiException.getAPIMessage(FTechEkycManager.getApplicationContext(), e)

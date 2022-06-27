@@ -4,6 +4,7 @@ import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.dev.base.common.BaseViewModel
 import ai.ftech.dev.base.extension.postSelf
 import ai.ftech.ekyc.common.action.FEkycActionResult
+import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetCityListAction
 import ai.ftech.ekyc.domain.action.GetEkycInfoAction
 import ai.ftech.ekyc.domain.action.GetNationListAction
@@ -28,6 +29,7 @@ class EkycInfoViewModel : BaseViewModel() {
 
     var cityList: List<City> = emptyList()
         private set
+
     var nationList: List<Nation> = emptyList()
         private set
 
@@ -37,7 +39,7 @@ class EkycInfoViewModel : BaseViewModel() {
             val data = ekycInfoLocal
             if (data != null) {
                 val rv = SubmitInfoAction.SubmitRV(data)
-                SubmitInfoAction().invoke(rv).catch {
+                SubmitInfoAction().invoke(rv).onException {
                     submitInfo.value?.exception = it
                     submitInfo.postSelf()
                 }.collect {
@@ -50,7 +52,7 @@ class EkycInfoViewModel : BaseViewModel() {
 
     fun getEkycInfo() {
         viewModelScope.launch {
-            GetEkycInfoAction().invoke(BaseAction.VoidRequest()).catch {
+            GetEkycInfoAction().invoke(BaseAction.VoidRequest()).onException {
 
             }.collect {
                 ekycInfo.value = it
@@ -61,7 +63,7 @@ class EkycInfoViewModel : BaseViewModel() {
 
     fun getCityList() {
         viewModelScope.launch {
-            GetCityListAction().invoke(BaseAction.VoidRequest()).catch {
+            GetCityListAction().invoke(BaseAction.VoidRequest()).onException {
 
             }.collect {
                 cityList = it
@@ -71,7 +73,7 @@ class EkycInfoViewModel : BaseViewModel() {
 
     fun getNationList() {
         viewModelScope.launch {
-            GetNationListAction().invoke(BaseAction.VoidRequest()).catch {
+            GetNationListAction().invoke(BaseAction.VoidRequest()).onException {
 
             }.collect {
                 nationList = it

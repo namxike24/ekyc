@@ -12,8 +12,10 @@ import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import ai.ftech.ekyc.publish.FTECH_STATE
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -102,29 +104,39 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         observer(viewModel.submitInfo) {
             hideLoading()
             when (it?.resultStatus) {
+
                 FEkycActionResult.RESULT_STATUS.SUCCESS -> {
                     if (it.data == true) {
                         lifecycleScope.launch {
+
                             val event = EkycEvent().apply {
-                                this.message = "Ekyc thành công!!"
+                                this.code = FTECH_STATE.EKYC_SUCCESSFULLY.code
+                                this.message = FTECH_STATE.EKYC_SUCCESSFULLY.message
                             }
+
                             ShareFlowEventBus.emitEvent(event)
                         }
                         finish()
                     }
                 }
+
                 FEkycActionResult.RESULT_STATUS.ERROR -> {
-                    when ((it.exception as APIException).code) {
-                        APIException.EXPIRE_SESSION_ERROR -> {
-                            lifecycleScope.launchWhenStarted {
-                                val event = EkycEvent().apply {
-                                    this.exception = it.exception as APIException
-                                }
-                                ShareFlowEventBus.emitEvent(event)
-                            }
-                            finish()
+                    lifecycleScope.launchWhenStarted {
+
+                        val apiException = it.exception as APIException
+
+                        val event = EkycEvent().apply {
+                            this.code = apiException.code
+                            this.message = apiException.message.toString()
                         }
+
+                        ShareFlowEventBus.emitEvent(event)
                     }
+                    finish()
+                }
+
+                else -> {
+                    Log.e(TAG, getAppString(R.string.fekyc_unknown_error))
                 }
             }
         }

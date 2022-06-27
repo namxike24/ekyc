@@ -72,10 +72,9 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
             this.data = data
         }
 
-//        return service.submitInfo(request).invokeApi { _, _ ->
-//            true
-//        }
-        throw APIException(APIException.EXPIRE_SESSION_ERROR)
+        return service.submitInfo(request).invokeApi { _, _ ->
+            true
+        }
     }
 
     private fun convertFileToMultipart(absolutePath: String): MultipartBody.Part {

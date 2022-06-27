@@ -2,8 +2,8 @@ package ai.ftech.ekyc.publish;
 
 import java.io.Serializable;
 
-public class FTechEkycInfo implements Serializable {
-    private int code = -1;
+public final class FTechEkycInfo implements Serializable {
+    private int code = 0;
     private String message = "";
 
     public int getCode() {
@@ -20,5 +20,13 @@ public class FTechEkycInfo implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "FTechEkycInfo{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                '}';
     }
 }
