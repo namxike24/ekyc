@@ -47,6 +47,16 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         EkycStep.clear()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        openAppSettingResult.unregister()
+    }
+
+    override fun onPrepareInitView() {
+        super.onPrepareInitView()
+        openAppSettingResult.register(this)
+    }
+
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvHomeHeader)
@@ -116,7 +126,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
             }
 
             override fun onNeverAskAgain() {
-
+                showPermissionDialog()
             }
         })
     }

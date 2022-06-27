@@ -8,6 +8,7 @@
     <string name="select_date">Chọn thời gian</string>
     <string name="fekyc_notification">Thông báo</string>
     <string name="fekyc_close">Đóng</string>
+    <string name="fekyc_setting">Cài đặt</string>
 
 
     <string name="fekyc_unknown_error">Đã có lỗi xảy ra</string>
