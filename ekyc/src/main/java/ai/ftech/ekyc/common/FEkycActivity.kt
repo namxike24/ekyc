@@ -2,7 +2,6 @@ package ai.ftech.ekyc.common
 
 import ai.ftech.dev.base.common.BaseActivity
 import ai.ftech.dev.base.common.StatusBar
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.LoadingDialog

@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/work/ftech/project/ekyc/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/demo/src/main/res/layout/demo_activity.xml" value="0.3625" />
+        <entry key="..\:/work/ftech/project/ekyc/ekyc-android/demo/src/main/res/layout/main_activity.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/bg_circle_stroke_blue.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/ekyc_shape_rect_bg_green_corner_8.xml" value="0.25" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/ekyc/src/main/res/drawable/fekyc_anim_loading.xml" value="0.1955" />

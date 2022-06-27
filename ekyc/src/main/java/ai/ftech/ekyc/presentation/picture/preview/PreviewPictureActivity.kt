@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.presentation.picture.preview
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
+import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION

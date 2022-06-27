@@ -4,15 +4,26 @@ import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
+import ai.ftech.ekyc.publish.FTechEkycInfo
+import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.Manifest
+import android.content.Intent
 import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 
 class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
+    companion object {
+        const val SEND_RESULT_FTECH_EKYC_INFO = "SEND_RESULT_FTECH_EKYC_INFO"
+    }
+
     /**
      * view
      */
@@ -67,6 +78,24 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
 
         llPassport.setOnSafeClick {
             navigateToTakePictureScreen(PHOTO_TYPE.PASSPORT)
+        }
+
+        lifecycleScope.launchWhenResumed {
+            val flow = ShareFlowEventBus.events.filter {
+                it is EkycEvent
+            }
+
+            flow.collectLatest {
+                val info = FTechEkycInfo().apply {
+                    this.code = -1
+                    this.message = (it as? EkycEvent)?.message
+                    this.throwable = (it as? EkycEvent)?.throwable
+                }
+                val intent = Intent()
+                intent.putExtra(SEND_RESULT_FTECH_EKYC_INFO, info)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
         }
     }
 

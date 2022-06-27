@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common.message
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.domain.APIException
 import android.content.Context
 

@@ -1,24 +1,29 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.observer
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
+import ai.ftech.ekyc.common.action.FEkycActionResult
+import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.widget.bottomsheetpickerdialog.BottomSheetPickerDialog
 import ai.ftech.ekyc.common.widget.datepicker.DatePickerDialog
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 
 class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     /**
@@ -95,9 +100,32 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         }
 
         observer(viewModel.submitInfo) {
-            if (it?.data == true) {
-                hideLoading()
-                finish()
+            hideLoading()
+            when (it?.resultStatus) {
+                FEkycActionResult.RESULT_STATUS.SUCCESS -> {
+                    if (it.data == true) {
+                        lifecycleScope.launch {
+                            val event = EkycEvent().apply {
+                                this.message = "Ekyc thành công!!"
+                            }
+                            ShareFlowEventBus.emitEvent(event)
+                        }
+                        finish()
+                    }
+                }
+                FEkycActionResult.RESULT_STATUS.ERROR -> {
+                    when ((it.exception as APIException).code) {
+                        APIException.EXPIRE_SESSION_ERROR -> {
+                            lifecycleScope.launchWhenStarted {
+                                val event = EkycEvent().apply {
+                                    this.throwable = it.exception
+                                }
+                                ShareFlowEventBus.emitEvent(event)
+                            }
+                            finish()
+                        }
+                    }
+                }
             }
         }
     }

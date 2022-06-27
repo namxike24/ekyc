@@ -1,10 +1,15 @@
 package ai.ftech.dev.base.extension
 
-import ai.ftech.dev.base.common.BaseApplication
 import ai.ftech.dev.base.common.BasePreference
 import android.app.Application
 
-fun getApplication() = BaseApplication.appInstance!!
+private var application: Application? = null
+
+fun setApplication(context: Application) {
+    application = context
+}
+
+fun getApplication() = application
 
 private var basePreference: BasePreference? = null
 

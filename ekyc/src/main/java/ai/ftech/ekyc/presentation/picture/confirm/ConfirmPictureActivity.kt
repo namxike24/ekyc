@@ -1,7 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.confirm
 
 import ai.ftech.dev.base.adapter.group.GroupAdapter
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.observer
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
@@ -9,10 +8,7 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
-import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.info.EkycInfoActivity
-import ai.ftech.ekyc.presentation.picture.take.EkycStep
-import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager

@@ -132,5 +132,4 @@ class BottomSheetPickerDialog private constructor(
             BottomSheetPickerDialog(lstPickers, chooseItemListener, title, ratioDialogHeight, visibleItem, hasSearch).show(fragmentManager, null)
         }
     }
-
 }

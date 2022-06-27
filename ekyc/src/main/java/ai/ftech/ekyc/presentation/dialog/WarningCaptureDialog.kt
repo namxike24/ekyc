@@ -2,10 +2,10 @@ package ai.ftech.ekyc.presentation.dialog
 
 import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.getAppDrawable
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppDrawable
+import ai.ftech.ekyc.common.getAppString
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View

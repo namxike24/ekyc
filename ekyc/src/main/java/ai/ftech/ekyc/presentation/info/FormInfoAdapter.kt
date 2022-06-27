@@ -2,8 +2,12 @@ package ai.ftech.ekyc.presentation.info
 
 import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.extension.*
+import ai.ftech.dev.base.extension.gone
+import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppDimension
+import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable

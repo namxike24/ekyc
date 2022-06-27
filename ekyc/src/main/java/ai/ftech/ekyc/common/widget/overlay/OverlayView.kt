@@ -1,9 +1,10 @@
 package ai.ftech.ekyc.common.widget.overlay
 
-import ai.ftech.dev.base.extension.getAppColor
-import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.runOnMainThread
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.drawAt
+import ai.ftech.ekyc.common.getAppColor
+import ai.ftech.ekyc.common.getAppDrawable
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable

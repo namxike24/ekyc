@@ -12,7 +12,6 @@ import ai.ftech.ekyc.domain.model.address.City
 import ai.ftech.ekyc.domain.model.address.Nation
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.catch
@@ -45,7 +44,6 @@ class EkycInfoViewModel : BaseViewModel() {
                 }.collect {
                     submitInfo.value?.data = it
                     submitInfo.postSelf()
-                    Log.d("anhnd", "zzz: ${submitInfo.value?.data}")
                 }
             }
         }
