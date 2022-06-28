@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.domain
 
-internal open class ActionException : Exception {
+open class ActionException : Exception {
 
     constructor() : super()
 

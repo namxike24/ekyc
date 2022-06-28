@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common.message
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.domain.APIException
 import android.content.Context
 
@@ -11,6 +11,7 @@ object HandleApiException : IAPIMessage {
         return when (exception.code) {
             APIException.NETWORK_ERROR -> getAppString(R.string.fekyc_no_network)
             APIException.TIME_OUT_ERROR -> getAppString(R.string.fekyc_sever_time_out)
+            APIException.EXPIRE_SESSION_ERROR -> getAppString(R.string.fekyc_session_expire)
 
             else -> {
                 if (exception.message.isNullOrBlank()) {

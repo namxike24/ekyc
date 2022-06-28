@@ -8,11 +8,13 @@
     <string name="select_date">Chọn thời gian</string>
     <string name="fekyc_notification">Thông báo</string>
     <string name="fekyc_close">Đóng</string>
+    <string name="fekyc_setting">Cài đặt</string>
 
 
     <string name="fekyc_unknown_error">Đã có lỗi xảy ra</string>
     <string name="fekyc_no_network">Vui lòng kiểm tra lại kết nối và thử lại</string>
     <string name="fekyc_sever_time_out">Server không phản hồi</string>
+    <string name="fekyc_session_expire">Phiên làm việc hết hạn</string>
 
 
 
@@ -46,6 +48,9 @@
 
     <string name="fekyc_take_picture_take_passport">Chụp trang số 2</string>
     <string name="fekyc_take_picture_image_passport">Ảnh trang số 2</string>
+
+    <string name="fekyc_take_picture_warning_take_papers">Định vị rõ ràng cả 4 góc của mặt trước\ntrong khung hình</string>
+    <string name="fekyc_take_picture_warning_take_face">Định vị rõ ràng toàn bộ khuôn mặt trong\nkhung hình</string>
 
 
     <!--endregion-->

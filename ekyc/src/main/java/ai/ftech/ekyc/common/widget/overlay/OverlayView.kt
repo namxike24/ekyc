@@ -1,9 +1,10 @@
 package ai.ftech.ekyc.common.widget.overlay
 
-import ai.ftech.dev.base.extension.getAppColor
-import ai.ftech.dev.base.extension.getAppDrawable
 import ai.ftech.dev.base.extension.runOnMainThread
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.drawAt
+import ai.ftech.ekyc.common.getAppColor
+import ai.ftech.ekyc.common.getAppDrawable
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -85,25 +86,39 @@ class OverlayView @JvmOverloads constructor(
         bitmapFull?.let {
             //xử lý ảnh bị xoay bởi camera Samsung
             if (it.width > it.height) {
-//                rotationMatrix.postRotate(90f)
-//
-//                val ratio = it.height.toDouble() / width
-//
-//                val x = (rectFrame.left * ratio).toInt()
-//                val y = (rectFrame.top * ratio).toInt()
-//
-//                val w = rectFrame.width().toInt()
-//                val h = rectFrame.height().toInt()
-//
-//                Log.d(TAG, "cropBitmap:  ratio: $ratio x: $x  y: $y   w: $w   h: $h     bitmap[${it.width}   ${it.height}]    rectBackground[${rectBackground.width()}   ${rectBackground.height()}]")
-//
-//                val bitmap = Bitmap.createBitmap(it, x, y, w - x, h - x, rotationMatrix, false)
-//
-//                listener?.onTakePicture(bitmap, path)
+                rotationMatrix.postRotate(90f)
 
-                // TODO: xử lý case này sau
-                listener?.onError(Exception("xoay thẳng điện thoại!"))
+                val ratio = it.height.toDouble() / width
 
+                val x = ((rectFrame.top) * ratio).toInt()
+                val y = ((rectFrame.left) * ratio).toInt()
+
+                val w = (rectFrame.height() * ratio).toInt()
+                val h = (rectFrame.width() * ratio).toInt()
+
+                Log.d(TAG, "cropBitmap:  ratio: $ratio x: $x  y: $y   w: $w   h: $h     bitmap[${it.width}   ${it.height}]    rectBackground[${rectBackground.width()}   ${rectBackground.height()}]")
+
+                runnable = HandleViewTask(
+                    name = THREAD_NAME_BY_CROP_BITMAP,
+                    task = {
+                        Bitmap.createBitmap(it, x, y, w, h, rotationMatrix, false)
+                    },
+                    callback = object : HandleViewTask.ICallback {
+                        override fun onFinish(bitmap: Bitmap) {
+                            executor.remove(runnable)
+                            runnable = null
+                            resizeBitmap(bitmap)
+                        }
+
+                        override fun onError(exception: Exception) {
+                            runOnMainThread({
+                                listener?.onError(exception)
+                            })
+                        }
+                    }
+                )
+
+                executor.execute(runnable)
             } else {
                 rotationMatrix.postRotate(0f)
 

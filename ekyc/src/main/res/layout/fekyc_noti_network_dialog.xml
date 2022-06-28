@@ -7,60 +7,68 @@
     android:layout_height="match_parent"
     tools:background="#A8A8A8">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="@dimen/ekyc_dimen_width_noti_network_dialog"
         android:layout_height="@dimen/ekyc_dimen_width_noti_network_dialog"
         android:layout_gravity="center"
-        android:background="@drawable/fekyc_shape_rect_bg_white_corner_10"
-        android:paddingVertical="@dimen/fbase_dimen_20">
+        android:background="@drawable/fekyc_shape_rect_bg_white_corner_10">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivNotiNetworkDlgIcon"
-            android:layout_width="@dimen/fbase_dimen_40"
-            android:layout_height="@dimen/fbase_dimen_40"
-            android:src="@drawable/fekyc_ic_notification_warning_red"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNotiNetworkDlgTitle"
-            style="@style/FBaseStyleText18SemiBold"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/fbase_color_black"
-            app:layout_constraintBottom_toTopOf="@id/tvNotiNetworkDlgContent"
-            app:layout_constraintTop_toBottomOf="@id/ivNotiNetworkDlgIcon"
-            tools:text="@string/fekyc_notification" />
+            android:layout_height="match_parent"
+            android:background="@drawable/fekyc_shape_rect_bg_gradien_red_corner_10"
+            android:paddingVertical="@dimen/fbase_dimen_20">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNotiNetworkDlgContent"
-            style="@style/FBaseStyleText16Regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/fbase_dimen_14"
-            android:layout_marginTop="@dimen/fbase_dimen_2"
-            android:gravity="center"
-            android:textColor="@color/fekyc_color_gray_light"
-            app:layout_constraintBottom_toTopOf="@id/btnNotiNetworkDlgClose"
-            app:layout_constraintTop_toBottomOf="@id/tvNotiNetworkDlgTitle"
-            tools:text="@string/fekyc_ekyc_noti_network" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNotiNetworkDlgIcon"
+                android:layout_width="@dimen/fbase_dimen_60"
+                android:layout_height="@dimen/fbase_dimen_60"
+                android:src="@drawable/fekyc_ic_notification_warning_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnNotiNetworkDlgClose"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/fbase_dimen_56"
-            android:layout_marginHorizontal="@dimen/fbase_dimen_50"
-            android:layout_marginTop="@dimen/fbase_dimen_24"
-            android:background="@drawable/fekyc_shape_rect_bg_blue_corner_48"
-            android:gravity="center"
-            android:text="@string/fekyc_close"
-            android:textColor="@color/fekyc_color_text_primary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/tvNotiNetworkDlgTitle"
-            app:layout_constraintStart_toStartOf="@id/tvNotiNetworkDlgTitle" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNotiNetworkDlgTitle"
+                style="@style/FBaseStyleText18SemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/fbase_color_black"
+                app:layout_constraintBottom_toTopOf="@id/tvNotiNetworkDlgContent"
+                app:layout_constraintTop_toBottomOf="@id/ivNotiNetworkDlgIcon"
+                tools:text="@string/fekyc_notification" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNotiNetworkDlgContent"
+                style="@style/FBaseStyleText14Regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/fbase_dimen_14"
+                android:layout_marginTop="@dimen/fbase_dimen_2"
+                android:gravity="center"
+                android:textColor="@color/fekyc_color_gray_light"
+                app:layout_constraintBottom_toTopOf="@id/btnNotiNetworkDlgClose"
+                app:layout_constraintTop_toBottomOf="@id/tvNotiNetworkDlgTitle"
+                tools:text="@string/fekyc_ekyc_noti_network" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNotiNetworkDlgClose"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fbase_dimen_56"
+                android:layout_marginHorizontal="@dimen/fbase_dimen_50"
+                android:layout_marginTop="@dimen/fbase_dimen_24"
+                android:background="@drawable/fekyc_shape_rect_bg_blue_corner_48"
+                android:gravity="center"
+                android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+                android:text="@string/fekyc_close"
+                android:textColor="@color/fekyc_color_text_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tvNotiNetworkDlgTitle"
+                app:layout_constraintStart_toStartOf="@id/tvNotiNetworkDlgTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </FrameLayout>

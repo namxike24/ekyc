@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.utils
 
 import ai.ftech.ekyc.BuildConfig
-import ai.ftech.ekyc.FTechEkycManager
+import ai.ftech.ekyc.publish.FTechEkycManager
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.net.Uri

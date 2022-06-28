@@ -2,8 +2,8 @@ package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 
 import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.extension.getAppColor
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppColor
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView

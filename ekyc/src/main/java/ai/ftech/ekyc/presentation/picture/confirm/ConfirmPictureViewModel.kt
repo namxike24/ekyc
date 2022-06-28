@@ -2,7 +2,7 @@ package ai.ftech.ekyc.presentation.picture.confirm
 
 import ai.ftech.dev.base.common.BaseAction
 import ai.ftech.dev.base.common.BaseViewModel
-import ai.ftech.dev.base.extension.asLiveData
+import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetConfirmPhotoListAction
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
@@ -12,21 +12,21 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ConfirmPictureViewModel : BaseViewModel() {
-    private val _photoConfirmDetailInfoList = MutableLiveData(mutableListOf<PhotoConfirmDetailInfo>())
-    val photoConfirmDetailInfoList = _photoConfirmDetailInfoList.asLiveData()
+    var photoConfirmDetailInfoList = MutableLiveData(mutableListOf<PhotoConfirmDetailInfo>())
+        private set
 
-    private val _photoInfoList = MutableLiveData<List<PhotoInfo>>()
-    val photoInfoList = _photoInfoList.asLiveData()
+    var photoInfoList = MutableLiveData<List<PhotoInfo>>()
+        private set
+
     private var selectedPosition = -1
-
 
     fun getConfirmPhotoList() {
         viewModelScope.launch {
-            GetConfirmPhotoListAction().invoke(BaseAction.VoidRequest()).catch {
+            GetConfirmPhotoListAction().invoke(BaseAction.VoidRequest()).onException {
 
             }.collect {
-                _photoConfirmDetailInfoList.value = it.toMutableList()
-                _photoInfoList.value = getPhotoInfoList(it)
+                photoConfirmDetailInfoList.value = it.toMutableList()
+                photoInfoList.value = getPhotoInfoList(it)
             }
         }
     }

@@ -62,6 +62,7 @@
         android:layout_marginTop="@dimen/fbase_dimen_16"
         android:background="@drawable/fekyc_bg_ssn"
         android:orientation="horizontal"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
         app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
         app:layout_constraintTop_toBottomOf="@id/tvHomeSelectTypeOfPapersTitle">
 
@@ -94,6 +95,7 @@
         android:layout_marginTop="@dimen/fbase_dimen_16"
         android:background="@drawable/fekyc_bg_driver_license"
         android:orientation="horizontal"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
         app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
         app:layout_constraintTop_toBottomOf="@id/llHomeSSN">
 
@@ -126,6 +128,7 @@
         android:layout_marginTop="@dimen/fbase_dimen_16"
         android:background="@drawable/fekyc_bg_passport"
         android:orientation="horizontal"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
         app:layout_constraintStart_toStartOf="@id/tvHomeStepTitle"
         app:layout_constraintTop_toBottomOf="@id/llHomeDriverLicense">
 

@@ -1,15 +1,14 @@
 package ai.ftech.ekyc.data.source.remote.service
 
+import ai.ftech.ekyc.data.source.remote.base.BaseApiResponse
 import ai.ftech.ekyc.data.source.remote.base.IApiService
 import ai.ftech.ekyc.data.source.remote.model.CaptureFaceResponse
 import ai.ftech.ekyc.data.source.remote.model.VerifyIdentityResponse
+import ai.ftech.ekyc.data.source.remote.model.ekyc.SubmitInfoRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.PartMap
+import retrofit2.http.*
 
 interface EkycService : IApiService {
     @Multipart
@@ -27,4 +26,7 @@ interface EkycService : IApiService {
     @Multipart
     @POST("/v1/ekyc/captureFace")
     fun captureFace(@Part file: MultipartBody.Part): Call<CaptureFaceResponse>
+
+    @POST("/v1/ekyc/submitInfo")
+    fun submitInfo(@Body body: SubmitInfoRequest): Call<BaseApiResponse>
 }

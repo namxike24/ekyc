@@ -2,10 +2,13 @@ package ai.ftech.ekyc.presentation.dialog
 
 import ai.ftech.dev.base.common.BaseDialog
 import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.getAppDrawable
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppDrawable
+import ai.ftech.ekyc.common.getAppString
+import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
+import android.content.Context
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -52,8 +55,18 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
     private fun getLayoutManager(): RecyclerView.LayoutManager? {
         if (activity != null) {
             return when (type) {
-                WARNING_TYPE.PAPERS -> GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.HORIZONTAL, false)
-                WARNING_TYPE.PORTRAIT -> GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.VERTICAL, false)
+                WARNING_TYPE.PAPERS -> {
+                    if (activity != null) {
+                        rvWarningList.addItemDecoration(adapter.getDecorator(activity!!))
+                    }
+                    GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.HORIZONTAL, false)
+                }
+                WARNING_TYPE.PORTRAIT -> {
+                    if (activity != null) {
+                        rvWarningList.removeItemDecoration(adapter.getDecorator(activity!!))
+                    }
+                    GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.VERTICAL, false)
+                }
             }
         }
         return null
@@ -113,6 +126,10 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
         }
 
         override fun getItemCount() = dataList?.size ?: 0
+
+        fun getDecorator(context: Context): RecyclerView.ItemDecoration {
+            return DeadlineExerciseDecorator(context)
+        }
 
         private fun initData(): List<WarningDisplay> {
             return getDataList().mapIndexed { index, value ->
@@ -205,6 +222,23 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
 
             fun getContent(): String {
                 return data.content
+            }
+        }
+
+        inner class DeadlineExerciseDecorator(context: Context) : DividerDecorator(context, R.drawable.shape_divider_horizontal, isDrawOver = true) {
+            //            private val offset = getAppDimensionPixel(ai.ftech.dev.base.R.dimen.fbase_dimen_20)
+            private val offset = 0
+
+            override fun getDividerOffset(rect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                super.getDividerOffset(rect, view, parent, state)
+                val index = parent.getChildAdapterPosition(view)
+
+                if (index in 0 until itemCount - 1) {
+                    rect.left = rect.left + offset
+                    rect.right = rect.right - offset
+                } else {
+                    rect.top = rect.bottom
+                }
             }
         }
     }

@@ -1,10 +1,10 @@
 package ai.ftech.ekyc.common.widget.datepicker
 
-import ai.ftech.dev.base.extension.getAppColor
-import ai.ftech.dev.base.extension.getAppDimension
 import ai.ftech.dev.base.extension.gone
 import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppColor
+import ai.ftech.ekyc.common.getAppDimension
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint
@@ -19,7 +19,6 @@ import java.lang.reflect.Field
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class DatePickerView @JvmOverloads constructor(
     ctx: Context,

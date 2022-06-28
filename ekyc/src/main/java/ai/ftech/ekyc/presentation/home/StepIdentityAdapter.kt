@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.presentation.home
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.dev.base.extension.hide
 import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
