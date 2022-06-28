@@ -3,7 +3,9 @@ package ai.ftech.ekyc.data.repo
 import ai.ftech.dev.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
+import ai.ftech.ekyc.data.source.remote.model.ekyc.SubmitInfoRequest
 import ai.ftech.ekyc.data.source.remote.service.EkycService
+import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.repo.IEkycRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -59,6 +61,18 @@ class EkycRepoImpl : BaseRepo(), IEkycRepo {
         val part = convertFileToMultipart(absolutePath)
 
         return service.captureFace(part).invokeApi { _, _ ->
+            true
+        }
+    }
+
+    override fun submitInfo(data: String): Boolean {
+        val service = invokeFEkycService(EkycService::class.java)
+
+        val request = SubmitInfoRequest().apply {
+            this.data = data
+        }
+
+        return service.submitInfo(request).invokeApi { _, _ ->
             true
         }
     }

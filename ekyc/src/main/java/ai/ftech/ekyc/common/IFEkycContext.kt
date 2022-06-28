@@ -1,6 +1,5 @@
 package ai.ftech.ekyc.common
 
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
 import android.content.Context
 

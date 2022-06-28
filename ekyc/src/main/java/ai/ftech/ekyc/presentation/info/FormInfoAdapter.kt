@@ -2,8 +2,12 @@ package ai.ftech.ekyc.presentation.info
 
 import ai.ftech.dev.base.adapter.BaseAdapter
 import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.extension.*
+import ai.ftech.dev.base.extension.gone
+import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.dev.base.extension.show
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppDimension
+import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
@@ -12,8 +16,13 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 
 class FormInfoAdapter : BaseAdapter() {
+
+    companion object {
+        const val PAYLOAD_UPDATE_FIELD = "PAYLOAD_UPDATE_FIELD"
+    }
 
     var listener: IListener? = null
 
@@ -37,6 +46,19 @@ class FormInfoAdapter : BaseAdapter() {
         notifyDataSetChanged()
     }
 
+    fun updateField(id: Int, value: String) {
+        var index = -1
+        this.dataList.forEachIndexed { i, v ->
+            if (v is FormInfoDisplay) {
+                if (v.data.id == id) {
+                    v.data.value = value
+                    index = i
+                }
+            }
+        }
+        notifyItemChanged(index, PAYLOAD_UPDATE_FIELD)
+    }
+
     inner class FormInfoVH(view: View) : BaseVH<FormInfoDisplay>(view) {
         private var tvTitle: TextView
         private var edtValue: EditText
@@ -49,6 +71,9 @@ class FormInfoAdapter : BaseAdapter() {
             edtValue = view.findViewById(R.id.tvEkycInfoItmValue)
             ivIcon = view.findViewById(R.id.ivEkycInfoItmRightIcon)
 
+            edtValue.addTextChangedListener(onTextChanged = { s, _, _, _ ->
+                getDataAtPosition(adapterPosition).data.value = s.toString()
+            })
 
             ivIcon.setOnSafeClick {
                 val item = getDataAtPosition(adapterPosition).data
@@ -60,8 +85,14 @@ class FormInfoAdapter : BaseAdapter() {
             tvTitle.text = data.getTitle()
             edtValue.setText(data.getValue())
             ivIcon.setImageDrawable(data.getIcon())
-
             checkStateFormHasEditable(data)
+        }
+
+        override fun onBind(data: FormInfoDisplay, payloads: List<Any>) {
+            super.onBind(data, payloads)
+            if (payloads[0] == PAYLOAD_UPDATE_FIELD) {
+                edtValue.setText(data.getValue())
+            }
         }
 
         private fun checkStateFormHasEditable(data: FormInfoDisplay) {

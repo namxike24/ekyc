@@ -1,6 +1,7 @@
-package ai.ftech.ekyc
+package ai.ftech.demo
 
 import ai.ftech.dev.base.common.BaseApplication
+import ai.ftech.ekyc.FTechEkycManager
 
 class Application : BaseApplication() {
 

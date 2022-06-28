@@ -9,7 +9,7 @@ android {
     compileSdk androidCompileSdkVersion
 
     defaultConfig {
-        applicationId "ai.ftech.ekyc"
+        applicationId "ai.ftech.demo"
         minSdk androidMinSdkVersion
         targetSdk androidCompileSdkVersion
         versionCode 1

@@ -33,22 +33,24 @@ abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatA
         private set
     protected val TAG = this::class.java.simpleName
     private var permissionListener: PermissionListener? = null
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { map ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                map.forEach { (k, v) ->
-                    if (v) {
-//                        permissionListener?.onAllow()
-                    } else {
-                        if (!shouldShowRequestPermissionRationale(k)) {
-                            permissionListener?.onNeverAskAgain()
-                            return@registerForActivityResult
-                        }
+    private val launcher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            it.forEach { (k, v) ->
+                if (v) {
+                    val lastKey = it.keys.last()
+                    if (lastKey == k) {
+                        permissionListener?.onAllow()
                     }
-                    permissionListener?.onDenied()
+                } else {
+                    if (!shouldShowRequestPermissionRationale(k)) {
+                        permissionListener?.onNeverAskAgain()
+                        return@registerForActivityResult
+                    }
                 }
+                permissionListener?.onDenied()
             }
         }
+    }
     private var safeAction = false
     private var waitingAction: (() -> Unit)? = null
     private var keyboardGlobalListener: ViewTreeObserver.OnGlobalLayoutListener? = null

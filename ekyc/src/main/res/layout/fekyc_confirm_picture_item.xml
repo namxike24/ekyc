@@ -1,58 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glConfirmPictureV50"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        android:layout_width="@dimen/fbase_dimen_1"
-        android:layout_height="match_parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivConfirmPictureItmPhoto"
-        android:layout_height="@dimen/fbase_dimen_100"
-        android:layout_margin="@dimen/fbase_dimen_8"
-        android:background="@drawable/fekyc_shape_rectange_bg_light_cyan_corner_8"
-        android:paddingVertical="@dimen/fbase_dimen_4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/glConfirmPictureV50"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="0dp"
-        tools:src="@tools:sample/backgrounds/scenic" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/fbase_dimen_30"
-        android:layout_height="@dimen/fbase_dimen_30"
-        android:layout_margin="@dimen/fbase_dimen_10"
-        android:src="@drawable/fekyc_ic_eye"
-        app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmPhoto"
-        app:layout_constraintEnd_toEndOf="@id/ivConfirmPictureItmPhoto" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivConfirmPictureItmIcon"
-        android:layout_width="@dimen/fbase_dimen_16"
-        android:layout_height="@dimen/fbase_dimen_16"
-        android:layout_marginStart="@dimen/fbase_dimen_8"
-        android:src="@drawable/fekyc_ic_success_green"
-        app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmPhoto"
-        app:layout_constraintStart_toEndOf="@id/glConfirmPictureV50"
-        app:layout_constraintTop_toTopOf="@id/ivConfirmPictureItmPhoto" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvConfirmPictureItmMessage"
-        style="@style/FBaseStyleText14Regular"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fbase_dimen_8"
-        android:textColor="@color/fekyc_color_black"
-        app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmIcon"
-        app:layout_constraintStart_toEndOf="@id/ivConfirmPictureItmIcon"
-        app:layout_constraintTop_toTopOf="@id/ivConfirmPictureItmIcon"
-        tools:text="@string/fekyc_confirm_picture_valid_photo" />
+        android:layout_marginVertical="@dimen/fbase_dimen_4"
+        android:background="@drawable/fekyc_shape_rect_bg_white_corner_10">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glConfirmPictureV50"
+            android:layout_width="@dimen/fbase_dimen_1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivConfirmPictureItmPhoto"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fbase_dimen_100"
+            android:layout_margin="@dimen/fbase_dimen_8"
+            android:background="@drawable/fekyc_shape_rectange_bg_light_cyan_corner_8"
+            android:paddingVertical="@dimen/fbase_dimen_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/glConfirmPictureV50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/fbase_dimen_30"
+            android:layout_height="@dimen/fbase_dimen_30"
+            android:layout_margin="@dimen/fbase_dimen_10"
+            android:src="@drawable/fekyc_ic_eye"
+            app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmPhoto"
+            app:layout_constraintEnd_toEndOf="@id/ivConfirmPictureItmPhoto" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivConfirmPictureItmIcon"
+            android:layout_width="@dimen/fbase_dimen_16"
+            android:layout_height="@dimen/fbase_dimen_16"
+            android:layout_marginStart="@dimen/fbase_dimen_8"
+            android:src="@drawable/fekyc_ic_success_green"
+            app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmPhoto"
+            app:layout_constraintStart_toEndOf="@id/glConfirmPictureV50"
+            app:layout_constraintTop_toTopOf="@id/ivConfirmPictureItmPhoto" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvConfirmPictureItmMessage"
+            style="@style/FBaseStyleText14Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fbase_dimen_8"
+            android:textColor="@color/fekyc_color_black"
+            app:layout_constraintBottom_toBottomOf="@id/ivConfirmPictureItmIcon"
+            app:layout_constraintStart_toEndOf="@id/ivConfirmPictureItmIcon"
+            app:layout_constraintTop_toTopOf="@id/ivConfirmPictureItmIcon"
+            tools:text="@string/fekyc_confirm_picture_valid_photo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

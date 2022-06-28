@@ -2,8 +2,8 @@ package ai.ftech.ekyc.common
 
 import ai.ftech.dev.base.common.BaseActivity
 import ai.ftech.dev.base.common.StatusBar
-import ai.ftech.dev.base.extension.getAppString
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.activityresultlancher.OpenAppSettingResult
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.LoadingDialog
 import ai.ftech.ekyc.presentation.dialog.NotiNetworkDialog
@@ -22,6 +22,9 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     var warningDialog: WarningCaptureDialog? = null
     var notiNetworkDialog: NotiNetworkDialog? = null
     var loadingDialog: LoadingDialog? = null
+    protected val openAppSettingResult by lazy {
+        OpenAppSettingResult()
+    }
 
     override fun onResume() {
         super.onResume()
@@ -79,6 +82,10 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     override fun showWarning(msg: String?) {
     }
 
+    override fun onBackPressed() {
+        showConfirmDialog()
+    }
+
     fun showKeyboard() {
         KeyboardUtility.showKeyBoard(this)
     }
@@ -109,6 +116,25 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
 
             override fun onRightClick() {
                 dialog.dismissDialog()
+            }
+        }
+        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+    }
+
+    fun showPermissionDialog() {
+        val dialog = ConfirmDialog.Builder()
+            .setTitle(getAppString(R.string.fekyc_confirm_permission_title))
+            .setContent(getAppString(R.string.fekyc_confirm_permission_content))
+            .setLeftTitle(getAppString(R.string.fekyc_confirm_exit))
+            .setRightTitle(getAppString(R.string.fekyc_setting))
+            .build()
+        dialog.listener = object : ConfirmDialog.IListener {
+            override fun onLeftClick() {
+                dialog.dismissDialog()
+            }
+
+            override fun onRightClick() {
+                openAppSettingResult.launch(this@FEkycActivity)
             }
         }
         dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
