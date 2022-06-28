@@ -24,6 +24,13 @@ object FTechEkycManager {
     private var isActive = true
     private var coolDownTime: Long = -1
 
+    var ftechKey: String = ""
+        private set
+    var appId: String = ""
+        private set
+    var transactionId: String = ""
+        private set
+
     @JvmStatic
     fun init(context: Context) {
         applicationContext = context
@@ -88,7 +95,10 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun startEkyc(callBack: IFTechEkycCallback<FTechEkycInfo>) {
+    fun startEkyc(ftechKey: String, appId: String, transactionId: String, callBack: IFTechEkycCallback<FTechEkycInfo>) {
+        this.ftechKey = ftechKey
+        this.appId = appId
+        this.transactionId = transactionId
         checkCoolDownAction {
             callback = callBack
             resultLauncher?.launch()

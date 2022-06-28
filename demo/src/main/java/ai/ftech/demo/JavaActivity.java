@@ -30,7 +30,7 @@ public class JavaActivity extends AppCompatActivity {
         });
 
         btnEkyc.setOnClickListener(v -> {
-            FTechEkycManager.startEkyc(new IFTechEkycCallback<FTechEkycInfo>() {
+            FTechEkycManager.startEkyc("123", "111", "12345", new IFTechEkycCallback<FTechEkycInfo>() {
                 @Override
                 public void onSuccess(FTechEkycInfo info) {
                     Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");

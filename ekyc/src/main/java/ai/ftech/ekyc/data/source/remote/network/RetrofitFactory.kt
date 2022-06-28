@@ -1,6 +1,7 @@
 package ai.ftech.ekyc.data.source.remote.network
 
 import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.publish.FTechEkycManager
 import android.util.Log
 import retrofit2.Retrofit
 import java.util.concurrent.ConcurrentHashMap
@@ -15,12 +16,10 @@ object RetrofitFactory {
         synchronized(RetrofitBuilderInfo::class.java) {
             var builderInfo = builderMap[FEKYC]
             if (builderInfo == null) {
-
-                // TODO: hardcode tạm vì chưa thiết kế các func cho app truyền vào các giá trị này
                 builderInfo = RetrofitBuilderInfo().apply {
-                    this.ftechKey = "123"
-                    this.appID = "111"
-                    this.transactionId = "12345"
+                    this.ftechKey = FTechEkycManager.ftechKey
+                    this.appID = FTechEkycManager.appId
+                    this.transactionId = FTechEkycManager.transactionId
                     this.language = ApiConfig.API_LANGUAGE.VI
                 }
 

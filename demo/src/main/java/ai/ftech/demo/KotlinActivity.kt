@@ -24,7 +24,7 @@ class KotlinActivity : AppCompatActivity() {
         }
 
         btnEkyc.setOnClickListener {
-            FTechEkycManager.startEkyc(object : IFTechEkycCallback<FTechEkycInfo> {
+            FTechEkycManager.startEkyc("123", "111", "12345", object : IFTechEkycCallback<FTechEkycInfo> {
                 override fun onSuccess(info: FTechEkycInfo?) {
                     tvState.text = info?.message
                 }
