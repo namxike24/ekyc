@@ -86,15 +86,15 @@ class OverlayView @JvmOverloads constructor(
         bitmapFull?.let {
             //xử lý ảnh bị xoay bởi camera Samsung
             if (it.width > it.height) {
-                /*rotationMatrix.postRotate(90f)
+                rotationMatrix.postRotate(90f)
 
                 val ratio = it.height.toDouble() / width
 
-                val x = (rectFrame.right * ratio).toInt()
-                val y = (rectFrame.bottom * ratio).toInt()
+                val x = ((rectFrame.top) * ratio).toInt()
+                val y = ((rectFrame.left) * ratio).toInt()
 
-                val w = rectFrame.height().toInt()
-                val h =  rectFrame.width().toInt()
+                val w = (rectFrame.height() * ratio).toInt()
+                val h = (rectFrame.width() * ratio).toInt()
 
                 Log.d(TAG, "cropBitmap:  ratio: $ratio x: $x  y: $y   w: $w   h: $h     bitmap[${it.width}   ${it.height}]    rectBackground[${rectBackground.width()}   ${rectBackground.height()}]")
 
@@ -118,10 +118,7 @@ class OverlayView @JvmOverloads constructor(
                     }
                 )
 
-                executor.execute(runnable)*/
-
-                // TODO: xử lý case này sau
-                listener?.onError(Exception("xoay thẳng điện thoại!"))
+                executor.execute(runnable)
             } else {
                 rotationMatrix.postRotate(0f)
 

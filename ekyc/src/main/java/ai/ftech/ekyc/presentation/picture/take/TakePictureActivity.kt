@@ -156,7 +156,11 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             hideLoading()
             when (it?.data) {
                 UPLOAD_STATUS.FAIL -> {
-                    handleCaseUploadFail(it.exception as APIException)
+                    if (it.exception is APIException) {
+                        handleCaseUploadFail(it.exception as APIException)
+                    } else {
+                        Toast.makeText(this, it.exception?.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 UPLOAD_STATUS.SUCCESS -> {
                     viewModel.clearUploadPhotoValue()
