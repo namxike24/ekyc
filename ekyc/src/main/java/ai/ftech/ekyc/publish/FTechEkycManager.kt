@@ -7,7 +7,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
@@ -103,9 +102,9 @@ object FTechEkycManager {
             Activity.RESULT_OK -> {
                 return FTechEkycResult<FTechEkycInfo>().apply {
                     this.type = if (info != null) {
-                        FTECH_RESULT_TYPE.SUCCESS
+                        FTECH_EKYC_RESULT_TYPE.SUCCESS
                     } else {
-                        FTECH_RESULT_TYPE.ERROR
+                        FTECH_EKYC_RESULT_TYPE.ERROR
                     }
                     this.data = info
                 }
@@ -113,13 +112,13 @@ object FTechEkycManager {
 
             Activity.RESULT_CANCELED -> {
                 return FTechEkycResult<FTechEkycInfo>().apply {
-                    this.type = FTECH_RESULT_TYPE.CANCEL
+                    this.type = FTECH_EKYC_RESULT_TYPE.CANCEL
                 }
             }
 
             else -> {
                 return FTechEkycResult<FTechEkycInfo>().apply {
-                    this.type = FTECH_RESULT_TYPE.ERROR
+                    this.type = FTECH_EKYC_RESULT_TYPE.ERROR
                 }
             }
         }
@@ -127,7 +126,7 @@ object FTechEkycManager {
 
     private fun <T> invokeCallback(callback: IFTechEkycCallback<T>?, result: FTechEkycResult<T>) {
         when (result.type) {
-            FTECH_RESULT_TYPE.SUCCESS -> {
+            FTECH_EKYC_RESULT_TYPE.SUCCESS -> {
                 if (isActive) {
                     callback?.onSuccess(result.data!!)
                 } else {
@@ -136,7 +135,7 @@ object FTechEkycManager {
                     }
                 }
             }
-            FTECH_RESULT_TYPE.ERROR -> {
+            FTECH_EKYC_RESULT_TYPE.ERROR -> {
                 if (isActive) {
                     callback?.onFail()
                 } else {
@@ -145,7 +144,7 @@ object FTechEkycManager {
                     }
                 }
             }
-            FTECH_RESULT_TYPE.CANCEL -> {
+            FTECH_EKYC_RESULT_TYPE.CANCEL -> {
                 if (isActive) {
                     callback?.onCancel()
                 } else {
