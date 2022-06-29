@@ -109,4 +109,7 @@ dependencies {
     //region camera
     implementation rootProject.ext.cameraViewNatario1Dependencies.cameraview
     //endregion
+
+    //ml kit
+    implementation rootProject.ext.mlKitDependencies.mlKit
 }
