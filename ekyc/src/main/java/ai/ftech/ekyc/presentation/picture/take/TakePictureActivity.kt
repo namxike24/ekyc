@@ -114,7 +114,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 ivFlash.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_flash_off))
                 isFlash = false
             } else {
-                cvCameraView.flash = Flash.ON
+                cvCameraView.flash = Flash.TORCH
                 ivFlash.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_flash_on))
                 isFlash = true
             }

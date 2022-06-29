@@ -15,8 +15,6 @@ import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
