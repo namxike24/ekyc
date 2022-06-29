@@ -51,20 +51,6 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        addTouchRootListener(constRoot, object : ITouchOutsideViewListener {
-            override fun onTouchOutside(view: View, event: MotionEvent) {
-                hideKeyboard()
-            }
-        })
-    }
-
-    override fun onStop() {
-        super.onStop()
-        removeTouchRootListener()
-    }
-
     override fun onInitView() {
         super.onInitView()
         constRoot = findViewById(R.id.constEkycInfoRoot)
@@ -155,6 +141,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             EkycFormInfo.FIELD_TYPE.GENDER -> {
                 showGenderDialog(ekycInfo)
             }
+            else -> {}
         }
     }
 

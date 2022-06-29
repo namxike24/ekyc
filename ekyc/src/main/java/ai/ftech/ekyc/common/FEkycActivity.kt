@@ -16,9 +16,6 @@ import android.view.View
 
 abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycContext {
 
-    var viewTouchOutside: View? = null
-    var listener: ITouchOutsideViewListener? = null
-        private set
     var warningDialog: WarningCaptureDialog? = null
     var notiNetworkDialog: NotiNetworkDialog? = null
     var loadingDialog: LoadingDialog? = null
@@ -36,6 +33,12 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         loadingDialog = null
     }
 
+    override fun onInitView() {
+        super.onInitView()
+        //hide keyboard edittext when touch outside
+        KeyboardUtility.hideSoftKeyboard(this, window.decorView.rootView)
+    }
+
     override fun onPrepareInitView() {
         super.onPrepareInitView()
         setFullScreen()
@@ -45,18 +48,6 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         return StatusBar(isDarkText = false)
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        if (ev.actionMasked == MotionEvent.ACTION_DOWN) {
-            if (listener != null && viewTouchOutside != null && viewTouchOutside?.visibility == View.VISIBLE) {
-                val rect = Rect()
-                viewTouchOutside?.getGlobalVisibleRect(rect)
-                if (rect.contains((ev.rawX).toInt(), (ev.rawY).toInt())) {
-                    listener?.onTouchOutside(viewTouchOutside!!, ev)
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev)
-    }
 
     override fun getActivityContext(): Context {
         return this
@@ -92,14 +83,6 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
 
     fun hideKeyboard() {
         KeyboardUtility.hideSoftKeyboard(this)
-    }
-
-    fun addTouchRootListener(view: View, listener: ITouchOutsideViewListener) {
-        setOnTouchOutsideViewListener(view, listener)
-    }
-
-    fun removeTouchRootListener() {
-        setOnTouchOutsideViewListener(null, null)
     }
 
     fun showConfirmDialog() {
@@ -146,14 +129,5 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
             .setContent(getAppString(R.string.fekyc_ekyc_noti_network))
             .build()
         dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
-    }
-
-    private fun setOnTouchOutsideViewListener(view: View?, listener: ITouchOutsideViewListener?) {
-        this.viewTouchOutside = view
-        this.listener = listener
-    }
-
-    interface ITouchOutsideViewListener {
-        fun onTouchOutside(view: View, event: MotionEvent)
     }
 }
