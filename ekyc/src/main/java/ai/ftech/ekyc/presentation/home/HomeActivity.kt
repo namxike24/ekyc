@@ -6,6 +6,7 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
+import ai.ftech.ekyc.presentation.info.EkycInfoActivity
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import ai.ftech.ekyc.publish.FTechEkycInfo

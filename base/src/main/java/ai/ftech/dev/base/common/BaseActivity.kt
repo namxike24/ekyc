@@ -20,6 +20,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
@@ -266,6 +267,13 @@ abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatA
         window?.apply {
             WindowCompat.setDecorFitsSystemWindows(this, false)
             isFullScreen = true
+        }
+
+        //handle keyboard adjustResize khi full screen
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView.rootView) { v: View, insets: WindowInsetsCompat ->
+            val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            v.setPadding(0, 0, 0, imeHeight)
+            insets
         }
     }
     //endregion
