@@ -204,4 +204,12 @@ ext {
     cameraViewNatario1Dependencies = [
             "cameraview": "com.otaliastudios:cameraview:$cameraViewNatario1Version"
     ]
+
+    /**
+     * mlkit
+     */
+    def mlKitVersion = "16.1.5"
+    mlKitDependencies = [
+            "mlKit": "com.google.mlkit:face-detection:$mlKitVersion"
+    ]
 }

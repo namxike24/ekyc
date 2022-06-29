@@ -15,8 +15,6 @@ import ai.ftech.ekyc.presentation.model.BottomSheetPicker
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -49,20 +47,6 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        addTouchRootListener(constRoot, object : ITouchOutsideViewListener {
-            override fun onTouchOutside(view: View, event: MotionEvent) {
-                hideKeyboard()
-            }
-        })
-    }
-
-    override fun onStop() {
-        super.onStop()
-        removeTouchRootListener()
     }
 
     override fun onInitView() {
@@ -155,6 +139,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             EkycFormInfo.FIELD_TYPE.GENDER -> {
                 showGenderDialog(ekycInfo)
             }
+            else -> {}
         }
     }
 

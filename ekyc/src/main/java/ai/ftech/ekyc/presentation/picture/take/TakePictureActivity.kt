@@ -17,10 +17,15 @@ import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.google.android.gms.tasks.Tasks
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
+import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
@@ -114,7 +119,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 ivFlash.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_flash_off))
                 isFlash = false
             } else {
-                cvCameraView.flash = Flash.ON
+                cvCameraView.flash = Flash.TORCH
                 ivFlash.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_flash_on))
                 isFlash = true
             }
@@ -218,10 +223,39 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             PHOTO_INFORMATION.FACE -> {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
+                setFrameMlKit()
             }
             PHOTO_INFORMATION.BACK, PHOTO_INFORMATION.FRONT, PHOTO_INFORMATION.PAGE_NUMBER_2 -> {
                 cvCameraView.facing = Facing.BACK
                 isFrontFace = false
+            }
+        }
+    }
+
+    private fun setFrameMlKit() {
+        val realTimeOpts = FaceDetectorOptions.Builder()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+            .setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
+            .build()
+
+        val detector = FaceDetection.getClient(realTimeOpts)
+
+        cvCameraView.addFrameProcessor {
+            try {
+                val inputImage = InputImage.fromByteArray(it.getData(), it.size.width, it.size.height, it.rotationToView, it.format)
+                Tasks.await(detector.process(inputImage)
+                    .addOnSuccessListener { faces ->
+                        // Task completed successfully
+                        // ...
+                        Log.e("resulttt face", faces.size.toString())
+                    }
+                    .addOnFailureListener { e ->
+                        // Chỗ này fail bỏ qua toàn bộ logic check scan, cho phép chụp luôn. Lý do fail kể thể do ML-kit lỗi tạm thời tạch chẳng hạn
+                        // ...
+                        e.printStackTrace()
+                    })
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

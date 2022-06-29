@@ -13,9 +13,9 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 
 class FormInfoAdapter : BaseAdapter() {
@@ -60,9 +60,9 @@ class FormInfoAdapter : BaseAdapter() {
     }
 
     inner class FormInfoVH(view: View) : BaseVH<FormInfoDisplay>(view) {
-        private var tvTitle: TextView
-        private var edtValue: EditText
-        private var ivIcon: ImageView
+        private var tvTitle: AppCompatTextView
+        private var edtValue: AppCompatEditText
+        private var ivIcon: AppCompatImageView
         private val FIRST_POSITION = 0
         private val LAST_POSITION = dataList.size - 1
 
