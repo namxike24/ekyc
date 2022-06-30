@@ -40,16 +40,9 @@ android {
 }
 
 dependencies {
-
-    //region import module
-    implementation project(':base')
-    //endregion
-
     //region kotlin
     implementation rootProject.ext.kotlinDependencies.kotlin
     implementation rootProject.ext.refection.kotlin
-    implementation rootProject.ext.kotlinSerializationConverterDependencies.kotlinSerializationConverter
-    implementation rootProject.ext.kotlinSerializationJsonDependencies.kotlinSerializationJson
     //endregion
 
     //region kotlin ktx
@@ -93,17 +86,6 @@ dependencies {
     implementation rootProject.ext.networkDependencies.retrofitConverterMoshi
     implementation rootProject.ext.networkDependencies.retrofitRxJava
     implementation rootProject.ext.networkDependencies.logging
-    //endregion
-
-    //region firebase
-    implementation rootProject.firebaseDependencies.bom
-    implementation rootProject.firebaseDependencies.analytics
-    implementation rootProject.firebaseDependencies.crashlyticsKTX
-    implementation rootProject.firebaseDependencies.cloudMessage
-    //endregion
-
-    //region eventbus
-    implementation rootProject.ext.eventbusDependencies.eventbus
     //endregion
 
     //region camera

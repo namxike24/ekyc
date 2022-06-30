@@ -1,7 +1,6 @@
 package ai.ftech.ekyc.domain
 
 class APIException : Exception {
-
     companion object {
         const val UNKNOWN_ERROR = -2001
         const val NETWORK_ERROR = -2002

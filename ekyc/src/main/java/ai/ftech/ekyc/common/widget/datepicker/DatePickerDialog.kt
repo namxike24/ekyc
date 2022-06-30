@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.common.widget.datepicker
 
-import ai.ftech.dev.base.common.BaseDialog
-import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.base.common.BaseDialog
+import ai.ftech.base.common.DialogScreen
+import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -79,5 +79,4 @@ class DatePickerDialog(
             DatePickerDialog(title, datePickerListener, currentCalendar).show(fragmentManager, null)
         }
     }
-
 }

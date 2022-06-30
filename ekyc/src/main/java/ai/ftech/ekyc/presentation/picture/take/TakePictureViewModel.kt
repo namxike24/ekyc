@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.take
 
-import ai.ftech.dev.base.common.BaseViewModel
+import ai.ftech.base.common.BaseViewModel
 import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.APIException

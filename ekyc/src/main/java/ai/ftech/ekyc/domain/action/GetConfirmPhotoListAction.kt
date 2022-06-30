@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.domain.action
 
-import ai.ftech.dev.base.common.BaseAction
+import ai.ftech.base.common.BaseAction
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
 

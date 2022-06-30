@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common.widget.datepicker
 
-import ai.ftech.dev.base.extension.gone
-import ai.ftech.dev.base.extension.show
+import ai.ftech.base.extension.gone
+import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppColor
 import ai.ftech.ekyc.common.getAppDimension
@@ -25,7 +25,6 @@ class DatePickerView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : LinearLayout(ctx, attrs, defStyle) {
-
     companion object {
         private val TAG = DatePickerView::class.java.simpleName
         private const val DAY_OFFSET = 1
@@ -38,7 +37,7 @@ class DatePickerView @JvmOverloads constructor(
     private var pickerYear: NumberPicker? = null
     private var pickerMonth: NumberPicker? = null
     private var pickerDay: NumberPicker? = null
-    private var columnWidth: Int = getAppDimension(ai.ftech.dev.base.R.dimen.fbase_dimen_70).toInt()
+    private var columnWidth: Int = getAppDimension(R.dimen.fbase_dimen_70).toInt()
     private var columnSpace: Int = 0
 
     private var currCalendar: Calendar = Calendar.getInstance()
@@ -315,7 +314,7 @@ class DatePickerView @JvmOverloads constructor(
         // set width của từng item ngày, tháng, năm
         columnWidth = ta.getDimension(
             R.styleable.DatePickerAdvance_dp_column_width,
-            getAppDimension(ai.ftech.dev.base.R.dimen.fbase_dimen_70)
+            getAppDimension(R.dimen.fbase_dimen_70)
         ).toInt()
 
         // Chọn ngôn ngữ hiển thị của tháng

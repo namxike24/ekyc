@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.common.widget.searchview
 
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.utils.KeyboardUtility
 import android.content.Context

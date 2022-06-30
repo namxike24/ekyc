@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common
 
-import ai.ftech.dev.base.common.BaseActivity
-import ai.ftech.dev.base.common.StatusBar
+import ai.ftech.base.common.BaseActivity
+import ai.ftech.base.common.StatusBar
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.activityresultlancher.OpenAppSettingResult
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
@@ -10,9 +10,6 @@ import ai.ftech.ekyc.presentation.dialog.NotiNetworkDialog
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.utils.KeyboardUtility
 import android.content.Context
-import android.graphics.Rect
-import android.view.MotionEvent
-import android.view.View
 
 abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycContext {
 
