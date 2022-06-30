@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.common.widget.overlay
 
-import ai.ftech.dev.base.extension.runOnMainThread
+import ai.ftech.base.extension.runOnMainThread
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.drawAt
 import ai.ftech.ekyc.common.getAppColor

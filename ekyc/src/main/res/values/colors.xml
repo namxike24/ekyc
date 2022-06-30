@@ -30,4 +30,21 @@
     <color name="fekyc_color_text_blue">@color/fekyc_color_primary</color>
     <color name="fekyc_color_black_80">#CC000000</color>
     <color name="fekyc_color_black_20">#33000000</color>
+
+
+
+
+
+
+
+
+
+
+
+    <!--region base-->
+    <color name="fbase_color_transparent">#00000000</color>
+    <color name="fbase_color_white">#FFFFFF</color>
+    <color name="fbase_color_black">#000000</color>
+    <color name="fbase_color_gray">#535353</color>
+    <!--endregion-->
 </resources>

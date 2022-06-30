@@ -1,14 +1,13 @@
 package ai.ftech.ekyc.presentation.picture.confirm
 
-import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.dev.base.common.BaseViewModel
+import ai.ftech.base.common.BaseAction
+import ai.ftech.base.common.BaseViewModel
 import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetConfirmPhotoListAction
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ConfirmPictureViewModel : BaseViewModel() {

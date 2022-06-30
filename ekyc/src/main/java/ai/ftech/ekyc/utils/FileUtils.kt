@@ -23,7 +23,6 @@ object FileUtils {
 
     private val imageType = FILE.IMAGE.PNG
 
-
     val ROOT_FOLDER = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         FTechEkycManager.getApplicationContext().getExternalFilesDir(null)!!.absolutePath
     } else {

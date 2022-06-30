@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.data.repo
 
-import ai.ftech.dev.base.common.converter.ListConverter
-import ai.ftech.dev.base.repo.BaseRepo
+import ai.ftech.base.common.converter.ListConverter
+import ai.ftech.base.repo.BaseRepo
 import ai.ftech.ekyc.data.repo.converter.CityDataConvertToCity
 import ai.ftech.ekyc.data.repo.converter.EkycDataConvertToEkycInfo
 import ai.ftech.ekyc.data.repo.converter.NationDataConvertToNation

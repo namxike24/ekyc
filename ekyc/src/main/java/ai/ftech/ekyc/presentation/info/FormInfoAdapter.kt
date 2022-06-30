@@ -1,10 +1,10 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.dev.base.adapter.BaseAdapter
-import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.extension.gone
-import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.dev.base.extension.show
+import ai.ftech.base.adapter.BaseAdapter
+import ai.ftech.base.adapter.BaseVH
+import ai.ftech.base.extension.gone
+import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppDimension
 import ai.ftech.ekyc.common.getAppDrawable
@@ -153,7 +153,7 @@ class FormInfoAdapter : BaseAdapter() {
             return data.fieldType
         }
 
-        fun getCorner() = getAppDimension(ai.ftech.dev.base.R.dimen.fbase_corner_10)
+        fun getCorner() = getAppDimension(R.dimen.fbase_corner_10)
 
         fun isEditable() = data.isEditable
     }

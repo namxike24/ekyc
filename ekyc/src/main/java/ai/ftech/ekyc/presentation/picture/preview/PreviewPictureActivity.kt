@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.preview
 
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.getAppString

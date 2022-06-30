@@ -1,11 +1,11 @@
 package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 
-import ai.ftech.dev.base.common.BaseDialog
-import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.getScreenHeight
-import ai.ftech.dev.base.extension.gone
-import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.dev.base.extension.show
+import ai.ftech.base.common.BaseDialog
+import ai.ftech.base.common.DialogScreen
+import ai.ftech.base.extension.getScreenHeight
+import ai.ftech.base.extension.gone
+import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator
@@ -24,7 +24,6 @@ class BottomSheetPickerDialog private constructor(
     var visibleItem: Int? = null,
     var hasSearch: Boolean = true
 ) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
-
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
     }

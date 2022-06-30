@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.publish
 
-import ai.ftech.dev.base.extension.setApplication
+import ai.ftech.base.extension.setApplication
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.presentation.home.HomeActivity
 import android.app.Activity

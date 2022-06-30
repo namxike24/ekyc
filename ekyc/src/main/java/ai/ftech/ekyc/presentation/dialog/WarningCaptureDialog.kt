@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.presentation.dialog
 
-import ai.ftech.dev.base.common.BaseDialog
-import ai.ftech.dev.base.common.DialogScreen
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.base.common.BaseDialog
+import ai.ftech.base.common.DialogScreen
+import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.common.getAppString
@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 typealias WARNING_TYPE = WarningCaptureDialog.WarningInfo.WARNING_TYPE
 
 class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout.fekyc_warning_capture_dialog) {
-
     private lateinit var tvTitle: TextView
     private lateinit var rvWarningList: RecyclerView
     private lateinit var btnConfirmOK: Button

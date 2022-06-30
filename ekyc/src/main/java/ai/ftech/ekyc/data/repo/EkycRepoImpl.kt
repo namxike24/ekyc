@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.data.repo
 
-import ai.ftech.dev.base.repo.BaseRepo
+import ai.ftech.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.model.ekyc.SubmitInfoRequest

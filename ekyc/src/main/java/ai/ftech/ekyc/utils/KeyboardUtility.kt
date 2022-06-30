@@ -11,9 +11,7 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 
 class KeyboardUtility {
-
     companion object {
-
         fun showKeyBoard(context: Context) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)

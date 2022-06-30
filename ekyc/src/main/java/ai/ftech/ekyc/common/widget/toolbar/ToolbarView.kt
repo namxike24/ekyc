@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.common.widget.toolbar
 
-import ai.ftech.dev.base.extension.gone
-import ai.ftech.dev.base.extension.setOnSafeClick
-import ai.ftech.dev.base.extension.show
+import ai.ftech.base.extension.gone
+import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import android.content.Context
 import android.util.AttributeSet

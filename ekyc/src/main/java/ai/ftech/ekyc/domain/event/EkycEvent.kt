@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.domain.event
 
-import ai.ftech.dev.base.parcelable.parcelableCreator
+import ai.ftech.base.parcelable.parcelableCreator
 import android.os.Parcel
 import android.os.Parcelable
 

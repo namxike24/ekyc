@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.dev.base.extension.observer
+import ai.ftech.base.extension.observer
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.action.FEkycActionResult
@@ -80,8 +80,23 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         super.onObserverViewModel()
 
         observer(viewModel.ekycInfo) {
-            tvTypePapres.text = String.format("${it?.identityType}: ${it?.identityName}")
-            adapter.resetData(it?.formList ?: emptyList())
+            when (it?.resultStatus) {
+                FEkycActionResult.RESULT_STATUS.SUCCESS -> {
+                    tvTypePapres.text = String.format("${it.data?.identityType}: ${it.data?.identityName}")
+                    adapter.resetData(it.data?.formList ?: emptyList())
+                }
+                FEkycActionResult.RESULT_STATUS.ERROR -> {
+
+                }
+                FEkycActionResult.RESULT_STATUS.UNKNOWN -> {
+
+                }
+                else -> {
+
+                }
+            }
+
+
         }
 
         observer(viewModel.submitInfo) {

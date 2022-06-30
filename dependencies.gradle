@@ -26,31 +26,14 @@ ext {
             "kotlin": "org.jetbrains.kotlin:kotlin-reflect:$kotlinRefectionVersion"
     ]
 
-    /**
-     * kotlin serialization
-     */
-    def kotlinSerializationConverterVersion = "0.8.0"
-    kotlinSerializationConverterDependencies = [
-            "kotlinSerializationConverter": "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$kotlinSerializationConverterVersion"
-    ]
-
-    def kotlinSerializationJsonVersion = "1.3.0"
-    kotlinSerializationJsonDependencies = [
-            "kotlinSerializationJson": "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion"
-    ]
-
 
     /**
      * androidx
      */
     def constraintLayoutVersion = "2.1.0-beta01"
     def recyclerViewVersion = "1.2.0-alpha03"
-    def roomVersion = "2.3.0"
     def lifecycleVersion = "2.4.0-alpha03"
-    def viewPagerVersion = "1.0.0"
     def appCompatVersion = "1.4.0"
-//    def cameraXVersion = "1.1.0-alpha02"
-
     androidXDependencies = [
             "appCompat"          : "androidx.appcompat:appcompat:$appCompatVersion",
 
@@ -58,15 +41,7 @@ ext {
 
             "recyclerview"       : "androidx.recyclerview:recyclerview:$recyclerViewVersion",
 
-            "room"               : "androidx.room:room-runtime:$roomVersion",
-            "roomCompiler"       : "androidx.room:room-compiler:$roomVersion",
-
             "savedStateViewModel": "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion",
-
-            "viewpager"          : "androidx.viewpager2:viewpager2:$viewPagerVersion",
-
-//            "cameraCore"         : "androidx.camera:camerak-core:$cameraXVersion",
-//            "camera2"            : "androidx.camera:camera-camera2:$cameraXVersion"
     ]
 
     /**
@@ -77,7 +52,6 @@ ext {
     def fragmentKTXVersion = "1.4.0"
     def lifecycleKTXVersion = "2.4.0"
     def livedataKTXVersion = "2.4.0"
-    def roomKTXVersion = "2.4.0"
     def viewmodelKTXVersion = "2.4.0"
     androidKTXDependencies = [
             "coreKTX"              : "androidx.core:core-ktx:$coreKTXVersion",
@@ -89,8 +63,6 @@ ext {
             "lifecycleKTX"         : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKTXVersion",
 
             "livedataKTX"          : "androidx.lifecycle:lifecycle-livedata-ktx:$livedataKTXVersion",
-
-            "roomKTX"              : "androidx.room:room-ktx:$roomKTXVersion",
 
             "viewmodelKTX"         : "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodelKTXVersion",
     ]
@@ -165,45 +137,13 @@ ext {
 
 
     /**
-     * firebase
-     */
-    def bomVersion = "29.1.0"
-    def analyticsVersion = "19.0.0"
-    def crashlyticsKTXVersion = "18.0.0"
-    def crashlyticsNDKVersion = "18.0.0"
-    def cloudMessage = "22.0.0"
-    firebaseDependencies = [
-            "bom"           : "com.google.firebase:firebase-bom:$bomVersion",
-            "analytics"     : "com.google.firebase:firebase-analytics-ktx:$analyticsVersion",
-            "crashlyticsKTX": "com.google.firebase:firebase-crashlytics-ktx:$crashlyticsKTXVersion",
-//            "crashlyticsNDK"   : "com.google.firebase:firebase-crashlytics-ndk:18.0.0:$crashlyticsNDKVersion"
-            "cloudMessage"  : "com.google.firebase:firebase-messaging-ktx:$cloudMessage"
-    ]
-
-
-    /**
-     * eventbus
-     */
-    def eventbusVersion = "3.2.0"
-    eventbusDependencies = [
-            "eventbus": "org.greenrobot:eventbus:$eventbusVersion"
-    ]
-
-    /**
-     * swipe layout
-     */
-    def swipeLayoutVersion = "1.1.0"
-    swipeLayoutDependencies = [
-            "swipelayout": "androidx.swiperefreshlayout:swiperefreshlayout:$swipeLayoutVersion"
-    ]
-
-    /**
      * cameraview
      */
     def cameraViewNatario1Version = "2.7.2"
     cameraViewNatario1Dependencies = [
             "cameraview": "com.otaliastudios:cameraview:$cameraViewNatario1Version"
     ]
+
 
     /**
      * mlkit

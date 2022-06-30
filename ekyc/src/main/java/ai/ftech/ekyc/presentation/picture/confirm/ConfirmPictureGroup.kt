@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.presentation.picture.confirm
 
-import ai.ftech.dev.base.adapter.BaseVH
-import ai.ftech.dev.base.adapter.group.GroupData
-import ai.ftech.dev.base.adapter.group.GroupVH
-import ai.ftech.dev.base.extension.setOnSafeClick
+import ai.ftech.base.adapter.BaseVH
+import ai.ftech.base.adapter.group.GroupData
+import ai.ftech.base.adapter.group.GroupVH
+import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.common.getAppString

@@ -1,3 +1,562 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="FBaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/fbase_color_white</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+<!--    <style name="FBaseStyleText">-->
+<!--        <item name="android:textColor">@color/fbase_color_black</item>-->
+<!--        <item name="android:textColorHint">@color/fbase_color_gray</item>-->
+<!--        <item name="android:layout_width">wrap_content</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--    </style>-->
+
+    <!-- font style to overide if need, default Roboto -->
+<!--    <style name="FBaseStyleBold" parent="FBaseStyleText">-->
+<!--        <item name="android:fontFamily">@font/fbase_font_bold</item>-->
+<!--        <item name="fontFamily">@font/fbase_font_bold</item>-->
+<!--    </style>-->
+
+<!--    <style name="FBaseStyleSemiBold" parent="FBaseStyleText">-->
+<!--        <item name="android:fontFamily">@font/fbase_font_semibold</item>-->
+<!--        <item name="fontFamily">@font/fbase_font_semibold</item>-->
+<!--    </style>-->
+
+    <style name="FBaseStyleItalic" parent="FBaseStyleText">
+        <item name="android:fontFamily">@font/fbase_font_italic</item>
+        <item name="fontFamily">@font/fbase_font_italic</item>
+    </style>
+
+<!--    <style name="FBaseStyleMedium" parent="FBaseStyleText">-->
+<!--        <item name="android:fontFamily">@font/fbase_font_medium</item>-->
+<!--        <item name="fontFamily">@font/fbase_font_medium</item>-->
+<!--    </style>-->
+
+<!--    <style name="FBaseStyleRegular" parent="FBaseStyleText">-->
+<!--        <item name="android:fontFamily">@font/fbase_font_regular</item>-->
+<!--        <item name="fontFamily">@font/fbase_font_regular</item>-->
+<!--    </style>-->
+
+    <!-- font bold -->
+    <style name="FBaseStyleText40Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_40</item>
+    </style>
+
+    <style name="FBaseStyleText38Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_38</item>
+    </style>
+
+    <style name="FBaseStyleText36Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_36</item>
+    </style>
+
+    <style name="FBaseStyleText34Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_34</item>
+    </style>
+
+    <style name="FBaseStyleText32Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_30</item>
+    </style>
+
+    <style name="FBaseStyleText28Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_28</item>
+    </style>
+
+    <style name="FBaseStyleText26Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_26</item>
+    </style>
+
+    <style name="FBaseStyleText24Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_24</item>
+    </style>
+
+    <style name="FBaseStyleText22Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_22</item>
+    </style>
+
+    <style name="FBaseStyleText20Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_20</item>
+    </style>
+
+    <style name="FBaseStyleText18Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_18</item>
+    </style>
+
+    <style name="FBaseStyleText16Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_16</item>
+    </style>
+
+    <style name="FBaseStyleText14Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_14</item>
+    </style>
+
+    <style name="FBaseStyleText12Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_12</item>
+    </style>
+
+    <style name="FBaseStyleText10Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_10</item>
+    </style>
+
+    <style name="FBaseStyleText8Bold" parent="FBaseStyleBold">
+        <item name="android:textSize">@dimen/fbase_text_size_8</item>
+    </style>
+
+    <!-- font semibold -->
+    <style name="FBaseStyleText40SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_40</item>
+    </style>
+
+    <style name="FBaseStyleText38SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_38</item>
+    </style>
+
+    <style name="FBaseStyleText36SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_36</item>
+    </style>
+
+    <style name="FBaseStyleText34SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_34</item>
+    </style>
+
+    <style name="FBaseStyleText32SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_30</item>
+    </style>
+
+    <style name="FBaseStyleText28SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_28</item>
+    </style>
+
+    <style name="FBaseStyleText26SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_26</item>
+    </style>
+
+    <style name="FBaseStyleText24SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_24</item>
+    </style>
+
+    <style name="FBaseStyleText22SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_22</item>
+    </style>
+
+    <style name="FBaseStyleText20SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_20</item>
+    </style>
+
+    <style name="FBaseStyleText18SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_18</item>
+    </style>
+
+    <style name="FBaseStyleText16SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_16</item>
+    </style>
+
+    <style name="FBaseStyleText14SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_14</item>
+    </style>
+
+    <style name="FBaseStyleText12SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_12</item>
+    </style>
+
+    <style name="FBaseStyleText10SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_10</item>
+    </style>
+
+    <style name="FBaseStyleText8SemiBold" parent="FBaseStyleSemiBold">
+        <item name="android:textSize">@dimen/fbase_text_size_8</item>
+    </style>
+
+    <!-- font italic -->
+    <style name="FBaseStyleText40Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_40</item>
+    </style>
+
+    <style name="FBaseStyleText38Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_38</item>
+    </style>
+
+    <style name="FBaseStyleText36Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_36</item>
+    </style>
+
+    <style name="FBaseStyleText34Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_34</item>
+    </style>
+
+    <style name="FBaseStyleText32Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_30</item>
+    </style>
+
+    <style name="FBaseStyleText28Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_28</item>
+    </style>
+
+    <style name="FBaseStyleText26Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_26</item>
+    </style>
+
+    <style name="FBaseStyleText24Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_24</item>
+    </style>
+
+    <style name="FBaseStyleText22Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_22</item>
+    </style>
+
+    <style name="FBaseStyleText20Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_20</item>
+    </style>
+
+    <style name="FBaseStyleText18Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_18</item>
+    </style>
+
+    <style name="FBaseStyleText16Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_16</item>
+    </style>
+
+    <style name="FBaseStyleText14Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_14</item>
+    </style>
+
+    <style name="FBaseStyleText12Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_12</item>
+    </style>
+
+    <style name="FBaseStyleText10Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_10</item>
+    </style>
+
+    <style name="FBaseStyleText8Italic" parent="FBaseStyleItalic">
+        <item name="android:textSize">@dimen/fbase_text_size_8</item>
+    </style>
+
+    <!-- font medium -->
+    <style name="FBaseStyleText40Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_40</item>
+    </style>
+
+    <style name="FBaseStyleText38Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_38</item>
+    </style>
+
+    <style name="FBaseStyleText36Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_36</item>
+    </style>
+
+    <style name="FBaseStyleText34Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_34</item>
+    </style>
+
+    <style name="FBaseStyleText32Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_30</item>
+    </style>
+
+    <style name="FBaseStyleText28Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_28</item>
+    </style>
+
+    <style name="FBaseStyleText26Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_26</item>
+    </style>
+
+    <style name="FBaseStyleText24Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_24</item>
+    </style>
+
+    <style name="FBaseStyleText22Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_22</item>
+    </style>
+
+    <style name="FBaseStyleText20Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_20</item>
+    </style>
+
+    <style name="FBaseStyleText18Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_18</item>
+    </style>
+
+    <style name="FBaseStyleText16Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_16</item>
+    </style>
+
+    <style name="FBaseStyleText14Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_14</item>
+    </style>
+
+    <style name="FBaseStyleText12Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_12</item>
+    </style>
+
+    <style name="FBaseStyleText10Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_10</item>
+    </style>
+
+    <style name="FBaseStyleText8Medium" parent="FBaseStyleMedium">
+        <item name="android:textSize">@dimen/fbase_text_size_8</item>
+    </style>
+
+    <!-- font regular -->
+    <style name="FBaseStyleText40Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_40</item>
+    </style>
+
+    <style name="FBaseStyleText38Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_38</item>
+    </style>
+
+    <style name="FBaseStyleText36Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_36</item>
+    </style>
+
+    <style name="FBaseStyleText34Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_34</item>
+    </style>
+
+    <style name="FBaseStyleText32Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_30</item>
+    </style>
+
+    <style name="FBaseStyleText28Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_28</item>
+    </style>
+
+    <style name="FBaseStyleText26Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_26</item>
+    </style>
+
+    <style name="FBaseStyleText24Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_24</item>
+    </style>
+
+    <style name="FBaseStyleText22Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_22</item>
+    </style>
+
+    <style name="FBaseStyleText20Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_20</item>
+    </style>
+
+    <style name="FBaseStyleText18Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_18</item>
+    </style>
+
+    <style name="FBaseStyleText16Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_16</item>
+    </style>
+
+    <style name="FBaseStyleText14Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_14</item>
+    </style>
+
+    <style name="FBaseStyleText12Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_12</item>
+    </style>
+
+    <style name="FBaseStyleText10Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_10</item>
+    </style>
+
+    <style name="FBaseStyleText8Regular" parent="FBaseStyleRegular">
+        <item name="android:textSize">@dimen/fbase_text_size_8</item>
+    </style>
+
+    <!-- icon 128 -->
+    <style name="FBaseIcon128">
+        <item name="android:layout_width">@dimen/fbase_dimen_128</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_128</item>
+    </style>
+
+    <!-- icon 124 -->
+    <style name="FBaseIcon124">
+        <item name="android:layout_width">@dimen/fbase_dimen_124</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_124</item>
+    </style>
+
+    <!-- icon 120 -->
+    <style name="FBaseIcon120">
+        <item name="android:layout_width">@dimen/fbase_dimen_120</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_120</item>
+    </style>
+
+    <!-- icon 116 -->
+    <style name="FBaseIcon116">
+        <item name="android:layout_width">@dimen/fbase_dimen_116</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_116</item>
+    </style>
+
+    <!-- icon 112 -->
+    <style name="FBaseIcon112">
+        <item name="android:layout_width">@dimen/fbase_dimen_112</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_112</item>
+    </style>
+
+    <!-- icon 108 -->
+    <style name="FBaseIcon108">
+        <item name="android:layout_width">@dimen/fbase_dimen_108</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_108</item>
+    </style>
+
+    <!-- icon 104 -->
+    <style name="FBaseIcon104">
+        <item name="android:layout_width">@dimen/fbase_dimen_104</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_104</item>
+    </style>
+
+    <!-- icon 100 -->
+    <style name="FBaseIcon100">
+        <item name="android:layout_width">@dimen/fbase_dimen_100</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_100</item>
+    </style>
+
+    <!-- icon 96 -->
+    <style name="FBaseIcon96">
+        <item name="android:layout_width">@dimen/fbase_dimen_96</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_96</item>
+    </style>
+
+    <!-- icon 92 -->
+    <style name="FBaseIcon92">
+        <item name="android:layout_width">@dimen/fbase_dimen_92</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_92</item>
+    </style>
+
+    <!-- icon 88 -->
+    <style name="FBaseIcon88">
+        <item name="android:layout_width">@dimen/fbase_dimen_88</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_88</item>
+    </style>
+
+    <!-- icon 84 -->
+    <style name="FBaseIcon84">
+        <item name="android:layout_width">@dimen/fbase_dimen_84</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_84</item>
+    </style>
+
+    <!-- icon 80 -->
+    <style name="FBaseIcon80">
+        <item name="android:layout_width">@dimen/fbase_dimen_80</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_80</item>
+    </style>
+
+    <!-- icon 76 -->
+    <style name="FBaseIcon76">
+        <item name="android:layout_width">@dimen/fbase_dimen_76</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_76</item>
+    </style>
+
+    <!-- icon 72 -->
+    <style name="FBaseIcon72">
+        <item name="android:layout_width">@dimen/fbase_dimen_72</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_72</item>
+    </style>
+
+    <!-- icon 68 -->
+    <style name="FBaseIcon68">
+        <item name="android:layout_width">@dimen/fbase_dimen_68</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_68</item>
+    </style>
+
+    <!-- icon 64 -->
+    <style name="FBaseIcon64">
+        <item name="android:layout_width">@dimen/fbase_dimen_64</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_64</item>
+    </style>
+
+    <!-- icon 60 -->
+    <style name="FBaseIcon60">
+        <item name="android:layout_width">@dimen/fbase_dimen_60</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_60</item>
+    </style>
+
+    <!-- icon 56 -->
+    <style name="FBaseIcon56">
+        <item name="android:layout_width">@dimen/fbase_dimen_56</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_56</item>
+    </style>
+
+    <!-- icon 52 -->
+    <style name="FBaseIcon52">
+        <item name="android:layout_width">@dimen/fbase_dimen_52</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_52</item>
+    </style>
+
+    <!-- icon 48 -->
+    <style name="FBaseIcon48">
+        <item name="android:layout_width">@dimen/fbase_dimen_48</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_48</item>
+    </style>
+
+    <!-- icon 44 -->
+    <style name="FBaseIcon44">
+        <item name="android:layout_width">@dimen/fbase_dimen_44</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_44</item>
+    </style>
+
+    <!-- icon 40 -->
+    <style name="FBaseIcon40">
+        <item name="android:layout_width">@dimen/fbase_dimen_40</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_40</item>
+    </style>
+
+    <!-- icon 36 -->
+    <style name="FBaseIcon36">
+        <item name="android:layout_width">@dimen/fbase_dimen_36</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_36</item>
+    </style>
+
+    <!-- icon 32 -->
+    <style name="FBaseIcon32">
+        <item name="android:layout_width">@dimen/fbase_dimen_32</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_32</item>
+    </style>
+
+    <!-- icon 28 -->
+    <style name="FBaseIcon28">
+        <item name="android:layout_width">@dimen/fbase_dimen_28</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_28</item>
+    </style>
+
+    <!-- icon 24 -->
+    <style name="FBaseIcon24">
+        <item name="android:layout_width">@dimen/fbase_dimen_24</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_24</item>
+    </style>
+
+    <!-- icon 20 -->
+    <style name="FBaseIcon20">
+        <item name="android:layout_width">@dimen/fbase_dimen_20</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_20</item>
+    </style>
+
+    <!-- icon 16 -->
+    <style name="FBaseIcon16">
+        <item name="android:layout_width">@dimen/fbase_dimen_16</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_16</item>
+    </style>
+
+    <!-- icon 12 -->
+    <style name="FBaseIcon12">
+        <item name="android:layout_width">@dimen/fbase_dimen_12</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_12</item>
+    </style>
+
+    <!-- icon 8 -->
+    <style name="FBaseIcon8">
+        <item name="android:layout_width">@dimen/fbase_dimen_8</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_8</item>
+    </style>
+
+
+    <style name="StyleNavigationBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/fbase_dimen_50</item>
+        <item name="android:background">@color/fbase_color_transparent</item>
+    </style>
 </resources>

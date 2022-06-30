@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.common.widget.recyclerview
 
-import ai.ftech.dev.base.adapter.BaseAdapter
+import ai.ftech.base.adapter.BaseAdapter
 import ai.ftech.ekyc.R
 import android.annotation.SuppressLint
 import android.content.Context

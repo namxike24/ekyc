@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.dev.base.common.BaseAction
-import ai.ftech.dev.base.common.BaseViewModel
-import ai.ftech.dev.base.extension.postSelf
+import ai.ftech.base.common.BaseAction
+import ai.ftech.base.common.BaseViewModel
+import ai.ftech.base.extension.postSelf
 import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetCityListAction
@@ -13,13 +13,13 @@ import ai.ftech.ekyc.domain.model.address.City
 import ai.ftech.ekyc.domain.model.address.Nation
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class EkycInfoViewModel : BaseViewModel() {
-    var ekycInfo = MutableLiveData<EkycInfo>()
+    var ekycInfo = MutableLiveData(FEkycActionResult<EkycInfo>())
         private set
 
     var submitInfo = MutableLiveData(FEkycActionResult<Boolean>())
@@ -53,10 +53,12 @@ class EkycInfoViewModel : BaseViewModel() {
     fun getEkycInfo() {
         viewModelScope.launch {
             GetEkycInfoAction().invoke(BaseAction.VoidRequest()).onException {
-
+                ekycInfo.value?.exception = it
+                ekycInfo.postSelf()
             }.collect {
-                ekycInfo.value = it
                 ekycInfoLocal = it
+                ekycInfo.value?.data = it
+                ekycInfo.postSelf()
             }
         }
     }
