@@ -70,6 +70,11 @@ class OverlayView @JvmOverloads constructor(
 //        canvas.drawCircle(cx, cy, 5f, paintPointTest)
     }
 
+    fun setFrameCrop(drawable: Drawable?) {
+        drawableFrame = drawable
+        invalidate()
+    }
+
     fun setCropType(type: CROP_TYPE) {
         this.cropType = type
         getDrawableFrame()
@@ -223,7 +228,7 @@ class OverlayView @JvmOverloads constructor(
         if (cropType == CROP_TYPE.REACTANGLE) {
             drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_rect_crop)
         } else if (cropType == CROP_TYPE.CIRCLE) {
-            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_circle_crop)
+            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_circle_blue_crop)
         }
     }
 

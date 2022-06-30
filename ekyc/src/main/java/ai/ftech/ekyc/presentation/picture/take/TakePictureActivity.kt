@@ -245,9 +245,16 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 val inputImage = InputImage.fromByteArray(it.getData(), it.size.width, it.size.height, it.rotationToView, it.format)
                 Tasks.await(detector.process(inputImage)
                     .addOnSuccessListener { faces ->
-                        // Task completed successfully
-                        // ...
-                        Log.e("resulttt face", faces.size.toString())
+                        Log.e("face count in camera", faces.size.toString())
+                        if (faces.size == 1) {
+                            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_blue_crop))
+                            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_on))
+                            ivCapture.isEnabled = true
+                        } else {
+                            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_white_crop))
+                            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_off))
+                            ivCapture.isEnabled = false
+                        }
                     }
                     .addOnFailureListener { e ->
                         // Chỗ này fail bỏ qua toàn bộ logic check scan, cho phép chụp luôn. Lý do fail kể thể do ML-kit lỗi tạm thời tạch chẳng hạn
