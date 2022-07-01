@@ -20,14 +20,15 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         OpenAppSettingResult()
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadingDialog = LoadingDialog()
+    override fun onDestroy() {
+        loadingDialog = null
+        super.onDestroy()
     }
 
-    override fun onPause() {
-        super.onPause()
-        loadingDialog = null
+    override fun onPrepareInitView() {
+        super.onPrepareInitView()
+        setFullScreen()
+        loadingDialog = LoadingDialog()
     }
 
     override fun onInitView() {
@@ -36,10 +37,6 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         KeyboardUtility.hideSoftKeyboard(this, window.decorView.rootView)
     }
 
-    override fun onPrepareInitView() {
-        super.onPrepareInitView()
-        setFullScreen()
-    }
 
     override fun setupStatusBar(): StatusBar {
         return StatusBar(isDarkText = false)

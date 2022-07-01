@@ -1,7 +1,9 @@
 package ai.ftech.ekyc.presentation.picture.take
 
+import ai.ftech.base.extension.hide
 import ai.ftech.base.extension.observer
 import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.getAppDrawable
@@ -83,8 +85,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         ivCapture = findViewById(R.id.ivTakePictureCapture)
         ivChangeCamera = findViewById(R.id.ivTakePictureChangeCamera)
 
-        setFacing()
-
         tbvHeader.setTitle(getToolbarTitleByEkycType())
 
         tbvHeader.setListener(object : ToolbarView.IListener {
@@ -96,6 +96,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 warningDialog?.showDialog(supportFragmentManager, warningDialog!!::class.java.simpleName)
             }
         })
+
+        setFacing()
 
         cvCameraView.apply {
             setLifecycleOwner(this@TakePictureActivity)
@@ -153,6 +155,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+
     }
 
     override fun onObserverViewModel() {
@@ -223,6 +227,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             PHOTO_INFORMATION.FACE -> {
                 cvCameraView.facing = Facing.FRONT
                 isFrontFace = true
+                setEnableCameraFace(false)
                 setFrameMlKit()
             }
             PHOTO_INFORMATION.BACK, PHOTO_INFORMATION.FRONT, PHOTO_INFORMATION.PAGE_NUMBER_2 -> {
@@ -245,25 +250,30 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 val inputImage = InputImage.fromByteArray(it.getData(), it.size.width, it.size.height, it.rotationToView, it.format)
                 Tasks.await(detector.process(inputImage)
                     .addOnSuccessListener { faces ->
-                        Log.e("face count in camera", faces.size.toString())
                         if (faces.size == 1) {
-                            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_blue_crop))
-                            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_on))
-                            ivCapture.isEnabled = true
+                            setEnableCameraFace(true)
                         } else {
-                            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_white_crop))
-                            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_off))
-                            ivCapture.isEnabled = false
+                            setEnableCameraFace(false)
                         }
                     }
-                    .addOnFailureListener { e ->
-                        // Chỗ này fail bỏ qua toàn bộ logic check scan, cho phép chụp luôn. Lý do fail kể thể do ML-kit lỗi tạm thời tạch chẳng hạn
-                        // ...
-                        e.printStackTrace()
+                    .addOnFailureListener {
+                        setEnableCameraFace(true)
                     })
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+    }
+
+    private fun setEnableCameraFace(isEnable: Boolean) {
+        if (isEnable) {
+            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_blue_crop))
+            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_on))
+            ivCapture.isEnabled = true
+        } else {
+            ovFrameCrop.setFrameCrop(getAppDrawable(R.drawable.fekyc_ic_photo_circle_white_crop))
+            ivCapture.setImageDrawable(getAppDrawable(R.drawable.fekyc_ic_capture_off))
+            ivCapture.isEnabled = false
         }
     }
 

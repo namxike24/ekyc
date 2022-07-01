@@ -228,7 +228,7 @@ class OverlayView @JvmOverloads constructor(
         if (cropType == CROP_TYPE.REACTANGLE) {
             drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_rect_crop)
         } else if (cropType == CROP_TYPE.CIRCLE) {
-            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_circle_blue_crop)
+            drawableFrame = getAppDrawable(R.drawable.fekyc_ic_photo_circle_white_crop)
         }
     }
 

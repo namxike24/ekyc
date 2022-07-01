@@ -64,13 +64,13 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         })
 
         btnCompleted.setOnClickListener {
-//            showLoading()
+            showLoading()
             viewModel.submitInfo(adapter.dataList as MutableList<EkycFormInfo>)
         }
 
         rvUserInfo.layoutManager = LinearLayoutManager(this)
         rvUserInfo.adapter = adapter
-
+        showLoading()
         viewModel.getEkycInfo()
         viewModel.getCityList()
         viewModel.getNationList()
@@ -84,32 +84,29 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                 FEkycActionResult.RESULT_STATUS.SUCCESS -> {
                     tvTypePapres.text = String.format("${it.data?.identityType}: ${it.data?.identityName}")
                     adapter.resetData(it.data?.formList ?: emptyList())
+                    hideLoading()
                 }
                 FEkycActionResult.RESULT_STATUS.ERROR -> {
-
-                }
-                FEkycActionResult.RESULT_STATUS.UNKNOWN -> {
-
+                    hideLoading()
                 }
                 else -> {
 
                 }
             }
-
-
         }
 
         observer(viewModel.submitInfo) {
-            hideLoading()
+
             when (it?.resultStatus) {
 
                 FEkycActionResult.RESULT_STATUS.SUCCESS -> {
+                    hideLoading()
                     if (it.data == true) {
                         lifecycleScope.launch {
 
                             val event = EkycEvent().apply {
                                 this.code = 0
-                                this.message ="Ekyc thành công!"
+                                this.message = "Ekyc thành công!"
                             }
 
                             ShareFlowEventBus.emitEvent(event)
@@ -119,6 +116,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                 }
 
                 FEkycActionResult.RESULT_STATUS.ERROR -> {
+                    hideLoading()
                     lifecycleScope.launchWhenStarted {
 
                         val apiException = it.exception as APIException
