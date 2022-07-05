@@ -2,6 +2,7 @@ package ai.ftech.ekyc.publish
 
 import ai.ftech.base.extension.setApplication
 import ai.ftech.ekyc.AppConfig
+import ai.ftech.ekyc.infras.EncodeRSA
 import ai.ftech.ekyc.presentation.home.HomeActivity
 import android.app.Activity
 import android.app.Application
@@ -95,8 +96,8 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun startEkyc(ftechKey: String, appId: String, transactionId: String, callBack: IFTechEkycCallback<FTechEkycInfo>) {
-        this.ftechKey = ftechKey
+    fun startEkyc(licenseKey: String, appId: String, transactionId: String, callBack: IFTechEkycCallback<FTechEkycInfo>) {
+        this.ftechKey = EncodeRSA.encryptData(licenseKey, applicationContext?.packageName)
         this.appId = appId
         this.transactionId = transactionId
         checkCoolDownAction {

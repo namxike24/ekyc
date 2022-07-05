@@ -6,6 +6,7 @@ import java.security.KeyFactory
 import java.security.NoSuchAlgorithmException
 import java.security.spec.InvalidKeySpecException
 import java.security.spec.X509EncodedKeySpec
+import java.util.*
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.IllegalBlockSizeException
@@ -14,9 +15,9 @@ import javax.crypto.NoSuchPaddingException
 object EncodeRSA {
     private val PUBLIC_KEY: String = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKvWIEhxiogTnaK9e7xH3UxhLPB73BafhsQSyt1eG5+3AbM3Nb4L974d6I41mPuF7OX/iBjxkX3qoHmEv0TnJCauBXuVt2irQ4mKx+Yyu1pi1YxH4xqKBIM37zNMsnC8k1upZ3LSBjjUf5xJLx+QVrZ5T1i2pBUUHOJcjIfkS8mQIDAQAB"
 
-    fun encryptData(text: String): String {
-        var encoded: String = ""
-        //TODO bundle + servicesID + key + timestamp để mã hóa
+    fun encryptData(key: String, bundle: String?): String {
+        var encoded = ""
+        val text = "${bundle},${Calendar.getInstance().timeInMillis},${key}"
         val encrypted: ByteArray
         try {
             val publicBytes = Base64.decode(PUBLIC_KEY, Base64.DEFAULT)
