@@ -1,6 +1,7 @@
 package ai.ftech.ekyc.infras
 
 import android.util.Base64
+import java.net.URLEncoder
 import java.security.InvalidKeyException
 import java.security.KeyFactory
 import java.security.NoSuchAlgorithmException
@@ -41,6 +42,6 @@ object EncodeRSA {
         } catch (e: IllegalBlockSizeException) {
             e.printStackTrace()
         }
-        return encoded
+        return URLEncoder.encode(encoded, "utf-8")
     }
 }

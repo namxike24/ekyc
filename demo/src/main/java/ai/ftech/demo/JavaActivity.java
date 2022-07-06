@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 import ai.ftech.ekyc.publish.FTechEkycInfo;
 import ai.ftech.ekyc.publish.FTechEkycManager;
 import ai.ftech.ekyc.publish.IFTechEkycCallback;
@@ -29,8 +31,11 @@ public class JavaActivity extends AppCompatActivity {
             tvState.setText("");
         });
 
+        Random rd = new Random();
+        String transId = "" + rd.nextInt(100000);
+
         btnEkyc.setOnClickListener(v -> {
-            FTechEkycManager.startEkyc("123", "111", "12345", new IFTechEkycCallback<FTechEkycInfo>() {
+            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
                 @Override
                 public void onSuccess(FTechEkycInfo info) {
                     Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");

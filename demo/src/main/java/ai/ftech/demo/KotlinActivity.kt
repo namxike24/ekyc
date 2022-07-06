@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.random.Random
 
 class KotlinActivity : AppCompatActivity() {
     private lateinit var tvState: TextView
@@ -24,7 +25,7 @@ class KotlinActivity : AppCompatActivity() {
         }
 
         btnEkyc.setOnClickListener {
-            FTechEkycManager.startEkyc("123", "111", "12345", object : IFTechEkycCallback<FTechEkycInfo> {
+            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", "${Random.nextInt(1, 100000)}", object : IFTechEkycCallback<FTechEkycInfo> {
                 override fun onSuccess(info: FTechEkycInfo?) {
                     tvState.text = info?.message
                 }
