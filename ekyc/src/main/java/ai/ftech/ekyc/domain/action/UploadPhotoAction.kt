@@ -14,13 +14,13 @@ class UploadPhotoAction : BaseAction<UploadPhotoAction.UploadRV, Boolean>() {
         val photoInformation = rv.photoInformation
 
         return when {
+            photoInformation == PHOTO_INFORMATION.FACE -> repo.captureFace(photoPath)
+
             photoType == PHOTO_TYPE.PASSPORT -> repo.verifyIdentityPassport(photoPath)
 
             photoType == PHOTO_TYPE.SSN -> repo.verifyIdentitySSN(photoPath, photoInformation)
 
             photoType == PHOTO_TYPE.DRIVER_LICENSE -> repo.verifyIdentityDriverLicense(photoPath, photoInformation)
-
-            photoInformation == PHOTO_INFORMATION.FACE -> repo.captureFace(photoPath)
 
             else -> false
         }

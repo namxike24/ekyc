@@ -22,7 +22,7 @@ class CaptureFaceData {
 
     @SerializedName("matchPercent")
     @Expose
-    var matchPercent: Int? = null
+    var matchPercent: Double? = null
 
     @SerializedName("imageUrl")
     @Expose
