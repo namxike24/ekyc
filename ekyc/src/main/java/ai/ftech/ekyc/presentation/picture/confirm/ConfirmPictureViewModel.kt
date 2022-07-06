@@ -34,8 +34,16 @@ class ConfirmPictureViewModel : BaseViewModel() {
         selectedPosition = photoInfoList.value?.indexOf(item) ?: -1
     }
 
+    fun setSelectedIndex(pos: Int) {
+        selectedPosition = pos
+    }
+
     fun getSelectedIndex(): Int {
         return selectedPosition
+    }
+
+    fun getItemSelected(): PhotoInfo? {
+        return photoInfoList.value?.get(getSelectedIndex())
     }
 
     fun clearSelected() {

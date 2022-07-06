@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.take
 
+import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo
@@ -41,6 +42,7 @@ object EkycStep {
         val photoInfo = PhotoInfo().apply {
             this.photoType = photoType
             this.url = path
+            this.photoInformation = getCurrentStep()
         }
 
         stepList.add(photoInfo)
