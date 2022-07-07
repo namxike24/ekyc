@@ -108,5 +108,10 @@
     <string name="fekyc_ekyc_noti_network">Ảnh tải lên không thành công.\nVui lòng kiểm tra lại kết nối mạng</string>
     <!--endregion-->
 
+    <!--region empty error -->
+    <string name="empty_license_key">License Key chưa được nhập</string>
+    <string name="empty_app_id">App ID chưa được nhập</string>
+    <string name="empty_transaction_id">Transaction ID chưa được nhập</string>
+    <!--endregion-->
 
 </resources>

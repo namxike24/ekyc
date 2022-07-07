@@ -2,6 +2,8 @@ package ai.ftech.ekyc.publish
 
 import ai.ftech.base.extension.setApplication
 import ai.ftech.ekyc.AppConfig
+import ai.ftech.ekyc.R
+import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.infras.EncodeRSA
 import ai.ftech.ekyc.presentation.home.HomeActivity
 import android.app.Activity
@@ -50,12 +52,16 @@ object FTechEkycManager {
             resultLauncher = if (launcherMap.contains(context.hashCode())) {
                 launcherMap[context.hashCode()]
             } else {
-                context.registerForActivityResult(object : ActivityResultContract<Unit, FTechEkycResult<FTechEkycInfo>>() {
+                context.registerForActivityResult(object :
+                    ActivityResultContract<Unit, FTechEkycResult<FTechEkycInfo>>() {
                     override fun createIntent(context: Context, input: Unit?): Intent {
                         return Intent(context, HomeActivity::class.java)
                     }
 
-                    override fun parseResult(resultCode: Int, intent: Intent?): FTechEkycResult<FTechEkycInfo> {
+                    override fun parseResult(
+                        resultCode: Int,
+                        intent: Intent?
+                    ): FTechEkycResult<FTechEkycInfo> {
                         return parseDataFormActivityForResult(resultCode, intent)
                     }
                 }) {
@@ -96,18 +102,39 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun startEkyc(licenseKey: String, appId: String, transactionId: String, callBack: IFTechEkycCallback<FTechEkycInfo>) {
+    fun startEkyc(
+        licenseKey: String,
+        appId: String,
+        transactionId: String,
+        callBack: IFTechEkycCallback<FTechEkycInfo>
+    ) {
         this.ftechKey = EncodeRSA.encryptData(licenseKey, applicationContext?.packageName)
         this.appId = appId
-        this.transactionId = transactionId
+        this.transactionId = "${transactionId}${appId}"
         checkCoolDownAction {
+            if (licenseKey.isEmpty()) {
+                throw RuntimeException(getAppString(R.string.empty_license_key))
+            }
+
+            if (appId.isEmpty()) {
+                throw RuntimeException(getAppString(R.string.empty_license_key))
+            }
+
+            if (transactionId.isEmpty()) {
+                throw RuntimeException(getAppString(R.string.empty_license_key))
+            }
+
             callback = callBack
             resultLauncher?.launch()
         }
     }
 
-    private fun parseDataFormActivityForResult(resultCode: Int, intent: Intent?): FTechEkycResult<FTechEkycInfo> {
-        val info = intent?.getSerializableExtra(HomeActivity.SEND_RESULT_FTECH_EKYC_INFO) as? FTechEkycInfo
+    private fun parseDataFormActivityForResult(
+        resultCode: Int,
+        intent: Intent?
+    ): FTechEkycResult<FTechEkycInfo> {
+        val info =
+            intent?.getSerializableExtra(HomeActivity.SEND_RESULT_FTECH_EKYC_INFO) as? FTechEkycInfo
 
         when (resultCode) {
             Activity.RESULT_OK -> {
