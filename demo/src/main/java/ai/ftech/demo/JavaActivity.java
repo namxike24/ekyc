@@ -31,10 +31,11 @@ public class JavaActivity extends AppCompatActivity {
             tvState.setText("");
         });
 
-        Random rd = new Random();
-        String transId = "" + rd.nextInt(100000);
+
 
         btnEkyc.setOnClickListener(v -> {
+            Random rd = new Random();
+            String transId = "" + rd.nextInt(100000);
             FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
                 @Override
                 public void onSuccess(FTechEkycInfo info) {
