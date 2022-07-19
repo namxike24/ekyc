@@ -35,7 +35,7 @@ class EkycInfoViewModel : BaseViewModel() {
 
     fun submitInfo(list: MutableList<EkycFormInfo>) {
         viewModelScope.launch {
-            ekycInfoLocal?.formList = list
+            ekycInfoLocal?.form = list
             val data = ekycInfoLocal
             if (data != null) {
                 val rv = SubmitInfoAction.SubmitRV(data)

@@ -51,7 +51,7 @@ class FormInfoAdapter : BaseAdapter() {
         this.dataList.forEachIndexed { i, v ->
             if (v is FormInfoDisplay) {
                 if (v.data.id == id) {
-                    v.data.value = value
+                    v.data.fieldValue = value
                     index = i
                 }
             }
@@ -72,7 +72,7 @@ class FormInfoAdapter : BaseAdapter() {
             ivIcon = view.findViewById(R.id.ivEkycInfoItmRightIcon)
 
             edtValue.addTextChangedListener(onTextChanged = { s, _, _, _ ->
-                getDataAtPosition(adapterPosition).data.value = s.toString()
+                getDataAtPosition(adapterPosition).data.fieldValue = s.toString()
             })
 
             ivIcon.setOnSafeClick {
@@ -130,9 +130,9 @@ class FormInfoAdapter : BaseAdapter() {
 
     class FormInfoDisplay(val data: EkycFormInfo) {
 
-        fun getTitle() = data.title
+        fun getTitle() = data.fieldName
 
-        fun getValue() = data.value
+        fun getValue() = data.fieldValue
 
         fun getIcon(): Drawable? {
             return when (getFieldType()) {

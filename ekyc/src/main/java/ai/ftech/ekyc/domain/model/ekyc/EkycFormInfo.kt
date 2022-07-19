@@ -4,8 +4,8 @@ import android.util.Log
 
 class EkycFormInfo {
     var id: Int? = null
-    var title: String? = null
-    var value: String? = null
+    var fieldName: String? = null
+    var fieldValue: String? = null
     var type: String? = null
     var isEditable: Boolean = false
     var fieldType: FIELD_TYPE? = null

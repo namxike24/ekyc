@@ -83,7 +83,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             when (it?.resultStatus) {
                 FEkycActionResult.RESULT_STATUS.SUCCESS -> {
                     tvTypePapres.text = String.format("${it.data?.identityType}: ${it.data?.identityName}")
-                    adapter.resetData(it.data?.formList ?: emptyList())
+                    adapter.resetData(it.data?.form ?: emptyList())
                     hideLoading()
                 }
                 FEkycActionResult.RESULT_STATUS.ERROR -> {
@@ -170,7 +170,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             BottomSheetPicker().apply {
                 this.id = city.id.toString()
                 this.title = city.name
-                this.isSelected = (ekycInfo.value == city.name)
+                this.isSelected = (ekycInfo.fieldValue == city.name)
             }
         }
 
@@ -188,7 +188,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             BottomSheetPicker().apply {
                 this.id = nation.id.toString()
                 this.title = nation.name
-                this.isSelected = (ekycInfo.value == nation.name)
+                this.isSelected = (ekycInfo.fieldValue == nation.name)
             }
         }
 
@@ -207,13 +207,13 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         list.add(BottomSheetPicker().apply {
             this.id = ekycInfo.id.toString()
             this.title = getAppString(R.string.fekyc_ekyc_info_gender_male)
-            this.isSelected = (ekycInfo.value == getAppString(R.string.fekyc_ekyc_info_gender_male))
+            this.isSelected = (ekycInfo.fieldValue == getAppString(R.string.fekyc_ekyc_info_gender_male))
         })
 
         list.add(BottomSheetPicker().apply {
             this.id = ekycInfo.id.toString()
             this.title = getAppString(R.string.fekyc_ekyc_info_gender_female)
-            this.isSelected = (ekycInfo.value == getAppString(R.string.fekyc_ekyc_info_gender_female))
+            this.isSelected = (ekycInfo.fieldValue == getAppString(R.string.fekyc_ekyc_info_gender_female))
         })
 
         BottomSheetPickerDialog.Builder()

@@ -83,8 +83,6 @@ dependencies {
     implementation rootProject.ext.networkDependencies.retrofit
     implementation rootProject.ext.networkDependencies.retrofitGsonConverter
     implementation rootProject.ext.networkDependencies.retrofitScalarConverter
-    implementation rootProject.ext.networkDependencies.retrofitConverterMoshi
-    implementation rootProject.ext.networkDependencies.retrofitRxJava
     implementation rootProject.ext.networkDependencies.logging
     //endregion
 

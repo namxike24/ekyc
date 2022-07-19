@@ -14,5 +14,5 @@ class EkycData {
 
     @SerializedName("form")
     @Expose
-    var formList: List<EkycFormData>? = null
+    var form: List<EkycFormData>? = null
 }

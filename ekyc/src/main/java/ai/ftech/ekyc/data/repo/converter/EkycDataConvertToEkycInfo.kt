@@ -11,14 +11,6 @@ import android.util.Log
 
 class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
     private val formMapper = Mapper(EkycFormData::class, EkycFormInfo::class).apply {
-        addNameMapper(EkycFormInfo::title) {
-            return@addNameMapper EkycFormData::fieldName
-        }
-
-        addNameMapper(EkycFormInfo::value) {
-            return@addNameMapper EkycFormData::fieldValue
-        }
-
         addNameMapper(EkycFormInfo::type) {
             return@addNameMapper EkycFormData::fieldType
         }
@@ -46,7 +38,7 @@ class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
 
     override fun convert(source: EkycData): EkycInfo {
         val mapper = Mapper(EkycData::class, EkycInfo::class).apply {
-            register(EkycInfo::formList, Mapper.listMapper(formMapper))
+            register(EkycInfo::form, Mapper.listMapper(formMapper))
         }
         return mapper.invoke(source)
     }
