@@ -13,7 +13,6 @@ import ai.ftech.ekyc.domain.model.address.City
 import ai.ftech.ekyc.domain.model.address.Nation
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -33,7 +32,7 @@ class EkycInfoViewModel : BaseViewModel() {
     var nationList: List<Nation> = emptyList()
         private set
 
-    fun submitInfo(list: MutableList<EkycFormInfo>) {
+    fun submitInfo(list: List<EkycFormInfo>) {
         viewModelScope.launch {
             ekycInfoLocal?.form = list
             val data = ekycInfoLocal
@@ -60,16 +59,7 @@ class EkycInfoViewModel : BaseViewModel() {
                 ekycInfo.value?.data = it
                 ekycInfo.postSelf()
             }
-        }
-    }
 
-    fun getCityList() {
-        viewModelScope.launch {
-            GetCityListAction().invoke(BaseAction.VoidRequest()).onException {
-
-            }.collect {
-                cityList = it
-            }
         }
     }
 

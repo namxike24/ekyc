@@ -10,7 +10,7 @@ class SubmitInfoAction : BaseAction<SubmitInfoAction.SubmitRV, Boolean>() {
         val repo = RepositoryFactory.getEkyc()
 
         val gson = Gson()
-        val dataAfterConvertJson = gson.toJson(rv.ekycInfo)
+        val dataAfterConvertJson = gson.toJson(rv.ekycInfo.form)
 
         return repo.submitInfo(dataAfterConvertJson)
     }

@@ -4,6 +4,7 @@ import android.util.Log
 
 class EkycFormInfo {
     var id: Int? = null
+    var cardAttributeId: Int? = null
     var fieldName: String? = null
     var fieldValue: String? = null
     var type: String? = null

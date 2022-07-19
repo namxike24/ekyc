@@ -65,14 +65,14 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
         btnCompleted.setOnClickListener {
             showLoading()
-            viewModel.submitInfo(adapter.dataList as MutableList<EkycFormInfo>)
+
+            viewModel.submitInfo((adapter.dataList as List<FormInfoAdapter.FormInfoDisplay>).map { it.data })
         }
 
         rvUserInfo.layoutManager = LinearLayoutManager(this)
         rvUserInfo.adapter = adapter
         showLoading()
         viewModel.getEkycInfo()
-        viewModel.getCityList()
         viewModel.getNationList()
     }
 
