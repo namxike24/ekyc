@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import java.sql.Time
 
 class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     /**
@@ -159,6 +160,8 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     private fun showDatePickerDialog(ekycInfo: EkycFormInfo) {
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
+            .setCurrentCalendar(TimeUtils.getCalendarFromDateString(ekycInfo.fieldValue ?: "", TimeUtils.ISO_SHORT_DATE_FOMAT))
+            .setDateType(ekycInfo.dateType)
             .setDatePickerListener {
                 val time = TimeUtils.dateToDateString(it, TimeUtils.ISO_SHORT_DATE_FOMAT)
                 adapter.updateField(ekycInfo.id!!, time)

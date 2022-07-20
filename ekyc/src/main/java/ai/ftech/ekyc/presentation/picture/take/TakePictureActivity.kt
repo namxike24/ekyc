@@ -110,6 +110,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             addCameraListener(object : CameraListener() {
                 override fun onPictureTaken(result: PictureResult) {
+                    cvCameraView.close()
                     uploadFile(result)
                 }
             })

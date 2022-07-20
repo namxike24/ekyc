@@ -27,4 +27,8 @@ class EkycFormData {
     @SerializedName("editable")
     @Expose
     var editable: Boolean? = null
+
+    @SerializedName("dateType")
+    @Expose
+    var dateType: Int? = null
 }

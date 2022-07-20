@@ -4,6 +4,7 @@ import ai.ftech.base.common.BaseDialog
 import ai.ftech.base.common.DialogScreen
 import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
+import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
@@ -12,7 +13,8 @@ import java.util.*
 class DatePickerDialog(
     var title: String? = null,
     var datePickerListener: ((Calendar) -> Unit)? = null,
-    var currentCalendar: Calendar? = null
+    var currentCalendar: Calendar? = null,
+    var dateType: EkycFormInfo.DATE_TYPE? = null
 ) : BaseDialog(R.layout.fekyc_date_picker_dialog) {
 
     lateinit var ivDatePickerDlgClose: AppCompatImageView
@@ -38,6 +40,17 @@ class DatePickerDialog(
             currentCalendar?.let {
                 setCurrentCalendar(it)
             }
+            when (dateType) {
+                EkycFormInfo.DATE_TYPE.FEATURE -> {
+                    setMinYear(Calendar.getInstance().get(Calendar.YEAR))
+                    setMaxYear(Calendar.getInstance().get(Calendar.YEAR) + 100)
+                }
+                EkycFormInfo.DATE_TYPE.PASS -> {
+                    setMinYear(Calendar.getInstance().get(Calendar.YEAR) - 100)
+                    setMaxYear(Calendar.getInstance().get(Calendar.YEAR))
+                }
+                else -> {}
+            }
         }
 
         ivDatePickerDlgClose.setOnSafeClick {
@@ -61,6 +74,7 @@ class DatePickerDialog(
         private var title: String? = null
         private var datePickerListener: ((Calendar) -> Unit)? = null
         private var currentCalendar: Calendar? = null
+        private var dateType: EkycFormInfo.DATE_TYPE? = null
 
         fun setDatePickerListener(listener: (Calendar) -> Unit) = apply {
             this.datePickerListener = listener
@@ -70,13 +84,20 @@ class DatePickerDialog(
             this.title = title
         }
 
-        fun setCurrentCalendar(currentCalendar: Calendar) = apply {
+        fun setCurrentCalendar(currentCalendar: Calendar?) = apply {
             this.currentCalendar = currentCalendar
+        }
+
+        fun setDateType(dateType: EkycFormInfo.DATE_TYPE?) = apply {
+            this.dateType = dateType
         }
 
         fun show(fragmentManager: FragmentManager?) {
             if (fragmentManager == null) return
-            DatePickerDialog(title, datePickerListener, currentCalendar).show(fragmentManager, null)
+            DatePickerDialog(title, datePickerListener, currentCalendar, dateType).show(
+                fragmentManager,
+                null
+            )
         }
     }
 }

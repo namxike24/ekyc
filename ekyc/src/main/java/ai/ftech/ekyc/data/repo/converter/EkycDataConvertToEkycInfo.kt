@@ -34,6 +34,17 @@ class EkycDataConvertToEkycInfo : IConverter<EkycData, EkycInfo> {
                 }
             }
         })
+
+        register(EkycFormInfo::dateType, object : Converter<Int?, EkycFormInfo.DATE_TYPE?> {
+            override fun invoke(p1: Int?): EkycFormInfo.DATE_TYPE? {
+                return if (p1 != null) {
+                    EkycFormInfo.DATE_TYPE.valueOfName(p1)
+                } else {
+                    Log.e("FIELD_TYPE", "`DATE_TYPE` response form server is null")
+                    null
+                }
+            }
+        })
     }
 
     override fun convert(source: EkycData): EkycInfo {

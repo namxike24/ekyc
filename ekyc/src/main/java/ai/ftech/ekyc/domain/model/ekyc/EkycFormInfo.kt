@@ -10,6 +10,7 @@ class EkycFormInfo {
     var type: String? = null
     var isEditable: Boolean = false
     var fieldType: FIELD_TYPE? = null
+    var dateType: DATE_TYPE? = null
 
     enum class FIELD_TYPE(val type: String) {
         STRING("string"),
@@ -29,6 +30,26 @@ class EkycFormInfo {
                     item
                 } else {
                     Log.e("FIELD_TYPE", "can not find any FIELD_TYPE for name: $value")
+                    null
+                }
+            }
+        }
+    }
+
+    enum class DATE_TYPE(val type: Int?) {
+        NORMAL(0),
+        PASS(1),
+        FEATURE(2);
+
+        companion object {
+            fun valueOfName(value: Int?): DATE_TYPE? {
+                val item = values().find {
+                    it.type == value
+                }
+
+                return if (item != null) {
+                    item
+                } else {
                     null
                 }
             }
