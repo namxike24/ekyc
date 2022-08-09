@@ -59,6 +59,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     }
 
     override fun showError(msg: String?) {
+        showHeaderAlert(HEADER_ALERT_TYPE.ERROR, msg)
     }
 
     override fun showSuccess(msg: String?) {
@@ -68,7 +69,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     }
 
     override fun onBackPressed() {
-        showConfirmDialog()
+       showConfirmDialog()
     }
 
     fun showKeyboard() {
@@ -79,7 +80,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         KeyboardUtility.hideSoftKeyboard(this)
     }
 
-    fun showConfirmDialog() {
+    fun showConfirmDialog(exitConsumer: (() -> Unit)? = null) {
         val dialog = ConfirmDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_notification))
             .setContent(getAppString(R.string.fekyc_confirm_notification_content))
@@ -88,6 +89,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
             .build()
         dialog.listener = object : ConfirmDialog.IListener {
             override fun onLeftClick() {
+                exitConsumer?.invoke()
                 finish()
             }
 
@@ -124,4 +126,11 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
             .build()
         dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
     }
+
+    private fun showHeaderAlert(type: HEADER_ALERT_TYPE, content: String?) {
+        HeaderAlertDefault(this) {
+
+        }.show(content, type)
+    }
+
 }

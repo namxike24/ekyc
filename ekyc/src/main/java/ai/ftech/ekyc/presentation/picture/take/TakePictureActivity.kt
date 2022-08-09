@@ -11,6 +11,7 @@ import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.domain.event.FinishActivityEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
@@ -18,12 +19,14 @@ import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
+import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.graphics.Bitmap
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.Tasks
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
@@ -33,6 +36,8 @@ import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
@@ -157,7 +162,17 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
         }
 
+        lifecycleScope.launchWhenResumed {
+            val flow = ShareFlowEventBus.events.filter {
+                it is FinishActivityEvent
+            }
 
+            flow.collectLatest {
+                if (it is FinishActivityEvent) {
+                    finish()
+                }
+            }
+        }
     }
 
     override fun onObserverViewModel() {

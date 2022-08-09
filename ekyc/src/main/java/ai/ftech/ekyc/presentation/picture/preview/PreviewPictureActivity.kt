@@ -6,14 +6,19 @@ import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.imageloader.ImageLoaderFactory
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
+import ai.ftech.ekyc.domain.event.FinishActivityEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
+import ai.ftech.ekyc.utils.ShareFlowEventBus
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_activity) {
     companion object {
@@ -42,10 +47,6 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
         warningDialog = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onPrepareInitView() {
         super.onPrepareInitView()
         viewModel.imagePreviewPath = intent.getStringExtra(SEND_PREVIEW_IMAGE_KEY)
@@ -64,15 +65,28 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
-                onBackPressed()
+                showConfirmDialog {
+                    lifecycleScope.launch {
+                        val event = FinishActivityEvent()
+                        ShareFlowEventBus.emitEvent(event)
+                    }
+                }
             }
 
             override fun onRightIconClick() {
-                warningDialog?.showDialog(supportFragmentManager, warningDialog!!::class.java.simpleName)
+                warningDialog?.showDialog(
+                    supportFragmentManager,
+                    warningDialog!!::class.java.simpleName
+                )
             }
         })
 
-        imageLoader.loadImage(activity = this, url = viewModel.imagePreviewPath, view = ivImageSrc, ignoreCache = true)
+        imageLoader.loadImage(
+            activity = this,
+            url = viewModel.imagePreviewPath,
+            view = ivImageSrc,
+            ignoreCache = true
+        )
 
         btnTakeAgain.setOnSafeClick {
             finish()
@@ -96,4 +110,5 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
             PHOTO_INFORMATION.PAGE_NUMBER_2 -> getAppString(R.string.fekyc_take_picture_take_passport)
         }
     }
+
 }

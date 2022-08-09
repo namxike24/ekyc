@@ -31,7 +31,6 @@
         android:layout_marginEnd="@dimen/fbase_dimen_20"
         android:background="@null"
         android:singleLine="true"
-        android:cursorVisible="false"
         android:gravity="center_vertical"
         android:textColor="@color/fekyc_color_black"
         app:layout_constraintBottom_toBottomOf="parent"

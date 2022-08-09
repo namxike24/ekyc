@@ -112,6 +112,7 @@
     <string name="empty_license_key">License Key chưa được nhập</string>
     <string name="empty_app_id">App ID chưa được nhập</string>
     <string name="empty_transaction_id">Transaction ID chưa được nhập</string>
+    <string name="empty_field_value">Trường thông tin không được bỏ trống</string>
     <!--endregion-->
 
 </resources>
