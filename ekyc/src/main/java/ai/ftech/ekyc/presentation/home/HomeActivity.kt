@@ -1,6 +1,7 @@
 package ai.ftech.ekyc.presentation.home
 
 import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.BuildConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
@@ -11,8 +12,10 @@ import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import ai.ftech.ekyc.publish.FTechEkycInfo
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +35,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private lateinit var llSSN: LinearLayout
     private lateinit var llDriverLicense: LinearLayout
     private lateinit var llPassport: LinearLayout
+    private lateinit var tvSdkVersion: AppCompatTextView
     private val adapter = StepIdentityAdapter()
 
     /**
@@ -57,6 +61,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         openAppSettingResult.register(this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onInitView() {
         super.onInitView()
         tbvHeader = findViewById(R.id.tbvHomeHeader)
@@ -64,8 +69,9 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         llSSN = findViewById(R.id.llHomeSSN)
         llDriverLicense = findViewById(R.id.llHomeDriverLicense)
         llPassport = findViewById(R.id.llHomePassport)
+        tvSdkVersion = findViewById(R.id.tvHomeSdkVersion)
 
-
+        tvSdkVersion.text = "v${BuildConfig.sdkVersion}"
         rvListStep.layoutManager = LinearLayoutManager(this)
         rvListStep.adapter = adapter
 

@@ -7,12 +7,13 @@
     android:gravity="center_horizontal"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/fbase_dimen_24"
-    android:paddingVertical="@dimen/fbase_dimen_16">
+    android:paddingTop="@dimen/fbase_dimen_32"
+    android:paddingBottom="@dimen/fbase_dimen_16">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHeaderAlert"
-        android:layout_marginTop="@dimen/fbase_dimen_16"
         style="@style/FBaseStyleText14Medium"
+        android:layout_marginTop="@dimen/fbase_dimen_24"
         android:gravity="center"
         tools:text="Message" />
 </androidx.appcompat.widget.LinearLayoutCompat>

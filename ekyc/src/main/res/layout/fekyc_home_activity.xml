@@ -153,4 +153,14 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHomeSdkVersion"
+        style="@style/FBaseStyleText12Medium"
+        android:text="v1.0.0"
+        android:textColor="@color/fekyc_color_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/fbase_dimen_8"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
