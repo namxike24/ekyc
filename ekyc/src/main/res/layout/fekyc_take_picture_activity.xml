@@ -4,16 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#424242">
+    android:background="@color/fbase_color_black"
+    >
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cvTakePictureCameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.7"
         app:cameraAudio="off"
         app:cameraFlash="off"
         app:cameraSnapshotMaxHeight="1920"
-        app:cameraSnapshotMaxWidth="1920" />
+        app:cameraSnapshotMaxWidth="1920"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ai.ftech.ekyc.common.widget.overlay.OverlayView
         android:id="@+id/ovTakePictureFrameCrop"

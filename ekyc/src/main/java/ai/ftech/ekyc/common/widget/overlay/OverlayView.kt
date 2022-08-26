@@ -25,6 +25,7 @@ class OverlayView @JvmOverloads constructor(
         private const val SSN_CORNER = 60f
         private const val CROP_RECTANGLE_TYPE = 0
         private const val CROP_CIRCLE_TYPE = 1
+        private const val LAYOUT_HEIGHT_PERCENT_RATIO = 0.6
     }
 
     var listener: ICallback? = null
@@ -96,7 +97,7 @@ class OverlayView @JvmOverloads constructor(
                 val ratio = it.height.toDouble() / width
 
                 val x = ((rectFrame.top) * ratio).toInt()
-                val y = ((rectFrame.left) * ratio).toInt()
+                val y = ((rectFrame.left) * ratio * LAYOUT_HEIGHT_PERCENT_RATIO).toInt()
 
                 val w = (rectFrame.height() * ratio).toInt()
                 val h = (rectFrame.width() * ratio).toInt()
@@ -130,7 +131,7 @@ class OverlayView @JvmOverloads constructor(
                 val ratio = it.width.toDouble() / width
 
                 val x = ((rectFrame.left) * ratio).toInt()
-                val y = ((rectFrame.top) * ratio).toInt()
+                val y = ((rectFrame.top) * ratio * LAYOUT_HEIGHT_PERCENT_RATIO).toInt()
 
                 val w = (rectFrame.width() * ratio).toInt()
                 val h = (rectFrame.height() * ratio).toInt()
