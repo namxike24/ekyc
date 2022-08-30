@@ -97,6 +97,7 @@ class FormInfoAdapter : BaseAdapter() {
 
         private fun checkStateFormHasEditable(data: FormInfoDisplay) {
             if (data.isEditable()) {
+                edtValue.hint = data.getPlaceHolder()
                 ivIcon.show()
                 when (data.getFieldType()) {
                     EkycFormInfo.FIELD_TYPE.STRING -> {
@@ -156,6 +157,8 @@ class FormInfoAdapter : BaseAdapter() {
         fun getCorner() = getAppDimension(R.dimen.fbase_corner_10)
 
         fun isEditable() = data.isEditable
+
+        fun getPlaceHolder() = data.placeholder
     }
 
     interface IListener {

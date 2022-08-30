@@ -24,6 +24,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import java.util.*
 
 class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     /**
@@ -167,10 +168,17 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setCurrentCalendar(
-                TimeUtils.getCalendarFromDateString(
-                    ekycInfo.fieldValue ?: "",
-                    TimeUtils.ISO_SHORT_DATE_FOMAT
-                )
+               try{
+                   TimeUtils.getCalendarFromDateString(
+                       ekycInfo.fieldValue ?: TimeUtils.dateToDateString(Calendar.getInstance(), TimeUtils.ISO_SHORT_DATE_FOMAT),
+                       TimeUtils.ISO_SHORT_DATE_FOMAT
+                   )
+               } catch(e: Exception) {
+                   TimeUtils.getCalendarFromDateString(
+                       ekycInfo.fieldValue ?: TimeUtils.dateToDateString(Calendar.getInstance(), TimeUtils.ISO_SHORT_DATE_FOMAT),
+                       TimeUtils.ISO_YEAR_FOMAT
+                   )
+               }
             )
             .setDateType(ekycInfo.dateType)
             .setDatePickerListener {

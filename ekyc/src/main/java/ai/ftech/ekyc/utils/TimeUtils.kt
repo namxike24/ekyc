@@ -11,6 +11,7 @@ object TimeUtils {
     const val ISO_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
     const val ISO_SHORT_DATE_TIME_FORMAT = "yyyy/MM/dd, HH:mm"
     const val ISO_SHORT_DATE_FOMAT = "dd/MM/yyyy"
+    const val ISO_YEAR_FOMAT = "yyyy"
     const val MONTH_YEAR_FORMAT = "MM/YY"
     private const val ISO_DATE_ONLY_FORMAT = "yyyy-MM-dd"
     private const val DASHBOARD_TIME_ZONE = "GMT+7"
@@ -433,7 +434,7 @@ object TimeUtils {
         return false
     }
 
-    fun getCalendarFromDateString(dateString: String, dateFormatStr: String = ISO_DATE_TIME_FORMAT): Calendar{
+    fun getCalendarFromDateString(dateString: String?, dateFormatStr: String = ISO_DATE_TIME_FORMAT): Calendar {
         val formatter = SimpleDateFormat(dateFormatStr, Locale.getDefault())
         val date = formatter.parse(dateString)
         val cal = Calendar.getInstance()

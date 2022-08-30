@@ -9,6 +9,7 @@ class EkycFormInfo {
     var fieldValue: String? = null
     var type: String? = null
     var isEditable: Boolean = false
+    var placeholder: String? = null
     var fieldType: FIELD_TYPE? = null
     var dateType: DATE_TYPE? = null
 

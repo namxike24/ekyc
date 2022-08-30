@@ -16,6 +16,10 @@ class EkycFormData {
     @Expose
     var fieldValue: String? = null
 
+    @SerializedName("placeholder")
+    @Expose
+    var placeholder: String? = null
+
     @SerializedName("cardAttributeId")
     @Expose
     var cardAttributeId: Int? = null
