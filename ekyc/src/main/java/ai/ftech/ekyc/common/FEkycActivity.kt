@@ -4,12 +4,23 @@ import ai.ftech.base.common.BaseActivity
 import ai.ftech.base.common.StatusBar
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.activityresultlancher.OpenAppSettingResult
+import ai.ftech.ekyc.domain.event.EkycEvent
+import ai.ftech.ekyc.domain.event.ExpireEvent
+import ai.ftech.ekyc.domain.event.FinishActEvent
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
 import ai.ftech.ekyc.presentation.dialog.LoadingDialog
 import ai.ftech.ekyc.presentation.dialog.NotiNetworkDialog
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
+import ai.ftech.ekyc.presentation.home.HomeActivity
+import ai.ftech.ekyc.publish.FTechEkycInfo
 import ai.ftech.ekyc.utils.KeyboardUtility
+import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.content.Context
+import android.content.Intent
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
 abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycContext {
 
@@ -35,6 +46,27 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         super.onInitView()
         //hide keyboard edittext when touch outside
         KeyboardUtility.hideSoftKeyboard(this, window.decorView.rootView)
+        lifecycleScope.launchWhenStarted {
+            val flow = ShareFlowEventBus.events.filter {
+                it is ExpireEvent
+            }
+
+            flow.collectLatest {
+                when (it) {
+                    is ExpireEvent -> {
+                        showExpireDialog {
+                            lifecycleScope.launch {
+                                ShareFlowEventBus.emitEvent(FinishActEvent())
+                            }
+                            val intent = Intent()
+                            intent.putExtra(HomeActivity.SEND_RESULT_FTECH_EKYC_INFO, "")
+                            setResult(RESULT_CANCELED, intent)
+                            finish()
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -50,7 +82,10 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     override fun showLoading(message: String) {
         if (loadingDialog != null) {
             loadingDialog?.message = message
-            loadingDialog?.showDialog(supportFragmentManager, loadingDialog!!::class.java.simpleName)
+            loadingDialog?.showDialog(
+                supportFragmentManager,
+                loadingDialog!!::class.java.simpleName
+            )
         }
     }
 
@@ -69,7 +104,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
     }
 
     override fun onBackPressed() {
-       showConfirmDialog()
+        showConfirmDialog()
     }
 
     fun showKeyboard() {
@@ -124,6 +159,20 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
             .setTitle(getAppString(R.string.fekyc_notification))
             .setContent(getAppString(R.string.fekyc_ekyc_noti_network))
             .build()
+        dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
+    }
+
+    fun showExpireDialog(exitConsumer: (() -> Unit)? = null) {
+        val dialog = ConfirmDialog.Builder()
+            .setTitle(getAppString(R.string.fekyc_notification))
+            .setContent(getAppString(R.string.fekyc_session_expire))
+            .setRightTitle(getAppString(R.string.fekyc_confirm_exit))
+            .build()
+        dialog.listener = object : ConfirmDialog.IListener {
+            override fun onRightClick() {
+                exitConsumer?.invoke()
+            }
+        }
         dialog.showDialog(supportFragmentManager, dialog::class.java.simpleName)
     }
 

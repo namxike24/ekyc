@@ -2,7 +2,9 @@ package ai.ftech.ekyc.common
 
 import ai.ftech.ekyc.common.message.HandleApiException
 import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.domain.event.ExpireEvent
 import ai.ftech.ekyc.publish.FTechEkycManager
+import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -22,6 +24,11 @@ fun <T> Flow<T>.onException(onCatch: suspend (Throwable) -> Unit): Flow<T> {
             val msg = HandleApiException.getAPIMessage(FTechEkycManager.getApplicationContext(), e)
             val apiException = APIException(e.code, msg)
             onCatch(apiException)
+
+            if (e.code == APIException.EXPIRE_SESSION_ERROR) {
+                ShareFlowEventBus.emitEvent(ExpireEvent())
+            }
+
         } else {
             onCatch(e)
         }

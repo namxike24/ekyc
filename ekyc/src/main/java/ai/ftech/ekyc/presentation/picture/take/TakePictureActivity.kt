@@ -11,6 +11,7 @@ import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.APIException
+import ai.ftech.ekyc.domain.event.ExpireEvent
 import ai.ftech.ekyc.domain.event.FinishActivityEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
@@ -38,6 +39,7 @@ import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
@@ -98,7 +100,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
 
             override fun onRightIconClick() {
-                warningDialog?.showDialog(supportFragmentManager, warningDialog!!::class.java.simpleName)
+                warningDialog?.showDialog(
+                    supportFragmentManager,
+                    warningDialog!!::class.java.simpleName
+                )
             }
         })
 
@@ -158,7 +163,8 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
             override fun onError(exception: Exception) {
                 hideLoading()
-                Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TakePictureActivity, exception.message, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -205,6 +211,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         when (exp.code) {
             APIException.TIME_OUT_ERROR,
             APIException.NETWORK_ERROR -> showNotiNetworkDialog()
+            APIException.EXPIRE_SESSION_ERROR -> {}
             else -> navigateToPreviewScreen(viewModel.filePath ?: "", exp.message)
         }
     }
@@ -263,7 +270,13 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         cvCameraView.addFrameProcessor {
             try {
-                val inputImage = InputImage.fromByteArray(it.getData(), it.size.width, it.size.height, it.rotationToView, it.format)
+                val inputImage = InputImage.fromByteArray(
+                    it.getData(),
+                    it.size.width,
+                    it.size.height,
+                    it.rotationToView,
+                    it.format
+                )
                 Tasks.await(detector.process(inputImage)
                     .addOnSuccessListener { faces ->
                         if (faces.size == 1) {

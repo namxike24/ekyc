@@ -14,7 +14,7 @@
     <string name="fekyc_unknown_error">Đã có lỗi xảy ra</string>
     <string name="fekyc_no_network">Vui lòng kiểm tra lại kết nối và thử lại</string>
     <string name="fekyc_sever_time_out">Server không phản hồi</string>
-    <string name="fekyc_session_expire">Phiên làm việc hết hạn</string>
+    <string name="fekyc_session_expire">Phiên làm việc hết hạn.</string>
 
 
 

@@ -8,7 +8,7 @@ class APIException : Exception {
         const val SERVER_ERROR_CODE_UNDEFINE = -2004
         const val RESPONSE_BODY_ERROR = -2005
         const val CREATE_INSTANCE_SERVICE_ERROR = -2006
-        const val EXPIRE_SESSION_ERROR = -2007
+        const val EXPIRE_SESSION_ERROR = 401
 
         // server error code
 

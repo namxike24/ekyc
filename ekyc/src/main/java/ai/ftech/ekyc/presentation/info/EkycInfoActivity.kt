@@ -126,17 +126,16 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                 FEkycActionResult.RESULT_STATUS.ERROR -> {
                     hideLoading()
                     lifecycleScope.launchWhenStarted {
-
                         val apiException = it.exception as APIException
-
-                        val event = EkycEvent().apply {
-                            this.code = apiException.code
-                            this.message = apiException.message.toString()
+                        if (apiException.code != APIException.EXPIRE_SESSION_ERROR) {
+                            val event = EkycEvent().apply {
+                                this.code = apiException.code
+                                this.message = apiException.message.toString()
+                            }
+                            ShareFlowEventBus.emitEvent(event)
+                            finish()
                         }
-
-                        ShareFlowEventBus.emitEvent(event)
                     }
-                    finish()
                 }
 
                 else -> {
@@ -165,20 +164,27 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showDatePickerDialog(ekycInfo: EkycFormInfo) {
+        ekycInfo.fieldValue = "2000"
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setCurrentCalendar(
-               try{
-                   TimeUtils.getCalendarFromDateString(
-                       ekycInfo.fieldValue ?: TimeUtils.dateToDateString(Calendar.getInstance(), TimeUtils.ISO_SHORT_DATE_FOMAT),
-                       TimeUtils.ISO_SHORT_DATE_FOMAT
-                   )
-               } catch(e: Exception) {
-                   TimeUtils.getCalendarFromDateString(
-                       ekycInfo.fieldValue ?: TimeUtils.dateToDateString(Calendar.getInstance(), TimeUtils.ISO_SHORT_DATE_FOMAT),
-                       TimeUtils.ISO_YEAR_FOMAT
-                   )
-               }
+                try {
+                    TimeUtils.getCalendarFromDateString(
+                        ekycInfo.fieldValue ?: TimeUtils.dateToDateString(
+                            Calendar.getInstance(),
+                            TimeUtils.ISO_SHORT_DATE_FOMAT
+                        ),
+                        TimeUtils.ISO_SHORT_DATE_FOMAT
+                    )
+                } catch (e: Exception) {
+                    TimeUtils.getCalendarFromDateString(
+                        ekycInfo.fieldValue ?: TimeUtils.dateToDateString(
+                            Calendar.getInstance(),
+                            TimeUtils.ISO_SHORT_DATE_FOMAT
+                        ),
+                        TimeUtils.ISO_YEAR_FOMAT
+                    )
+                }
             )
             .setDateType(ekycInfo.dateType)
             .setDatePickerListener {

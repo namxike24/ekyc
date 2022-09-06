@@ -2,6 +2,7 @@ package ai.ftech.ekyc.presentation.dialog
 
 import ai.ftech.base.common.BaseDialog
 import ai.ftech.base.common.DialogScreen
+import ai.ftech.base.extension.gone
 import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import android.widget.Button
@@ -32,6 +33,17 @@ class ConfirmDialog : BaseDialog(R.layout.fekyc_confirm_dialog) {
         btnRight.setOnSafeClick {
             listener?.onRightClick()
         }
+
+        btnRight.text = builder?.rightTitle
+        btnLeft.text = builder?.leftTitle
+
+        if (builder?.leftTitle.isNullOrEmpty()) {
+            btnLeft.gone()
+        }
+
+        if (builder?.rightTitle.isNullOrEmpty()) {
+            btnRight.gone()
+        }
     }
 
     override fun getBackgroundId() = R.id.frameConfirmDlgRoot
@@ -60,25 +72,25 @@ class ConfirmDialog : BaseDialog(R.layout.fekyc_confirm_dialog) {
             return dialog
         }
 
-        fun setTitle(title:String) = apply {
+        fun setTitle(title: String) = apply {
             this.title = title
         }
 
-        fun setContent(content:String) = apply {
+        fun setContent(content: String) = apply {
             this.content = content
         }
 
-        fun setLeftTitle(leftTitle:String) = apply {
+        fun setLeftTitle(leftTitle: String) = apply {
             this.leftTitle = leftTitle
         }
 
-        fun setRightTitle(rightTitle:String) = apply {
+        fun setRightTitle(rightTitle: String) = apply {
             this.rightTitle = rightTitle
         }
     }
 
     interface IListener {
-        fun onLeftClick()
-        fun onRightClick()
+        fun onLeftClick() {}
+        fun onRightClick() {}
     }
 }
