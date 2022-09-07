@@ -8,31 +8,31 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-        android:requestLegacyExternalStorage="true">
+    <application android:requestLegacyExternalStorage="true">
         <activity
-            android:theme="@style/FBaseTheme"
             android:name=".presentation.home.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FBaseTheme" />
 
         <activity
-            android:theme="@style/FBaseTheme"
             android:name="ai.ftech.ekyc.presentation.picture.take.TakePictureActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FBaseTheme" />
 
         <activity
-            android:theme="@style/FBaseTheme"
             android:name="ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FBaseTheme" />
 
         <activity
-            android:theme="@style/FBaseTheme"
             android:name=".presentation.picture.confirm.ConfirmPictureActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FBaseTheme" />
 
         <activity
-            android:theme="@style/FBaseTheme"
             android:name=".presentation.info.EkycInfoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FBaseTheme"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 </manifest>

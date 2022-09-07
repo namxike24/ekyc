@@ -17,6 +17,10 @@ import ai.ftech.ekyc.utils.KeyboardUtility
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
@@ -38,7 +42,7 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        setFullScreen()
+//        setFullScreen()
         loadingDialog = LoadingDialog()
     }
 
@@ -67,11 +71,12 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
                 }
             }
         }
+
     }
 
 
     override fun setupStatusBar(): StatusBar {
-        return StatusBar(isDarkText = false)
+        return StatusBar(color = R.color.fekyc_color_dark_blue, isDarkText = false)
     }
 
 

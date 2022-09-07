@@ -96,8 +96,8 @@ class OverlayView @JvmOverloads constructor(
 
                 val ratio = it.height.toDouble() / width
 
-                val x = ((rectFrame.top) * ratio).toInt()
-                val y = ((rectFrame.left) * ratio * LAYOUT_HEIGHT_PERCENT_RATIO).toInt()
+                val x = ((rectFrame.top) * ratio * LAYOUT_HEIGHT_PERCENT_RATIO).toInt()
+                val y = ((rectFrame.left) * ratio).toInt()
 
                 val w = (rectFrame.height() * ratio).toInt()
                 val h = (rectFrame.width() * ratio).toInt()

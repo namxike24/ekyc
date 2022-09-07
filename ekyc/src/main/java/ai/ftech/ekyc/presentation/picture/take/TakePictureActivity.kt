@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.take
 
+import ai.ftech.base.common.StatusBar
 import ai.ftech.base.extension.hide
 import ai.ftech.base.extension.observer
 import ai.ftech.base.extension.setOnSafeClick
@@ -61,6 +62,10 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
     private var isFrontFace = false
     private var isFlash = false
     private var file: File? = null
+
+    override fun setupStatusBar(): StatusBar {
+        return StatusBar(color = R.color.fbase_color_black, isDarkText = false)
+    }
 
     override fun onResume() {
         super.onResume()

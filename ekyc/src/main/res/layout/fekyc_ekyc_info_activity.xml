@@ -10,7 +10,7 @@
     <ai.ftech.ekyc.common.widget.toolbar.ToolbarView
         android:id="@+id/tbvEkycInfoHeader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fbase_dimen_88"
+        android:layout_height="@dimen/fbase_dimen_56"
         android:background="@drawable/fekyc_bg_header"
         app:layout_constraintTop_toTopOf="parent"
         app:tbv_left_icon_src="@drawable/fekyc_ic_close"

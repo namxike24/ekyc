@@ -23,18 +23,18 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvToolbarCenterTitle"
-            style="@style/FBaseStyleRegular"
+            style="@style/FBaseStyleText16Medium"
             android:layout_width="wrap_content"
             android:layout_centerInParent="true"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLength="25"
+            android:maxLength="30"
             android:maxLines="1"
             tools:text="Chọn loại giấy tờ Chọn loại giấy tờ Chọn loại giấy tờ" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvToolbarRightText"
-            style="@style/FBaseStyleRegular"
+            style="@style/FBaseStyleText16Regular"
             android:layout_width="@dimen/fbase_dimen_60"
             android:layout_height="@dimen/fbase_dimen_36"
             android:layout_alignParentEnd="true"

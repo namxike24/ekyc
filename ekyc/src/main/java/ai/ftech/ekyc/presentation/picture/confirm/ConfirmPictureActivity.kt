@@ -31,7 +31,6 @@ class ConfirmPictureActivity : FEkycActivity(R.layout.fekyc_confirm_picture_acti
         rvPhoto.adapter = adapter
         viewModel.getConfirmPhotoList()
 
-
         tbvHeader.setListener(object : ToolbarView.IListener {
             override fun onLeftIconClick() {
                 onBackPressed()

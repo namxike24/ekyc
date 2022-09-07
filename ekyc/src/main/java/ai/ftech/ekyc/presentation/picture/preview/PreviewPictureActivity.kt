@@ -1,5 +1,6 @@
 package ai.ftech.ekyc.presentation.picture.preview
 
+import ai.ftech.base.common.StatusBar
 import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
@@ -33,6 +34,10 @@ class PreviewPictureActivity : FEkycActivity(R.layout.fekyc_preview_picture_acti
 
     private val viewModel by viewModels<PreviewPictureViewModel>()
     private val imageLoader = ImageLoaderFactory.glide()
+
+    override fun setupStatusBar(): StatusBar {
+        return StatusBar(color = R.color.fbase_color_black, isDarkText = false)
+    }
 
     override fun onResume() {
         super.onResume()
