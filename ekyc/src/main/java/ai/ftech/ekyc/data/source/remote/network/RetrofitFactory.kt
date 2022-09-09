@@ -14,9 +14,7 @@ object RetrofitFactory {
 
     fun <T> createFEkycService(service: Class<T>): T {
         synchronized(RetrofitBuilderInfo::class.java) {
-            var builderInfo = builderMap[FEKYC]
-            if (builderInfo == null) {
-                builderInfo = RetrofitBuilderInfo().apply {
+            val builderInfo = RetrofitBuilderInfo().apply {
                     this.ftechKey = FTechEkycManager.ftechKey
                     this.appID = FTechEkycManager.appId
                     this.transactionId = FTechEkycManager.transactionId
@@ -32,7 +30,6 @@ object RetrofitFactory {
 
                 builderMap[FEKYC] = builderInfo
                 Log.d(TAG, "Create new domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
-            }
             Log.e(TAG, "Reuse domain retrofit builder for ${ApiConfig.BASE_URL_FEKYC}")
             val serviceApi = builderInfo.builder?.build()?.create(service)
 
