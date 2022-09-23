@@ -6,24 +6,21 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.event.EkycEvent
-import ai.ftech.ekyc.domain.event.ExpireEvent
 import ai.ftech.ekyc.domain.event.FinishActEvent
-import ai.ftech.ekyc.domain.event.FinishActivityEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.presentation.picture.take.TakePictureActivity
 import ai.ftech.ekyc.publish.FTechEkycInfo
+import ai.ftech.ekyc.publish.FTechEkycManager
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 
@@ -112,6 +109,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
                         val info = FTechEkycInfo().apply {
                             this.code = it.code
                             this.message = it.message
+                            this.sessionId = FTechEkycManager.transactionId
                         }
                         val intent = Intent()
                         intent.putExtra(SEND_RESULT_FTECH_EKYC_INFO, info)

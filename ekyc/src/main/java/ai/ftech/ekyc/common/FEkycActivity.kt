@@ -4,7 +4,6 @@ import ai.ftech.base.common.BaseActivity
 import ai.ftech.base.common.StatusBar
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.activityresultlancher.OpenAppSettingResult
-import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.event.ExpireEvent
 import ai.ftech.ekyc.domain.event.FinishActEvent
 import ai.ftech.ekyc.presentation.dialog.ConfirmDialog
@@ -12,15 +11,10 @@ import ai.ftech.ekyc.presentation.dialog.LoadingDialog
 import ai.ftech.ekyc.presentation.dialog.NotiNetworkDialog
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.home.HomeActivity
-import ai.ftech.ekyc.publish.FTechEkycInfo
 import ai.ftech.ekyc.utils.KeyboardUtility
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter

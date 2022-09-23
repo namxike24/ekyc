@@ -39,6 +39,8 @@ android {
     }
 }
 
+apply from: "$rootDir/gradle-mvn-push.gradle"
+
 dependencies {
     //region kotlin
     implementation rootProject.ext.kotlinDependencies.kotlin
