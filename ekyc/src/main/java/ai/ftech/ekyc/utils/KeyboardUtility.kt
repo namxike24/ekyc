@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentActivity
 
 class KeyboardUtility {
     companion object {
-        fun showKeyBoard(context: Context) {
+        fun showKeyBoard(context: Context, editText: EditText) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            imm.showSoftInput(editText, 0)
         }
 
         fun dontShowKeyboard(activity: Activity) {

@@ -18,11 +18,12 @@ class PreviewPhotoAdapter : PagerAdapter() {
             notifyDataSetChanged()
         }
 
-    override fun getCount() = dataList?.size ?: 0
+    override fun getCount() = 299
 
     override fun isViewFromObject(view: View, data: Any): Boolean {
         return view === data
     }
+
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val ivPhoto = ImageView(container.context)
@@ -33,7 +34,13 @@ class PreviewPhotoAdapter : PagerAdapter() {
 
         container.addView(ivPhoto)
 
-        imageLoader.loadImage(container, dataList?.get(position)?.url!!, ivPhoto, null, true)
+        imageLoader.loadImage(
+            container,
+            dataList?.get(position % 3)?.url!!,
+            ivPhoto,
+            null,
+            true
+        )
 
         return ivPhoto
     }

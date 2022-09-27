@@ -30,12 +30,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/vpConfirmPicture" />
 
-    <androidx.viewpager.widget.ViewPager
+    <com.asksira.loopingviewpager.LoopingViewPager
         android:id="@+id/vpConfirmPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/fbase_dimen_8"
         android:layout_marginVertical="@dimen/fbase_dimen_50"
+        app:autoScroll="false"
+        app:isInfinite="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ivConfirmPictureNext"
         app:layout_constraintStart_toEndOf="@id/ivConfirmPictureBack"

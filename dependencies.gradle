@@ -152,4 +152,12 @@ ext {
     mlKitDependencies = [
             "mlKit": "com.google.mlkit:face-detection:$mlKitVersion"
     ]
+
+    /**
+     * looperViewPager
+     */
+    def loopViewPagerVersion = "1.4.1"
+    loopViewPagerDependencies = [
+            "loopViewPager": "com.asksira.android:loopingviewpager:$loopViewPagerVersion"
+    ]
 }

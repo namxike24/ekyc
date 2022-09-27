@@ -9,10 +9,12 @@ import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppDimension
 import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
+import ai.ftech.ekyc.utils.KeyboardUtility
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -77,7 +79,7 @@ class FormInfoAdapter : BaseAdapter() {
 
             ivIcon.setOnSafeClick {
                 val item = getDataAtPosition(adapterPosition).data
-                listener?.onClickItem(item)
+                listener?.onClickItem(item, edtValue)
             }
         }
 
@@ -162,6 +164,6 @@ class FormInfoAdapter : BaseAdapter() {
     }
 
     interface IListener {
-        fun onClickItem(item: EkycFormInfo)
+        fun onClickItem(item: EkycFormInfo, edt: EditText)
     }
 }

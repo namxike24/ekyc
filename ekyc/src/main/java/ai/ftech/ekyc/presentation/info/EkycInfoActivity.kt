@@ -13,10 +13,12 @@ import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.event.EkycEvent
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
+import ai.ftech.ekyc.utils.KeyboardUtility
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import ai.ftech.ekyc.utils.TimeUtils
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -43,9 +45,9 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
     private val adapter = FormInfoAdapter().apply {
         listener = object : FormInfoAdapter.IListener {
-            override fun onClickItem(item: EkycFormInfo) {
+            override fun onClickItem(item: EkycFormInfo, editText: EditText) {
                 if (item.fieldType !== null) {
-                    showBottomSheetDialog(item)
+                    showBottomSheetDialog(item, editText)
                 }
             }
         }
@@ -145,7 +147,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         }
     }
 
-    private fun showBottomSheetDialog(ekycInfo: EkycFormInfo) {
+    private fun showBottomSheetDialog(ekycInfo: EkycFormInfo, editText: EditText) {
         when (ekycInfo.fieldType) {
             EkycFormInfo.FIELD_TYPE.DATE -> {
                 showDatePickerDialog(ekycInfo)
@@ -158,6 +160,11 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             }
             EkycFormInfo.FIELD_TYPE.GENDER -> {
                 showGenderDialog(ekycInfo)
+            }
+            EkycFormInfo.FIELD_TYPE.STRING, EkycFormInfo.FIELD_TYPE.NUMBER -> {
+                editText.requestFocus()
+                editText.setSelection(editText.text.length)
+                KeyboardUtility.showKeyBoard(this, editText)
             }
             else -> {}
         }

@@ -17,6 +17,8 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
     private lateinit var ivBack: ImageView
     private lateinit var ivNext: ImageView
 
+    override fun isHandleBackPressByFragment(): Boolean = true
+
     private val activityViewModel by activityViewModels<ConfirmPictureViewModel>()
     private val adapter = PreviewPhotoAdapter()
 
@@ -39,7 +41,7 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
         })
 
         vpPhoto.apply {
-            offscreenPageLimit = this@ConfirmPictureFragment.adapter.count
+            offscreenPageLimit = 100
             post {
                 currentItem = activityViewModel.getSelectedIndex()
             }
@@ -54,7 +56,7 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
                 }
 
                 override fun onPageSelected(position: Int) {
-                    activityViewModel.setSelectedIndex(position)
+                    activityViewModel.setSelectedIndex(position % 3)
                     setTitle()
                 }
 
@@ -98,5 +100,9 @@ class ConfirmPictureFragment : FEkycFragment(R.layout.fekyc_confirm_picture_frag
                 else -> ""
             }
         )
+    }
+
+    override fun onBackPressedFragment(tag: String?) {
+        backFragment()
     }
 }

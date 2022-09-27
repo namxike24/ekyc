@@ -15,6 +15,7 @@ import ai.ftech.ekyc.utils.KeyboardUtility
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.content.Context
 import android.content.Intent
+import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
@@ -106,8 +107,8 @@ abstract class FEkycActivity(layoutId: Int) : BaseActivity(layoutId), IFEkycCont
         showConfirmDialog()
     }
 
-    fun showKeyboard() {
-        KeyboardUtility.showKeyBoard(this)
+    fun showKeyboard(editText: EditText) {
+        KeyboardUtility.showKeyBoard(this, editText)
     }
 
     fun hideKeyboard() {

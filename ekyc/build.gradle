@@ -94,4 +94,6 @@ dependencies {
 
     //ml kit
     implementation rootProject.ext.mlKitDependencies.mlKit
+
+    implementation rootProject.ext.loopViewPagerDependencies.loopViewPager
 }

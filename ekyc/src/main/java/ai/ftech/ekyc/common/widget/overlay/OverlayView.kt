@@ -126,7 +126,7 @@ class OverlayView @JvmOverloads constructor(
 
                 executor.execute(runnable)
             } else {
-                rotationMatrix.postRotate(0f)
+//                rotationMatrix.postRotate(0f)
 
                 val ratio = it.width.toDouble() / width
 
