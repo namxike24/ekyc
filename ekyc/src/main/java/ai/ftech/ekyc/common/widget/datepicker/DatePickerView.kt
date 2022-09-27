@@ -210,7 +210,7 @@ class DatePickerView @JvmOverloads constructor(
             value = currDay
         }
 
-        setEnabledNumberPicker(pickerYear!!, true)
+//        setEnabledNumberPicker(pickerYear!!, true)
     }
 
     private fun loadCurrentTime() {

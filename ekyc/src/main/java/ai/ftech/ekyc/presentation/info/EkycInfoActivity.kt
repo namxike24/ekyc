@@ -171,7 +171,6 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showDatePickerDialog(ekycInfo: EkycFormInfo) {
-        ekycInfo.fieldValue = "2000"
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setCurrentCalendar(

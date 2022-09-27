@@ -2,6 +2,7 @@ package ai.ftech.ekyc.common.widget.datepicker
 
 import ai.ftech.base.common.BaseDialog
 import ai.ftech.base.common.DialogScreen
+import ai.ftech.base.extension.getAppColor
 import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
@@ -30,6 +31,7 @@ class DatePickerDialog(
     }
 
     override fun onInitView() {
+        val cal = Calendar.getInstance()
         ivDatePickerDlgClose = viewRoot.findViewById(R.id.ivDatePickerDlgClose)
         tvDatePickerDlgTitle = viewRoot.findViewById(R.id.tvDatePickerDlgTitle)
         dpvDatePickerDlg = viewRoot.findViewById(R.id.dpvDatePickerDlg)
@@ -51,6 +53,28 @@ class DatePickerDialog(
                 }
                 else -> {}
             }
+            listener = object : DatePickerView.Callback {
+                override fun onDate(date: Date?) {
+                    when (dateType) {
+                        EkycFormInfo.DATE_TYPE.PASS -> {
+                            if (date?.compareTo(cal.time)!! > 0) {
+                                setEnableSaveButton(false)
+                            } else {
+                                setEnableSaveButton(true)
+                            }
+                        }
+                        EkycFormInfo.DATE_TYPE.FEATURE -> {
+                            if (date?.compareTo(cal.time)!! < 0) {
+                                setEnableSaveButton(false)
+                            } else {
+                                setEnableSaveButton(true)
+                            }
+                        }
+                        else -> {}
+                    }
+
+                }
+            }
         }
 
         ivDatePickerDlgClose.setOnSafeClick {
@@ -69,6 +93,16 @@ class DatePickerDialog(
             }
         }
     }
+
+    private fun setEnableSaveButton(isEnable: Boolean) {
+        tvDatePickerDlgSave.isEnabled = isEnable
+        tvDatePickerDlgSave.setTextColor(
+            if (isEnable) getAppColor(R.color.fekyc_color_text_blue) else getAppColor(
+                R.color.fekyc_color_text_hint
+            )
+        )
+    }
+
 
     class Builder {
         private var title: String? = null
@@ -101,3 +135,4 @@ class DatePickerDialog(
         }
     }
 }
+
