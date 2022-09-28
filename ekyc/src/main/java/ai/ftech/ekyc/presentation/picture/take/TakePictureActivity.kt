@@ -1,10 +1,8 @@
 package ai.ftech.ekyc.presentation.picture.take
 
 import ai.ftech.base.common.StatusBar
-import ai.ftech.base.extension.hide
 import ai.ftech.base.extension.observer
 import ai.ftech.base.extension.setOnSafeClick
-import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.getAppDrawable
@@ -12,7 +10,6 @@ import ai.ftech.ekyc.common.getAppString
 import ai.ftech.ekyc.common.widget.overlay.OverlayView
 import ai.ftech.ekyc.common.widget.toolbar.ToolbarView
 import ai.ftech.ekyc.domain.APIException
-import ai.ftech.ekyc.domain.event.ExpireEvent
 import ai.ftech.ekyc.domain.event.FinishActivityEvent
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.UPLOAD_STATUS
@@ -23,7 +20,6 @@ import ai.ftech.ekyc.presentation.picture.preview.PreviewPictureActivity
 import ai.ftech.ekyc.utils.FileUtils
 import ai.ftech.ekyc.utils.ShareFlowEventBus
 import android.graphics.Bitmap
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -40,7 +36,6 @@ import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.launch
 import java.io.File
 
 class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) {
@@ -116,7 +111,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
         cvCameraView.apply {
             setLifecycleOwner(this@TakePictureActivity)
-
+            useDeviceOrientation = false
             facing = if (isFrontFace) {
                 Facing.FRONT
             } else {
@@ -235,7 +230,6 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 ovFrameCrop.attachFile(file.absolutePath)
             }
         }
-
     }
 
     private fun navigateToTakePictureScreen() {
