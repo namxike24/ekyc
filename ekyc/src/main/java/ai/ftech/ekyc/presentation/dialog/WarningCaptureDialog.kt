@@ -21,7 +21,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 typealias WARNING_TYPE = WarningCaptureDialog.WarningInfo.WARNING_TYPE
 
-class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout.fekyc_warning_capture_dialog) {
+class WarningCaptureDialog(private var type: WARNING_TYPE) :
+    BaseDialog(R.layout.fekyc_warning_capture_dialog) {
     private lateinit var tvTitle: TextView
     private lateinit var rvWarningList: RecyclerView
     private lateinit var btnConfirmOK: Button
@@ -52,19 +53,29 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager? {
-        if (activity != null) {
+        activity?.let {
             return when (type) {
                 WARNING_TYPE.PAPERS -> {
                     if (activity != null) {
-                        rvWarningList.addItemDecoration(adapter.getDecorator(activity!!))
+                        rvWarningList.addItemDecoration(adapter.getDecorator(it))
                     }
-                    GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.HORIZONTAL, false)
+                    GridLayoutManager(
+                        activity,
+                        adapter.itemCount,
+                        GridLayoutManager.HORIZONTAL,
+                        false
+                    )
                 }
                 WARNING_TYPE.PORTRAIT -> {
                     if (activity != null) {
-                        rvWarningList.removeItemDecoration(adapter.getDecorator(activity!!))
+                        rvWarningList.removeItemDecoration(adapter.getDecorator(it))
                     }
-                    GridLayoutManager(activity, adapter.itemCount, GridLayoutManager.VERTICAL, false)
+                    GridLayoutManager(
+                        activity,
+                        adapter.itemCount,
+                        GridLayoutManager.VERTICAL,
+                        false
+                    )
                 }
             }
         }
@@ -80,7 +91,8 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
         }
     }
 
-    private class WarningAdapter(private var type: WarningInfo.WARNING_TYPE) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private class WarningAdapter(private var type: WarningInfo.WARNING_TYPE) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         companion object {
             const val INVALID_RESOURCE = -1
             const val PAPERS_VIEW_TYPE = 0
@@ -224,11 +236,17 @@ class WarningCaptureDialog(private var type: WARNING_TYPE) : BaseDialog(R.layout
             }
         }
 
-        inner class DeadlineExerciseDecorator(context: Context) : DividerDecorator(context, R.drawable.shape_divider_horizontal, isDrawOver = true) {
+        inner class DeadlineExerciseDecorator(context: Context) :
+            DividerDecorator(context, R.drawable.shape_divider_horizontal, isDrawOver = true) {
             //            private val offset = getAppDimensionPixel(ai.ftech.dev.base.R.dimen.fbase_dimen_20)
             private val offset = 0
 
-            override fun getDividerOffset(rect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            override fun getDividerOffset(
+                rect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
                 super.getDividerOffset(rect, view, parent, state)
                 val index = parent.getChildAdapterPosition(view)
 

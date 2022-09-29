@@ -19,6 +19,7 @@ import android.view.ViewTreeObserver
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -343,7 +344,7 @@ abstract class BaseActivity(@LayoutRes protected val layoutId: Int) : AppCompatA
 
     private fun checkPermission(permissions: Array<String>): Boolean {
         permissions.forEach {
-            if (checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED) {
                 return false
             }
         }
