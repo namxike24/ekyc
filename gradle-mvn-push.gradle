@@ -5,7 +5,7 @@ publishing {
         myPublish (MavenPublication) {
             groupId "ai.ftech"
             artifactId "ekyc"
-            version "1.0.2"
+            version "1.0.3"
             artifact "$buildDir/outputs/aar/ekyc-release.aar"
 
 
