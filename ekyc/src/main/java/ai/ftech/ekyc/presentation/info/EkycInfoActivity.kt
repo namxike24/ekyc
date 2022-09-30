@@ -176,18 +176,18 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
             .setCurrentCalendar(
                 try {
                     TimeUtils.getCalendarFromDateString(
-                        ekycInfo.fieldValue ?: TimeUtils.dateToDateString(
+                        if (ekycInfo.fieldValue.isNullOrEmpty()) TimeUtils.dateToDateString(
                             Calendar.getInstance(),
                             TimeUtils.ISO_SHORT_DATE_FOMAT
-                        ),
+                        ) else ekycInfo.fieldValue,
                         TimeUtils.ISO_SHORT_DATE_FOMAT
                     )
                 } catch (e: Exception) {
                     TimeUtils.getCalendarFromDateString(
-                        ekycInfo.fieldValue ?: TimeUtils.dateToDateString(
+                        if (ekycInfo.fieldValue.isNullOrEmpty()) TimeUtils.dateToDateString(
                             Calendar.getInstance(),
                             TimeUtils.ISO_SHORT_DATE_FOMAT
-                        ),
+                        ) else ekycInfo.fieldValue,
                         TimeUtils.ISO_YEAR_FOMAT
                     )
                 }
