@@ -24,7 +24,6 @@ abstract class BaseRetrofitConfig {
             .baseUrl(getUrl())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(getGson()))
-//            .addConverterFactory(NullOnEmptyConverterFactory())
             .client(provideOkHttpClient())
     }
 

@@ -5,10 +5,10 @@ import okhttp3.Request
 import okhttp3.Response
 
 class EkycRetrofitConfig(
-    val ftechKey: String,
-    val appID: String,
-    val transactionId: String,
-    val language: String,
+    private val ftechKey: String,
+    private val appID: String,
+    private val transactionId: String,
+    private val language: String,
 ) : BaseRetrofitConfig() {
     override fun getUrl() = ApiConfig.BASE_URL_FEKYC
 
@@ -17,10 +17,10 @@ class EkycRetrofitConfig(
     }
 
     class ContentTypeJson(
-        val ftechKey: String,
-        val appID: String,
-        val transactionId: String,
-        val language: String,
+        private val ftechKey: String,
+        private val appID: String,
+        private val transactionId: String,
+        private val language: String,
     ) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val requestBuilder = buildChain(chain)
