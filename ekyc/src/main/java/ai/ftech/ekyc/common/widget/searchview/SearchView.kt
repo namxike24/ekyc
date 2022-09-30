@@ -21,9 +21,9 @@ class SearchView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : LinearLayout(ctx, attrs) {
 
-    lateinit var etSearchViewItm: AppCompatEditText
-    lateinit var ivSearchViewItmClear: AppCompatImageView
-    lateinit var llSearchView: LinearLayoutCompat
+    private lateinit var etSearchViewItm: AppCompatEditText
+    private lateinit var ivSearchViewItmClear: AppCompatImageView
+    private lateinit var llSearchView: LinearLayoutCompat
 
     private var textChangeListener: ((String) -> Unit)? = null
     private var submitListener: ((String) -> Unit)? = null

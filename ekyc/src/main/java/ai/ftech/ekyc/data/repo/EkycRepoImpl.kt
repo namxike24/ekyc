@@ -5,7 +5,6 @@ import ai.ftech.ekyc.data.source.remote.base.invokeApi
 import ai.ftech.ekyc.data.source.remote.base.invokeFEkycService
 import ai.ftech.ekyc.data.source.remote.model.ekyc.SubmitInfoRequest
 import ai.ftech.ekyc.data.source.remote.service.EkycService
-import ai.ftech.ekyc.domain.APIException
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.repo.IEkycRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

@@ -1,6 +1,5 @@
 package ai.ftech.ekyc.presentation.picture.take
 
-import ai.ftech.ekyc.domain.model.ekyc.EkycInfo
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.ekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.ekyc.domain.model.ekyc.PhotoInfo

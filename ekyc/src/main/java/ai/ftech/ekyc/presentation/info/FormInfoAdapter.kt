@@ -6,10 +6,8 @@ import ai.ftech.base.extension.gone
 import ai.ftech.base.extension.setOnSafeClick
 import ai.ftech.base.extension.show
 import ai.ftech.ekyc.R
-import ai.ftech.ekyc.common.getAppDimension
 import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
-import ai.ftech.ekyc.utils.KeyboardUtility
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.text.InputType
@@ -65,8 +63,6 @@ class FormInfoAdapter : BaseAdapter() {
         private var tvTitle: AppCompatTextView
         private var edtValue: AppCompatEditText
         private var ivIcon: AppCompatImageView
-        private val FIRST_POSITION = 0
-        private val LAST_POSITION = dataList.size - 1
 
         init {
             tvTitle = view.findViewById(R.id.tvEkycInfoItmTitle)
@@ -155,8 +151,6 @@ class FormInfoAdapter : BaseAdapter() {
         fun getFieldType(): EkycFormInfo.FIELD_TYPE? {
             return data.fieldType
         }
-
-        fun getCorner() = getAppDimension(R.dimen.fbase_corner_10)
 
         fun isEditable() = data.isEditable
 

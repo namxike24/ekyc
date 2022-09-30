@@ -88,8 +88,7 @@ class ToolbarView @JvmOverloads constructor(
         tvRightText.text = ta.getText(R.styleable.ToolbarView_tbv_right_text_content)
         tvRightText.textSize = ta.getDimension(R.styleable.ToolbarView_tbv_right_text_text_size, 12f)
 
-        val rightType = ta.getInt(R.styleable.ToolbarView_tbv_right_type, RIGHT_TYPE_NONE)
-        when (rightType) {
+        when (ta.getInt(R.styleable.ToolbarView_tbv_right_type, RIGHT_TYPE_NONE)) {
             RIGHT_TYPE_NONE -> {
                 tvRightText.gone()
                 ivRightIcon.gone()

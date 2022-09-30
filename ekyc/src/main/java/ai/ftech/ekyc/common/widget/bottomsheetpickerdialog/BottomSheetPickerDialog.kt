@@ -17,22 +17,22 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 
 class BottomSheetPickerDialog private constructor(
-    var lstPickers: List<BottomSheetPicker> = listOf(),
+    private var lstPickers: List<BottomSheetPicker> = listOf(),
     var chooseItemListener: ((BottomSheetPicker) -> Unit)? = null,
     var title: String? = null,
-    var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT,
-    var visibleItem: Int? = null,
-    var hasSearch: Boolean = true
+    private var ratioDialogHeight: Float = DEFAULT_RATIO_DIALOG_HEIGHT,
+    private var visibleItem: Int? = null,
+    private var hasSearch: Boolean = true
 ) : BaseDialog(R.layout.fekyc_bottom_sheet_picker_dialog) {
     companion object {
         const val DEFAULT_RATIO_DIALOG_HEIGHT = 0.5f
     }
 
-    lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
-    lateinit var cvBottomSheetPickerDlg: CollectionView
-    lateinit var tvBottomSheetPickerTitle: AppCompatTextView
-    lateinit var svBottomSheetPickerDialog: SearchView
-    lateinit var ivBottomSheetPickerClose: AppCompatImageView
+    private lateinit var constBottomSheetPickerDlgRoot: ConstraintLayout
+    private lateinit var cvBottomSheetPickerDlg: CollectionView
+    private lateinit var tvBottomSheetPickerTitle: AppCompatTextView
+    private lateinit var svBottomSheetPickerDialog: SearchView
+    private lateinit var ivBottomSheetPickerClose: AppCompatImageView
 
     override fun getBackgroundId(): Int = R.id.constBottomSheetPickerDlgRoot
 
@@ -54,7 +54,8 @@ class BottomSheetPickerDialog private constructor(
 
         tvBottomSheetPickerTitle.text = title
 
-        constBottomSheetPickerDlgRoot.maxHeight = (requireActivity().getScreenHeight() * ratioDialogHeight).toInt()
+        constBottomSheetPickerDlgRoot.maxHeight =
+            (requireActivity().getScreenHeight() * ratioDialogHeight).toInt()
 
         cvBottomSheetPickerDlg.apply {
             setAdapter(BottomSheetPickerAdapter().apply {
@@ -65,7 +66,14 @@ class BottomSheetPickerDialog private constructor(
                     }
                 }
             })
-            setItemDecoration(DividerDecorator(context, R.drawable.fekyc_shape_divider, false, true))
+            setItemDecoration(
+                DividerDecorator(
+                    context,
+                    R.drawable.fekyc_shape_divider,
+                    isShowLast = false,
+                    isDrawOver = true
+                )
+            )
             setMaximumVisibleItem(visibleItem, visibleItem?.plus(1))
             addItems(lstPickers.toMutableList())
         }
@@ -128,7 +136,14 @@ class BottomSheetPickerDialog private constructor(
 
         fun show(fragmentManager: FragmentManager?) {
             if (fragmentManager == null) return
-            BottomSheetPickerDialog(lstPickers, chooseItemListener, title, ratioDialogHeight, visibleItem, hasSearch).show(fragmentManager, null)
+            BottomSheetPickerDialog(
+                lstPickers,
+                chooseItemListener,
+                title,
+                ratioDialogHeight,
+                visibleItem,
+                hasSearch
+            ).show(fragmentManager, null)
         }
     }
 }

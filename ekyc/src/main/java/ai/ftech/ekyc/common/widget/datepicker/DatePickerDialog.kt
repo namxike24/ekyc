@@ -13,15 +13,15 @@ import java.util.*
 
 class DatePickerDialog(
     var title: String? = null,
-    var datePickerListener: ((Calendar) -> Unit)? = null,
-    var currentCalendar: Calendar? = null,
+    private var datePickerListener: ((Calendar) -> Unit)? = null,
+    private var currentCalendar: Calendar? = null,
     var dateType: EkycFormInfo.DATE_TYPE? = null
 ) : BaseDialog(R.layout.fekyc_date_picker_dialog) {
 
-    lateinit var ivDatePickerDlgClose: AppCompatImageView
-    lateinit var tvDatePickerDlgTitle: AppCompatTextView
-    lateinit var tvDatePickerDlgSave: AppCompatTextView
-    lateinit var dpvDatePickerDlg: DatePickerView
+    private lateinit var ivDatePickerDlgClose: AppCompatImageView
+    private lateinit var tvDatePickerDlgTitle: AppCompatTextView
+    private lateinit var tvDatePickerDlgSave: AppCompatTextView
+    private lateinit var dpvDatePickerDlg: DatePickerView
 
     override fun getBackgroundId(): Int = R.id.constDatePickerDlgRoot
 

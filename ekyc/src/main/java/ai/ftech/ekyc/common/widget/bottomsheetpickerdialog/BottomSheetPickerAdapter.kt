@@ -20,8 +20,8 @@ class BottomSheetPickerAdapter : BaseAdapter() {
     override fun getDataAtPosition(position: Int) = dataList[position] as BottomSheetPicker
 
     inner class SchoolYearViewHolder(view: View) : BaseVH<BottomSheetPicker>(view) {
-        var llBottomSheetPickerItm: LinearLayoutCompat
-        var tvBottomSheetPickerItm: AppCompatTextView
+        private var llBottomSheetPickerItm: LinearLayoutCompat
+        private var tvBottomSheetPickerItm: AppCompatTextView
 
         init {
             tvBottomSheetPickerItm = view.findViewById(R.id.tvBottomSheetPickerItm)

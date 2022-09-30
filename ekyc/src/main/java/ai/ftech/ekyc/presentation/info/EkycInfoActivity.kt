@@ -45,14 +45,15 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
 
     private val adapter = FormInfoAdapter().apply {
         listener = object : FormInfoAdapter.IListener {
-            override fun onClickItem(item: EkycFormInfo, editText: EditText) {
+            override fun onClickItem(item: EkycFormInfo, edt: EditText) {
                 if (item.fieldType !== null) {
-                    showBottomSheetDialog(item, editText)
+                    showBottomSheetDialog(item, edt)
                 }
             }
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onInitView() {
         super.onInitView()
         constRoot = findViewById(R.id.constEkycInfoRoot)
@@ -171,6 +172,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
     }
 
     private fun showDatePickerDialog(ekycInfo: EkycFormInfo) {
+        ekycInfo.fieldValue = ""
         DatePickerDialog.Builder()
             .setTitle(getAppString(R.string.fekyc_ekyc_info_select_time))
             .setCurrentCalendar(

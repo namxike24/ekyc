@@ -5,7 +5,6 @@ import ai.ftech.base.common.BaseViewModel
 import ai.ftech.base.extension.postSelf
 import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.common.onException
-import ai.ftech.ekyc.domain.action.GetCityListAction
 import ai.ftech.ekyc.domain.action.GetEkycInfoAction
 import ai.ftech.ekyc.domain.action.GetNationListAction
 import ai.ftech.ekyc.domain.action.SubmitInfoAction

@@ -7,7 +7,7 @@ import android.content.Context
 
 object HandleApiException : IAPIMessage {
 
-    override fun getAPIMessage(context: Context?, exception: APIException): String? {
+    override fun getAPIMessage(context: Context?, exception: APIException): String {
         return when (exception.code) {
             APIException.NETWORK_ERROR -> getAppString(R.string.fekyc_no_network)
             APIException.TIME_OUT_ERROR -> getAppString(R.string.fekyc_sever_time_out)

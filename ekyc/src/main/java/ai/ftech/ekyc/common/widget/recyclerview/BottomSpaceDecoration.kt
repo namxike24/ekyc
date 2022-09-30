@@ -14,7 +14,7 @@ class BottomSpaceDecoration(private val space: Int): RecyclerView.ItemDecoration
         super.getItemOffsets(outRect, view, parent, state)
         parent.adapter?.itemCount?.let { itemCount ->
             if (parent.getChildAdapterPosition(view) == (itemCount - 1)) {
-                outRect.bottom += space;
+                outRect.bottom += space
             }
         }
     }

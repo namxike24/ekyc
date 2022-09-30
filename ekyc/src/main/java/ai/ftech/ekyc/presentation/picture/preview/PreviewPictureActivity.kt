@@ -13,7 +13,6 @@ import ai.ftech.ekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.ekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.ekyc.presentation.picture.take.EkycStep
 import ai.ftech.ekyc.utils.ShareFlowEventBus
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
