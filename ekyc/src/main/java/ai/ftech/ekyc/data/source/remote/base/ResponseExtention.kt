@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.data.source.remote.base
 
-import ai.ftech.base.repo.BaseRepo
+import ai.ftech.ekyc.base.repo.BaseRepo
 import ai.ftech.ekyc.data.source.remote.network.RetrofitFactory
 import ai.ftech.ekyc.domain.APIException
 import okhttp3.Headers

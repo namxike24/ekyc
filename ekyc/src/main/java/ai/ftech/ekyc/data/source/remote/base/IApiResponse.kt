@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.data.source.remote.base
 
-import ai.ftech.base.common.converter.IConverter
+import ai.ftech.ekyc.base.common.converter.IConverter
 
 interface IApiResponse {
     fun isSuccessful(): Boolean

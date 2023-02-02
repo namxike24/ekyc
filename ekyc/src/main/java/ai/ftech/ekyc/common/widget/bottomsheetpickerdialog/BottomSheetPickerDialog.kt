@@ -1,11 +1,11 @@
 package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 
-import ai.ftech.base.common.BaseDialog
-import ai.ftech.base.common.DialogScreen
-import ai.ftech.base.extension.getScreenHeight
-import ai.ftech.base.extension.gone
-import ai.ftech.base.extension.setOnSafeClick
-import ai.ftech.base.extension.show
+import ai.ftech.ekyc.base.common.BaseDialog
+import ai.ftech.ekyc.base.common.DialogScreen
+import ai.ftech.ekyc.base.extension.getScreenHeight
+import ai.ftech.ekyc.base.extension.gone
+import ai.ftech.ekyc.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.widget.recyclerview.CollectionView
 import ai.ftech.ekyc.common.widget.recyclerview.DividerDecorator

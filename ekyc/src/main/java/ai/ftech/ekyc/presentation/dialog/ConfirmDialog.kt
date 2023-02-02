@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.presentation.dialog
 
-import ai.ftech.base.common.BaseDialog
-import ai.ftech.base.common.DialogScreen
-import ai.ftech.base.extension.gone
-import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.common.BaseDialog
+import ai.ftech.ekyc.base.common.DialogScreen
+import ai.ftech.ekyc.base.extension.gone
+import ai.ftech.ekyc.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import android.widget.Button
 import android.widget.TextView

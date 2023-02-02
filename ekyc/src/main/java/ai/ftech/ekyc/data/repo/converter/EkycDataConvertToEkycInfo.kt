@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.data.repo.converter
 
-import ai.ftech.base.common.converter.Converter
-import ai.ftech.base.common.converter.IConverter
-import ai.ftech.base.common.converter.Mapper
+import ai.ftech.ekyc.base.common.converter.Converter
+import ai.ftech.ekyc.base.common.converter.IConverter
+import ai.ftech.ekyc.base.common.converter.Mapper
 import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycData
 import ai.ftech.ekyc.data.source.remote.model.ekyc.EkycFormData
 import ai.ftech.ekyc.domain.model.ekyc.EkycInfo

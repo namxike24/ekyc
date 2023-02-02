@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.presentation.home
 
-import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.extension.setOnSafeClick
 import ai.ftech.ekyc.BuildConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity

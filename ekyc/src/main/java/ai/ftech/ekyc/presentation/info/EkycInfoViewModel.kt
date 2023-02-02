@@ -1,8 +1,8 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.base.common.BaseAction
-import ai.ftech.base.common.BaseViewModel
-import ai.ftech.base.extension.postSelf
+import ai.ftech.ekyc.base.common.BaseAction
+import ai.ftech.ekyc.base.common.BaseViewModel
+import ai.ftech.ekyc.base.extension.postSelf
 import ai.ftech.ekyc.common.action.FEkycActionResult
 import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetEkycInfoAction

@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.common.widget.recyclerview
 
-import ai.ftech.base.adapter.BaseAdapter
+import ai.ftech.ekyc.base.adapter.BaseAdapter
 import ai.ftech.ekyc.R
 import android.annotation.SuppressLint
 import android.content.Context
@@ -50,7 +50,7 @@ class CollectionView @JvmOverloads constructor(
     // has fixed size
     private var hasFixedSize: Boolean = true
 
-    private var baseAdapter: BaseAdapter? = null
+    private var baseAdapter: ai.ftech.ekyc.base.adapter.BaseAdapter? = null
 
     private var visibleItem: Int? = null
 
@@ -58,10 +58,10 @@ class CollectionView @JvmOverloads constructor(
 
     private var maxVisibleHeight: Int? = null
 
-    val adapter: BaseAdapter
+    val adapter: ai.ftech.ekyc.base.adapter.BaseAdapter
         get() {
             if (baseAdapter == null) throw NullPointerException()
-            return baseAdapter as BaseAdapter
+            return baseAdapter as ai.ftech.ekyc.base.adapter.BaseAdapter
         }
 
     val itemCount: Int
@@ -87,7 +87,7 @@ class CollectionView @JvmOverloads constructor(
         initView(ctx, attrs)
     }
 
-    fun setAdapter(adapter: BaseAdapter) {
+    fun setAdapter(adapter: ai.ftech.ekyc.base.adapter.BaseAdapter) {
         this.baseAdapter = adapter
         rvRecyclerView.adapter = adapter
     }

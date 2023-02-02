@@ -1,9 +1,9 @@
 package ai.ftech.ekyc.common.widget.datepicker
 
-import ai.ftech.base.common.BaseDialog
-import ai.ftech.base.common.DialogScreen
-import ai.ftech.base.extension.getAppColor
-import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.common.BaseDialog
+import ai.ftech.ekyc.base.common.DialogScreen
+import ai.ftech.ekyc.base.extension.getAppColor
+import ai.ftech.ekyc.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
 import androidx.appcompat.widget.AppCompatImageView

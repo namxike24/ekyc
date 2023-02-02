@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.presentation.dialog
 
-import ai.ftech.base.common.BaseDialog
-import ai.ftech.base.common.DialogScreen
+import ai.ftech.ekyc.base.common.BaseDialog
+import ai.ftech.ekyc.base.common.DialogScreen
 import ai.ftech.ekyc.R
 import android.widget.TextView
 

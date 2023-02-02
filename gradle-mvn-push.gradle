@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 
 publishing {
     def EKYC_VERSION = "1.0.4"
-    def DOMAIN_MAVEN = "https://gg.ftech.ai//api/v4/projects/398/packages/maven"
+    def DOMAIN_MAVEN = "https://gitlab.com//api/v4/projects/40140113/packages/maven"
 
     publications {
         myPublish (MavenPublication) {
@@ -28,7 +28,7 @@ publishing {
             url DOMAIN_MAVEN
             credentials(HttpHeaderCredentials) {
                 name = "Private-Token"
-                value = "jA7yijjSuDNsuHucK2N2"
+                value = "glpat-yxu-vreQrV4Wa8GZcyBP"
             }
             authentication {
                 header(HttpHeaderAuthentication)

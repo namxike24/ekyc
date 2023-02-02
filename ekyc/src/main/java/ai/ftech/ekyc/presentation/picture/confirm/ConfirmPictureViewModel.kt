@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.presentation.picture.confirm
 
-import ai.ftech.base.common.BaseAction
-import ai.ftech.base.common.BaseViewModel
+import ai.ftech.ekyc.base.common.BaseAction
+import ai.ftech.ekyc.base.common.BaseViewModel
 import ai.ftech.ekyc.common.onException
 import ai.ftech.ekyc.domain.action.GetConfirmPhotoListAction
 import ai.ftech.ekyc.domain.model.ekyc.PhotoConfirmDetailInfo

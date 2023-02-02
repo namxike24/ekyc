@@ -1,10 +1,10 @@
 package ai.ftech.ekyc.presentation.info
 
-import ai.ftech.base.adapter.BaseAdapter
-import ai.ftech.base.adapter.BaseVH
-import ai.ftech.base.extension.gone
-import ai.ftech.base.extension.setOnSafeClick
-import ai.ftech.base.extension.show
+import ai.ftech.ekyc.base.adapter.BaseAdapter
+import ai.ftech.ekyc.base.adapter.BaseVH
+import ai.ftech.ekyc.base.extension.gone
+import ai.ftech.ekyc.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppDrawable
 import ai.ftech.ekyc.domain.model.ekyc.EkycFormInfo
@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 
-class FormInfoAdapter : BaseAdapter() {
+class FormInfoAdapter : ai.ftech.ekyc.base.adapter.BaseAdapter() {
 
     companion object {
         const val PAYLOAD_UPDATE_FIELD = "PAYLOAD_UPDATE_FIELD"

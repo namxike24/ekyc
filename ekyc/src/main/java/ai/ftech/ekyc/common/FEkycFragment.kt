@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.common
 
-import ai.ftech.base.common.BaseFragment
+import ai.ftech.ekyc.base.common.BaseFragment
 
 abstract class FEkycFragment(layoutId: Int) : BaseFragment(layoutId) {
 }

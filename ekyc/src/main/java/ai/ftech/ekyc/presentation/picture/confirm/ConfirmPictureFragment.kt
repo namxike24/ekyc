@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.presentation.picture.confirm
 
-import ai.ftech.base.extension.observer
-import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.extension.observer
+import ai.ftech.ekyc.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycFragment
 import ai.ftech.ekyc.common.getAppString

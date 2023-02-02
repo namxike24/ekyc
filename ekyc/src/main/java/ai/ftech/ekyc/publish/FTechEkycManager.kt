@@ -1,6 +1,6 @@
 package ai.ftech.ekyc.publish
 
-import ai.ftech.base.extension.setApplication
+import ai.ftech.ekyc.base.extension.setApplication
 import ai.ftech.ekyc.AppConfig
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppString

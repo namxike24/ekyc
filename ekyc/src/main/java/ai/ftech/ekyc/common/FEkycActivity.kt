@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common
 
-import ai.ftech.base.common.BaseActivity
-import ai.ftech.base.common.StatusBar
+import ai.ftech.ekyc.base.common.BaseActivity
+import ai.ftech.ekyc.base.common.StatusBar
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.activityresultlancher.OpenAppSettingResult
 import ai.ftech.ekyc.domain.event.ExpireEvent

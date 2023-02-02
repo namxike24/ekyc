@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common.widget.bottomsheetpickerdialog
 
-import ai.ftech.base.adapter.BaseAdapter
-import ai.ftech.base.adapter.BaseVH
+import ai.ftech.ekyc.base.adapter.BaseAdapter
+import ai.ftech.ekyc.base.adapter.BaseVH
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppColor
 import ai.ftech.ekyc.presentation.model.BottomSheetPicker
@@ -9,7 +9,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 
-class BottomSheetPickerAdapter : BaseAdapter() {
+class BottomSheetPickerAdapter : ai.ftech.ekyc.base.adapter.BaseAdapter() {
     var listener: BottomSheetItemListener? = null
 
     override fun getLayoutResource(viewType: Int) = R.layout.fekyc_bottom_sheet_picker_item

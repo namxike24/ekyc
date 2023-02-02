@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.presentation.picture.preview
 
-import ai.ftech.base.common.StatusBar
-import ai.ftech.base.extension.setOnSafeClick
+import ai.ftech.ekyc.base.common.StatusBar
+import ai.ftech.ekyc.base.extension.setOnSafeClick
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.FEkycActivity
 import ai.ftech.ekyc.common.getAppString

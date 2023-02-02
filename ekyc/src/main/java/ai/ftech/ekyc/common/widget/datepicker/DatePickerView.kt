@@ -1,7 +1,7 @@
 package ai.ftech.ekyc.common.widget.datepicker
 
-import ai.ftech.base.extension.gone
-import ai.ftech.base.extension.show
+import ai.ftech.ekyc.base.extension.gone
+import ai.ftech.ekyc.base.extension.show
 import ai.ftech.ekyc.R
 import ai.ftech.ekyc.common.getAppColor
 import ai.ftech.ekyc.common.getAppDimension
