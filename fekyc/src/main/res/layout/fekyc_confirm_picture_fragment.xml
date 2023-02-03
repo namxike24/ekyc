@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fekyc_bg_preview"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ai.ftech.fekyc.common.widget.toolbar.ToolbarView
+        android:id="@+id/tbvConfirmPictureHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_88"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tbv_left_icon_src="@drawable/fekyc_ic_back"
+        app:tbv_right_text_content="@string/fekyc_home_right_title"
+        app:tbv_right_text_text_size="@dimen/fbase_text_size_4"
+        app:tbv_right_type="NONE"
+        app:tbv_title_text="@string/fekyc_confirm_picture_title"
+        app:tbv_title_text_size="@dimen/fbase_text_size_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivConfirmPictureBack"
+        android:layout_width="@dimen/fbase_dimen_50"
+        android:layout_height="@dimen/fbase_dimen_50"
+        android:padding="@dimen/fbase_dimen_10"
+        android:src="@drawable/fekyc_ic_arrow_back"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="@id/vpConfirmPicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vpConfirmPicture" />
+
+    <com.asksira.loopingviewpager.LoopingViewPager
+        android:id="@+id/vpConfirmPicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_8"
+        android:layout_marginVertical="@dimen/fbase_dimen_50"
+        app:autoScroll="false"
+        app:isInfinite="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivConfirmPictureNext"
+        app:layout_constraintStart_toEndOf="@id/ivConfirmPictureBack"
+        app:layout_constraintTop_toBottomOf="@id/tbvConfirmPictureHeader" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivConfirmPictureNext"
+        android:layout_width="@dimen/fbase_dimen_50"
+        android:layout_height="@dimen/fbase_dimen_50"
+        android:padding="@dimen/fbase_dimen_10"
+        android:src="@drawable/fekyc_ic_arrow_next"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="@id/vpConfirmPicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vpConfirmPicture" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ekyc-android"
-include ':ekyc'
+include ':fekyc'
 include ':demo'

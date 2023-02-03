@@ -1,8 +1,8 @@
 package ai.ftech.demo
 
-import ai.ftech.ekyc.publish.FTechEkycInfo
-import ai.ftech.ekyc.publish.FTechEkycManager
-import ai.ftech.ekyc.publish.IFTechEkycCallback
+import ai.ftech.fekyc.publish.FTechEkycInfo
+import ai.ftech.fekyc.publish.FTechEkycManager
+import ai.ftech.fekyc.publish.IFTechEkycCallback
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView

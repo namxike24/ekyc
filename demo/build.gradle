@@ -39,7 +39,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    implementation project(':ekyc')
+    implementation project(':fekyc')
 
     implementation 'junit:junit:4.13.2'
     implementation 'androidx.test.ext:junit:1.1.3'

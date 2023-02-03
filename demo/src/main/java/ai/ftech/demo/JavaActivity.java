@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-import ai.ftech.ekyc.publish.FTechEkycInfo;
-import ai.ftech.ekyc.publish.FTechEkycManager;
-import ai.ftech.ekyc.publish.IFTechEkycCallback;
+import ai.ftech.fekyc.publish.FTechEkycInfo;
+import ai.ftech.fekyc.publish.FTechEkycManager;
+import ai.ftech.fekyc.publish.IFTechEkycCallback;
 
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;

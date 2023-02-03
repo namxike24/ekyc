@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fekyc_bg_preview">
+
+    <ai.ftech.fekyc.common.widget.toolbar.ToolbarView
+        android:id="@+id/tbvPreviewPictureHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_88"
+        app:tbv_left_icon_src="@drawable/fekyc_ic_close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tbv_right_text_content="@string/fekyc_home_right_title"
+        app:tbv_right_text_text_size="@dimen/fbase_text_size_8"
+        app:tbv_right_type="ICON"
+        app:tbv_title_text_size="@dimen/fbase_text_size_6"
+        tools:tbv_title_text="@string/fekyc_take_picture_image_front" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPreviewPictureErrorMessage"
+        style="@style/FBaseStyleText14Regular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_50"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_32"
+        android:layout_marginTop="@dimen/fbase_dimen_40"
+        android:background="@drawable/fekyc_shape_rect_bg_red_alplha_10_corner_10"
+        android:gravity="center"
+        android:textColor="@color/fekyc_color_red"
+        app:layout_constraintTop_toBottomOf="@id/tbvPreviewPictureHeader"
+        tools:text="Ảnh chụp không hợp lệ. Vui lòng chụp lại!" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivPreviewPictureImageSrc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/fbase_dimen_20"
+        android:layout_marginBottom="@dimen/fbase_dimen_80"
+        app:layout_constraintTop_toBottomOf="@id/tvPreviewPictureErrorMessage"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@id/btnPreviewPictureTakeAgain"
+        tools:src="@drawable/default_photo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPreviewPictureTakeAgain"
+        style="@style/FBaseStyleText18Bold"
+        android:layout_width="match_parent"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginBottom="@dimen/fbase_dimen_40"
+        android:background="@drawable/fekyc_shape_rect_bg_blue_corner_8"
+        android:gravity="center"
+        android:text="@string/fekyc_preview_picture_take_picture_again"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

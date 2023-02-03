@@ -1,6 +1,6 @@
 package ai.ftech.demo
 
-import ai.ftech.ekyc.publish.FTechEkycManager
+import ai.ftech.fekyc.publish.FTechEkycManager
 import android.app.Application
 
 class DemoApplication : Application() {

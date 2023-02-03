@@ -1,7 +1,7 @@
 apply plugin: 'maven-publish'
 
 publishing {
-    def EKYC_VERSION = "1.0.4"
+    def EKYC_VERSION = "1.0.5"
     def DOMAIN_MAVEN = "https://gitlab.com//api/v4/projects/40140113/packages/maven"
 
     publications {
@@ -9,7 +9,7 @@ publishing {
             groupId "ai.ftech"
             artifactId "ekyc"
             version EKYC_VERSION
-            artifact "$buildDir/outputs/aar/ekyc-release.aar"
+            artifact "$buildDir/outputs/aar/fekyc-release.aar"
 
 
             pom.withXml {
