@@ -30,6 +30,7 @@
             android:gravity="center"
             android:maxLength="30"
             android:maxLines="1"
+            android:textColor="@color/fekyc_color_white"
             tools:text="Chọn loại giấy tờ Chọn loại giấy tờ Chọn loại giấy tờ" />
 
         <androidx.appcompat.widget.AppCompatTextView

@@ -76,6 +76,7 @@
             android:layout_weight="9"
             android:maxLines="1"
             android:text="@string/fekyc_home_select_type_of_papers_ssn"
+            android:textColor="@color/fekyc_color_white"
             android:textSize="@dimen/fbase_text_size_14" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -109,6 +110,7 @@
             android:layout_weight="9"
             android:maxLines="1"
             android:text="@string/fekyc_home_select_type_of_papers_driver_license"
+            android:textColor="@color/fekyc_color_white"
             android:textSize="@dimen/fbase_text_size_14" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -142,6 +144,7 @@
             android:layout_weight="9"
             android:maxLines="1"
             android:text="@string/fekyc_home_select_type_of_papers_passport"
+            android:textColor="@color/fekyc_color_white"
             android:textSize="@dimen/fbase_text_size_14" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -156,11 +159,11 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHomeSdkVersion"
         style="@style/FBaseStyleText12Medium"
+        android:layout_marginBottom="@dimen/fbase_dimen_8"
         android:text="v1.0.2"
         android:textColor="@color/fekyc_color_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="@dimen/fbase_dimen_8"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

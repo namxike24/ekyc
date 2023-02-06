@@ -10,6 +10,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
@@ -110,7 +111,7 @@ object FTechEkycManager {
     ) {
         this.ftechKey = EncodeRSA.encryptData(licenseKey, applicationContext?.packageName)
         this.appId = appId
-        this.transactionId = "${transactionId}${appId}"
+        this.transactionId = "${transactionId},${appId}"
         checkCoolDownAction {
             if (licenseKey.isEmpty()) {
                 throw RuntimeException(getAppString(R.string.empty_license_key))
