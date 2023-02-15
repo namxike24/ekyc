@@ -111,7 +111,7 @@ object FTechEkycManager {
     ) {
         this.ftechKey = EncodeRSA.encryptData(licenseKey, applicationContext?.packageName)
         this.appId = appId
-        this.transactionId = "${transactionId},${appId}"
+        this.transactionId = "${transactionId}_${appId}"
         checkCoolDownAction {
             if (licenseKey.isEmpty()) {
                 throw RuntimeException(getAppString(R.string.empty_license_key))
