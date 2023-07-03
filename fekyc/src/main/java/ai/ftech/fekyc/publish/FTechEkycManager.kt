@@ -3,7 +3,9 @@ package ai.ftech.fekyc.publish
 import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.AppConfig
 import ai.ftech.fekyc.R
+import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.common.getAppString
+import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.home.HomeActivity
 import android.app.Activity
@@ -15,6 +17,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
 import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
 object FTechEkycManager {
@@ -202,4 +207,29 @@ object FTechEkycManager {
             action.invoke()
         }
     }
+
+    private fun <I : BaseAction.RequestValue, O> runActionInCoroutine(
+        action: BaseAction<I, O>,
+        request: I,
+        callback: IFTechEkycCallback<O>?
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            action.invoke(request)
+                .onException {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        invokeCallback(callback, FTechEkycResult<O>().apply {
+                            this.type = FTECH_EKYC_RESULT_TYPE.ERROR
+                        })
+                    }
+                }.collect {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        invokeCallback(callback, FTechEkycResult<O>().apply {
+                            this.type = FTECH_EKYC_RESULT_TYPE.SUCCESS
+                            this.data = it
+                        })
+                    }
+                }
+        }
+    }
+
 }
