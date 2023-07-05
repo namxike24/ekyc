@@ -3,6 +3,7 @@ package ai.ftech.fekyc.data.source.remote.network
 import ai.ftech.fekyc.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,6 +15,8 @@ import java.util.concurrent.TimeUnit
 abstract class BaseRetrofitConfig {
     abstract fun getUrl(): String
     abstract fun getInterceptorList(): Array<Interceptor>
+
+    open fun getAuthenticator(): Authenticator = Authenticator.NONE
 
     fun getRetrofit(): Retrofit {
         return getRetrofitBuilder().build()

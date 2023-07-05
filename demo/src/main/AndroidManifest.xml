@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="sdkId"
+            android:value="@string/sdk_id" />
+        <meta-data
+            android:name="licenseKey"
+            android:value="@string/licenseKey" />
     </application>
 
 </manifest>

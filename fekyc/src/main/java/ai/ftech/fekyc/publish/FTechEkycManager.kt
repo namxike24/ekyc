@@ -6,13 +6,18 @@ import ai.ftech.fekyc.R
 import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
+import ai.ftech.fekyc.domain.action.InitSDKAction
+import ai.ftech.fekyc.domain.action.TransactionAction
 import ai.ftech.fekyc.infras.EncodeRSA
+import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
 import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.content.pm.PackageManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
@@ -231,5 +236,33 @@ object FTechEkycManager {
                 }
         }
     }
+
+    // start ekyc
+
+    fun initSDK(callback: IFTechEkycCallback<InitSDKData>) {
+        val applicationInfo = applicationContext?.let { getApplicationContext().packageManager.getApplicationInfo(it.packageName, PackageManager.GET_META_DATA) }
+        val bundle = applicationInfo?.metaData
+        val appId = bundle?.getString("sdkId")
+        val licenseKey = bundle?.getString("licenseKey")
+        runActionInCoroutine(
+            InitSDKAction(),
+            InitSDKAction.InitSDKRV(appId.toString(), licenseKey.toString()),
+            object : IFTechEkycCallback<InitSDKData> {
+                override fun onSuccess(info: InitSDKData?) {
+                    AppPreferences.token = info?.token
+                    super.onSuccess(info)
+                }
+            }
+        )
+    }
+
+    fun createTransaction(callback: IFTechEkycCallback<TransactionData>){
+        runActionInCoroutine(
+            TransactionAction(),
+            BaseAction.VoidRequest(),
+            callback
+        )
+    }
+
 
 }

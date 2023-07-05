@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gland/AndroidStudioProjects/ekyc/ekyc-android/demo/src/main/res/layout/demo_activity.xml" value="0.1734375" />
+        <entry key="..\:/Users/gland/AndroidStudioProjects/ekyc/ekyc-android/fekyc/src/main/res/layout/fekyc_home_activity.xml" value="0.2838541666666667" />
+        <entry key="..\:/Users/gland/AndroidStudioProjects/ekyc/ekyc-android/fekyc/src/main/res/layout/fekyc_step_identity_item.xml" value="0.2838541666666667" />
         <entry key="..\:/work/ftech/project/ekyc/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/work/ftech/project/ekyc/ekyc-android/demo/src/main/res/layout/demo_activity.xml" value="0.3625" />

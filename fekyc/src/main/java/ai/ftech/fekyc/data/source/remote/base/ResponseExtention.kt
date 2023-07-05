@@ -41,3 +41,11 @@ fun <RESPONSE : IApiResponse, RETURN_VALUE> Call<RESPONSE>.invokeApi(block: (Hea
 fun <T : IApiService> BaseRepo.invokeFEkycService(service: Class<T>): T {
     return RetrofitFactory.createFEkycService(service)
 }
+
+fun <T : IApiService> BaseRepo.invokeInitSDKFEkycService(service: Class<T>): T {
+    return RetrofitFactory.createInitSDKService(service)
+}
+
+fun <T : IApiService> BaseRepo.invokeNewFEkycService(service: Class<T>): T {
+    return RetrofitFactory.createNewEKYCService(service)
+}
