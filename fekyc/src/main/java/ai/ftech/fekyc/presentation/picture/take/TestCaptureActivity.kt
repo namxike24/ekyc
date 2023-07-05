@@ -17,8 +17,8 @@ class TestCaptureActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_capture_activity)
-        cvCaptureView = findViewById(R.id.cvTestCaptureView)
-        ivPreview = findViewById(R.id.ivTestPreview)
+        cvCaptureView = findViewById(R.id.cvTestCaptureCaptureView)
+        ivPreview = findViewById(R.id.ivTestCapturePreview)
 
         cvCaptureView.apply {
             setLifecycleOwner(this@TestCaptureActivity)
