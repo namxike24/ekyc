@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ai.ftech.fekyc.presentation.picture.take.CaptureView
+        android:id="@+id/cvTestCaptureCaptureView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:captureCameraFacing="back"
+        app:captureFlash="on"
+        app:captureLeftIcon="@drawable/fekyc_ic_flash_off"
+        app:captureLeftIconSize="@dimen/fbase_dimen_40"
+        app:captureLeftIconVisibility="show"
+        app:captureMiddleIcon="@drawable/fekyc_ic_capture_on"
+        app:captureMiddleIconSize="@dimen/fbase_dimen_60"
+        app:captureMiddleIconVisibility="show"
+        app:captureRightIcon="@drawable/fekyc_ic_change_camera"
+        app:captureRightIconSize="@dimen/fbase_dimen_50"
+        app:captureRightIconVisibility="show" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTestCapturePreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="@color/fbase_color_black"
+        android:visibility="gone" />
+
+</FrameLayout>

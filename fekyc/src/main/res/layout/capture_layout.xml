@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cameraAudio="off"
-        android:visibility="gone"
         app:cameraFacing="back"
         app:cameraFlash="off"
         app:cameraSnapshotMaxHeight="1920"
@@ -31,7 +30,7 @@
         android:layout_width="@dimen/fbase_dimen_60"
         android:layout_height="@dimen/fbase_dimen_60"
         android:layout_marginEnd="@dimen/fbase_dimen_44"
-        android:src="@drawable/fekyc_ic_flash_off"
+        android:src="@drawable/fekyc_ic_flash_on"
         android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
         app:layout_constraintBottom_toBottomOf="@id/ivCaptureMid"
         app:layout_constraintEnd_toStartOf="@id/ivCaptureMid"
@@ -41,12 +40,12 @@
         android:id="@+id/ivCaptureMid"
         android:layout_width="@dimen/fbase_dimen_80"
         android:layout_height="@dimen/fbase_dimen_80"
-        android:layout_marginBottom="@dimen/fbase_dimen_40"
         android:src="@drawable/fekyc_ic_capture_on"
         android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvCaptureCameraView" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivCaptureRight"

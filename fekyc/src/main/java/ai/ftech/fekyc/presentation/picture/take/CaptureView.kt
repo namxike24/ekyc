@@ -2,7 +2,10 @@ package ai.ftech.fekyc.presentation.picture.take
 
 import ai.ftech.fekyc.R
 import ai.ftech.fekyc.base.extension.setOnSafeClick
+import ai.ftech.fekyc.common.widget.overlay.OverlayView
+import ai.ftech.fekyc.utils.FileUtils
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -11,16 +14,22 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.Flash
+import java.io.File
 
 class CaptureView constructor(
     ctx: Context,
     attrs: AttributeSet?
 ) : FrameLayout(ctx, attrs) {
 
+    private var callback: ICallback? = null
+
     private var cvCamera: CameraView? = null
+    private var ovFrameCrop: OverlayView? = null
 
     private var ivLeft: ImageView? = null
     private var leftIcon: Drawable? = null
@@ -43,6 +52,8 @@ class CaptureView constructor(
     private var isBackFacing: Boolean = true
     private var isFlashOn: Boolean = false
 
+    private var file: File? = null
+
     init {
         LayoutInflater.from(context).inflate(R.layout.capture_layout, this, true)
         initView(attrs)
@@ -55,6 +66,7 @@ class CaptureView constructor(
         ivLeft = findViewById(R.id.ivCaptureLeft)
         ivMid = findViewById(R.id.ivCaptureMid)
         ivRight = findViewById(R.id.ivCaptureRight)
+        ovFrameCrop = findViewById(R.id.ovCaptureFrameCrop)
 
         if (leftIcon != null) {
             ivLeft?.setImageDrawable(leftIcon)
@@ -115,6 +127,39 @@ class CaptureView constructor(
         }
         ivRight?.setOnSafeClick {
             onRightIconClick?.invoke()
+        }
+
+        cvCamera?.addCameraListener(object: CameraListener() {
+            override fun onPictureTaken(result: PictureResult) {
+                super.onPictureTaken(result)
+                val path = FileUtils.getIdentityFrontPath()
+                val file = File(path)
+                if (file.exists()) {
+                    FileUtils.deleteFile(path)
+                }
+                result.toFile(file) {
+                    it?.let { file ->
+                        this@CaptureView.file = file
+                        ovFrameCrop?.attachFile(file.absolutePath)
+                    }
+                }
+            }
+        })
+
+        ovFrameCrop?.apply {
+            setCropType(OverlayView.CROP_TYPE.REACTANGLE)
+            listener = object : OverlayView.ICallback {
+                override fun onTakePicture(bitmap: Bitmap) {
+                    val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
+                    if (file != null) {
+                        this@CaptureView.callback?.onCaptureSuccess(file)
+                    }
+                }
+
+                override fun onError(exception: Exception) {
+                    this@CaptureView.callback?.onCaptureFail(exception)
+                }
+            }
         }
     }
 
@@ -210,6 +255,11 @@ class CaptureView constructor(
         }
     }
 
+    fun capture(callback: ICallback) {
+        this.callback = callback
+        cvCamera?.takePictureSnapshot()
+    }
+
     fun setMidIconVisibility(isShow: Boolean) {
         isShowMidIcon = isShow
         ivMid?.visibility = if (isShowMidIcon) {
@@ -269,5 +319,10 @@ class CaptureView constructor(
         }
 
         ta.recycle()
+    }
+
+    interface ICallback {
+        fun onCaptureSuccess(file: File)
+        fun onCaptureFail(exception: Exception)
     }
 }
