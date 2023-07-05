@@ -8,8 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 import java.util.Random;
 
+import ai.ftech.fekyc.domain.model.ekyc.EkycInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
@@ -17,6 +20,7 @@ import ai.ftech.fekyc.publish.IFTechEkycCallback;
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
     private Button btnEkyc;
+    private Button btnSubmitInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class JavaActivity extends AppCompatActivity {
         setContentView(R.layout.demo_activity);
         tvState = findViewById(R.id.tvDemoState);
         btnEkyc = findViewById(R.id.btnDemoEkyc);
+        btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
 
         FTechEkycManager.register(this);
 
@@ -53,6 +58,32 @@ public class JavaActivity extends AppCompatActivity {
                 }
             });
         });
+
+        btnSubmitInfo.setOnClickListener(v -> {
+            executeSubmitInfo();
+        });
+    }
+
+    private void executeSubmitInfo() {
+        FTechEkycManager.submitInfo(generateMockEkycInfo(), new IFTechEkycCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean info) {
+                Log.d("DucPT", "onSuccess SubmitInfo: "+info.toString());
+            }
+
+            @Override
+            public void onFail() {
+                Log.d("DucPT", "onFail SubmitInfo");
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+    }
+
+    private EkycInfo generateMockEkycInfo() {
+        return new EkycInfo();
     }
 
     @Override

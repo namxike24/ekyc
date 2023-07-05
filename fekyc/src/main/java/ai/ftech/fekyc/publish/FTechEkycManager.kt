@@ -9,7 +9,9 @@ import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.action.InitSDKAction
+import ai.ftech.fekyc.domain.action.SubmitInfoAction
 import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.model.ekyc.EkycInfo
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -261,6 +263,15 @@ object FTechEkycManager {
             TransactionAction(),
             BaseAction.VoidRequest(),
             callback
+        )
+    }
+
+    @JvmStatic
+    fun submitInfo(info: EkycInfo, callback: IFTechEkycCallback<Boolean>){
+        runActionInCoroutine(
+            action = SubmitInfoAction(),
+            request = SubmitInfoAction.SubmitRV(ekycInfo = info),
+            callback = callback
         )
     }
 
