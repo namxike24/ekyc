@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/cvCaptureCameraView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cameraAudio="off"
+        android:visibility="gone"
+        app:cameraFacing="back"
+        app:cameraFlash="off"
+        app:cameraSnapshotMaxHeight="1920"
+        app:cameraSnapshotMaxWidth="1920"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ai.ftech.fekyc.common.widget.overlay.OverlayView
+        android:id="@+id/ovCaptureFrameCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ov_frame_type="RECTANGLE" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCaptureLeft"
+        android:layout_width="@dimen/fbase_dimen_60"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginEnd="@dimen/fbase_dimen_44"
+        android:src="@drawable/fekyc_ic_flash_off"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="@id/ivCaptureMid"
+        app:layout_constraintEnd_toStartOf="@id/ivCaptureMid"
+        app:layout_constraintTop_toTopOf="@id/ivCaptureMid" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCaptureMid"
+        android:layout_width="@dimen/fbase_dimen_80"
+        android:layout_height="@dimen/fbase_dimen_80"
+        android:layout_marginBottom="@dimen/fbase_dimen_40"
+        android:src="@drawable/fekyc_ic_capture_on"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCaptureRight"
+        android:layout_width="@dimen/fbase_dimen_60"
+        android:layout_height="@dimen/fbase_dimen_60"
+        android:layout_marginStart="@dimen/fbase_dimen_44"
+        android:src="@drawable/fekyc_ic_change_camera"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="@id/ivCaptureMid"
+        app:layout_constraintStart_toEndOf="@id/ivCaptureMid"
+        app:layout_constraintTop_toTopOf="@id/ivCaptureMid" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
