@@ -21,6 +21,7 @@ public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
     private Button btnEkyc;
     private Button btnSubmitInfo;
+    private Button btnUploadPhoto;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class JavaActivity extends AppCompatActivity {
         tvState = findViewById(R.id.tvDemoState);
         btnEkyc = findViewById(R.id.btnDemoEkyc);
         btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
+        btnUploadPhoto = findViewById(R.id.btnUploadPhoto);
 
         FTechEkycManager.register(this);
 
@@ -61,6 +63,10 @@ public class JavaActivity extends AppCompatActivity {
 
         btnSubmitInfo.setOnClickListener(v -> {
             executeSubmitInfo();
+        });
+
+        btnUploadPhoto.setOnClickListener(v->{
+            TakePhotoActivity.startTakePhotoScreen(this);
         });
     }
 

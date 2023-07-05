@@ -11,7 +11,10 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.action.InitSDKAction
 import ai.ftech.fekyc.domain.action.SubmitInfoAction
 import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.action.UploadPhotoAction
 import ai.ftech.fekyc.domain.model.ekyc.EkycInfo
+import ai.ftech.fekyc.domain.model.ekyc.PHOTO_INFORMATION
+import ai.ftech.fekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -271,6 +274,24 @@ object FTechEkycManager {
         runActionInCoroutine(
             action = SubmitInfoAction(),
             request = SubmitInfoAction.SubmitRV(ekycInfo = info),
+            callback = callback
+        )
+    }
+
+    @JvmStatic
+    fun uploadPhoto(
+        pathImage: String,
+        type: PHOTO_TYPE,
+        info: PHOTO_INFORMATION,
+        callback: IFTechEkycCallback<Boolean>
+    ) {
+        runActionInCoroutine(
+            action = UploadPhotoAction(),
+            request = UploadPhotoAction.UploadRV(
+                absolutePath = pathImage,
+                photoType = type,
+                photoInformation = info
+            ),
             callback = callback
         )
     }
