@@ -7,14 +7,17 @@ import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.action.InitSDKAction
+import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
 import ai.ftech.fekyc.domain.action.SubmitInfoAction
 import ai.ftech.fekyc.domain.action.TransactionAction
 import ai.ftech.fekyc.domain.action.UploadPhotoAction
 import ai.ftech.fekyc.domain.model.ekyc.EkycInfo
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_TYPE
+import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -54,6 +57,7 @@ object FTechEkycManager {
     fun init(context: Context) {
         applicationContext = context
         setApplication(getApplicationContext())
+        AppPreferences.init(context)
     }
 
     @JvmStatic
@@ -270,10 +274,10 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun submitInfo(info: EkycInfo, callback: IFTechEkycCallback<Boolean>){
+    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<SubmitInfo>){
         runActionInCoroutine(
-            action = SubmitInfoAction(),
-            request = SubmitInfoAction.SubmitRV(ekycInfo = info),
+            action = NewSubmitInfoAction(),
+            request = NewSubmitInfoAction.SubmitRV(request = info),
             callback = callback
         )
     }
