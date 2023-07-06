@@ -61,8 +61,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     };
 
     private String currentPath = null;
-    private PHOTO_INFORMATION informationUpload = PHOTO_INFORMATION.BACK;
-    private PHOTO_TYPE typeUpload = PHOTO_TYPE.SSN;
+    private String uploadOrientation = "front";
 
     public static void startTakePhotoScreen(Context context) {
         context.startActivity(new Intent(context, TakePhotoActivity.class));
@@ -98,26 +97,20 @@ public class TakePhotoActivity extends AppCompatActivity {
             }
         });
 
-        List<String> listOption = List.of("SSN", "DRIVER_LICENSE", "PASSPORT", "FACE");
+        List<String> listOption = List.of("Front", "Back", "Face");
         spTypePicture.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
+                switch (i) {
                     case 0:
-                        typeUpload = PHOTO_TYPE.SSN;
+                        uploadOrientation = "front";
                         break;
                     case 1:
-                        typeUpload = PHOTO_TYPE.DRIVER_LICENSE;
-                            break;
+                        uploadOrientation = "back";
+                        break;
                     case 2:
-                        typeUpload = PHOTO_TYPE.PASSPORT;
+                        uploadOrientation = null;
                         break;
-                    case 3:
-                        informationUpload = PHOTO_INFORMATION.FACE;
-                        break;
-                    default:
-                        typeUpload = PHOTO_TYPE.SSN;
-                        informationUpload = PHOTO_INFORMATION.BACK;
 
                 }
             }
@@ -133,13 +126,14 @@ public class TakePhotoActivity extends AppCompatActivity {
             takePhotoUtils.showDialogSelectImage(null, null, null).setListener(takePhotoCallback);
         });
         btnUpload.setOnClickListener(v -> {
+            String transactionId = "2e5912a0-0ead-4fda-8849-11540b9b68ff";
             btnUpload.setVisibility(View.GONE);
             ivPreviewPicture.setImageBitmap(null);
             pbLoading.setVisibility(View.VISIBLE);
-            FTechEkycManager.uploadPhoto(currentPath, typeUpload, informationUpload, new IFTechEkycCallback<Boolean>() {
+            FTechEkycManager.uploadPhoto(currentPath, uploadOrientation, transactionId, new IFTechEkycCallback<Boolean>() {
                 @Override
                 public void onSuccess(Boolean info) {
-                    Log.d("DucPT", "onSuccess UploadPhoto: "+info.toString());
+                    Log.d("DucPT", "onSuccess UploadPhoto: " + info.toString());
                     btnTakePicture.setVisibility(View.VISIBLE);
                     pbLoading.setVisibility(View.GONE);
                 }

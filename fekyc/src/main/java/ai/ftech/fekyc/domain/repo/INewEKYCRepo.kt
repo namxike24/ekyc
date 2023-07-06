@@ -10,5 +10,9 @@ interface INewEKYCRepo {
 
     fun createTransaction(extraData: String): TransactionData
 
-    fun submitInfo(request : NewSubmitInfoRequest): SubmitInfo
+    fun submitInfo(request: NewSubmitInfoRequest): SubmitInfo
+
+    fun capturePhoto(transactionId: String, orientation: String, imagePath: String): Boolean
+
+    fun captureFace(transactionId: String, imagePath: String): Boolean
 }
