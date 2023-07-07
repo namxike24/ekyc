@@ -9,11 +9,7 @@ import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
-import ai.ftech.fekyc.domain.action.FaceMatchingAction
-import ai.ftech.fekyc.domain.action.InitSDKAction
-import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
-import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
-import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.action.*
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo
@@ -319,7 +315,4 @@ object FTechEkycManager {
         )
     }
 
-    fun takePhotoFront(callback: IFTechEkycCallback<InitSDKData>){
-
-    }
 }
