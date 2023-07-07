@@ -1,15 +1,22 @@
 package ai.ftech.fekyc.publish
 
-import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.AppConfig
 import ai.ftech.fekyc.R
 import ai.ftech.fekyc.base.common.BaseAction
+import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
+import ai.ftech.fekyc.domain.action.FaceMatchingAction
 import ai.ftech.fekyc.domain.action.InitSDKAction
+import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
+import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
 import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.model.capture.CaptureData
+import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
+import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -49,6 +56,7 @@ object FTechEkycManager {
     fun init(context: Context) {
         applicationContext = context
         setApplication(getApplicationContext())
+        AppPreferences.init(context)
     }
 
     @JvmStatic
@@ -240,7 +248,12 @@ object FTechEkycManager {
     // start ekyc
 
     fun initSDK(callback: IFTechEkycCallback<InitSDKData>) {
-        val applicationInfo = applicationContext?.let { getApplicationContext().packageManager.getApplicationInfo(it.packageName, PackageManager.GET_META_DATA) }
+        val applicationInfo = applicationContext?.let {
+            getApplicationContext().packageManager.getApplicationInfo(
+                it.packageName,
+                PackageManager.GET_META_DATA
+            )
+        }
         val bundle = applicationInfo?.metaData
         val appId = bundle?.getString("sdkId")
         val licenseKey = bundle?.getString("licenseKey")
@@ -261,6 +274,48 @@ object FTechEkycManager {
             TransactionAction(),
             BaseAction.VoidRequest(),
             callback
+        )
+    }
+
+    @JvmStatic
+    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<SubmitInfo>) {
+        runActionInCoroutine(
+            action = NewSubmitInfoAction(),
+            request = NewSubmitInfoAction.SubmitRV(request = info),
+            callback = callback
+        )
+    }
+
+    @JvmStatic
+    fun uploadPhoto(
+        pathImage: String,
+        orientation: String?,
+        transactionId: String,
+        callback: IFTechEkycCallback<CaptureData>
+    ) {
+        runActionInCoroutine(
+            action = NewUploadPhotoAction(),
+            request = NewUploadPhotoAction.UploadRV(
+                absolutePath = pathImage,
+                orientation = orientation,
+                transactionId = transactionId
+            ),
+            callback = callback
+        )
+    }
+
+    @JvmStatic
+    fun faceMatching(
+        idTransaction: String,
+        idSessionFront: String,
+        idSessionBack: String,
+        idSessionFace: String,
+        callback: IFTechEkycCallback<FaceMatchingData>
+    ) {
+        runActionInCoroutine(
+            action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
+                idTransaction, idSessionFront, idSessionBack, idSessionFace
+            ), callback = callback
         )
     }
 

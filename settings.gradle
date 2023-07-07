@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url "https://google.com" }
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "ekyc-android"
