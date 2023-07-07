@@ -264,5 +264,7 @@ object FTechEkycManager {
         )
     }
 
+    fun takePhotoFront(callback: IFTechEkycCallback<InitSDKData>){
 
+    }
 }
