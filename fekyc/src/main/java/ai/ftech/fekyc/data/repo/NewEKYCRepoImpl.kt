@@ -1,10 +1,12 @@
 package ai.ftech.fekyc.data.repo
 
 import ai.ftech.fekyc.base.repo.BaseRepo
+import ai.ftech.fekyc.data.repo.converter.FaceMatchingResponseConvertData
 import ai.ftech.fekyc.data.repo.converter.NewSubmitResponseConvertToSubmitInfo
 import ai.ftech.fekyc.data.source.remote.base.invokeApi
 import ai.ftech.fekyc.data.source.remote.base.invokeInitSDKFEkycService
 import ai.ftech.fekyc.data.source.remote.base.invokeNewFEkycService
+import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
@@ -12,6 +14,7 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionRequest
 import ai.ftech.fekyc.data.source.remote.service.InitSDKService
 import ai.ftech.fekyc.data.source.remote.service.NewEkycService
+import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.domain.repo.INewEKYCRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -82,6 +85,25 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
 
         return service.captureFace(partImage, partTransactionId).invokeApi { _, _ -> true }
     }
+
+    override fun faceMatching(
+        idTransaction: String,
+        idSessionFront: String,
+        idSessionBack: String,
+        idSessionFace: String
+    ): FaceMatchingData {
+        val service = invokeNewFEkycService(NewEkycService::class.java)
+        val bodyMatching = FaceMatchingRequest().apply {
+            transactionId = idTransaction
+            sessionIdBack = idSessionBack
+            sessionIdFront = idSessionFront
+            sessionIdFace = idSessionFace
+        }
+        return service.faceMatching(body = bodyMatching).invokeApi { _, data ->
+            FaceMatchingResponseConvertData().convert(data)
+        }
+    }
+
 
     private fun convertImageToMultipart(absolutePath: String): MultipartBody.Part {
         val file = File(absolutePath)

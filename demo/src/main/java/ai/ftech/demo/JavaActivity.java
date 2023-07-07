@@ -15,6 +15,7 @@ import java.util.Random;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
 import ai.ftech.fekyc.domain.model.ekyc.EkycInfo;
+import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
 import ai.ftech.fekyc.publish.FTechEkycManager;
@@ -25,6 +26,7 @@ public class JavaActivity extends AppCompatActivity {
     private Button btnEkyc;
     private Button btnSubmitInfo;
     private Button btnUploadPhoto;
+    private Button btnFaceMatching;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class JavaActivity extends AppCompatActivity {
         btnEkyc = findViewById(R.id.btnDemoEkyc);
         btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
         btnUploadPhoto = findViewById(R.id.btnUploadPhoto);
+        btnFaceMatching = findViewById(R.id.btnFaceMatching);
 
         FTechEkycManager.register(this);
 
@@ -70,6 +73,38 @@ public class JavaActivity extends AppCompatActivity {
         btnUploadPhoto.setOnClickListener(v -> {
             TakePhotoActivity.startTakePhotoScreen(this);
         });
+
+        btnFaceMatching.setOnClickListener(v -> {
+            executeFaceMatching();
+        });
+    }
+
+    private void executeFaceMatching() {
+        String idTransaction = "2e5912a0-0ead-4fda-8849-11540b9b68ff";
+        String idSessionFront = "4e2e9287-4b03-4bd0-9022-aaad4bc62916";
+        String idSessionBack = "5a7939c5-74fe-4bb2-9ef4-a0d2e401b632";
+        String idSessionFace = "3a6b002f-0007-4b5c-b09f-6838d7e7265";
+        FTechEkycManager.faceMatching(
+                idTransaction,
+                idSessionFront,
+                idSessionBack,
+                idSessionFace,
+                new IFTechEkycCallback<FaceMatchingData>() {
+                    @Override
+                    public void onSuccess(FaceMatchingData data) {
+                        Log.d("DucPT", "onSuccess FaceMatching: " + data.toString());
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Log.d("DucPT", "onFail FaceMatching");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                    }
+                }
+        );
     }
 
     private void executeSubmitInfo() {
