@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CaptureView">
-        <attr name="captureLeftIcon" format="reference" />
-        <attr name="captureMiddleIcon" format="reference" />
-        <attr name="captureRightIcon" format="reference" />
-        <attr name="captureLeftIconSize" format="dimension" />
-        <attr name="captureMiddleIconSize" format="dimension" />
-        <attr name="captureRightIconSize" format="dimension" />
-        <attr format="enum" name="captureCameraFacing">
+        <attr name="captureFlashOnIcon" format="reference" />
+        <attr name="captureFlashOffIcon" format="reference" />
+        <attr name="captureTakePictureIcon" format="reference" />
+        <attr name="captureFacingIcon" format="reference" />
+        <attr name="captureFlashIconSize" format="dimension" />
+        <attr name="captureTakePictureIconSize" format="dimension" />
+        <attr name="captureFacingIconSize" format="dimension" />
+        <attr format="enum" name="captureFacing">
             <enum name="front" value="0"/>
             <enum name="back" value="1"/>
         </attr>
@@ -15,15 +16,15 @@
             <enum name="off" value="0"/>
             <enum name="on" value="1"/>
         </attr>
-        <attr format="enum" name="captureLeftIconVisibility">
+        <attr format="enum" name="captureFlashIconVisibility">
             <enum name="hide" value="0"/>
             <enum name="show" value="1"/>
         </attr>
-        <attr format="enum" name="captureMiddleIconVisibility">
+        <attr format="enum" name="captureTakePictureIconVisibility">
             <enum name="hide" value="0"/>
             <enum name="show" value="1"/>
         </attr>
-        <attr format="enum" name="captureRightIconVisibility">
+        <attr format="enum" name="captureFacingIconVisibility">
             <enum name="hide" value="0"/>
             <enum name="show" value="1"/>
         </attr>

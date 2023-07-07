@@ -22,30 +22,25 @@ class TestCaptureActivity : AppCompatActivity() {
 
         cvCaptureView.apply {
             setLifecycleOwner(this@TestCaptureActivity)
-            setOnLeftIconClick {
-                changeFlash()
-                if (isFlashOn()) {
-                    setLeftIcon(R.drawable.fekyc_ic_flash_off)
-                } else {
-                    setLeftIcon(R.drawable.fekyc_ic_flash_on)
+            setOnFlashIconClick {
+                Toast.makeText(this@TestCaptureActivity, "Flash", Toast.LENGTH_SHORT).show()
+            }
+            setOnFacingIconClick {
+                Toast.makeText(this@TestCaptureActivity, "Facing", Toast.LENGTH_SHORT).show()
+            }
+            setOnTakePictureIconClick {
+                Toast.makeText(this@TestCaptureActivity, "Take picture", Toast.LENGTH_SHORT).show()
+            }
+            setOnTakePictureCallback(object : CaptureView.ICallback {
+                override fun onTakePictureSuccess(file: File) {
+                    ivPreview.show()
+                    ImageLoaderFactory.glide().loadImage(this@TestCaptureActivity, file.absolutePath, ivPreview, true)
                 }
-            }
-            setOnRightIconClick {
-                changeFacing()
-            }
-            setOnMidIconClick {
-                capture(object : CaptureView.ICallback {
-                    override fun onCaptureSuccess(file: File) {
-                        ivPreview.show()
-                        ImageLoaderFactory.glide()
-                            .loadImage(this@TestCaptureActivity, file.absolutePath, ivPreview, true)
-                    }
 
-                    override fun onCaptureFail(exception: Exception) {
-                        Toast.makeText(this@TestCaptureActivity, "Fail", Toast.LENGTH_SHORT).show()
-                    }
-                })
-            }
+                override fun onTakePictureFail(exception: Exception) {
+                    Toast.makeText(this@TestCaptureActivity, exception.message, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 

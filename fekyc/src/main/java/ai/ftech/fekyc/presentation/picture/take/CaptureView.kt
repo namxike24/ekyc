@@ -31,26 +31,27 @@ class CaptureView constructor(
     private var cvCamera: CameraView? = null
     private var ovFrameCrop: OverlayView? = null
 
-    private var ivLeft: ImageView? = null
-    private var leftIcon: Drawable? = null
-    private var leftIconSize: Int = 0
-    private var onLeftIconClick: (() -> Unit)? = null
-    private var isShowLeftIcon: Boolean = true
+    private var ivFlash: ImageView? = null
+    private var flashIconOn: Drawable? = null
+    private var flashIconOff: Drawable? = null
+    private var flashIconSize: Int = 0
+    private var onFlashIconClick: (() -> Unit)? = null
+    private var isShowFlashIcon: Boolean = true
 
-    private var ivMid: ImageView? = null
-    private var midIcon: Drawable? = null
-    private var midIconSize: Int = 0
-    private var onMidIconClick: (() -> Unit)? = null
-    private var isShowMidIcon: Boolean = true
+    private var ivTakePicture: ImageView? = null
+    private var takePictureIcon: Drawable? = null
+    private var takePictureIconSize: Int = 0
+    private var onTakePictureIconClick: (() -> Unit)? = null
+    private var isShowTakePictureIcon: Boolean = true
 
-    private var ivRight: ImageView? = null
-    private var rightIcon: Drawable? = null
-    private var rightIconSize: Int = 0
-    private var onRightIconClick: (() -> Unit)? = null
-    private var isShowRightIcon: Boolean = true
+    private var ivFacing: ImageView? = null
+    private var facingIcon: Drawable? = null
+    private var facingIconSize: Int = 0
+    private var onFacingIconClick: (() -> Unit)? = null
+    private var isShowFacingIcon: Boolean = true
 
-    private var isBackFacing: Boolean = true
-    private var isFlashOn: Boolean = false
+    private var facing: FACING = FACING.BACK
+    private var flash: FLASH = FLASH.OFF
 
     private var file: File? = null
 
@@ -63,70 +64,81 @@ class CaptureView constructor(
         super.onFinishInflate()
 
         cvCamera = findViewById(R.id.cvCaptureCameraView)
-        ivLeft = findViewById(R.id.ivCaptureLeft)
-        ivMid = findViewById(R.id.ivCaptureMid)
-        ivRight = findViewById(R.id.ivCaptureRight)
+        ivFlash = findViewById(R.id.ivCaptureLeft)
+        ivTakePicture = findViewById(R.id.ivCaptureMid)
+        ivFacing = findViewById(R.id.ivCaptureRight)
         ovFrameCrop = findViewById(R.id.ovCaptureFrameCrop)
 
-        if (leftIcon != null) {
-            ivLeft?.setImageDrawable(leftIcon)
+        if (flashIconOn == null) {
+            flashIconOn = ContextCompat.getDrawable(context, R.drawable.fekyc_ic_flash_on)
         }
-        if (midIcon != null) {
-            ivMid?.setImageDrawable(midIcon)
+        if (flashIconOff == null) {
+            flashIconOff = ContextCompat.getDrawable(context, R.drawable.fekyc_ic_flash_off)
         }
-        if (rightIcon != null) {
-            ivRight?.setImageDrawable(rightIcon)
+        if (flash == FLASH.OFF) {
+            ivFlash?.setImageDrawable(flashIconOn)
+        } else {
+            ivFlash?.setImageDrawable(flashIconOff)
         }
-
-        if (leftIconSize != 0) {
-            ivLeft?.layoutParams?.width = leftIconSize
-            ivLeft?.layoutParams?.height = leftIconSize
+        if (takePictureIcon != null) {
+            ivTakePicture?.setImageDrawable(takePictureIcon)
         }
-        if (midIconSize != 0) {
-            ivMid?.layoutParams?.width = midIconSize
-            ivMid?.layoutParams?.height = midIconSize
-        }
-        if (rightIconSize != 0) {
-            ivRight?.layoutParams?.width = rightIconSize
-            ivRight?.layoutParams?.height = rightIconSize
+        if (facingIcon != null) {
+            ivFacing?.setImageDrawable(facingIcon)
         }
 
-        ivLeft?.visibility = if (isShowLeftIcon) {
+        if (flashIconSize != 0) {
+            ivFlash?.layoutParams?.width = flashIconSize
+            ivFlash?.layoutParams?.height = flashIconSize
+        }
+        if (takePictureIconSize != 0) {
+            ivTakePicture?.layoutParams?.width = takePictureIconSize
+            ivTakePicture?.layoutParams?.height = takePictureIconSize
+        }
+        if (facingIconSize != 0) {
+            ivFacing?.layoutParams?.width = facingIconSize
+            ivFacing?.layoutParams?.height = facingIconSize
+        }
+
+        ivFlash?.visibility = if (isShowFlashIcon) {
             VISIBLE
         } else {
             INVISIBLE
         }
-        ivMid?.visibility = if (isShowMidIcon) {
+        ivTakePicture?.visibility = if (isShowTakePictureIcon) {
             VISIBLE
         } else {
             INVISIBLE
         }
-        ivRight?.visibility = if (isShowRightIcon) {
+        ivFacing?.visibility = if (isShowFacingIcon) {
             VISIBLE
         } else {
             INVISIBLE
         }
 
-        cvCamera?.facing = if (isBackFacing) {
+        cvCamera?.facing = if (facing == FACING.BACK) {
             Facing.BACK
         } else {
             Facing.FRONT
         }
 
-        cvCamera?.flash = if (isFlashOn) {
+        cvCamera?.flash = if (flash == FLASH.ON) {
             Flash.TORCH
         } else {
             Flash.OFF
         }
 
-        ivLeft?.setOnSafeClick {
-            onLeftIconClick?.invoke()
+        ivFlash?.setOnSafeClick {
+            changeFlash()
+            onFlashIconClick?.invoke()
         }
-        ivMid?.setOnSafeClick {
-            onMidIconClick?.invoke()
+        ivTakePicture?.setOnSafeClick {
+            takePicture()
+            onTakePictureIconClick?.invoke()
         }
-        ivRight?.setOnSafeClick {
-            onRightIconClick?.invoke()
+        ivFacing?.setOnSafeClick {
+            changeFacing()
+            onFacingIconClick?.invoke()
         }
 
         cvCamera?.addCameraListener(object: CameraListener() {
@@ -152,12 +164,12 @@ class CaptureView constructor(
                 override fun onTakePicture(bitmap: Bitmap) {
                     val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
                     if (file != null) {
-                        this@CaptureView.callback?.onCaptureSuccess(file)
+                        this@CaptureView.callback?.onTakePictureSuccess(file)
                     }
                 }
 
                 override fun onError(exception: Exception) {
-                    this@CaptureView.callback?.onCaptureFail(exception)
+                    this@CaptureView.callback?.onTakePictureFail(exception)
                 }
             }
         }
@@ -168,110 +180,132 @@ class CaptureView constructor(
     }
 
     fun changeFlash() {
-        setFlash(!isFlashOn)
-    }
-
-    fun changeFacing() {
-        setFacing(!isBackFacing)
-    }
-
-    fun isFlashOn(): Boolean {
-        return isFlashOn
-    }
-
-    fun isBackFacing(): Boolean {
-        return isBackFacing
-    }
-
-    fun setFlash(isFlashOn: Boolean) {
-        this.isFlashOn = isFlashOn
-        cvCamera?.flash = if (isFlashOn) {
-            Flash.TORCH
+        if (flash == FLASH.ON) {
+            setFlash(FLASH.OFF)
         } else {
-            Flash.OFF
+            setFlash(FLASH.ON)
         }
     }
 
-    fun setFacing(isBackFacing: Boolean) {
-        this.isBackFacing = isBackFacing
-        cvCamera?.facing = if (isBackFacing) {
+    fun changeFacing() {
+        if (facing == FACING.BACK) {
+            setFacing(FACING.FRONT)
+        } else {
+            setFacing(FACING.BACK)
+        }
+    }
+
+    fun getFlash(): FLASH {
+        return flash
+    }
+
+    fun getFacing(): FACING {
+        return facing
+    }
+
+    fun setFlash(flash: FLASH) {
+        this.flash = flash
+        if (flash == FLASH.ON) {
+            cvCamera?.flash = Flash.TORCH
+            ivFlash?.setImageDrawable(flashIconOff)
+        } else {
+            cvCamera?.flash = Flash.OFF
+            ivFlash?.setImageDrawable(flashIconOn)
+        }
+    }
+
+    fun setFacing(facing: FACING) {
+        this.facing = facing
+        cvCamera?.facing = if (facing == FACING.BACK) {
             Facing.BACK
         } else {
             Facing.FRONT
         }
     }
 
-    fun setOnLeftIconClick(onLeftIconClick: (() -> Unit)?) {
-        this.onLeftIconClick = onLeftIconClick
+    fun setOnFlashIconClick(onFlashIconClick: (() -> Unit)?) {
+        this.onFlashIconClick = onFlashIconClick
     }
 
-    fun setOnMidIconClick(onMidIconClick: (() -> Unit)?) {
-        this.onMidIconClick = onMidIconClick
+    fun setOnTakePictureIconClick(onTakePictureIconClick: (() -> Unit)?) {
+        this.onTakePictureIconClick = onTakePictureIconClick
     }
 
-    fun setOnRightIconClick(onRightIconClick: (() -> Unit)?) {
-        this.onRightIconClick = onRightIconClick
+    fun setOnTakePictureCallback(callback: ICallback?) {
+        this.callback = callback
     }
 
-    fun setRightIcon(@DrawableRes iconId: Int) {
-        rightIcon = ContextCompat.getDrawable(context, iconId)
-        ivRight?.setImageDrawable(rightIcon)
+    fun setOnFacingIconClick(onFacingIconClick: (() -> Unit)?) {
+        this.onFacingIconClick = onFacingIconClick
     }
 
-    fun setLeftIcon(@DrawableRes iconId: Int) {
-        leftIcon = ContextCompat.getDrawable(context, iconId)
-        ivLeft?.setImageDrawable(leftIcon)
+    fun setFacingIcon(@DrawableRes iconId: Int) {
+        facingIcon = ContextCompat.getDrawable(context, iconId)
+        ivFacing?.setImageDrawable(facingIcon)
     }
 
-    fun setMidIcon(@DrawableRes iconId: Int) {
-        midIcon = ContextCompat.getDrawable(context, iconId)
-        ivMid?.setImageDrawable(midIcon)
+    fun setFlashOnIcon(@DrawableRes iconId: Int) {
+        flashIconOn = ContextCompat.getDrawable(context, iconId)
+        if (flash == FLASH.OFF) {
+            ivFlash?.setImageDrawable(flashIconOn)
+        }
     }
 
-    fun setLeftIconSize(size: Int) {
-        leftIconSize = size
-        ivLeft?.layoutParams?.width = leftIconSize
-        ivLeft?.layoutParams?.height = leftIconSize
+    fun setFlashOffIcon(@DrawableRes iconId: Int) {
+        flashIconOff = ContextCompat.getDrawable(context, iconId)
+        if (flash == FLASH.ON) {
+            ivFlash?.setImageDrawable(flashIconOff)
+        }
     }
 
-    fun setMidIconSize(size: Int) {
-        midIconSize = size
-        ivMid?.layoutParams?.width = midIconSize
-        ivMid?.layoutParams?.height = midIconSize
+    fun setTakePictureIcon(@DrawableRes iconId: Int) {
+        takePictureIcon = ContextCompat.getDrawable(context, iconId)
+        ivTakePicture?.setImageDrawable(takePictureIcon)
     }
 
-    fun setRightIconSize(size: Int) {
-        rightIconSize = size
-        ivRight?.layoutParams?.width = rightIconSize
-        ivRight?.layoutParams?.height = rightIconSize
+    fun setFlashIconSize(size: Int) {
+        flashIconSize = size
+        ivFlash?.layoutParams?.width = flashIconSize
+        ivFlash?.layoutParams?.height = flashIconSize
     }
 
-    fun setLeftIconVisibility(isShow: Boolean) {
-        isShowLeftIcon = isShow
-        ivLeft?.visibility = if (isShowLeftIcon) {
+    fun setTakePictureIconSize(size: Int) {
+        takePictureIconSize = size
+        ivTakePicture?.layoutParams?.width = takePictureIconSize
+        ivTakePicture?.layoutParams?.height = takePictureIconSize
+    }
+
+    fun setFacingIconSize(size: Int) {
+        facingIconSize = size
+        ivFacing?.layoutParams?.width = facingIconSize
+        ivFacing?.layoutParams?.height = facingIconSize
+    }
+
+    fun setFlashIconVisibility(isShow: Boolean) {
+        isShowFlashIcon = isShow
+        ivFlash?.visibility = if (isShowFlashIcon) {
             VISIBLE
         } else {
             GONE
         }
     }
 
-    fun capture(callback: ICallback) {
-        this.callback = callback
+    fun takePicture() {
         cvCamera?.takePictureSnapshot()
     }
 
-    fun setMidIconVisibility(isShow: Boolean) {
-        isShowMidIcon = isShow
-        ivMid?.visibility = if (isShowMidIcon) {
+    fun setTakePictureIconVisibility(isShow: Boolean) {
+        isShowTakePictureIcon = isShow
+        ivTakePicture?.visibility = if (isShowTakePictureIcon) {
             VISIBLE
         } else {
             GONE
         }
     }
 
-    fun setRightIconVisibility(isShow: Boolean) {
-        isShowRightIcon = isShow
-        ivRight?.visibility = if (isShowRightIcon) {
+    fun setFacingIconVisibility(isShow: Boolean) {
+        isShowFacingIcon = isShow
+        ivFacing?.visibility = if (isShowFacingIcon) {
             VISIBLE
         } else {
             GONE
@@ -281,48 +315,67 @@ class CaptureView constructor(
     private fun initView(attrs: AttributeSet?) {
         val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.CaptureView, 0, 0)
 
-        if (ta.hasValue(R.styleable.CaptureView_captureLeftIcon)) {
-            leftIcon = ta.getDrawable(R.styleable.CaptureView_captureLeftIcon)
+        if (ta.hasValue(R.styleable.CaptureView_captureFlashOnIcon)) {
+            flashIconOn = ta.getDrawable(R.styleable.CaptureView_captureFlashOnIcon)
         }
-        if (ta.hasValue(R.styleable.CaptureView_captureMiddleIcon)) {
-            midIcon = ta.getDrawable(R.styleable.CaptureView_captureMiddleIcon)
+        if (ta.hasValue(R.styleable.CaptureView_captureFlashOffIcon)) {
+            flashIconOff = ta.getDrawable(R.styleable.CaptureView_captureFlashOffIcon)
         }
-        if (ta.hasValue(R.styleable.CaptureView_captureRightIcon)) {
-            rightIcon = ta.getDrawable(R.styleable.CaptureView_captureRightIcon)
+        if (ta.hasValue(R.styleable.CaptureView_captureTakePictureIcon)) {
+            takePictureIcon = ta.getDrawable(R.styleable.CaptureView_captureTakePictureIcon)
         }
-
-        if (ta.hasValue(R.styleable.CaptureView_captureLeftIconSize)) {
-            leftIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureLeftIconSize, 0)
-        }
-        if (ta.hasValue(R.styleable.CaptureView_captureMiddleIconSize)) {
-            midIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureMiddleIconSize, 0)
-        }
-        if (ta.hasValue(R.styleable.CaptureView_captureRightIconSize)) {
-            rightIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureRightIconSize, 0)
+        if (ta.hasValue(R.styleable.CaptureView_captureFacingIcon)) {
+            facingIcon = ta.getDrawable(R.styleable.CaptureView_captureFacingIcon)
         }
 
-        if (ta.hasValue(R.styleable.CaptureView_captureLeftIconVisibility)) {
-            isShowLeftIcon = ta.getBoolean(R.styleable.CaptureView_captureLeftIconVisibility, true)
+        if (ta.hasValue(R.styleable.CaptureView_captureFlashIconSize)) {
+            flashIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureFlashIconSize, 0)
         }
-        if (ta.hasValue(R.styleable.CaptureView_captureMiddleIconVisibility)) {
-            isShowMidIcon = ta.getBoolean(R.styleable.CaptureView_captureMiddleIconVisibility, true)
+        if (ta.hasValue(R.styleable.CaptureView_captureTakePictureIconSize)) {
+            takePictureIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureTakePictureIconSize, 0)
         }
-        if (ta.hasValue(R.styleable.CaptureView_captureRightIconVisibility)) {
-            isShowRightIcon = ta.getBoolean(R.styleable.CaptureView_captureRightIconVisibility, true)
+        if (ta.hasValue(R.styleable.CaptureView_captureFacingIconSize)) {
+            facingIconSize = ta.getDimensionPixelSize(R.styleable.CaptureView_captureFacingIconSize, 0)
         }
 
-        if (ta.hasValue(R.styleable.CaptureView_captureCameraFacing)) {
-            isBackFacing = ta.getBoolean(R.styleable.CaptureView_captureCameraFacing, true)
+        if (ta.hasValue(R.styleable.CaptureView_captureFlashIconVisibility)) {
+            isShowFlashIcon = ta.getBoolean(R.styleable.CaptureView_captureFlashIconVisibility, true)
+        }
+        if (ta.hasValue(R.styleable.CaptureView_captureTakePictureIconVisibility)) {
+            isShowTakePictureIcon = ta.getBoolean(R.styleable.CaptureView_captureTakePictureIconVisibility, true)
+        }
+        if (ta.hasValue(R.styleable.CaptureView_captureFacingIconVisibility)) {
+            isShowFacingIcon = ta.getBoolean(R.styleable.CaptureView_captureFacingIconVisibility, true)
+        }
+
+        if (ta.hasValue(R.styleable.CaptureView_captureFacing)) {
+            facing = if (ta.getBoolean(R.styleable.CaptureView_captureFacing, true)) {
+                FACING.BACK
+            } else {
+                FACING.FRONT
+            }
         }
         if (ta.hasValue(R.styleable.CaptureView_captureFlash)) {
-            isFlashOn = ta.getBoolean(R.styleable.CaptureView_captureFlash, false)
+            flash = if (ta.getBoolean(R.styleable.CaptureView_captureFlash, false)) {
+                FLASH.ON
+            } else {
+                FLASH.OFF
+            }
         }
 
         ta.recycle()
     }
 
+    enum class FACING {
+        BACK, FRONT
+    }
+
+    enum class FLASH {
+        ON, OFF
+    }
+
     interface ICallback {
-        fun onCaptureSuccess(file: File)
-        fun onCaptureFail(exception: Exception)
+        fun onTakePictureSuccess(file: File)
+        fun onTakePictureFail(exception: Exception)
     }
 }
