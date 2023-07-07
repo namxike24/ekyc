@@ -26,8 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ai.ftech.fekyc.common.widget.toolbar.ToolbarView;
-import ai.ftech.fekyc.domain.model.ekyc.PHOTO_INFORMATION;
-import ai.ftech.fekyc.domain.model.ekyc.PHOTO_TYPE;
+import ai.ftech.fekyc.domain.model.capture.CaptureData;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
 
@@ -130,10 +129,10 @@ public class TakePhotoActivity extends AppCompatActivity {
             btnUpload.setVisibility(View.GONE);
             ivPreviewPicture.setImageBitmap(null);
             pbLoading.setVisibility(View.VISIBLE);
-            FTechEkycManager.uploadPhoto(currentPath, uploadOrientation, transactionId, new IFTechEkycCallback<Boolean>() {
+            FTechEkycManager.uploadPhoto(currentPath, uploadOrientation, transactionId, new IFTechEkycCallback<CaptureData>() {
                 @Override
-                public void onSuccess(Boolean info) {
-                    Log.d("DucPT", "onSuccess UploadPhoto: " + info.toString());
+                public void onSuccess(CaptureData data) {
+                    Log.d("DucPT", "onSuccess UploadPhoto: " + data.toString());
                     btnTakePicture.setVisibility(View.VISIBLE);
                     pbLoading.setVisibility(View.GONE);
                 }

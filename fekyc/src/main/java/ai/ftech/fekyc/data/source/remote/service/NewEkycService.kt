@@ -1,8 +1,7 @@
 package ai.ftech.fekyc.data.source.remote.service
 
 import ai.ftech.fekyc.data.source.remote.base.IApiService
-import ai.ftech.fekyc.data.source.remote.model.CaptureFaceResponse
-import ai.ftech.fekyc.data.source.remote.model.VerifyIdentityResponse
+import ai.ftech.fekyc.data.source.remote.model.ekyc.capture.CaptureResponse
 import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingResponse
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
@@ -31,14 +30,14 @@ interface NewEkycService : IApiService {
         @Part file: MultipartBody.Part,
         @PartMap transactionId: HashMap<String, RequestBody>,
         @PartMap cardOrientation: HashMap<String, RequestBody>
-    ): Call<VerifyIdentityResponse>
+    ): Call<CaptureResponse>
 
     @Multipart
     @POST("/ekyc/face/")
     fun captureFace(
         @Part file: MultipartBody.Part,
         @PartMap transactionId: HashMap<String, RequestBody>
-    ): Call<CaptureFaceResponse>
+    ): Call<CaptureResponse>
 
     @POST("/ekyc/process/")
     fun faceMatching(@Body body: FaceMatchingRequest): Call<FaceMatchingResponse>

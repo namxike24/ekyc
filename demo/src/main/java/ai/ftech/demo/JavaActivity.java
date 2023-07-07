@@ -12,9 +12,7 @@ import com.google.gson.Gson;
 
 import java.util.Random;
 
-import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
-import ai.ftech.fekyc.domain.model.ekyc.EkycInfo;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;

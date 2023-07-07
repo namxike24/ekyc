@@ -14,6 +14,7 @@ import ai.ftech.fekyc.domain.action.InitSDKAction
 import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
 import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
 import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.infras.EncodeRSA
@@ -290,7 +291,7 @@ object FTechEkycManager {
         pathImage: String,
         orientation: String?,
         transactionId: String,
-        callback: IFTechEkycCallback<Boolean>
+        callback: IFTechEkycCallback<CaptureData>
     ) {
         runActionInCoroutine(
             action = NewUploadPhotoAction(),

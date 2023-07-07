@@ -1,6 +1,7 @@
 package ai.ftech.fekyc.data.repo
 
 import ai.ftech.fekyc.base.repo.BaseRepo
+import ai.ftech.fekyc.data.repo.converter.CapturePhotoResponseConvertToData
 import ai.ftech.fekyc.data.repo.converter.FaceMatchingResponseConvertData
 import ai.ftech.fekyc.data.repo.converter.NewSubmitResponseConvertToSubmitInfo
 import ai.ftech.fekyc.data.source.remote.base.invokeApi
@@ -14,6 +15,7 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionRequest
 import ai.ftech.fekyc.data.source.remote.service.InitSDKService
 import ai.ftech.fekyc.data.source.remote.service.NewEkycService
+import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.domain.repo.INewEKYCRepo
@@ -64,7 +66,7 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         transactionId: String,
         orientation: String,
         imagePath: String
-    ): Boolean {
+    ): CaptureData {
         val service = invokeNewFEkycService(NewEkycService::class.java)
 
         val partImage = convertImageToMultipart(imagePath)
@@ -73,17 +75,20 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         val partOrientation = hashMapOf(PART_ORIENTATION to convertToRequestBody(orientation))
 
         return service.capturePhoto(partImage, partTransactionId, partOrientation)
-            .invokeApi { _, _ -> true }
+            .invokeApi { _, data ->
+                CapturePhotoResponseConvertToData().convert(data)
+            }
     }
 
-    override fun captureFace(transactionId: String, imagePath: String): Boolean {
+    override fun captureFace(transactionId: String, imagePath: String): CaptureData {
         val service = invokeNewFEkycService(NewEkycService::class.java)
 
         val partImage = convertImageToMultipart(imagePath)
         val partTransactionId =
             hashMapOf(PART_TRANSACTION_ID to convertToRequestBody(transactionId))
 
-        return service.captureFace(partImage, partTransactionId).invokeApi { _, _ -> true }
+        return service.captureFace(partImage, partTransactionId)
+            .invokeApi { _, data -> CapturePhotoResponseConvertToData().convert(data) }
     }
 
     override fun faceMatching(
