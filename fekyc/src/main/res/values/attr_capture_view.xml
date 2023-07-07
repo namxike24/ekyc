@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CaptureView">
+        <attr name="captureFlashOnIcon" format="reference" />
+        <attr name="captureFlashOffIcon" format="reference" />
+        <attr name="captureTakePictureIcon" format="reference" />
+        <attr name="captureFacingIcon" format="reference" />
+        <attr name="captureFlashIconSize" format="dimension" />
+        <attr name="captureTakePictureIconSize" format="dimension" />
+        <attr name="captureFacingIconSize" format="dimension" />
+        <attr format="enum" name="captureFacing">
+            <enum name="front" value="0"/>
+            <enum name="back" value="1"/>
+        </attr>
+        <attr format="enum" name="captureFlash">
+            <enum name="off" value="0"/>
+            <enum name="on" value="1"/>
+        </attr>
+        <attr format="enum" name="captureFlashIconVisibility">
+            <enum name="hide" value="0"/>
+            <enum name="show" value="1"/>
+        </attr>
+        <attr format="enum" name="captureTakePictureIconVisibility">
+            <enum name="hide" value="0"/>
+            <enum name="show" value="1"/>
+        </attr>
+        <attr format="enum" name="captureFacingIconVisibility">
+            <enum name="hide" value="0"/>
+            <enum name="show" value="1"/>
+        </attr>
+        <attr format="enum" name="captureShape">
+            <enum name="circle" value="0"/>
+            <enum name="rectangle" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
