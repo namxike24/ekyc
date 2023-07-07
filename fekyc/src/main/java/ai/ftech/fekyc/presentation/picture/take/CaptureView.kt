@@ -52,6 +52,7 @@ class CaptureView constructor(
 
     private var facing: FACING = FACING.BACK
     private var flash: FLASH = FLASH.OFF
+    private var shape: SHAPE = SHAPE.RECTANGLE
 
     private var file: File? = null
 
@@ -159,7 +160,11 @@ class CaptureView constructor(
         })
 
         ovFrameCrop?.apply {
-            setCropType(OverlayView.CROP_TYPE.REACTANGLE)
+            setCropType(if (shape == SHAPE.RECTANGLE) {
+                OverlayView.CROP_TYPE.REACTANGLE
+            } else {
+                OverlayView.CROP_TYPE.CIRCLE
+            })
             listener = object : OverlayView.ICallback {
                 override fun onTakePicture(bitmap: Bitmap) {
                     val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
@@ -221,6 +226,15 @@ class CaptureView constructor(
         } else {
             Facing.FRONT
         }
+    }
+
+    fun setShape(shape: SHAPE) {
+        this.shape = shape
+        ovFrameCrop?.setCropType(if (shape == SHAPE.RECTANGLE) {
+            OverlayView.CROP_TYPE.REACTANGLE
+        } else {
+            OverlayView.CROP_TYPE.CIRCLE
+        })
     }
 
     fun setOnFlashIconClick(onFlashIconClick: (() -> Unit)?) {
@@ -362,6 +376,13 @@ class CaptureView constructor(
                 FLASH.OFF
             }
         }
+        if (ta.hasValue(R.styleable.CaptureView_captureShape)) {
+            shape = if (ta.getBoolean(R.styleable.CaptureView_captureShape, true)) {
+                SHAPE.RECTANGLE
+            } else {
+                SHAPE.CIRCLE
+            }
+        }
 
         ta.recycle()
     }
@@ -372,6 +393,10 @@ class CaptureView constructor(
 
     enum class FLASH {
         ON, OFF
+    }
+
+    enum class SHAPE {
+        RECTANGLE, CIRCLE
     }
 
     interface ICallback {

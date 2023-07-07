@@ -28,5 +28,9 @@
             <enum name="hide" value="0"/>
             <enum name="show" value="1"/>
         </attr>
+        <attr format="enum" name="captureShape">
+            <enum name="circle" value="0"/>
+            <enum name="rectangle" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>
