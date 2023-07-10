@@ -260,7 +260,7 @@ object FTechEkycManager {
             )
         }
         val bundle = applicationInfo?.metaData
-        val appId = bundle?.getString("sdkId")
+        val appId = bundle?.getString("ekycId")
         val licenseKey = bundle?.getString("licenseKey")
         runActionInCoroutine(
             RegisterEkycAction(),

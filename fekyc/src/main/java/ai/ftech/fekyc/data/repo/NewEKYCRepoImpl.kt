@@ -43,10 +43,7 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
             this.secretKey = licenseKey
         }
 
-        return service.registerEkyc(request).invokeApi { _, body ->
-            body.data!!
-
-        }
+        return service.registerEkyc(request).invokeApi { _, body -> body.data!! }
     }
 
     override fun createTransaction(extraData: String): TransactionData {
