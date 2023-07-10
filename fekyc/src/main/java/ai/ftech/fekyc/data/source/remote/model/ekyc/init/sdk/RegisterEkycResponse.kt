@@ -8,4 +8,8 @@ class RegisterEkycResponse : BaseApiResponse() {
     @SerializedName("data")
     @Expose
     var data: RegisterEkycData? = null
+
+    override fun isSuccessful(): Boolean {
+        return data != null
+    }
 }

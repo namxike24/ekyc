@@ -9,6 +9,7 @@ import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
+import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.domain.action.*
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
@@ -25,6 +26,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
 import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -196,10 +198,10 @@ object FTechEkycManager {
             }
             FTECH_EKYC_RESULT_TYPE.ERROR -> {
                 if (isActive) {
-                    callback?.onFail()
+                    callback?.onFail(result.error)
                 } else {
                     pendingCallback = {
-                        callback?.onFail()
+                        callback?.onFail(result.error)
                     }
                 }
             }
@@ -234,6 +236,7 @@ object FTechEkycManager {
                     CoroutineScope(Dispatchers.Main).launch {
                         invokeCallback(callback, FTechEkycResult<O>().apply {
                             this.type = FTECH_EKYC_RESULT_TYPE.ERROR
+                            this.error = if (it is APIException) it else APIException(APIException.UNKNOWN_ERROR, it.message)
                         })
                     }
                 }.collect {
@@ -267,9 +270,18 @@ object FTechEkycManager {
                     AppPreferences.token = info?.token
                     super.onSuccess(info)
                 }
+
+                override fun onFail(error: APIException) {
+                    super.onFail(error)
+                }
+
+                override fun onCancel() {
+                    super.onCancel()
+                }
             }
         )
     }
+
 
     @JvmStatic
     fun createTransaction(callback: IFTechEkycCallback<TransactionData>) {

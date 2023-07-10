@@ -25,12 +25,12 @@ fun <T> Flow<T>.onException(onCatch: suspend (Throwable) -> Unit): Flow<T> {
             val apiException = APIException(e.code, msg)
             onCatch(apiException)
 
-            if (e.code == APIException.EXPIRE_SESSION_ERROR) {
-                ShareFlowEventBus.emitEvent(ExpireEvent())
-            }
+//            if (e.code == APIException.EXPIRE_SESSION_ERROR) {
+//                ShareFlowEventBus.emitEvent(ExpireEvent())
+//            }
 
         } else {
-            onCatch(e)
+            onCatch(APIException(APIException.UNKNOWN_ERROR ,e.message))
         }
     }
 }

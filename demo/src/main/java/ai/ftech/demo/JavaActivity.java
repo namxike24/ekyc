@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
-import java.util.Random;
-
+import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
+import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
@@ -46,24 +46,26 @@ public class JavaActivity extends AppCompatActivity {
             tvState.setText("");
         });
         btnEkyc.setOnClickListener(v -> {
-            Random rd = new Random();
-            String transId = "" + rd.nextInt(100000);
-            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
-                @Override
-                public void onSuccess(FTechEkycInfo info) {
-                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
-                    tvState.setText(info.getMessage());
-                }
-
-                @Override
-                public void onFail() {
-                }
-
-                @Override
-                public void onCancel() {
-
-                }
-            });
+//            Random rd = new Random();
+//            String transId = "" + rd.nextInt(100000);
+//            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
+//                @Override
+//                public void onSuccess(FTechEkycInfo info) {
+//                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
+//                    tvState.setText(info.getMessage());
+//                }
+//
+//                @Override
+//                public void onFail() {
+//                }
+//
+//                @Override
+//                public void onCancel() {
+//
+//                }
+//            });
+//            FTechEkycManager.init(this);
+            FTechEkycManager.registerEkyc();
         });
 
         btnCreateTransaction.setOnClickListener(v -> createTransaction());
@@ -90,8 +92,8 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail() {
-                IFTechEkycCallback.super.onFail();
+            public void onFail(APIException error) {
+                IFTechEkycCallback.super.onFail(error);
             }
 
             @Override
@@ -118,7 +120,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail() {
+                    public void onFail(APIException error) {
                         Log.d("DucPT", "onFail FaceMatching");
                     }
 
@@ -137,7 +139,7 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail() {
+            public void onFail(APIException error) {
                 Log.d("DucPT", "onFail SubmitInfo");
             }
 
