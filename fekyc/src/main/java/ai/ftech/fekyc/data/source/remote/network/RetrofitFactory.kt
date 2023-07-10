@@ -56,7 +56,7 @@ object RetrofitFactory {
             val builderInfo = RetrofitBuilderInfo().apply {
             }
             builderInfo.builder = NewEkycRetrofitConfig(AppPreferences.token).getRetrofitBuilder()
-            builderMap[SDK] = builderInfo
+            builderMap[FNEWEKYC] = builderInfo
             val serviceApi = builderInfo.builder?.build()?.create(service)
             return serviceApi ?: throw APIException(APIException.CREATE_INSTANCE_SERVICE_ERROR)
         }

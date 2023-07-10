@@ -19,6 +19,7 @@ import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.domain.repo.INewEKYCRepo
+import android.util.Log
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,7 +43,10 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
             this.secretKey = licenseKey
         }
 
-        return service.registerEkyc(request).invokeApi { _, body -> body.data!! }
+        return service.registerEkyc(request).invokeApi { _, body ->
+            body.data!!
+
+        }
     }
 
     override fun createTransaction(extraData: String): TransactionData {
@@ -51,7 +55,9 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         val request = TransactionRequest().apply {
             this.extraData = extraData
         }
-        return service.createTransaction(request).invokeApi { _, body -> body.data!! }
+        return service.createTransaction(request).invokeApi { _, body ->
+            body.data!!
+        }
     }
 
     override fun submitInfo(request: NewSubmitInfoRequest): SubmitInfo {
