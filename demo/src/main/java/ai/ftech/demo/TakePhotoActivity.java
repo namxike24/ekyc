@@ -27,6 +27,7 @@ import java.util.Objects;
 
 import ai.ftech.fekyc.common.widget.toolbar.ToolbarView;
 import ai.ftech.fekyc.domain.model.capture.CaptureData;
+import ai.ftech.fekyc.presentation.picture.take.TakePictureActivity;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
 
@@ -122,7 +123,9 @@ public class TakePhotoActivity extends AppCompatActivity {
         spTypePicture.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listOption));
 
         btnTakePicture.setOnClickListener(v -> {
-            takePhotoUtils.showDialogSelectImage(null, null, null).setListener(takePhotoCallback);
+            Intent intent = new Intent(this, TakePictureActivity.class);
+            intent.putExtra(TakePictureActivity.KEY_ORIENTATION, uploadOrientation);
+            startActivity(intent);
         });
         btnUpload.setOnClickListener(v -> {
             String transactionId = "2e5912a0-0ead-4fda-8849-11540b9b68ff";

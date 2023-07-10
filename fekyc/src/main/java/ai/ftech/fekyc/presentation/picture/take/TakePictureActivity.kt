@@ -153,11 +153,13 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             }
         }
 
+        val orientation = intent.getStringExtra(KEY_ORIENTATION)
+
         ovFrameCrop.listener = object : OverlayView.ICallback {
             override fun onTakePicture(bitmap: Bitmap) {
                 val file = FileUtils.bitmapToFile(bitmap, file?.absolutePath.toString())
                 if (file != null) {
-                    viewModel.uploadPhoto(file.absolutePath)
+                    viewModel.uploadPhoto(file.absolutePath, orientation)
                 }
             }
 
@@ -333,5 +335,9 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
             PHOTO_INFORMATION.FACE -> getAppString(R.string.fekyc_take_picture_image_portrait)
             PHOTO_INFORMATION.PAGE_NUMBER_2 -> getAppString(R.string.fekyc_take_picture_take_passport)
         }
+    }
+
+    companion object{
+        const val KEY_ORIENTATION = "orientation"
     }
 }
