@@ -6,7 +6,7 @@ import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
-import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.action.*
@@ -49,10 +49,16 @@ object FTechEkycManager {
         private set
 
     @JvmStatic
+    fun setTransactionId(transactionId: String) {
+        this.transactionId = transactionId
+    }
+
+    @JvmStatic
     fun init(context: Context) {
         applicationContext = context
         setApplication(getApplicationContext())
         AppPreferences.init(context)
+        registerEkyc()
     }
 
     @JvmStatic
@@ -242,8 +248,8 @@ object FTechEkycManager {
     }
 
     // start ekyc
-
-    fun initSDK(callback: IFTechEkycCallback<InitSDKData>) {
+    @JvmStatic
+    fun registerEkyc() {
         val applicationInfo = applicationContext?.let {
             getApplicationContext().packageManager.getApplicationInfo(
                 it.packageName,
@@ -254,10 +260,10 @@ object FTechEkycManager {
         val appId = bundle?.getString("sdkId")
         val licenseKey = bundle?.getString("licenseKey")
         runActionInCoroutine(
-            InitSDKAction(),
-            InitSDKAction.InitSDKRV(appId.toString(), licenseKey.toString()),
-            object : IFTechEkycCallback<InitSDKData> {
-                override fun onSuccess(info: InitSDKData?) {
+            RegisterEkycAction(),
+            RegisterEkycAction.RegisterEkycRV(appId.toString(), licenseKey.toString()),
+            object : IFTechEkycCallback<RegisterEkycData> {
+                override fun onSuccess(info: RegisterEkycData?) {
                     AppPreferences.token = info?.token
                     super.onSuccess(info)
                 }
@@ -265,7 +271,8 @@ object FTechEkycManager {
         )
     }
 
-    fun createTransaction(callback: IFTechEkycCallback<TransactionData>){
+    @JvmStatic
+    fun createTransaction(callback: IFTechEkycCallback<TransactionData>) {
         runActionInCoroutine(
             TransactionAction(),
             BaseAction.VoidRequest(),

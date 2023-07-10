@@ -29,6 +29,17 @@
         app:layout_constraintTop_toBottomOf="@id/tvDemoState" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDemoCreateTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Create Transaction"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDemoEkyc" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmitInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +48,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnDemoEkyc" />
+        app:layout_constraintTop_toBottomOf="@id/btnDemoCreateTransaction" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUploadPhoto"

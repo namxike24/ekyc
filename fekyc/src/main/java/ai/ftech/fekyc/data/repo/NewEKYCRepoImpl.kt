@@ -8,7 +8,7 @@ import ai.ftech.fekyc.data.source.remote.base.invokeApi
 import ai.ftech.fekyc.data.source.remote.base.invokeInitSDKFEkycService
 import ai.ftech.fekyc.data.source.remote.base.invokeNewFEkycService
 import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingRequest
-import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
@@ -34,7 +34,7 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         private const val PART_TRANSACTION_ID = "transaction_id"
     }
 
-    override fun initSDK(appId: String, licenseKey: String): InitSDKData {
+    override fun registerEkyc(appId: String, licenseKey: String): RegisterEkycData {
         val service = invokeInitSDKFEkycService(InitSDKService::class.java)
 
         val request = InitSDKRequest().apply {
@@ -42,7 +42,7 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
             this.secretKey = licenseKey
         }
 
-        return service.initSDK(request).invokeApi { _, body -> body.data!! }
+        return service.registerEkyc(request).invokeApi { _, body -> body.data!! }
     }
 
     override fun createTransaction(extraData: String): TransactionData {

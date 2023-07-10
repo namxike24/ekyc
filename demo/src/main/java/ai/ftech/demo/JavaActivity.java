@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 
 import java.util.Random;
 
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
+import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
@@ -22,6 +24,7 @@ import ai.ftech.fekyc.publish.IFTechEkycCallback;
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
     private Button btnEkyc;
+    private Button btnCreateTransaction;
     private Button btnSubmitInfo;
     private Button btnUploadPhoto;
     private Button btnFaceMatching;
@@ -32,6 +35,7 @@ public class JavaActivity extends AppCompatActivity {
         setContentView(R.layout.demo_activity);
         tvState = findViewById(R.id.tvDemoState);
         btnEkyc = findViewById(R.id.btnDemoEkyc);
+        btnCreateTransaction = findViewById(R.id.btnDemoCreateTransaction);
         btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
         btnUploadPhoto = findViewById(R.id.btnUploadPhoto);
         btnFaceMatching = findViewById(R.id.btnFaceMatching);
@@ -41,8 +45,6 @@ public class JavaActivity extends AppCompatActivity {
         tvState.setOnClickListener(v -> {
             tvState.setText("");
         });
-
-
         btnEkyc.setOnClickListener(v -> {
             Random rd = new Random();
             String transId = "" + rd.nextInt(100000);
@@ -64,6 +66,8 @@ public class JavaActivity extends AppCompatActivity {
             });
         });
 
+        btnCreateTransaction.setOnClickListener(v -> createTransaction());
+
         btnSubmitInfo.setOnClickListener(v -> {
             executeSubmitInfo();
         });
@@ -74,6 +78,26 @@ public class JavaActivity extends AppCompatActivity {
 
         btnFaceMatching.setOnClickListener(v -> {
             executeFaceMatching();
+        });
+    }
+
+    private void createTransaction() {
+        FTechEkycManager.createTransaction(new IFTechEkycCallback<TransactionData>() {
+            @Override
+            public void onSuccess(TransactionData info) {
+                IFTechEkycCallback.super.onSuccess(info);
+                FTechEkycManager.setTransactionId(info.getTransactionId());
+            }
+
+            @Override
+            public void onFail() {
+                IFTechEkycCallback.super.onFail();
+            }
+
+            @Override
+            public void onCancel() {
+                IFTechEkycCallback.super.onCancel();
+            }
         });
     }
 
