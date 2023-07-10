@@ -10,15 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
-import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
-import ai.ftech.fekyc.domain.APIException;
+import java.util.Random;
+
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
-import ai.ftech.fekyc.domain.model.capture.CaptureData;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
-import ai.ftech.fekyc.presentation.AppPreferences;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
@@ -67,22 +65,7 @@ public class JavaActivity extends AppCompatActivity {
 //                }
 //            });
 //            FTechEkycManager.init(this);
-            FTechEkycManager.registerEkyc(new IFTechEkycCallback<CaptureData>() {
-                @Override
-                public void onSuccess(CaptureData info) {
-                    IFTechEkycCallback.super.onSuccess(info);
-                }
-
-                @Override
-                public void onFail(APIException error) {
-                    IFTechEkycCallback.super.onFail(error);
-                }
-
-                @Override
-                public void onCancel() {
-                    IFTechEkycCallback.super.onCancel();
-                }
-            });
+            FTechEkycManager.registerEkyc();
         });
 
         btnCreateTransaction.setOnClickListener(v -> createTransaction());
@@ -109,8 +92,8 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(APIException error) {
-                IFTechEkycCallback.super.onFail(error);
+            public void onFail() {
+                IFTechEkycCallback.super.onFail();
             }
 
             @Override
@@ -137,7 +120,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail(APIException error) {
+                    public void onFail() {
                         Log.d("DucPT", "onFail FaceMatching");
                     }
 
@@ -156,7 +139,7 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(APIException error) {
+            public void onFail() {
                 Log.d("DucPT", "onFail SubmitInfo");
             }
 
