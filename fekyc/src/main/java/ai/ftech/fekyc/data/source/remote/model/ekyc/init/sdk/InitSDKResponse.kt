@@ -8,4 +8,8 @@ class InitSDKResponse : BaseApiResponse() {
     @SerializedName("data")
     @Expose
     var data: InitSDKData? = null
+
+    override fun isSuccessful(): Boolean {
+        return data != null
+    }
 }

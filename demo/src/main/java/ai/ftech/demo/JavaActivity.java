@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 
 import java.util.Random;
 
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
+import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
@@ -44,22 +46,39 @@ public class JavaActivity extends AppCompatActivity {
 
 
         btnEkyc.setOnClickListener(v -> {
-            Random rd = new Random();
-            String transId = "" + rd.nextInt(100000);
-            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
+//            Random rd = new Random();
+//            String transId = "" + rd.nextInt(100000);
+//            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
+//                @Override
+//                public void onSuccess(FTechEkycInfo info) {
+//                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
+//                    tvState.setText(info.getMessage());
+//                }
+//
+//                @Override
+//                public void onFail() {
+//                }
+//
+//                @Override
+//                public void onCancel() {
+//
+//                }
+//            });
+//            FTechEkycManager.init(this);
+            FTechEkycManager.initSDK(new IFTechEkycCallback<InitSDKData>() {
                 @Override
-                public void onSuccess(FTechEkycInfo info) {
-                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
-                    tvState.setText(info.getMessage());
+                public void onSuccess(InitSDKData info) {
+                    Log.e("initSDK", "onSuccess");
                 }
 
                 @Override
-                public void onFail() {
+                public void onFail(APIException error) {
+                    Log.e("initSDK", "onFail");
                 }
 
                 @Override
                 public void onCancel() {
-
+                    Log.e("initSDK", "onCancel");
                 }
             });
         });
@@ -94,7 +113,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail() {
+                    public void onFail(APIException error) {
                         Log.d("DucPT", "onFail FaceMatching");
                     }
 
@@ -113,7 +132,7 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail() {
+            public void onFail(APIException error) {
                 Log.d("DucPT", "onFail SubmitInfo");
             }
 
