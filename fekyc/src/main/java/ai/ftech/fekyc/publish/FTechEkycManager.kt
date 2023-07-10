@@ -50,9 +50,33 @@ object FTechEkycManager {
     var transactionId: String = ""
         private set
 
+    var transactionFront: String = ""
+        private set
+
+    var transactionBack: String = ""
+        private set
+
+    var transactionFace: String = ""
+        private set
+
     @JvmStatic
     fun setTransactionId(transactionId: String) {
         this.transactionId = transactionId
+    }
+
+    @JvmStatic
+    fun setTransactionFront(transactionFront: String) {
+        this.transactionFront = transactionFront
+    }
+
+    @JvmStatic
+    fun setTransactionBack(transactionBack: String) {
+        this.transactionBack = transactionBack
+    }
+
+    @JvmStatic
+    fun setTransactionFace(transactionFace: String) {
+        this.transactionFace = transactionFace
     }
 
     @JvmStatic
@@ -305,7 +329,6 @@ object FTechEkycManager {
     fun uploadPhoto(
         pathImage: String,
         orientation: String?,
-        transactionId: String,
         callback: IFTechEkycCallback<CaptureData>
     ) {
         runActionInCoroutine(
@@ -321,15 +344,11 @@ object FTechEkycManager {
 
     @JvmStatic
     fun faceMatching(
-        idTransaction: String,
-        idSessionFront: String,
-        idSessionBack: String,
-        idSessionFace: String,
         callback: IFTechEkycCallback<FaceMatchingData>
     ) {
         runActionInCoroutine(
             action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
-                idTransaction, idSessionFront, idSessionBack, idSessionFace
+                transactionId,transactionFront, transactionBack, transactionFace
             ), callback = callback
         )
     }

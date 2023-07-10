@@ -90,38 +90,15 @@ public class JavaActivity extends AppCompatActivity {
                 IFTechEkycCallback.super.onSuccess(info);
                 FTechEkycManager.setTransactionId(info.getTransactionId());
             }
-
-            @Override
-            public void onFail() {
-                IFTechEkycCallback.super.onFail();
-            }
-
-            @Override
-            public void onCancel() {
-                IFTechEkycCallback.super.onCancel();
-            }
         });
     }
 
     private void executeFaceMatching() {
-        String idTransaction = "2e5912a0-0ead-4fda-8849-11540b9b68ff";
-        String idSessionFront = "4e2e9287-4b03-4bd0-9022-aaad4bc62916";
-        String idSessionBack = "5a7939c5-74fe-4bb2-9ef4-a0d2e401b632";
-        String idSessionFace = "3a6b002f-0007-4b5c-b09f-6838d7e7265";
         FTechEkycManager.faceMatching(
-                idTransaction,
-                idSessionFront,
-                idSessionBack,
-                idSessionFace,
                 new IFTechEkycCallback<FaceMatchingData>() {
                     @Override
                     public void onSuccess(FaceMatchingData data) {
                         Log.d("DucPT", "onSuccess FaceMatching: " + data.toString());
-                    }
-
-                    @Override
-                    public void onFail() {
-                        Log.d("DucPT", "onFail FaceMatching");
                     }
 
                     @Override
@@ -136,11 +113,6 @@ public class JavaActivity extends AppCompatActivity {
             @Override
             public void onSuccess(SubmitInfo info) {
                 Log.d("DucPT", "onSuccess SubmitInfo: " + info.toString());
-            }
-
-            @Override
-            public void onFail() {
-                Log.d("DucPT", "onFail SubmitInfo");
             }
 
             @Override

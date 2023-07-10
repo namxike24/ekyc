@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,14 +20,6 @@
         android:layout_margin="@dimen/fbase_dimen_16"
         app:layout_constraintTop_toBottomOf="@id/tbvTakePhoto" />
 
-    <ImageView
-        android:id="@+id/ivPreviewPicture"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/fbase_dimen_16"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spTypePicture" />
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnTakePicture"
         android:layout_width="wrap_content"
@@ -37,25 +30,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUploadPicture"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
         android:layout_marginBottom="@dimen/fbase_dimen_16"
-        android:text="Upload"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <ProgressBar
-        android:id="@+id/pbLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvTakePhotoStateFront"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Front"
+            android:textSize="16sp"
+            android:textColor="@color/color_process_capture" />
+
+        <TextView
+            android:id="@+id/tvTakePhotoStateBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Back"
+            android:textSize="16sp"
+            android:textColor="@color/color_process_capture" />
+
+        <TextView
+            android:id="@+id/tvTakePhotoStateFace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Face"
+            android:textColor="@color/color_process_capture" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
