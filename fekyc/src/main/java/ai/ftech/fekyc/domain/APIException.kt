@@ -2,7 +2,7 @@ package ai.ftech.fekyc.domain
 
 class APIException : Exception {
     companion object {
-        const val UNKNOWN_ERROR = -2001
+        const val UNKNOWN_ERROR = -9999
         const val NETWORK_ERROR = -2002
         const val TIME_OUT_ERROR = -2003
         const val SERVER_ERROR_CODE_UNDEFINE = -2004

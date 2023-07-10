@@ -1,5 +1,6 @@
 package ai.ftech.demo
 
+import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.publish.FTechEkycInfo
 import ai.ftech.fekyc.publish.FTechEkycManager
 import ai.ftech.fekyc.publish.IFTechEkycCallback
@@ -30,7 +31,7 @@ class KotlinActivity : AppCompatActivity() {
                     tvState.text = info?.message
                 }
 
-                override fun onFail() {
+                override fun onFail(error: APIException) {
 
                 }
 

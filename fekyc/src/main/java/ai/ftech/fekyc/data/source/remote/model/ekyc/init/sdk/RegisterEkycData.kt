@@ -3,7 +3,7 @@ package ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class InitSDKData {
+class RegisterEkycData {
     @SerializedName("token")
     @Expose
     var token: String? = null

@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap
 object RetrofitFactory {
     private val TAG = RetrofitFactory::class.java.simpleName
     private const val FEKYC = "FEKYC"
+    private const val FNEWEKYC = "FNEWEKYC"
     private const val SDK = "SDK"
 
     private val builderMap = ConcurrentHashMap<String, RetrofitBuilderInfo>()
@@ -56,7 +57,7 @@ object RetrofitFactory {
             val builderInfo = RetrofitBuilderInfo().apply {
             }
             builderInfo.builder = NewEkycRetrofitConfig(AppPreferences.token).getRetrofitBuilder()
-            builderMap[SDK] = builderInfo
+            builderMap[FNEWEKYC] = builderInfo
             val serviceApi = builderInfo.builder?.build()?.create(service)
             return serviceApi ?: throw APIException(APIException.CREATE_INSTANCE_SERVICE_ERROR)
         }

@@ -34,7 +34,7 @@
         <activity android:name=".TakePhotoActivity" android:exported="true" />
 
         <meta-data
-            android:name="sdkId"
+            android:name="ekycId"
             android:value="@string/sdk_id" />
         <meta-data
             android:name="licenseKey"
