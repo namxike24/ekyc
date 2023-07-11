@@ -10,10 +10,13 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.APIException
-import ai.ftech.fekyc.domain.action.*
+import ai.ftech.fekyc.domain.action.FaceMatchingAction
+import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
+import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
+import ai.ftech.fekyc.domain.action.RegisterEkycAction
+import ai.ftech.fekyc.domain.action.TransactionAction
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
-import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -26,7 +29,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
 import androidx.fragment.app.FragmentActivity
-import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,9 +52,33 @@ object FTechEkycManager {
     var transactionId: String = ""
         private set
 
+    var transactionFront: String = ""
+        private set
+
+    var transactionBack: String = ""
+        private set
+
+    var transactionFace: String = ""
+        private set
+
     @JvmStatic
     fun setTransactionId(transactionId: String) {
         this.transactionId = transactionId
+    }
+
+    @JvmStatic
+    fun setTransactionFront(transactionFront: String) {
+        this.transactionFront = transactionFront
+    }
+
+    @JvmStatic
+    fun setTransactionBack(transactionBack: String) {
+        this.transactionBack = transactionBack
+    }
+
+    @JvmStatic
+    fun setTransactionFace(transactionFace: String) {
+        this.transactionFace = transactionFace
     }
 
     @JvmStatic
@@ -279,7 +305,7 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<SubmitInfo>) {
+    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<Boolean>) {
         runActionInCoroutine(
             action = NewSubmitInfoAction(),
             request = NewSubmitInfoAction.SubmitRV(request = info),
@@ -291,7 +317,6 @@ object FTechEkycManager {
     fun uploadPhoto(
         pathImage: String,
         orientation: String?,
-        transactionId: String,
         callback: IFTechEkycCallback<CaptureData>
     ) {
         runActionInCoroutine(
@@ -307,15 +332,11 @@ object FTechEkycManager {
 
     @JvmStatic
     fun faceMatching(
-        idTransaction: String,
-        idSessionFront: String,
-        idSessionBack: String,
-        idSessionFace: String,
         callback: IFTechEkycCallback<FaceMatchingData>
     ) {
         runActionInCoroutine(
             action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
-                idTransaction, idSessionFront, idSessionBack, idSessionFace
+                transactionId, transactionFront, transactionBack, transactionFace
             ), callback = callback
         )
     }
