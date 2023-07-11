@@ -11,8 +11,9 @@ open class BaseApiResponse : IApiResponse {
     @SerializedName("msg")
     @Expose
     var message: String? = null
-//
+
+    //
     override fun isSuccessful(): Boolean {
-        return code == 2000
+        return code == 2000 || code == 0
     }
 }

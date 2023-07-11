@@ -15,6 +15,7 @@ import java.util.Random;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
+import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.publish.FTechEkycInfo;
@@ -74,9 +75,9 @@ public class JavaActivity extends AppCompatActivity {
             executeSubmitInfo();
         });
 
-        btnUploadPhoto.setOnClickListener(v -> {
-            TakePhotoActivity.startTakePhotoScreen(this);
-        });
+//        btnUploadPhoto.setOnClickListener(v -> {
+//            TakePhotoActivity.startTakePhotoScreen(this);
+//        });
 
         btnFaceMatching.setOnClickListener(v -> {
             executeFaceMatching();
@@ -92,8 +93,8 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail() {
-                IFTechEkycCallback.super.onFail();
+            public void onFail(APIException error) {
+                IFTechEkycCallback.super.onFail(error);
             }
 
             @Override
@@ -120,7 +121,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail() {
+                    public void onFail(APIException error) {
                         Log.d("DucPT", "onFail FaceMatching");
                     }
 
@@ -139,7 +140,7 @@ public class JavaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail() {
+            public void onFail(APIException error) {
                 Log.d("DucPT", "onFail SubmitInfo");
             }
 
