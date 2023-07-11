@@ -3,13 +3,12 @@ package ai.ftech.fekyc.data.repo
 import ai.ftech.fekyc.base.repo.BaseRepo
 import ai.ftech.fekyc.data.repo.converter.CapturePhotoResponseConvertToData
 import ai.ftech.fekyc.data.repo.converter.FaceMatchingResponseConvertData
-import ai.ftech.fekyc.data.repo.converter.NewSubmitResponseConvertToSubmitInfo
 import ai.ftech.fekyc.data.source.remote.base.invokeApi
 import ai.ftech.fekyc.data.source.remote.base.invokeInitSDKFEkycService
 import ai.ftech.fekyc.data.source.remote.base.invokeNewFEkycService
 import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingRequest
-import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.InitSDKRequest
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionRequest
@@ -17,9 +16,7 @@ import ai.ftech.fekyc.data.source.remote.service.InitSDKService
 import ai.ftech.fekyc.data.source.remote.service.NewEkycService
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
-import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.domain.repo.INewEKYCRepo
-import android.util.Log
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -57,11 +54,11 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         }
     }
 
-    override fun submitInfo(request: NewSubmitInfoRequest): SubmitInfo {
+    override fun submitInfo(request: NewSubmitInfoRequest): Boolean {
         val service = invokeNewFEkycService(NewEkycService::class.java)
 
-        return service.submitInfo(request).invokeApi { _, body ->
-            NewSubmitResponseConvertToSubmitInfo().convert(body)
+        return service.submitInfo(request).invokeApi { _, _ ->
+            true
         }
     }
 
@@ -107,8 +104,8 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
             sessionIdFront = idSessionFront
             sessionIdFace = idSessionFace
         }
-        return service.faceMatching(body = bodyMatching).invokeApi { _, data ->
-            FaceMatchingResponseConvertData().convert(data)
+        return service.faceMatching(body = bodyMatching).invokeApi { _, body ->
+            FaceMatchingResponseConvertData().convert(body.data)
         }
     }
 

@@ -13,6 +13,6 @@ open class BaseApiResponse : IApiResponse {
     var message: String? = null
 //
     override fun isSuccessful(): Boolean {
-        return code == 2000
+        return code == 0
     }
 }

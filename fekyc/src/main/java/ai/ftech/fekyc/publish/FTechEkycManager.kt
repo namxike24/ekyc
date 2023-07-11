@@ -10,10 +10,13 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.APIException
-import ai.ftech.fekyc.domain.action.*
+import ai.ftech.fekyc.domain.action.FaceMatchingAction
+import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
+import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
+import ai.ftech.fekyc.domain.action.RegisterEkycAction
+import ai.ftech.fekyc.domain.action.TransactionAction
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
-import ai.ftech.fekyc.domain.model.submit.SubmitInfo
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -26,7 +29,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
 import androidx.fragment.app.FragmentActivity
-import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -317,7 +319,7 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<SubmitInfo>) {
+    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<Boolean>) {
         runActionInCoroutine(
             action = NewSubmitInfoAction(),
             request = NewSubmitInfoAction.SubmitRV(request = info),
@@ -348,7 +350,7 @@ object FTechEkycManager {
     ) {
         runActionInCoroutine(
             action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
-                transactionId,transactionFront, transactionBack, transactionFace
+                transactionId, transactionFront, transactionBack, transactionFace
             ), callback = callback
         )
     }
