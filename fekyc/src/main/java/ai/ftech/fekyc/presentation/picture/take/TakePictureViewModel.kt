@@ -35,7 +35,7 @@ class TakePictureViewModel : BaseViewModel() {
         }
     }
 
-    fun uploadPhoto(absolutePath: String) {
+   /* fun uploadPhoto(absolutePath: String) {
         viewModelScope.launch {
             currentPhotoType?.let { photoType ->
                 if (currentPhotoType != null) {
@@ -66,9 +66,15 @@ class TakePictureViewModel : BaseViewModel() {
                 }
             }
         }
-    }
+    }*/
 
-    fun uploadPhoto(absolutePath: String, orientation: String?){
+    fun uploadPhoto(absolutePath: String){
+        val orientation = when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT -> "front"
+            PHOTO_INFORMATION.BACK -> "back"
+            PHOTO_INFORMATION.FACE -> null
+            else -> "front"
+        }
         viewModelScope.launch {
             FTechEkycManager.uploadPhoto(absolutePath, orientation = orientation,object : IFTechEkycCallback<CaptureData>{
                 override fun onSuccess(info: CaptureData?) {
@@ -86,6 +92,7 @@ class TakePictureViewModel : BaseViewModel() {
                             }
                         }
                     }
+                    EkycStep.add(PHOTO_TYPE.SSN, absolutePath)
                     uploadPhoto.value = if (EkycStep.isDoneStep()) {
                         FEkycActionResult<UPLOAD_STATUS>().apply {
                             this.data = UPLOAD_STATUS.COMPLETE
