@@ -1,5 +1,6 @@
 package ai.ftech.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -16,12 +17,12 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
 import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
 import ai.ftech.fekyc.presentation.AppPreferences;
+import ai.ftech.fekyc.presentation.picture.take.TakePictureActivity;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
 
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
-    private Button btnEkyc;
     private Button btnCreateTransaction;
     private Button btnSubmitInfo;
     private Button btnUploadPhoto;
@@ -34,7 +35,6 @@ public class JavaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_activity);
         tvState = findViewById(R.id.tvDemoState);
-        btnEkyc = findViewById(R.id.btnDemoEkyc);
         btnCreateTransaction = findViewById(R.id.btnDemoCreateTransaction);
         btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
         btnUploadPhoto = findViewById(R.id.btnUploadPhoto);
@@ -45,44 +45,24 @@ public class JavaActivity extends AppCompatActivity {
         tvState.setOnClickListener(v -> {
             tvState.setText("");
         });
-        btnEkyc.setOnClickListener(v -> {
-//            Random rd = new Random();
-//            String transId = "" + rd.nextInt(100000);
-//            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", transId, new IFTechEkycCallback<FTechEkycInfo>() {
-//                @Override
-//                public void onSuccess(FTechEkycInfo info) {
-//                    Log.d("anhnd", "onSuccess() called with: info = [" + info + "]");
-//                    tvState.setText(info.getMessage());
-//                }
-//
-//                @Override
-//                public void onFail() {
-//                }
-//
-//                @Override
-//                public void onCancel() {
-//
-//                }
-//            });
-//            FTechEkycManager.init(this);
-            FTechEkycManager.registerEkyc(new IFTechEkycCallback<RegisterEkycData>() {
-                @Override
-                public void onSuccess(RegisterEkycData info) {
-                    AppPreferences.INSTANCE.setToken(info.getToken());
-                    IFTechEkycCallback.super.onSuccess(info);
-                }
+        FTechEkycManager.registerEkyc(new IFTechEkycCallback<RegisterEkycData>() {
+            @Override
+            public void onSuccess(RegisterEkycData info) {
+                AppPreferences.INSTANCE.setToken(info.getToken());
+                IFTechEkycCallback.super.onSuccess(info);
+            }
 
-                @Override
-                public void onFail(APIException error) {
-                    IFTechEkycCallback.super.onFail(error);
-                }
+            @Override
+            public void onFail(APIException error) {
+                IFTechEkycCallback.super.onFail(error);
+            }
 
-                @Override
-                public void onCancel() {
-                    IFTechEkycCallback.super.onCancel();
-                }
-            });
+            @Override
+            public void onCancel() {
+                IFTechEkycCallback.super.onCancel();
+            }
         });
+
 
         btnCreateTransaction.setOnClickListener(v -> createTransaction());
 
@@ -91,12 +71,20 @@ public class JavaActivity extends AppCompatActivity {
         });
 
         btnUploadPhoto.setOnClickListener(v -> {
-            TakePhotoActivity.startTakePhotoScreen(this);
+            launchCaptureScreen();
         });
 
         btnFaceMatching.setOnClickListener(v -> {
             executeFaceMatching();
         });
+    }
+
+    private void launchCaptureScreen() {
+        if (hasTransactionId()){
+            startActivity(new Intent(this, TakePictureActivity.class));
+        }else{
+            Toast.makeText(this, "Please create Transaction", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void createTransaction() {
@@ -105,6 +93,7 @@ public class JavaActivity extends AppCompatActivity {
             public void onSuccess(TransactionData info) {
                 IFTechEkycCallback.super.onSuccess(info);
                 FTechEkycManager.setTransactionId(info.getTransactionId());
+                Toast.makeText(JavaActivity.this, "Transaction created!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -120,23 +109,38 @@ public class JavaActivity extends AppCompatActivity {
     }
 
     private void executeFaceMatching() {
-        FTechEkycManager.faceMatching(new IFTechEkycCallback<FaceMatchingData>() {
-            @Override
-            public void onSuccess(FaceMatchingData data) {
-                submitInfoRequest = new FaceMatchingDataConvertToSubmitRequest().convert(data);
-                Log.d("DucPT", "SubmitReq: " + submitInfoRequest);
-            }
+        if (hasTransactionCaptureId()) {
+            FTechEkycManager.faceMatching(new IFTechEkycCallback<FaceMatchingData>() {
+                @Override
+                public void onSuccess(FaceMatchingData data) {
+                    submitInfoRequest = new FaceMatchingDataConvertToSubmitRequest().convert(data);
+                    Toast.makeText(JavaActivity.this, "Matching succeeded!", Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onFail(APIException error) {
-                IFTechEkycCallback.super.onFail(error);
-                Toast.makeText(JavaActivity.this, "ErrorFaceMatching: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFail(APIException error) {
+                    IFTechEkycCallback.super.onFail(error);
+                    Toast.makeText(JavaActivity.this, "ErrorFaceMatching: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onCancel() {
-            }
-        });
+                @Override
+                public void onCancel() {
+                }
+            });
+        } else {
+            Toast.makeText(this, "Transaction capture not enough", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean hasTransactionCaptureId() {
+        return !FTechEkycManager.INSTANCE.getTransactionId().isEmpty() &&
+                !FTechEkycManager.INSTANCE.getTransactionFront().isEmpty() &&
+                !FTechEkycManager.INSTANCE.getTransactionBack().isEmpty() &&
+                !FTechEkycManager.INSTANCE.getTransactionFace().isEmpty();
+    }
+
+    private boolean hasTransactionId() {
+        return !FTechEkycManager.INSTANCE.getTransactionId().isEmpty();
     }
 
     private void executeSubmitInfo() {
@@ -146,7 +150,7 @@ public class JavaActivity extends AppCompatActivity {
                 public void onSuccess(Boolean info) {
                     submitInfoRequest = null;
                     clearTransaction();
-                    Toast.makeText(JavaActivity.this, "Success Submit Info", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JavaActivity.this, "Submit Info Succeeded!", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

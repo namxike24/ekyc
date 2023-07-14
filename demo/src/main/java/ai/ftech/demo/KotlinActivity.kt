@@ -19,7 +19,6 @@ class KotlinActivity : AppCompatActivity() {
         setContentView(R.layout.demo_activity)
 
         tvState = findViewById(R.id.tvDemoState)
-        btnEkyc = findViewById(R.id.btnDemoEkyc)
 
         tvState.setOnClickListener {
             tvState.text = ""
