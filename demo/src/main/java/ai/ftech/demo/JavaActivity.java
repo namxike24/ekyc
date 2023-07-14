@@ -10,13 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ai.ftech.fekyc.data.repo.converter.FaceMatchingDataConvertToSubmitRequest;
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
 import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
-import ai.ftech.fekyc.domain.model.submit.SubmitInfo;
 import ai.ftech.fekyc.presentation.AppPreferences;
-import ai.ftech.fekyc.publish.FTechEkycInfo;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
 
