@@ -5,9 +5,12 @@ import ai.ftech.fekyc.common.action.FEkycActionResult
 import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.domain.action.UploadPhotoAction
+import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.fekyc.domain.model.ekyc.UPLOAD_STATUS
+import ai.ftech.fekyc.publish.FTechEkycManager
+import ai.ftech.fekyc.publish.IFTechEkycCallback
 import ai.ftech.fekyc.utils.FileUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -32,7 +35,7 @@ class TakePictureViewModel : BaseViewModel() {
         }
     }
 
-    fun uploadPhoto(absolutePath: String) {
+   /* fun uploadPhoto(absolutePath: String) {
         viewModelScope.launch {
             currentPhotoType?.let { photoType ->
                 if (currentPhotoType != null) {
@@ -62,6 +65,58 @@ class TakePictureViewModel : BaseViewModel() {
                     }
                 }
             }
+        }
+    }*/
+
+    fun uploadPhoto(absolutePath: String){
+        val orientation = when (EkycStep.getCurrentStep()) {
+            PHOTO_INFORMATION.FRONT -> "front"
+            PHOTO_INFORMATION.BACK -> "back"
+            PHOTO_INFORMATION.FACE -> null
+            else -> "front"
+        }
+        viewModelScope.launch {
+            FTechEkycManager.uploadPhoto(absolutePath, orientation = orientation,object : IFTechEkycCallback<CaptureData>{
+                override fun onSuccess(info: CaptureData?) {
+                    super.onSuccess(info)
+                    info?.let {
+                        when(orientation){
+                            "back"->{
+                                FTechEkycManager.setTransactionBack(it.data?.sessionId.toString())
+                            }
+                            "front"->{
+                                FTechEkycManager.setTransactionFront(it.data?.sessionId.toString())
+                            }
+                            null->{
+                                FTechEkycManager.setTransactionFace(it.data?.sessionId.toString())
+                            }
+                        }
+                    }
+                    EkycStep.add(PHOTO_TYPE.SSN, absolutePath)
+                    uploadPhoto.value = if (EkycStep.isDoneStep()) {
+                        FEkycActionResult<UPLOAD_STATUS>().apply {
+                            this.data = UPLOAD_STATUS.COMPLETE
+                        }
+
+                    } else {
+                        FEkycActionResult<UPLOAD_STATUS>().apply {
+                            this.data = UPLOAD_STATUS.SUCCESS
+                        }
+                    }
+                }
+
+                override fun onFail(error: APIException?) {
+                    super.onFail(error)
+                    if (error is APIException) {
+                        error.printStackTrace()
+                    }
+                    filePath = absolutePath
+                    uploadPhoto.value = FEkycActionResult<UPLOAD_STATUS>().apply {
+                        this.exception = error
+                        this.data = UPLOAD_STATUS.FAIL
+                    }
+                }
+            })
         }
     }
 

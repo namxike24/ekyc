@@ -17,6 +17,7 @@ import ai.ftech.fekyc.presentation.dialog.WARNING_TYPE
 import ai.ftech.fekyc.presentation.dialog.WarningCaptureDialog
 import ai.ftech.fekyc.presentation.picture.confirm.ConfirmPictureActivity
 import ai.ftech.fekyc.presentation.picture.preview.PreviewPictureActivity
+import ai.ftech.fekyc.publish.FTechEkycManager
 import ai.ftech.fekyc.utils.FileUtils
 import ai.ftech.fekyc.utils.ShareFlowEventBus
 import android.graphics.Bitmap
@@ -64,6 +65,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
 
     override fun onResume() {
         super.onResume()
+        FTechEkycManager.notifyActive(this)
         cvCameraView.open()
         if (warningDialog == null) {
             warningDialog = WarningCaptureDialog(getWarningType())
@@ -74,6 +76,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
         super.onPause()
         cvCameraView.close()
         warningDialog = null
+        FTechEkycManager.notifyInactive(this)
     }
 
     override fun onDestroy() {
@@ -199,7 +202,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 }
                 UPLOAD_STATUS.COMPLETE -> {
                     finish()
-                    navigateTo(ConfirmPictureActivity::class.java)
+//                    navigateTo(ConfirmPictureActivity::class.java)
                 }
                 UPLOAD_STATUS.NONE -> {}
                 else -> {}

@@ -26,8 +26,8 @@ object ExceptionHelper {
         val body = response.body()
         if (body != null) {
             val apiResponse = body as BaseApiResponse
-            val status = apiResponse.status
-            val code = apiResponse.statusCode ?: APIException.SERVER_ERROR_CODE_UNDEFINE
+//            val status = apiResponse.status
+            val code = apiResponse.code ?: APIException.SERVER_ERROR_CODE_UNDEFINE
             val msg = apiResponse.message
             return APIException(code, msg)
         }

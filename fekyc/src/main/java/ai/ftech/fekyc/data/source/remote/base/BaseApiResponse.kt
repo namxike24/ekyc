@@ -4,19 +4,16 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 open class BaseApiResponse : IApiResponse {
-    @SerializedName("status")
+    @SerializedName("code")
     @Expose
-    var status: String? = null
+    var code: Int? = null
 
-    @SerializedName("statusCode")
-    @Expose
-    var statusCode: Int? = null
-
-    @SerializedName("message")
+    @SerializedName("msg")
     @Expose
     var message: String? = null
 
+    //
     override fun isSuccessful(): Boolean {
-        return status == "success" && statusCode == 0
+        return code == 2000 || code == 0
     }
 }

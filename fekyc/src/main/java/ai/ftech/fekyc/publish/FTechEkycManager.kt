@@ -1,18 +1,30 @@
 package ai.ftech.fekyc.publish
 
-import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.AppConfig
 import ai.ftech.fekyc.R
 import ai.ftech.fekyc.base.common.BaseAction
+import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
+import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
+import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
+import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
+import ai.ftech.fekyc.domain.APIException
+import ai.ftech.fekyc.domain.action.FaceMatchingAction
+import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
+import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
+import ai.ftech.fekyc.domain.action.RegisterEkycAction
+import ai.ftech.fekyc.domain.action.TransactionAction
+import ai.ftech.fekyc.domain.model.capture.CaptureData
+import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
 import ai.ftech.fekyc.infras.EncodeRSA
+import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
 import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.content.pm.PackageManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.launch
@@ -40,10 +52,40 @@ object FTechEkycManager {
     var transactionId: String = ""
         private set
 
+    var transactionFront: String = ""
+        private set
+
+    var transactionBack: String = ""
+        private set
+
+    var transactionFace: String = ""
+        private set
+
+    @JvmStatic
+    fun setTransactionId(transactionId: String) {
+        this.transactionId = transactionId
+    }
+
+    @JvmStatic
+    fun setTransactionFront(transactionFront: String) {
+        this.transactionFront = transactionFront
+    }
+
+    @JvmStatic
+    fun setTransactionBack(transactionBack: String) {
+        this.transactionBack = transactionBack
+    }
+
+    @JvmStatic
+    fun setTransactionFace(transactionFace: String) {
+        this.transactionFace = transactionFace
+    }
+
     @JvmStatic
     fun init(context: Context) {
         applicationContext = context
         setApplication(getApplicationContext())
+        AppPreferences.init(context)
     }
 
     @JvmStatic
@@ -181,10 +223,10 @@ object FTechEkycManager {
             }
             FTECH_EKYC_RESULT_TYPE.ERROR -> {
                 if (isActive) {
-                    callback?.onFail()
+                    callback?.onFail(result.error)
                 } else {
                     pendingCallback = {
-                        callback?.onFail()
+                        callback?.onFail(result.error)
                     }
                 }
             }
@@ -219,6 +261,7 @@ object FTechEkycManager {
                     CoroutineScope(Dispatchers.Main).launch {
                         invokeCallback(callback, FTechEkycResult<O>().apply {
                             this.type = FTECH_EKYC_RESULT_TYPE.ERROR
+                            this.error = if (it is APIException) it else APIException(APIException.UNKNOWN_ERROR, it.message)
                         })
                     }
                 }.collect {
@@ -230,6 +273,72 @@ object FTechEkycManager {
                     }
                 }
         }
+    }
+
+    // start ekyc
+    @JvmStatic
+    fun registerEkyc(callback: IFTechEkycCallback<RegisterEkycData>) {
+        val applicationInfo = applicationContext?.let {
+            getApplicationContext().packageManager.getApplicationInfo(
+                it.packageName,
+                PackageManager.GET_META_DATA
+            )
+        }
+        val bundle = applicationInfo?.metaData
+        val appId = bundle?.getString("ekycId")
+        val licenseKey = bundle?.getString("licenseKey")
+        runActionInCoroutine(
+            RegisterEkycAction(),
+            RegisterEkycAction.RegisterEkycRV(appId.toString(), licenseKey.toString()),
+            callback
+        )
+    }
+
+
+    @JvmStatic
+    fun createTransaction(callback: IFTechEkycCallback<TransactionData>) {
+        runActionInCoroutine(
+            TransactionAction(),
+            BaseAction.VoidRequest(),
+            callback
+        )
+    }
+
+    @JvmStatic
+    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<Boolean>) {
+        runActionInCoroutine(
+            action = NewSubmitInfoAction(),
+            request = NewSubmitInfoAction.SubmitRV(request = info),
+            callback = callback
+        )
+    }
+
+    @JvmStatic
+    fun uploadPhoto(
+        pathImage: String,
+        orientation: String?,
+        callback: IFTechEkycCallback<CaptureData>
+    ) {
+        runActionInCoroutine(
+            action = NewUploadPhotoAction(),
+            request = NewUploadPhotoAction.UploadRV(
+                absolutePath = pathImage,
+                orientation = orientation,
+                transactionId = transactionId
+            ),
+            callback = callback
+        )
+    }
+
+    @JvmStatic
+    fun faceMatching(
+        callback: IFTechEkycCallback<FaceMatchingData>
+    ) {
+        runActionInCoroutine(
+            action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
+                transactionId, transactionFront, transactionBack, transactionFace
+            ), callback = callback
+        )
     }
 
 }

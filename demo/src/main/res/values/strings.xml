@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Demo FEkyc</string>
+    <string name="sdk_id"> 1</string>
+    <string name="licenseKey"> 107CB96525E9433C926B92FCC6F388AF</string>
 </resources>

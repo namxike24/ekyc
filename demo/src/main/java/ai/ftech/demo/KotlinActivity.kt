@@ -1,5 +1,6 @@
 package ai.ftech.demo
 
+import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.publish.FTechEkycInfo
 import ai.ftech.fekyc.publish.FTechEkycManager
 import ai.ftech.fekyc.publish.IFTechEkycCallback
@@ -18,7 +19,6 @@ class KotlinActivity : AppCompatActivity() {
         setContentView(R.layout.demo_activity)
 
         tvState = findViewById(R.id.tvDemoState)
-        btnEkyc = findViewById(R.id.btnDemoEkyc)
 
         tvState.setOnClickListener {
             tvState.text = ""
@@ -30,7 +30,7 @@ class KotlinActivity : AppCompatActivity() {
                     tvState.text = info?.message
                 }
 
-                override fun onFail() {
+                override fun onFail(error: APIException) {
 
                 }
 
