@@ -40,11 +40,11 @@ public class JavaActivity extends AppCompatActivity {
         tvState.setOnClickListener(v -> {
             tvState.setText("");
         });
-        FTechEkycManager.registerEkyc(new IFTechEkycCallback<RegisterEkycData>() {
+        FTechEkycManager.registerEkyc(new IFTechEkycCallback<Boolean>() {
             @Override
-            public void onSuccess(RegisterEkycData info) {
-                AppPreferences.INSTANCE.setToken(info.getToken());
+            public void onSuccess(Boolean info) {
                 IFTechEkycCallback.super.onSuccess(info);
+                Toast.makeText(JavaActivity.this, "Register succeeded!", Toast.LENGTH_SHORT).show();
             }
 
             @Override

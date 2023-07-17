@@ -262,7 +262,7 @@ object FTechEkycManager {
 
     // start ekyc
     @JvmStatic
-    fun registerEkyc(callback: IFTechEkycCallback<RegisterEkycData>) {
+    fun registerEkyc(callback: IFTechEkycCallback<Boolean>) {
         val applicationInfo = applicationContext?.let {
             getApplicationContext().packageManager.getApplicationInfo(
                 it.packageName,
@@ -275,7 +275,20 @@ object FTechEkycManager {
         runActionInCoroutine(
             RegisterEkycAction(),
             RegisterEkycAction.RegisterEkycRV(appId.toString(), licenseKey.toString()),
-            callback
+            callback = object: IFTechEkycCallback<RegisterEkycData>{
+                override fun onSuccess(info: RegisterEkycData) {
+                    AppPreferences.token = info.token
+                    callback.onSuccess(true)
+                }
+
+                override fun onCancel() {
+                    callback.onCancel()
+                }
+
+                override fun onFail(error: APIException?) {
+                    super.onFail(error)
+                }
+            }
         )
     }
 
