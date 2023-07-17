@@ -79,19 +79,6 @@ class TakePictureViewModel : BaseViewModel() {
             FTechEkycManager.uploadPhoto(absolutePath, orientation = orientation,object : IFTechEkycCallback<CaptureData>{
                 override fun onSuccess(info: CaptureData?) {
                     super.onSuccess(info)
-                    info?.let {
-                        when(orientation){
-                            "back"->{
-                                FTechEkycManager.setTransactionBack(it.data?.sessionId.toString())
-                            }
-                            "front"->{
-                                FTechEkycManager.setTransactionFront(it.data?.sessionId.toString())
-                            }
-                            null->{
-                                FTechEkycManager.setTransactionFace(it.data?.sessionId.toString())
-                            }
-                        }
-                    }
                     EkycStep.add(PHOTO_TYPE.SSN, absolutePath)
                     uploadPhoto.value = if (EkycStep.isDoneStep()) {
                         FEkycActionResult<UPLOAD_STATUS>().apply {

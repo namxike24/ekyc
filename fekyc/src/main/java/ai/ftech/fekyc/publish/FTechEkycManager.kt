@@ -6,6 +6,7 @@ import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
+import ai.ftech.fekyc.data.repo.converter.FaceMatchingDataConvertToSubmitRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
@@ -52,34 +53,13 @@ object FTechEkycManager {
     var transactionId: String = ""
         private set
 
-    var transactionFront: String = ""
-        private set
+    private var sessionIdFront: String = ""
 
-    var transactionBack: String = ""
-        private set
+    private var sessionIdBack: String = ""
 
-    var transactionFace: String = ""
-        private set
+    private var sessionIdFace: String = ""
 
-    @JvmStatic
-    fun setTransactionId(transactionId: String) {
-        this.transactionId = transactionId
-    }
-
-    @JvmStatic
-    fun setTransactionFront(transactionFront: String) {
-        this.transactionFront = transactionFront
-    }
-
-    @JvmStatic
-    fun setTransactionBack(transactionBack: String) {
-        this.transactionBack = transactionBack
-    }
-
-    @JvmStatic
-    fun setTransactionFace(transactionFace: String) {
-        this.transactionFace = transactionFace
-    }
+    private var submitInfoRequest: NewSubmitInfoRequest? = null
 
     @JvmStatic
     fun init(context: Context) {
@@ -221,6 +201,7 @@ object FTechEkycManager {
                     }
                 }
             }
+
             FTECH_EKYC_RESULT_TYPE.ERROR -> {
                 if (isActive) {
                     callback?.onFail(result.error)
@@ -230,6 +211,7 @@ object FTechEkycManager {
                     }
                 }
             }
+
             FTECH_EKYC_RESULT_TYPE.CANCEL -> {
                 if (isActive) {
                     callback?.onCancel()
@@ -261,7 +243,10 @@ object FTechEkycManager {
                     CoroutineScope(Dispatchers.Main).launch {
                         invokeCallback(callback, FTechEkycResult<O>().apply {
                             this.type = FTECH_EKYC_RESULT_TYPE.ERROR
-                            this.error = if (it is APIException) it else APIException(APIException.UNKNOWN_ERROR, it.message)
+                            this.error = if (it is APIException) it else APIException(
+                                APIException.UNKNOWN_ERROR,
+                                it.message
+                            )
                         })
                     }
                 }.collect {
@@ -300,17 +285,61 @@ object FTechEkycManager {
         runActionInCoroutine(
             TransactionAction(),
             BaseAction.VoidRequest(),
-            callback
+            object : IFTechEkycCallback<TransactionData> {
+                override fun onSuccess(info: TransactionData) {
+                    if (info.transactionId.isNullOrEmpty()) {
+                        callback.onFail(
+                            APIException(
+                                code = APIException.UNKNOWN_ERROR,
+                                message = getAppString(R.string.null_or_empty_transaction_id)
+                            )
+                        )
+                    } else {
+                        transactionId = info.transactionId.toString()
+                        callback.onSuccess(info)
+                    }
+                }
+
+                override fun onCancel() {
+                    callback.onCancel()
+                }
+
+                override fun onFail(error: APIException?) {
+                    callback.onFail(error)
+                }
+            }
         )
     }
 
     @JvmStatic
-    fun submitInfo(info: NewSubmitInfoRequest, callback: IFTechEkycCallback<Boolean>) {
-        runActionInCoroutine(
-            action = NewSubmitInfoAction(),
-            request = NewSubmitInfoAction.SubmitRV(request = info),
-            callback = callback
-        )
+    fun submitInfo(callback: IFTechEkycCallback<Boolean>) {
+        if (hasInfoSubmit()) {
+            runActionInCoroutine(
+                action = NewSubmitInfoAction(),
+                request = NewSubmitInfoAction.SubmitRV(request = submitInfoRequest!!),
+                callback = object : IFTechEkycCallback<Boolean> {
+                    override fun onSuccess(info: Boolean?) {
+                        clearDataWhenSubmitSuccess()
+                        callback.onSuccess(info)
+                    }
+
+                    override fun onCancel() {
+                        callback.onCancel()
+                    }
+
+                    override fun onFail(error: APIException?) {
+                        callback.onFail(error)
+                    }
+                }
+            )
+        } else {
+            callback.onFail(
+                APIException(
+                    APIException.UNKNOWN_ERROR,
+                    getAppString(R.string.null_submit_info_request)
+                )
+            )
+        }
     }
 
     @JvmStatic
@@ -319,26 +348,137 @@ object FTechEkycManager {
         orientation: String?,
         callback: IFTechEkycCallback<CaptureData>
     ) {
-        runActionInCoroutine(
-            action = NewUploadPhotoAction(),
-            request = NewUploadPhotoAction.UploadRV(
-                absolutePath = pathImage,
-                orientation = orientation,
-                transactionId = transactionId
-            ),
-            callback = callback
-        )
+        if (hasTransactionId()) {
+            runActionInCoroutine(
+                action = NewUploadPhotoAction(),
+                request = NewUploadPhotoAction.UploadRV(
+                    absolutePath = pathImage,
+                    orientation = orientation,
+                    transactionId = transactionId
+                ),
+                callback = object : IFTechEkycCallback<CaptureData> {
+                    override fun onSuccess(info: CaptureData) {
+                        if (info.data?.sessionId.isNullOrEmpty()) {
+                            callback.onFail(getErrorSessionId(orientation))
+                        } else {
+                            handleSuccessUploadPhoto(orientation, info)
+                            callback.onSuccess(info)
+                        }
+                    }
+
+                    override fun onCancel() {
+                        callback.onCancel()
+                    }
+
+                    override fun onFail(error: APIException?) {
+                        callback.onFail(error)
+                    }
+                }
+            )
+        } else {
+            callback.onFail(
+                APIException(
+                    APIException.UNKNOWN_ERROR,
+                    getAppString(R.string.null_or_empty_transaction_id)
+                )
+            )
+        }
+    }
+
+    private fun handleSuccessUploadPhoto(orientation: String?, info: CaptureData) {
+        when (orientation) {
+            "back" -> {
+                sessionIdBack = info.data?.sessionId.toString()
+            }
+
+            "front" -> {
+                sessionIdFront = info.data?.sessionId.toString()
+            }
+            null -> {
+                sessionIdFace = info.data?.sessionId.toString()
+
+            }
+        }
+    }
+
+    private fun getErrorSessionId(orientation: String?): APIException {
+        return when (orientation) {
+            "back" -> {
+                APIException(
+                    code = APIException.UNKNOWN_ERROR,
+                    message = getAppString(R.string.null_or_empty_session_id_back)
+                )
+
+            }
+
+            "front" -> {
+                APIException(
+                    code = APIException.UNKNOWN_ERROR,
+                    message = getAppString(R.string.null_or_empty_session_id_front)
+                )
+            }
+
+            null -> {
+                APIException(
+                    code = APIException.UNKNOWN_ERROR,
+                    message = getAppString(R.string.null_or_empty_session_id_face)
+                )
+            }
+
+            else -> {
+                APIException(code = APIException.UNKNOWN_ERROR)
+            }
+        }
     }
 
     @JvmStatic
     fun faceMatching(
         callback: IFTechEkycCallback<FaceMatchingData>
     ) {
-        runActionInCoroutine(
-            action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
-                transactionId, transactionFront, transactionBack, transactionFace
-            ), callback = callback
-        )
+        if (hasTransactionAndSessionCaptureId()) {
+            runActionInCoroutine(
+                action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
+                    transactionId, sessionIdFront, sessionIdBack, sessionIdFace
+                ), callback = object : IFTechEkycCallback<FaceMatchingData> {
+                    override fun onSuccess(info: FaceMatchingData) {
+                        submitInfoRequest = FaceMatchingDataConvertToSubmitRequest().convert(info)
+                        callback.onSuccess(info)
+                    }
+
+                    override fun onCancel() {
+                        callback.onCancel()
+                    }
+
+                    override fun onFail(error: APIException?) {
+                        callback.onFail(error)
+                    }
+                }
+            )
+        } else {
+            callback.onFail(
+                APIException(
+                    APIException.UNKNOWN_ERROR,
+                    getAppString(R.string.empty_transaction_id_and_session_capture)
+                )
+            )
+        }
+    }
+
+    private fun hasTransactionAndSessionCaptureId(): Boolean {
+        return transactionId.isNotEmpty() && sessionIdFront.isNotEmpty() &&
+                sessionIdBack.isNotEmpty() && sessionIdFace.isNotEmpty()
+    }
+
+    private fun hasTransactionId(): Boolean = transactionId.isNotEmpty()
+
+    private fun hasInfoSubmit(): Boolean = submitInfoRequest != null
+
+    private fun clearDataWhenSubmitSuccess(){
+        submitInfoRequest = null
+        transactionId = ""
+        sessionIdFront = ""
+        sessionIdBack = ""
+        sessionIdFace = ""
     }
 
 }
