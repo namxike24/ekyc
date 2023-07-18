@@ -1,7 +1,10 @@
 package ai.ftech.demo;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,23 +43,37 @@ public class JavaActivity extends AppCompatActivity {
         tvState.setOnClickListener(v -> {
             tvState.setText("");
         });
-        FTechEkycManager.registerEkyc(new IFTechEkycCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean info) {
-                IFTechEkycCallback.super.onSuccess(info);
-                Toast.makeText(JavaActivity.this, "Register succeeded!", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onFail(APIException error) {
-                IFTechEkycCallback.super.onFail(error);
-            }
+        try {
+            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager().getApplicationInfo(
+                    getApplicationContext().getPackageName(),
+                    PackageManager.GET_META_DATA
+            );
+            Bundle bundle = applicationInfo.metaData;
+            String appId = bundle.getString("ekycId");
+            String licenseKey = bundle.getString("licenseKey");
+            FTechEkycManager.registerEkyc(appId, licenseKey, new IFTechEkycCallback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean info) {
+                    IFTechEkycCallback.super.onSuccess(info);
+                    Toast.makeText(JavaActivity.this, "Register succeeded!", Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onCancel() {
-                IFTechEkycCallback.super.onCancel();
-            }
-        });
+                @Override
+                public void onFail(APIException error) {
+                    IFTechEkycCallback.super.onFail(error);
+                    Toast.makeText(JavaActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancel() {
+                    IFTechEkycCallback.super.onCancel();
+                }
+            });
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            Log.e("JavaActivity", e.getMessage());
+        }
 
 
         btnCreateTransaction.setOnClickListener(v -> createTransaction());
@@ -116,10 +133,6 @@ public class JavaActivity extends AppCompatActivity {
                 public void onCancel() {
                 }
             });
-    }
-
-    private boolean hasTransactionId() {
-        return !FTechEkycManager.INSTANCE.getTransactionId().isEmpty();
     }
 
     private void executeSubmitInfo() {

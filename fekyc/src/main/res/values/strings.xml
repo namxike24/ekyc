@@ -115,11 +115,16 @@
     <string name="empty_field_value">Trường thông tin không được bỏ trống</string>
     <!--endregion-->
 
+    <!--region token error -->
+    <string name="null_token_register">Ứng dụng chưa được đăng ký Ekyc</string>
+    <!--endregion-->
+
     <!--region response transaction error -->
     <string name="null_or_empty_transaction_id">Transaction ID không hợp lệ</string>
     <string name="null_or_empty_session_id_front">Session ID mặt trước không hợp lệ</string>
     <string name="null_or_empty_session_id_back">Session ID mặt sau không hợp lệ</string>
     <string name="null_or_empty_session_id_face">Session ID gương mặt không hợp lệ</string>
+    <string name="null_or_empty_session_id_unknown">Không thể phân loại Session ID</string>
     <string name="empty_transaction_id_and_session_capture">Transaction ID và Session ID chưa đủ</string>
     <!--endregion-->
 
