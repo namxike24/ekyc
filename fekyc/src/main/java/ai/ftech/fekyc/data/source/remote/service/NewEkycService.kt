@@ -6,6 +6,7 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingReq
 import ai.ftech.fekyc.data.source.remote.model.ekyc.facematching.FaceMatchingResponse
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoResponse
+import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionProcessResponse
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionResponse
 import okhttp3.MultipartBody
@@ -43,4 +44,9 @@ interface NewEkycService : IApiService {
     fun uploadIdentityCard(@Query("transaction_id") transactionId: String,
                            @Query("card_orientation") type: String,
                            @Part uploadFile: MultipartBody.Part): Call<TransactionResponse>
+
+    @GET("/ekyc/transaction/{transaction_id}")
+    fun getProcessTransaction(
+        @Path(value = "transaction_id") transactionId: String
+    ): Call<TransactionProcessResponse>
 }

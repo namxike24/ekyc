@@ -12,11 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData;
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData;
 import ai.ftech.fekyc.domain.APIException;
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData;
-import ai.ftech.fekyc.presentation.AppPreferences;
+import ai.ftech.fekyc.domain.model.transaction.TransactionProcessData;
 import ai.ftech.fekyc.presentation.picture.take.TakePictureActivity;
 import ai.ftech.fekyc.publish.FTechEkycManager;
 import ai.ftech.fekyc.publish.IFTechEkycCallback;
@@ -24,6 +23,7 @@ import ai.ftech.fekyc.publish.IFTechEkycCallback;
 public class JavaActivity extends AppCompatActivity {
     private TextView tvState;
     private Button btnCreateTransaction;
+    private Button btnProcessTransaction;
     private Button btnSubmitInfo;
     private Button btnUploadPhoto;
     private Button btnFaceMatching;
@@ -34,6 +34,7 @@ public class JavaActivity extends AppCompatActivity {
         setContentView(R.layout.demo_activity);
         tvState = findViewById(R.id.tvDemoState);
         btnCreateTransaction = findViewById(R.id.btnDemoCreateTransaction);
+        btnProcessTransaction = findViewById(R.id.btnProcessTransaction);
         btnSubmitInfo = findViewById(R.id.btnSubmitInfo);
         btnUploadPhoto = findViewById(R.id.btnUploadPhoto);
         btnFaceMatching = findViewById(R.id.btnFaceMatching);
@@ -78,6 +79,8 @@ public class JavaActivity extends AppCompatActivity {
 
         btnCreateTransaction.setOnClickListener(v -> createTransaction());
 
+        btnProcessTransaction.setOnClickListener(v -> executeGetProcessTransaction());
+
         btnSubmitInfo.setOnClickListener(v -> {
             executeSubmitInfo();
         });
@@ -88,6 +91,27 @@ public class JavaActivity extends AppCompatActivity {
 
         btnFaceMatching.setOnClickListener(v -> {
             executeFaceMatching();
+        });
+    }
+
+    private void executeGetProcessTransaction() {
+        FTechEkycManager.getProcessTransaction(new IFTechEkycCallback<TransactionProcessData>() {
+            @Override
+            public void onSuccess(TransactionProcessData info) {
+                IFTechEkycCallback.super.onSuccess(info);
+                Toast.makeText(JavaActivity.this, "Transaction processId: "+info.getProcessId(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFail(APIException error) {
+                IFTechEkycCallback.super.onFail(error);
+                Toast.makeText(JavaActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                IFTechEkycCallback.super.onCancel();
+            }
         });
     }
 

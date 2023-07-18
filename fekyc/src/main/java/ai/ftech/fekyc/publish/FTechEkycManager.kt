@@ -14,11 +14,13 @@ import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.domain.action.FaceMatchingAction
 import ai.ftech.fekyc.domain.action.NewSubmitInfoAction
 import ai.ftech.fekyc.domain.action.NewUploadPhotoAction
+import ai.ftech.fekyc.domain.action.ProcessTransactionAction
 import ai.ftech.fekyc.domain.action.RegisterEkycAction
 import ai.ftech.fekyc.domain.action.TransactionAction
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.ekyc.CAPTURE_TYPE
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
+import ai.ftech.fekyc.domain.model.transaction.TransactionProcessData
 import ai.ftech.fekyc.infras.EncodeRSA
 import ai.ftech.fekyc.presentation.AppPreferences
 import ai.ftech.fekyc.presentation.home.HomeActivity
@@ -341,6 +343,44 @@ object FTechEkycManager {
                 }
             }
         )
+    }
+
+    @JvmStatic
+    fun getProcessTransaction(callback: IFTechEkycCallback<TransactionProcessData>) {
+        if (!hasTransactionId()) {
+            callback.onFail(
+                APIException(
+                    code = APIException.UNKNOWN_ERROR,
+                    message = getAppString(R.string.null_or_empty_transaction_id)
+                )
+            )
+            return
+        }
+        runActionInCoroutine(
+            action = ProcessTransactionAction(),
+            request = ProcessTransactionAction.ProcessTransactionRV(transactionId = transactionId),
+            callback = object : IFTechEkycCallback<TransactionProcessData> {
+                override fun onSuccess(info: TransactionProcessData) {
+                    handleProcessTransaction(info)
+                    callback.onSuccess(info)
+                }
+
+                override fun onCancel() {
+                    callback.onCancel()
+                }
+
+                override fun onFail(error: APIException?) {
+                    callback.onFail(error)
+                }
+            })
+    }
+
+    private fun handleProcessTransaction(info: TransactionProcessData) {
+        if (info.processId.isNullOrEmpty()) {
+            sessionIdFront = info.sessionIdFront.orEmpty()
+            sessionIdBack = info.sessionIdBack.orEmpty()
+            sessionIdFace = info.sessionIdFace.orEmpty()
+        }
     }
 
     @JvmStatic
