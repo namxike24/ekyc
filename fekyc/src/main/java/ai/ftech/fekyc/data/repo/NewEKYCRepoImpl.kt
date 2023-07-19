@@ -3,6 +3,7 @@ package ai.ftech.fekyc.data.repo
 import ai.ftech.fekyc.base.repo.BaseRepo
 import ai.ftech.fekyc.data.repo.converter.CapturePhotoResponseConvertToData
 import ai.ftech.fekyc.data.repo.converter.FaceMatchingResponseConvertData
+import ai.ftech.fekyc.data.repo.converter.TransactionProcessResponseConvertToData
 import ai.ftech.fekyc.data.source.remote.base.invokeApi
 import ai.ftech.fekyc.data.source.remote.base.invokeInitSDKFEkycService
 import ai.ftech.fekyc.data.source.remote.base.invokeNewFEkycService
@@ -16,6 +17,7 @@ import ai.ftech.fekyc.data.source.remote.service.InitSDKService
 import ai.ftech.fekyc.data.source.remote.service.NewEkycService
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
+import ai.ftech.fekyc.domain.model.transaction.TransactionProcessData
 import ai.ftech.fekyc.domain.repo.INewEKYCRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -51,6 +53,13 @@ class NewEKYCRepoImpl : BaseRepo(), INewEKYCRepo {
         }
         return service.createTransaction(request).invokeApi { _, body ->
             body.data!!
+        }
+    }
+
+    override fun getProcessTransaction(transactionId: String): TransactionProcessData {
+        val service = invokeNewFEkycService(NewEkycService::class.java)
+        return service.getProcessTransaction(transactionId).invokeApi { _, body ->
+            TransactionProcessResponseConvertToData().convert(body.data)
         }
     }
 

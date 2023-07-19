@@ -5,11 +5,14 @@ import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
 import ai.ftech.fekyc.domain.model.capture.CaptureData
 import ai.ftech.fekyc.domain.model.facematching.FaceMatchingData
+import ai.ftech.fekyc.domain.model.transaction.TransactionProcessData
 
 interface INewEKYCRepo {
     fun registerEkyc(appId: String, licenseKey: String): RegisterEkycData
 
     fun createTransaction(extraData: String): TransactionData
+
+    fun getProcessTransaction(transactionId: String): TransactionProcessData
 
     fun submitInfo(request: NewSubmitInfoRequest): Boolean
 

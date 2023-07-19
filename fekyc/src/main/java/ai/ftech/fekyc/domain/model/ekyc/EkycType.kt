@@ -20,4 +20,10 @@ enum class UPLOAD_STATUS {
     FAIL
 }
 
+enum class CAPTURE_TYPE(var value: String?) {
+    FRONT("front"),
+    BACK("back"),
+    FACE(null),
+}
+
 

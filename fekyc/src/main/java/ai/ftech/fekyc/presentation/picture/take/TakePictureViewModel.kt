@@ -2,10 +2,9 @@ package ai.ftech.fekyc.presentation.picture.take
 
 import ai.ftech.fekyc.base.common.BaseViewModel
 import ai.ftech.fekyc.common.action.FEkycActionResult
-import ai.ftech.fekyc.common.onException
 import ai.ftech.fekyc.domain.APIException
-import ai.ftech.fekyc.domain.action.UploadPhotoAction
 import ai.ftech.fekyc.domain.model.capture.CaptureData
+import ai.ftech.fekyc.domain.model.ekyc.CAPTURE_TYPE
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_INFORMATION
 import ai.ftech.fekyc.domain.model.ekyc.PHOTO_TYPE
 import ai.ftech.fekyc.domain.model.ekyc.UPLOAD_STATUS
@@ -70,28 +69,15 @@ class TakePictureViewModel : BaseViewModel() {
 
     fun uploadPhoto(absolutePath: String){
         val orientation = when (EkycStep.getCurrentStep()) {
-            PHOTO_INFORMATION.FRONT -> "front"
-            PHOTO_INFORMATION.BACK -> "back"
-            PHOTO_INFORMATION.FACE -> null
-            else -> "front"
+            PHOTO_INFORMATION.FRONT -> CAPTURE_TYPE.FRONT
+            PHOTO_INFORMATION.BACK -> CAPTURE_TYPE.BACK
+            PHOTO_INFORMATION.FACE -> CAPTURE_TYPE.FACE
+            else -> CAPTURE_TYPE.FRONT
         }
         viewModelScope.launch {
             FTechEkycManager.uploadPhoto(absolutePath, orientation = orientation,object : IFTechEkycCallback<CaptureData>{
                 override fun onSuccess(info: CaptureData?) {
                     super.onSuccess(info)
-                    info?.let {
-                        when(orientation){
-                            "back"->{
-                                FTechEkycManager.setTransactionBack(it.data?.sessionId.toString())
-                            }
-                            "front"->{
-                                FTechEkycManager.setTransactionFront(it.data?.sessionId.toString())
-                            }
-                            null->{
-                                FTechEkycManager.setTransactionFace(it.data?.sessionId.toString())
-                            }
-                        }
-                    }
                     EkycStep.add(PHOTO_TYPE.SSN, absolutePath)
                     uploadPhoto.value = if (EkycStep.isDoneStep()) {
                         FEkycActionResult<UPLOAD_STATUS>().apply {
