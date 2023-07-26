@@ -24,11 +24,6 @@ fun <T> Flow<T>.onException(onCatch: suspend (Throwable) -> Unit): Flow<T> {
             val msg = HandleApiException.getAPIMessage(FTechEkycManager.getApplicationContext(), e)
             val apiException = APIException(e.code, msg)
             onCatch(apiException)
-
-//            if (e.code == APIException.EXPIRE_SESSION_ERROR) {
-//                ShareFlowEventBus.emitEvent(ExpireEvent())
-//            }
-
         } else {
             onCatch(APIException(APIException.UNKNOWN_ERROR ,e.message))
         }
