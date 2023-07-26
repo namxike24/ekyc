@@ -25,7 +25,7 @@ class KotlinActivity : AppCompatActivity() {
         }
 
         btnEkyc.setOnClickListener {
-            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", "${Random.nextInt(1, 100000)}", object : IFTechEkycCallback<FTechEkycInfo> {
+            FTechEkycManager.startEkyc("licenceftechekyc", "ftechekycapp", object : IFTechEkycCallback<FTechEkycInfo> {
                 override fun onSuccess(info: FTechEkycInfo?) {
                     tvState.text = info?.message
                 }

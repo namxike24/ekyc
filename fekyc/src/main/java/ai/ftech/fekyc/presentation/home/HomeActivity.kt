@@ -17,6 +17,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
     private lateinit var llDriverLicense: LinearLayout
     private lateinit var llPassport: LinearLayout
     private lateinit var tvSdkVersion: AppCompatTextView
+    private lateinit var btnHomeSSN: AppCompatButton
     private val adapter = StepIdentityAdapter()
 
     /**
@@ -72,6 +74,7 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         llDriverLicense = findViewById(R.id.llHomeDriverLicense)
         llPassport = findViewById(R.id.llHomePassport)
         tvSdkVersion = findViewById(R.id.tvHomeSdkVersion)
+        btnHomeSSN = findViewById(R.id.btnHomeSSN)
 
         tvSdkVersion.text = "v${BuildConfig.sdkVersion}"
         rvListStep.layoutManager = LinearLayoutManager(this)
@@ -87,6 +90,10 @@ class HomeActivity : FEkycActivity(R.layout.fekyc_home_activity) {
         })
 
         llSSN.setOnSafeClick {
+            navigateToTakePictureScreen(PHOTO_TYPE.SSN)
+        }
+
+        btnHomeSSN.setOnSafeClick {
             navigateToTakePictureScreen(PHOTO_TYPE.SSN)
         }
 
