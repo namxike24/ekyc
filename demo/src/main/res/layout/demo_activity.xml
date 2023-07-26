@@ -15,62 +15,29 @@
         android:layout_marginTop="@dimen/fbase_dimen_36"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDemoCreateTransaction"
+        android:id="@+id/btnStartEkyc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Create Transaction"
+        android:text="Start Ekyc"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDemoState" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnProcessTransaction"
+    <ProgressBar
+        android:id="@+id/pbLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Get Process Transaction"
-        android:textAllCaps="false"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnDemoCreateTransaction" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Upload Photo"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnProcessTransaction" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnFaceMatching"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Face Matching"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnUploadPhoto" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSubmitInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Submit info"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnFaceMatching" />
+        app:layout_constraintTop_toBottomOf="@id/tvDemoState" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -132,4 +132,9 @@
     <string name="null_submit_info_request">Chưa có thông tin</string>
     <!--endregion-->
 
+    <!--region mock text -->
+    <string name="mock_title_card_type">Giấy tờ</string>
+    <!--endregion-->
+
+
 </resources>

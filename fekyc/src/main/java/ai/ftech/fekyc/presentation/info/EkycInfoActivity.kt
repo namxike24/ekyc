@@ -13,6 +13,7 @@ import ai.ftech.fekyc.domain.APIException
 import ai.ftech.fekyc.domain.event.EkycEvent
 import ai.ftech.fekyc.domain.model.ekyc.EkycFormInfo
 import ai.ftech.fekyc.presentation.model.BottomSheetPicker
+import ai.ftech.fekyc.publish.FTechEkycManager
 import ai.ftech.fekyc.utils.KeyboardUtility
 import ai.ftech.fekyc.utils.ShareFlowEventBus
 import ai.ftech.fekyc.utils.TimeUtils
@@ -82,8 +83,7 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         rvUserInfo.layoutManager = LinearLayoutManager(this)
         rvUserInfo.adapter = adapter
         showLoading()
-        viewModel.getEkycInfo()
-        viewModel.getNationList()
+        viewModel.getFaceMatchingData()
     }
 
     override fun onObserverViewModel() {
@@ -262,5 +262,15 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
                 adapter.updateField(ekycInfo.id!!, it.title.toString())
             }
             .show(supportFragmentManager)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FTechEkycManager.notifyActive(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        FTechEkycManager.notifyInactive(this)
     }
 }
