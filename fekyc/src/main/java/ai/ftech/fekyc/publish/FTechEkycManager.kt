@@ -6,7 +6,6 @@ import ai.ftech.fekyc.base.common.BaseAction
 import ai.ftech.fekyc.base.extension.setApplication
 import ai.ftech.fekyc.common.getAppString
 import ai.ftech.fekyc.common.onException
-import ai.ftech.fekyc.data.repo.converter.FaceMatchingDataConvertToSubmitRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.init.sdk.RegisterEkycData
 import ai.ftech.fekyc.data.source.remote.model.ekyc.submit.NewSubmitInfoRequest
 import ai.ftech.fekyc.data.source.remote.model.ekyc.transaction.TransactionData
@@ -60,8 +59,6 @@ object FTechEkycManager {
     private var sessionIdBack: String = ""
 
     private var sessionIdFace: String = ""
-
-    private var submitInfoRequest: NewSubmitInfoRequest? = null
 
     @JvmStatic
     fun init(context: Context) {
@@ -135,12 +132,10 @@ object FTechEkycManager {
     fun startEkyc(
         licenseKey: String,
         appId: String,
-        transactionId: String,
         callBack: IFTechEkycCallback<FTechEkycInfo>
     ) {
         this.ftechKey = EncodeRSA.encryptData(licenseKey, applicationContext?.packageName)
         this.appId = appId
-        this.transactionId = "${transactionId}_${appId}"
         checkCoolDownAction {
             if (licenseKey.isEmpty()) {
                 throw RuntimeException(getAppString(R.string.empty_license_key))
@@ -384,19 +379,10 @@ object FTechEkycManager {
     }
 
     @JvmStatic
-    fun submitInfo(callback: IFTechEkycCallback<Boolean>) {
-        if (!hasInfoSubmit()) {
-            callback.onFail(
-                APIException(
-                    APIException.UNKNOWN_ERROR,
-                    getAppString(R.string.null_submit_info_request)
-                )
-            )
-            return
-        }
+    fun submitInfo(submitInfoRequest: NewSubmitInfoRequest, callback: IFTechEkycCallback<Boolean>) {
         runActionInCoroutine(
             action = NewSubmitInfoAction(),
-            request = NewSubmitInfoAction.SubmitRV(request = submitInfoRequest!!),
+            request = NewSubmitInfoAction.SubmitRV(request = submitInfoRequest),
             callback = object : IFTechEkycCallback<Boolean> {
                 override fun onSuccess(info: Boolean?) {
                     clearData()
@@ -521,20 +507,7 @@ object FTechEkycManager {
         runActionInCoroutine(
             action = FaceMatchingAction(), request = FaceMatchingAction.FaceMatchingRV(
                 transactionId, sessionIdFront, sessionIdBack, sessionIdFace
-            ), callback = object : IFTechEkycCallback<FaceMatchingData> {
-                override fun onSuccess(info: FaceMatchingData) {
-                    submitInfoRequest = FaceMatchingDataConvertToSubmitRequest().convert(info)
-                    callback.onSuccess(info)
-                }
-
-                override fun onCancel() {
-                    callback.onCancel()
-                }
-
-                override fun onFail(error: APIException?) {
-                    callback.onFail(error)
-                }
-            }
+            ), callback = callback
         )
     }
 
@@ -545,10 +518,7 @@ object FTechEkycManager {
 
     private fun hasTransactionId(): Boolean = transactionId.isNotEmpty()
 
-    private fun hasInfoSubmit(): Boolean = submitInfoRequest != null
-
-    private fun clearData(){
-        submitInfoRequest = null
+    private fun clearData() {
         transactionId = ""
         sessionIdFront = ""
         sessionIdBack = ""

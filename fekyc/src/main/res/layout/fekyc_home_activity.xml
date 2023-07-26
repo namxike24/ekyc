@@ -44,6 +44,7 @@
         tools:listitem="@layout/fekyc_step_identity_item" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvHomeSelectTypeOfPapersTitle"
         style="@style/FBaseStyleSemiBold"
         android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/rvHomeListStep" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llHomeSSN"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_80"
@@ -89,6 +91,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llHomeDriverLicense"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_80"
@@ -123,6 +126,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llHomePassport"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fbase_dimen_80"
@@ -157,6 +161,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:visibility="gone"
         android:id="@+id/tvHomeSdkVersion"
         style="@style/FBaseStyleText12Medium"
         android:layout_marginBottom="@dimen/fbase_dimen_8"
@@ -165,5 +170,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHomeSSN"
+        style="@style/FBaseStyleMedium"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fbase_dimen_48"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="@dimen/fbase_text_size_16"
+        android:layout_marginHorizontal="@dimen/fbase_dimen_16"
+        android:layout_marginBottom="@dimen/fbase_dimen_34"
+        android:text="@string/fekyc_home_button_continue"
+        android:textColor="@color/fbase_color_white"
+        android:background="@drawable/fekyc_shape_rect_bg_blue_corner_8"
+        android:stateListAnimator="@animator/fekyc_scale_down_anim_selector"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

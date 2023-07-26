@@ -202,7 +202,7 @@ class TakePictureActivity : FEkycActivity(R.layout.fekyc_take_picture_activity) 
                 }
                 UPLOAD_STATUS.COMPLETE -> {
                     finish()
-//                    navigateTo(ConfirmPictureActivity::class.java)
+                    navigateTo(ConfirmPictureActivity::class.java)
                 }
                 UPLOAD_STATUS.NONE -> {}
                 else -> {}

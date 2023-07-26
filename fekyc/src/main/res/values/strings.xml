@@ -19,13 +19,13 @@
 
 
     <!--region Home Activity-->
-    <string name="fekyc_home_title">Chọn loại giấy tờ</string>
+    <string name="fekyc_home_title">Chụp ảnh giấy tờ </string>
     <string name="fekyc_home_right_title">Trợ giúp</string>
     <string name="fekyc_home_step_title">Các bước thực hiện</string>
 
     <string name="fekyc_home_step_1">Lựa chọn loại giấy tờ</string>
-    <string name="fekyc_home_step_2">Chụp ảnh giấy tờ</string>
-    <string name="fekyc_home_step_3">Chụp ảnh chân dung</string>
+    <string name="fekyc_home_step_2">Chụp ảnh chân dung</string>
+    <string name="fekyc_home_step_3">Xác thực khuôn mặt </string>
     <string name="fekyc_home_step_4">Kiểm tra lại thông tin cá nhân</string>
 
 
@@ -33,6 +33,8 @@
     <string name="fekyc_home_select_type_of_papers_ssn">Căn cước công dân / Chứng minh thư</string>
     <string name="fekyc_home_select_type_of_papers_driver_license">Giấy phép lái xe</string>
     <string name="fekyc_home_select_type_of_papers_passport">Hộ chiếu Việt Nam</string>
+
+    <string name="fekyc_home_button_continue">Tiếp theo</string>
     <!--endregion-->
 
 
@@ -131,5 +133,10 @@
     <!--region response transaction error -->
     <string name="null_submit_info_request">Chưa có thông tin</string>
     <!--endregion-->
+
+    <!--region mock text -->
+    <string name="mock_title_card_type">Giấy tờ</string>
+    <!--endregion-->
+
 
 </resources>
