@@ -70,14 +70,10 @@ class EkycInfoActivity : FEkycActivity(R.layout.fekyc_ekyc_info_activity) {
         })
 
         btnCompleted.setOnSafeClick {
+            showLoading()
             val dataInfo =
                 (adapter.dataList as List<FormInfoAdapter.FormInfoDisplay>).map { it.data }
-            if (dataInfo.find { it.fieldValue.isNullOrEmpty() } != null) {
-                showError(getAppString(R.string.empty_field_value))
-            } else {
-                showLoading()
                 viewModel.submitInfo(dataInfo)
-            }
         }
 
         rvUserInfo.layoutManager = LinearLayoutManager(this)
