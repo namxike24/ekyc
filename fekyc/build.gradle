@@ -91,8 +91,8 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.namxike24'
-            artifactId = 'ykyc'
-            version = '1.0.8'
+            artifactId = 'ekyc'
+            version = '1.0.9'
 
             afterEvaluate {
                 from components.release
